@@ -1,0 +1,35 @@
+.navigation {
+  width: 100%;
+  background: $background-color;
+  display: flex;
+  align-items: center;
+  padding: 0 $xl-size;
+  // box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
+  z-index: map-get($z-index, navigation);
+  position: fixed;
+  top: 0;
+}
+
+.navigation-menu {
+  justify-self: flex-end;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  text-align: right;
+}
+
+.navigation-menu-item {
+  display: inline-block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation-menu-link {
+  color: $heading-color;
+  padding: $s-size $m-size;
+  text-decoration: none;
+  font-size: $font-small;
+  text-transform: uppercase;
+  font-weight: bold;
+}

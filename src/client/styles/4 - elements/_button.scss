@@ -1,0 +1,34 @@
+.button {
+  background: $button-color;
+  padding: $s-size $m-size;
+  border: none;
+  color: $white;
+
+  &:hover {
+    background: $button-hover;
+  }
+}
+
+.button-block {
+  display: block;
+  width: 100%;
+}
+
+.button-border {
+  background: transparent;
+  border: 1px solid $button-color;
+  color: $button-color;
+}
+
+.button-border-gray {
+  border: 1px solid $border-color;
+  color: $paragraph-color-00;
+
+  &:hover {
+    background: $border-color;
+  }
+}
+
+.button-small {
+  font-size: $font-small;
+}

@@ -1,0 +1,65 @@
+// 
+// BASE STYLING ---------
+//
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Tajawal', Helvetica, Arial, sans-serif;
+  font-size: $baseFontSize;
+  background: $background-color;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}   
+
+p {
+  color: $paragraph-color-00;
+  font-weight: 300;
+}
+
+span {
+  color: $paragraph-color-00;
+  font-size: $font-small;
+}
+
+h1,
+h2,
+h3, 
+h4, 
+h5,
+h6 {
+  font-family: 'Tajawal', Helvetica, Arial, sans-serif;
+  color: $heading-color;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+ 
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: $heading-color;
+  outline: 1px solid lighten($heading-color, 10%);
+}
+
+.content {
+  width: 100%;
+  position: relative;
+  padding: $top $xl-size;
+  display: flex;
+}
+

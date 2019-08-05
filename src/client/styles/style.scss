@@ -1,0 +1,42 @@
+// --------
+// 00 - VENDORS
+
+// --------
+// 01 - SETTINGS
+
+@import './1 - settings/breakpoints';
+@import './1 - settings/colors';
+@import './1 - settings/sizes';
+@import './1 - settings/typography';
+@import './1 - settings/zindex';
+
+// --------
+// 02 - TOOLS
+
+@import './2 - tools/functions';
+@import './2 - tools/mixins';
+
+// --------
+// 03 - GENERIC
+
+// --------
+// 04 - ELEMENTS
+
+@import './4 - elements/base';
+@import './4 - elements/button';
+
+
+// --------
+// 05 - COMPONENTS
+
+@import './5 - components/navigation';
+@import './5 - components/product';
+@import './5 - components/basket';
+@import './5 - components/sidebar';
+
+
+// --------
+// 06 - UTILS
+
+@import './6 - utils/state';
+@import './6 - utils/utils';

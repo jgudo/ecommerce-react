@@ -1,0 +1,8 @@
+@mixin bezier-transition($prop: all, $speed: .5s, $func: cubic-bezier(.77,0,.175,1) ) {
+  // -webkit-transition: all $speed cubic-bezier(.4, 0, .2, 1);
+  -webkit-transition: $prop $speed $func;
+  -moz-transition: $prop $speed $func;
+  -o-transition: $prop $speed $func;
+  -ms-transition: $prop $speed $func;
+  transition: $prop $speed $func;
+}
