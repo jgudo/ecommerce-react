@@ -1,0 +1,23 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  padding-right: $m-size;
+}
+
+.filters-field {
+  margin-bottom: $m-size;
+  padding-bottom: $m-size;
+  border-bottom: 1px solid $border-color;
+}
+
+.filters-brand {
+  width: 100%;
+}
+
+.filters-action {
+  display: flex;
+}
+
+.filters-button {
+  flex-grow: 1;
+}

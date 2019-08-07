@@ -1,0 +1,18 @@
+.badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: $black;
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge-count {
+  color: $white;
+  font-size: 9px;
+
+}

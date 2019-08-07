@@ -1,0 +1,39 @@
+.user-profile {
+  display: flex;
+}
+
+.user-profile-block {
+  width: 400px;
+  height: auto;
+  padding: $m-size;
+}
+
+.user-profile-banner {
+  width: 100%;
+  height: 100px;
+  position: relative;
+}
+
+.user-profile-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.user-profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid $white;
+  position: absolute;
+  left: $m-size;
+  bottom: -50px;
+}
+
+.user-profile-details {
+  padding: $xl-size $m-size $l-size;
+}

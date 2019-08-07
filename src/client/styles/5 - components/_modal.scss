@@ -1,0 +1,13 @@
+.ReactModal__Overlay {
+  z-index: 9999;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: $s-size;
+  right: $s-size;
+}

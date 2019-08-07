@@ -3,7 +3,7 @@
   background: $background-color;
   display: flex;
   align-items: center;
-  padding: 0 $xl-size;
+  padding: 0 $xxl-size;
   // box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
   z-index: map-get($z-index, navigation);
   position: fixed;
@@ -32,4 +32,10 @@
   font-size: $font-small;
   text-transform: uppercase;
   font-weight: bold;
+  position: relative;
+}
+
+.navigation-menu-active {
+  font-weight: bold;
+  text-decoration: underline;
 }

@@ -1,0 +1,47 @@
+.price-range {
+  width: 100%;
+  position: relative;
+  // box-shadow: inset 0 2px 5px rgba(0, 0, 0, .2);
+}
+
+.price-range-control {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  display: flex;
+}
+
+.price-range-slider {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.price-range-input {
+  border: none !important;
+  font-size: $font-medium !important;
+  border-bottom: 1px solid $border-color !important;
+  padding: $l-size;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.price-range-scale {
+  display: flex;
+  padding: $m-size 0;
+}
+
+.price-range-price {
+  font-size: 10px;
+}
+
+.price-range-price:nth-child(1) {
+  flex-grow: 1;
+}
+
+// .range-slider svg,
+// .range-slider input[type=range] {
+//   position: absolute;
+//   left: 0;
+//   bottom: 0;
+// }

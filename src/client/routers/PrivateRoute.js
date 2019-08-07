@@ -1,9 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import Basket from '../components/basket/basket';
 // ui
 import Navigation from '../components/ui/Navigation';
-import Sidebar from '../components/ui/Sidebar';
+import Footer from '../components/ui/Footer';
 
 const PrivateRoute = ({ 
   isAuthenticated, 
@@ -18,10 +20,11 @@ const PrivateRoute = ({
         ? (
           <>
             <Navigation />
+            <Basket />
             <main className="content">
-              <Sidebar />
               <Component {...props} />
             </main>
+            <Footer />
           </>
         ) : isAuthenticated && userType === 'admin'
         ? <Redirect to="/dashboard" />

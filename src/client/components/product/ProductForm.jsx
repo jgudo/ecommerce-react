@@ -3,33 +3,33 @@ import uuid from 'uuid';
 
 class ProductForm extends Component {
   state = {
-    productName: this.props.product ? this.props.product.productName : '',
-    productPrice: this.props.product ? this.props.product.productPrice : 0,
-    productDescription: this.props.product ? this.props.product.productDescription : ''
+    name: this.props.product ? this.props.product.name : '',
+    price: this.props.product ? this.props.product.price : 0,
+    description: this.props.product ? this.props.product.description : ''
   };
 
   onProductNameInput = (e) => {
-    this.setState({ productName: e.target.value });
+    this.setState({ name: e.target.value });
   }
 
   onProductPriceInput = (e) => {
-    this.setState({ productPrice: e.target.value });
+    this.setState({ price: e.target.value });
   }
 
   onProductDescriptionInput = (e) => {
-    this.setState({ productDescription: e.target.value });
+    this.setState({ description: e.target.value });
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { productName, productPrice, productDescription } = this.state;
+    const { name, price, description } = this.state;
     
-    if (productName && productPrice && productDescription) {
+    if (name && price && description) {
       const product = {
-        productId: this.props.product ? this.props.product.productId : uuid(),
-        productName,
-        productDescription,
-        productPrice,
+        id: this.props.product ? this.props.product.id : uuid(),
+        name,
+        description,
+        price,
         dateAdded: new Date().getTime()
       };
       
@@ -40,7 +40,7 @@ class ProductForm extends Component {
   }
 
   render() {
-    const { productName, productDescription, productPrice } = this.state;
+    const { name, description, price } = this.state;
 
     return (
       <div>
@@ -49,19 +49,19 @@ class ProductForm extends Component {
               onChange={this.onProductNameInput}
               placeholder="Product Name" 
               type="text" 
-              value={productName}
+              value={name}
           />
           <input 
               onChange={this.onProductDescriptionInput}
               placeholder="Product Description" 
               type="text" 
-              value={productDescription}
+              value={description}
           />
           <input 
               onChange={this.onProductPriceInput}
               placeholder="Product Price"
               type="number" 
-              value={productPrice}
+              value={price}
           />
           <button type="submit">Add Product</button>
         </form>

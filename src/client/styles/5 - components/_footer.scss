@@ -1,0 +1,14 @@
+.footer {
+  padding: $xxl-size;
+  background: darken($background-color, 3%);
+  display: flex;
+  align-items: flex-end;
+}
+
+.footer-col-1 {
+  flex-grow: 1;
+}
+
+.footer-col-2 {
+  flex-grow: 1;
+}

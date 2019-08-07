@@ -39,20 +39,47 @@
 
 .basket-list {
   padding: $m-size;
+  padding-bottom: 100px;
   overflow-y: scroll;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .basket-item {
   display: flex;
+  align-items: center;
   border: 1px solid $border-color;
-  padding: $m-size;
   margin-bottom: $s-size;
+  @include bezier-transition();
+  animation: slide-up .5s ease;
+}
+
+.basket-item-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 $s-size;
+}
+
+.basket-empty {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.basket-empty-msg {
+  color: $paragraph-color-10;
 }
 
 .basket-header {
   display: flex;
   align-items: center;
+  position: sticky;
+  top: -20px;
+  background: $white;
+  z-index: map-get($z-index, 'basket');
 }
 
 
@@ -62,7 +89,7 @@
 
 .basket-item-img-wrapper {
   width: 100px;
-  height: 70px;
+  height: 60px;
   margin-right: $m-size;
 }
 
@@ -78,6 +105,10 @@
 
 .basket-item-name {
   margin: $s-size 0;
+  width: 142px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 
 .basket-item-price {
@@ -85,7 +116,7 @@
 }
 
 .basket-item-remove {
-  align-self: flex-start;
+  align-self: center;
 }
 
 .basket-clear {
@@ -130,4 +161,37 @@
 
 .basket-total-amount {
   margin: $s-size 0;
+}
+
+.basket-item-control {
+  width: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.basket-control {
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.basket-control-count {
+  margin: 5px;
+}
+
+
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

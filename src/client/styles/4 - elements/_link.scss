@@ -1,0 +1,8 @@
+a {
+  text-decoration: none;
+  color: $button-color;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

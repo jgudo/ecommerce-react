@@ -1,0 +1,23 @@
+.user-nav {
+  margin-left: $xxl-size;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.user-nav-img-wrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+.user-nav-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -4,7 +4,7 @@ const BasketToggle = (props) => {
   document.addEventListener('click', () => {
 
     // document.body.classList.remove('basket-open');
-    console.log(document.activeElement);
+    // console.log(document.activeElement);
   });
 
   const onClickToggle = (e) => {

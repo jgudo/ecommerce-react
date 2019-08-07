@@ -1,8 +1,12 @@
 import { EDIT_PROFILE } from '../constants/constants';
+import profile from '../../../static/profile.jpg';
+import banner from '../../../static/banner.jpg';
 
 const initState = {
   firstname: 'Pedro',
-  lastname: 'Juan'
+  lastname: 'Juan',
+  avatar: profile,
+  banner
 };
 
 export default (state = initState, action) => {

@@ -6,19 +6,12 @@ export const parseDate = (date) => {
   return `${m.length >= 10 ? m : `0${m}`}/${d}/${y}`;
 };
 
-const splitStr = (str) => {
-  if (str.length === 0) {
-    return [];
-  }
-
-  const arr = splitStr(str.substring(0, str.length - 3));
-  arr.push(str.substring(str.length - 3));
-
-  return arr;
-};
-
 export const displayMoney = (n) => {
-  const a = splitStr(n.toString());
+  const format = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
 
-  return a.join(', ');
+  // or use toLocaleString()
+  return format.format(n);
 };
