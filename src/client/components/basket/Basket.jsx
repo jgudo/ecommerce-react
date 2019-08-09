@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Button from '../ui/Button';
@@ -12,7 +13,8 @@ import {
 } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils';
 
-const Basket = ({ basket, action }) => {
+const Basket = (props) => {
+  const { basket, action, isAuth } = props;
   const calculateTotal = () => {
     let total = 0;
 
@@ -22,6 +24,15 @@ const Basket = ({ basket, action }) => {
     }
 
     return displayMoney(total);
+  };
+
+  const onCheckOut = () => {
+    if (basket.length !== 0 && isAuth) {
+      props.history.push('/checkout');
+      alert('Authenticated');
+    } else {
+      alert('You must login to continue');
+    }
   };
 
   return (
@@ -69,19 +80,22 @@ const Basket = ({ basket, action }) => {
           <p className="basket-total-title">Total Amout:</p>
           <h2 className="basket-total-amount">{calculateTotal()}</h2>
         </div>
-        <Button 
+        <button 
             className="basket-checkout-button button"
+            // disabled={!isAuth || basket.length === 0}
+            onClick={onCheckOut}
         >
           Check Out
-        </Button>
+        </button>
       </div>
       
     </div>
   );
 };
 
-const mapStateToProps = ({ basket }) => ({
-  basket
+const mapStateToProps = ({ basket, auth }) => ({
+  basket,
+  isAuth: !!auth.id && !!auth.type
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -93,4 +107,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
  
-export default connect(mapStateToProps, mapDispatchToProps)(Basket);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Basket));

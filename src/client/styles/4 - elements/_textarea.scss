@@ -1,0 +1,5 @@
+textarea {
+  @extend input;
+  line-height: $line-height;
+  resize: none;
+}

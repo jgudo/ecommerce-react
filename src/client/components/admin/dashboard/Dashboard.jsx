@@ -1,9 +1,8 @@
 import React from 'react';
-import Products from './Products';
 
 const Dashboard = () => (
   <>
-    <Products />
+    <h2>Welcome to admin dashboard</h2>
   </>
 );
 

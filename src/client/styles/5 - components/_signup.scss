@@ -1,0 +1,29 @@
+.input-message {
+  display: block;
+  color: $red;
+}
+
+.input-form {
+  padding: 10px $m-size !important;
+  border: 1px solid darken($border-color, 5%) !important;
+  font-size: $font-medium !important;
+  margin-bottom: $s-size;
+}
+
+.signup {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.signup-wrapper {
+  width: 350px;
+  height: auto;
+  padding: $m-size;
+  border: 1px solid $border-color;
+}
+
+.signup-action {
+  display: flex;
+  justify-content: flex-end;
+}

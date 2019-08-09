@@ -1,0 +1,31 @@
+.sidenavigation {
+  width: 250px;
+  height: 100%;
+  background: darken($background-color, 3%); 
+  position: relative;
+  padding-top: 1rem;
+  border-right: 1px solid $border-color;
+}
+
+.sidenavigation-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenavigation-menu {
+  padding: $m-size 0 $m-size $l-size;
+  display: block;
+
+  &:hover {
+    background: $border-color;
+    text-decoration: none;
+  }
+}
+
+.sidenavigation-menu-active {
+  background: $border-color;
+  font-weight: bold;
+  border-right: 3px solid $black;
+}

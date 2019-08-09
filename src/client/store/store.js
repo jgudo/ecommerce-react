@@ -9,6 +9,7 @@ import basketReducer from '../reducers/basketReducer';
 import authReducer from '../reducers/authReducer';
 import profileReducer from '../reducers/profileReducer';
 import filterReducer from '../reducers/filterReducer';
+import userReducer from '../reducers/userReducer';
 
 const middleWare = store => next => (action) => {
   console.log(store.getState());
@@ -24,7 +25,8 @@ export default () => {
       basket: basketReducer,
       auth: authReducer,
       profile: profileReducer,
-      filter: filterReducer
+      filter: filterReducer,
+      users: userReducer
     }),
     composeEnhancer(applyMiddleware(middleWare))
   );

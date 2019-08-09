@@ -1,4 +1,4 @@
-import { EDIT_PROFILE } from '../constants/constants';
+import { EDIT_PROFILE, CLEAR_PROFILE } from '../constants/constants';
 import profile from '../../../static/profile.jpg';
 import banner from '../../../static/banner.jpg';
 
@@ -16,6 +16,8 @@ export default (state = initState, action) => {
         ...state,
         ...action.payload
       };
+    case CLEAR_PROFILE:
+      return {};
     default:
       return state;
   }

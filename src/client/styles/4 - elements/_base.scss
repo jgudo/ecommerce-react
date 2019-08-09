@@ -26,6 +26,7 @@ button:focus {
 p {
   color: $paragraph-color-00;
   font-weight: 300;
+  line-height: $line-height;
 }
 
 span {
@@ -63,3 +64,19 @@ h6 {
   display: flex;
 }
 
+.content-admin {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  padding-top: $xxl-size;
+  // padding-bottom: $l-size;
+  overflow: hidden;
+  display: flex;
+}
+
+.content-admin-wrapper {
+  overflow-y: scroll;
+  flex-grow: 1;
+  padding: $m-size $l-size;
+}

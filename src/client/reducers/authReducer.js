@@ -1,18 +1,18 @@
-import { LOGIN, LOGOUT } from '../constants/constants';
+import { SIGNIN, SIGNOUT } from '../constants/constants';
 
 const initState = {
   id: 'test-123',
-  type: 'client'
+  type: 'admin'
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case LOGIN:
+    case SIGNIN:
       return {
         id: action.payload.uid,
         type: action.payload.type
       };
-    case LOGOUT:
+    case SIGNOUT:
       return {};
     default: 
       return state;

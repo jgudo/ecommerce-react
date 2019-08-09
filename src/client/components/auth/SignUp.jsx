@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../ui/Button';
 
 class SignUp extends Component {
   state = {
@@ -13,6 +14,10 @@ class SignUp extends Component {
       password: ''
     }
   };
+
+  componentDidMount() {
+    window.scrollTo(undefined, 0);
+  }
 
   onEmailInput = (e) => {
     const val = e.target.value.trim();
@@ -91,43 +96,60 @@ class SignUp extends Component {
   render() {
     const { error } = this.state;
     return (
-      <div>
-        <h1>SignUp</h1>
-        <form onSubmit={this.onFormSubmit}>
-          {error.firstname && <p>{error.firstname}</p>}
-          <input 
-              className={this.errorClassName('firstname')}
-              onKeyUp={this.onFirstnameInput}
-              placeholder="First Name"
-              type="text" 
-          />
-          <br/>
-          {error.lastname && <p>{error.lastname}</p>}
-          <input
-              className={this.errorClassName('lastname')}
-              onInput={this.onLastNameInput}
-              placeholder="Last Name" 
-              type="text"
-          />
-          <br/>
-          {error.email && <p>{error.email}</p>}
-          <input 
-              className={this.errorClassName('email')}
-              onInput={this.onEmailInput}
-              placeholder="Email"
-              type="email" 
-          />
-          <br/>
-          {error.password && <p>{error.password}</p>}
-          <input
-              onInput={this.onPasswordInput}
-              className={this.errorClassName('password')}
-              placeholder="Password" 
-              type="password"
-          />
-          <br/>
-          <button type="submit">Sign Up</button>
-        </form>
+      <div className="signup">
+        <div className="signup-wrapper">
+          <h3>Sign up to Salinaka</h3>
+          <form onSubmit={this.onFormSubmit}>
+            <div className="signup-field">
+              {error.firstname && <span className="input-message">{error.firstname}</span>}
+              <span className="d-block padding-s">First Name</span>
+              <input 
+                  className={`input-form d-block ${this.errorClassName('firstname')}`}
+                  onKeyUp={this.onFirstnameInput}
+                  placeholder="First Name"
+                  type="text" 
+              />
+            </div>
+            <div className="signup-field">
+              {error.lastname && <span className="input-message">{error.lastname}</span>}
+              <span className="d-block padding-s">Last Name</span>
+              <input
+                  className={`input-form d-block ${this.errorClassName('lastname')}`}
+                  onInput={this.onLastNameInput}
+                  placeholder="Last Name" 
+                  type="text"
+              />
+            </div>
+            <div className="signup-field">
+              {error.email && <span className="input-message">{error.email}</span>}
+              <span className="d-block padding-s">Email</span>
+              <input 
+                  className={`input-form d-block ${this.errorClassName('email')}`}
+                  onInput={this.onEmailInput}
+                  placeholder="Your Email"
+                  type="email" 
+              />
+            </div>
+            <div className="signup-field">
+              {error.password && <span className="input-message">{error.password}</span>}
+              <span className="d-block padding-s">Password</span>
+              <input
+                  className={`input-form d-block ${this.errorClassName('password')}`}
+                  onInput={this.onPasswordInput}
+                  placeholder="Password" 
+                  type="password"
+              />
+            </div>
+            <br/>
+            <div className="signup-field signup-action">
+              <Button
+                  className="button"
+              >
+                Sign Up
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

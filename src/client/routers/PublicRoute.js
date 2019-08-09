@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-const PublicRoute = ({ userType, isAuth, component: Component, ...rest }) => (
+import Basket from '../components/basket/basket';
+import Navigation from '../components/ui/Navigation';
+import Footer from '../components/ui/Footer';
+
+const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) => (
   <Route 
       {...rest} 
       component={props => (
@@ -10,12 +14,19 @@ const PublicRoute = ({ userType, isAuth, component: Component, ...rest }) => (
         ? (
           <Redirect to="/dashboard"/>
         ) 
-        : isAuth && userType === 'client'
+        : (isAuth && userType === 'client') && (path === '/signup' || path === '/signin')
         ? (
           <Redirect to="/"/>
         ) 
         : (
-          <Component {...props} />
+          <>
+            <Navigation />
+            <Basket />
+            <main className="content">
+              <Component {...props} />
+            </main>
+            <Footer />
+          </>
         )
       )}
   />

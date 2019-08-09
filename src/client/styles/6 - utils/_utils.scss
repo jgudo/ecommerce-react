@@ -1,16 +1,132 @@
 // 
 // UTILS ---------
 //
+.d-block {
+  display: block;
+  width: 100%;
+}
 
+.background-dark {
+  background: $black;
+}
+
+.color-light {
+  color: $white;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-overflow-ellipsis {
+  width: 120px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 
 .input-valid {
   border: 1px solid green;
 }
 
 .input-error {
-  border: 1px solid red;
+  border: 1px solid red !important;
+
+  &:focus {
+    border: 1px solid red !important;
+  }
 }
 
 .text-subtle {
   color: $paragraph-color-10;
+}
+
+.padding-s {
+  padding: $s-size;
+}
+
+.padding-left-s {
+  padding-left: $s-size;
+}
+
+.padding-left-m {
+  padding-left: $m-size;
+}
+
+.padding-left-l {
+  padding-left: $l-size;
+}
+
+.padding-left-xl {
+  padding-left: $xl-size;
+}
+
+.padding-left-xxl {
+  padding-left: $xxl-size;
+}
+
+.padding-right-s {
+  padding-right: $s-size;
+}
+
+.padding-right-m {
+  padding-right: $m-size;
+}
+
+.padding-right-l {
+  padding-right: $l-size;
+}
+
+.padding-right-xl {
+  padding-right: $xl-size;
+}
+
+.padding-right-xxl {
+  padding-right: $xxl-size;
+}
+
+.margin-left-s {
+  margin-left: $s-size;
+}
+
+.margin-left-m {
+  margin-left: $m-size;
+}
+
+.margin-left-l {
+  margin-left: $l-size;
+}
+
+.margin-left-xl {
+  margin-left: $xl-size;
+}
+
+.margin-left-xxl {
+  margin-left: $xxl-size;
+}
+
+.margin-right-s {
+  margin-right: $s-size;
+}
+
+.margin-right-m {
+  margin-right: $m-size;
+}
+
+.margin-right-l {
+  margin-right: $l-size;
+}
+
+.margin-right-xl {
+  margin-right: $xl-size;
+}
+
+.margin-right-xxl {
+  margin-right: $xxl-size;
+}
+
+.flex-justify-end {
+  display: flex;
+  justify-content: flex-end;
 }

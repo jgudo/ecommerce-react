@@ -28,7 +28,7 @@ const PrivateRoute = ({
           </>
         ) : isAuthenticated && userType === 'admin'
         ? <Redirect to="/dashboard" />
-        :  <Redirect to="/" />
+        :  <Redirect to="/signin" />
       )}
   />
 );

@@ -97,7 +97,7 @@
   padding: $m-size $s-size;
 }
 
-// PRODUCT MODAL --------------------------
+// PRODUCT MODAL -------------------------------------------------
 
 .product-modal {
   display: flex;
@@ -122,4 +122,29 @@
 .product-modal-action {
   display: flex;
   margin-top: $m-size;
+}
+
+// PRODUCT FORM --------------------
+
+.product-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: $s-size;
+}
+
+.product-form-field {
+}
+
+.product-textarea {
+  grid-row: span 2;
+  padding-bottom: $xl-size;
+  
+  textarea { 
+    height: 100%;
+  }
+}
+
+.product-form-submit {
+  // grid-column-start: 2;
 }

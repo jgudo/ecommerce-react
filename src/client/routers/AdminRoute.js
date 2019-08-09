@@ -2,11 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
+import AdminNavigation from '../components/admin/dashboard/components/Navigation';
+import SideNavigation from '../components/admin/dashboard/components/SideNavigation'
+
 const AdminRoute = ({ isAuth, component: Component, ...rest }) => (
   <Route 
       {...rest} 
       component={props => (
-        isAuth ? <Component {...props} /> : <Redirect to="/" /> 
+        isAuth ? (
+          <>
+            <AdminNavigation />
+            <main className="content-admin">
+              <SideNavigation />
+              <div className="content-admin-wrapper">
+                <Component {...props} />
+              </div>
+            </main>
+          </>
+        ) : <Redirect to="/" /> 
       )}
   />
 );

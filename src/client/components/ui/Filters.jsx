@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { 
-  setBrandFilter, 
-  setMinPriceFilter, 
-  setMaxPriceFilter,
-  resetFilter,
-  applyFilter 
-} from '../../actions/filterActions';
+import { resetFilter, applyFilter } from '../../actions/filterActions';
 import { selectMax, selectMin } from '../../selectors/selector';
 
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
   const { 
-    // dispatchSetBrandFilter, 
-    // dispatchSetMaxPriceFilter, 
-    // dispatchSetMinPriceFilter, 
     dispatchResetFilter,
     dispatchApplyFilter,
     max, 
@@ -27,21 +18,18 @@ const Filters = (props) => {
   const [minPriceFilter, setMinPriceState] = useState(filter.minPrice);
   const [maxPriceFilter, setMaxPriceState] = useState(filter.maxPrice);
 
-  const onMinPriceChange = async (val) => {
+  const onMinPriceChange = (val) => {
     setMinPriceState(val);
-    // await dispatchSetMinPriceFilter(val);
   };
 
-  const onMaxPriceChange = async (val) => {
+  const onMaxPriceChange = (val) => {
     setMaxPriceState(val);
-    // await dispatchSetMaxPriceFilter(val);
   };
 
   const onBrandFilterChange = (e) => {
     const val = e.target.value;
 
     setBrandState(val);
-    // dispatchSetBrandFilter(val);
   };
 
   const onApplyFilter = () => {
@@ -105,9 +93,6 @@ const mapStateToProps = ({ products, filter }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchSetBrandFilter: brand => dispatch(setBrandFilter(brand)),
-  dispatchSetMinPriceFilter: min => dispatch(setMinPriceFilter(min)),
-  dispatchSetMaxPriceFilter: max => dispatch(setMaxPriceFilter(max)),
   dispatchResetFilter: () => dispatch(resetFilter()),
   dispatchApplyFilter: filters => dispatch(applyFilter(filters))
 });

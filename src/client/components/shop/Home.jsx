@@ -5,7 +5,7 @@ import SearchBar from '../ui/SearchBar';
 import Sidebar from '../ui/Sidebar';
 import Modal from '../ui/Modal';
 
-import { displayMoney } from '../../helpers/utils';
+import ProductAppliedFilters from '../product/ProductAppliedFilters';
 import ProductModalDetails from '../product/ProductModalDetails';
 
 const Home = () => {
@@ -57,22 +57,7 @@ const Home = () => {
                   <SearchBar />
                 </div>
               </div>
-              <div className="product-applied-filters">
-                {((filter.keyword || filter.brand || !!filter.minPrice || !!filter.maxPrice) && products.length >= 1) && (
-                    <>
-                      <span>Applied filters:</span> &nbsp;
-                      {filter.keyword && (<span>Keyword: <mark>{filter.keyword}</mark>&nbsp;</span>)}
-                      {filter.brand && (<span>Brand: <mark>{filter.brand}</mark>&nbsp;</span>)}
-                      {(!!filter.minPrice || !!filter.maxPrice) && (
-                        <span>
-                          Price Range: &nbsp;
-                          <mark>{displayMoney(filter.minPrice)}&nbsp;-&nbsp;{displayMoney(filter.maxPrice)}</mark>
-                          &nbsp;
-                        </span>
-                      )}
-                    </>
-                )}
-              </div>
+              <ProductAppliedFilters products={products} filter={filter} />
               <div className="product-list">
                 {products.map(product => (
                   <ProductClient 
@@ -90,25 +75,6 @@ const Home = () => {
                 <div className="product-list-empty">
                   <h4>There are no items found</h4>
                   <span>Try using correct filters and keyword</span>
-
-                  <div className="product-list-empty-filters">
-                    {filter.keyword && (
-                      <p>Keyword used: <mark><strong>{filter.keyword}</strong></mark></p>
-                    )}
-                    {filter.brand && (
-                      <p>
-                        Brand: <mark><strong>{filter.brand}</strong></mark>
-                      </p>
-                    )}
-                    {(!!filter.minPrice || !!filter.maxPrice) && (
-                      <p>
-                        Price Range: &nbsp;
-                        <mark><strong>{displayMoney(filter.minPrice)}</strong></mark>
-                        &nbsp;—&nbsp; 
-                        <mark><strong>{displayMoney(filter.maxPrice)}</strong></mark>
-                      </p>
-                    )}
-                  </div>
                 </div>
               )}
             </>

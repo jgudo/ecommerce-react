@@ -1,0 +1,27 @@
+.signin {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.signin-wrapper {
+  width: 350px;
+  height: auto;
+  border: 1px solid $border-color;
+  padding: $m-size;
+}
+
+.signin-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.signin-message {
+  display: flex;
+  align-items: center;
+  padding: $s-size;
+}
+
+.signin-info {
+  flex-grow: 1;
+}

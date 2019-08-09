@@ -3,15 +3,17 @@ input {
   background: transparent;
   font-size: $font-small !important;
   padding: 5px $m-size !important;
+  box-shadow: 0;
+  outline: 0;
 
   &:focus {
     outline: none;
+    border: 1px solid $border-color-focus !important;
   }
 }
 
-input {
-  box-shadow: 0;
-  outline: 0;
+input::-webkit-input-placeholder {
+  opacity: .7;
 }
 
 input[type=number] {
