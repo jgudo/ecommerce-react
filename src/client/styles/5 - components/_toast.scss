@@ -1,0 +1,29 @@
+.toast {
+  position: fixed;
+  bottom: $s-size;
+  left: $s-size;
+  background: $white;
+  animation: slideIn 3s ease;
+  padding: $s-size $m-size;
+  border: 1px solid $border-color-focus;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+}
+
+.toast-msg {
+  font-weight: bold;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-120%);
+  }
+  20% {
+    transform: translateX(0);
+  }
+  90% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}

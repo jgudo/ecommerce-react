@@ -1,71 +1,42 @@
-.product-admin {
-  // display: flex;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  align-items: center;
+.item {
   position: relative;
-  padding: 0 $s-size;
+  padding: $s-size;
   border: 1px solid transparent;
-
-  &:hover {
-    border: 1px solid $border-color-focus;
-  }
-
+  
   &:nth-child(even) {
     background: $white;
   }
+  
+  &:hover {
+    border: 1px solid $border-color-focus;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, .1);
+    z-index: 1;
+  }
 }
 
-.product-admin-header {
+.item-products {
+  padding: 0;
+}
+
+.item:hover > .item-action {
   display: flex;
-  align-items: center;
-  padding: 0 $s-size;
-  border-bottom: 1px solid $border-color;
 }
 
-.product-admin-header-title {
-  flex-grow: 1;
-}
-
-.product-admin-img {
-  width: 80px;
-  // height: 100px;
-  object-fit: contain;
-}
-
-.product-admin-table {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  align-items: center;
-  padding: 0 $s-size;
-}
-
-.product-admin-filter {
-  position: relative;
-  z-index: map-get($z-index, 'filter');
-  margin-right: $s-size;
-}
-
-.product-admin-filter-wrapper {
-  width: 250px;
-  padding: $m-size;
+.item-action {
   position: absolute;
+  right: 0;
   top: 0;
-  right: 100%;
+  bottom: 0;
+  padding: $s-size;
   background: $white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   display: none;
 }
 
-.product-admin-filter:hover > .product-admin-filter-wrapper {
-  display: block;
-}
-
-.item-col-action {
-  position: relative;
-}
-
-.item-col-action-confirm {
+.item-action-confirm {
   width: 350px;
   height: 100%;
   display: flex;
@@ -83,24 +54,28 @@
   }
 }
 
-.product-active {
-  border: 1px solid $black;
-  
-  &:hover {
-    border: 1px solid $black;
-  }
+.item-active {
+  border: 1px solid $border-color;
 }
 
-.product-active:after {
+.item-active:after {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, .3), #fff);
+  background: linear-gradient(45deg, rgba(255, 255, 255, .3), $white 90%);
 }
 
-.product-active .item-col-action-confirm {
+.item-active .item-action-confirm,
+.item-active .item-action {
   display: flex;
+}
+
+.item-img {
+  width: 80px;
+  height: 50px;
+  object-fit: contain;
+  margin-left: $s-size;
 }

@@ -1,0 +1,11 @@
+export const HOME = '/';
+export const PROFILE = '/profile';
+export const DASHBOARD = '/dashboard';
+export const DASHBOARD_PRODUCTS = '/dashboard/products';
+export const DASHBOARD_USERS = '/dashboard/users';
+export const ADD_PRODUCT = '/dashboard/add';
+export const EDIT_PRODUCT = '/dashboard/edit/:id';
+export const SIGNIN = '/signin';
+export const SIGNOUT = '/signout';
+export const SIGNUP = '/signup';
+export const CHECKOUT = '/checkout';

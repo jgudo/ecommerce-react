@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { editProduct } from '../../actions/productActions';
+import { displayActionMessage } from '../../helpers/utils';
 import ProductForm from './ProductForm';
 
 const EditProduct = (props) => {
   const onSubmitForm = (updates) => {
     props.dispatchEditProduct(updates);
     props.history.push('/dashboard/products');
+    displayActionMessage('Item successfully edited');
   };
 
   return (

@@ -5,7 +5,7 @@ const initState = {
   type: 'admin'
 };
 
-export default (state = initState, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case SIGNIN:
       return {

@@ -1,9 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 
 import ClientRoute from './ClientRoute';
 import AdminRoute from './AdminRoute';
 import PublicRoute from './PublicRoute';
+
+import * as ROUTES from '../constants/routes';
 
 // components
 import Dashboard from '../components/admin/dashboard/Dashboard'; // Dashboard
@@ -18,22 +20,54 @@ import Home from '../components/shop/Home';
 import CheckOut from '../components/payment/CheckOut';
 
 const AppRouter = () => (
-    <BrowserRouter>
-        <>
-            <Switch>
-                <PublicRoute path="/" component={Home} exact/>
-                <AdminRoute path="/dashboard" component={Dashboard} exact/>
-                <AdminRoute path="/dashboard/products" component={DashboardProducts} />
-                <AdminRoute path="/dashboard/users" component={DashboardUsers} />
-                <AdminRoute path="/dashboard/add" component={AddProduct} />
-                <AdminRoute path="/edit/:id" component={EditProduct} />
-                <PublicRoute path="/signup" component={SignUp} />
-                <PublicRoute path="/signin" component={SignIn} />
-                <ClientRoute path="/profile" component={UserProfile} />
-                <ClientRoute path="/checkout" component={CheckOut} />
-            </Switch>
-        </>
-    </BrowserRouter>
+  <BrowserRouter>
+    <>
+      <Switch>
+        <PublicRoute 
+            component={Home} 
+            exact
+            path={ROUTES.HOME} 
+        />
+        <AdminRoute 
+            component={Dashboard} 
+            exact
+            path={ROUTES.DASHBOARD} 
+        />
+        <AdminRoute 
+            component={DashboardProducts} 
+            path={ROUTES.DASHBOARD_PRODUCTS} 
+        />
+        <AdminRoute 
+            component={DashboardUsers} 
+            path={ROUTES.DASHBOARD_USERS} 
+        />
+        <AdminRoute 
+            component={AddProduct} 
+            path={ROUTES.ADD_PRODUCT} 
+        />
+        <AdminRoute 
+            component={EditProduct} 
+            path={ROUTES.EDIT_PRODUCT} 
+        />
+        <PublicRoute 
+            component={SignUp} 
+            path={ROUTES.SIGNUP} 
+        />
+        <PublicRoute 
+            component={SignIn} 
+            path={ROUTES.SIGNIN} 
+        />
+        <ClientRoute 
+            component={UserProfile} 
+            path={ROUTES.PROFILE} 
+        />
+        <ClientRoute 
+            component={CheckOut} 
+            path={ROUTES.CHECKOUT} 
+        />
+      </Switch>
+    </>
+  </BrowserRouter>
 );
 
 export default AppRouter;

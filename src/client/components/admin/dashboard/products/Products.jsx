@@ -42,25 +42,22 @@ const Products = (props) => {
             </div>
             <ProductAppliedFilters products={products} filter={filter}/>
             {products.length > 0 ? (
-              <div className="product-admin-table">
-                <div className="product-col-img" />
-                <div className="product-col-name">
+              <div className="grid grid-product grid-count-6">
+                <div className="grid-col" />
+                <div className="grid-col">
                   <h5>Name</h5>
                 </div>
-                <div className="product-col-brand">
+                <div className="grid-col">
                   <h5>Brand</h5>
                 </div>
-                <div className="product-col-price">
+                <div className="grid-col">
                   <h5>Price</h5>
                 </div>
-                <div className="product-col-date">
+                <div className="grid-col">
                   <h5>Date Added</h5>
                 </div>
-                <div className="product-col-maxquantity">
+                <div className="grid-col">
                   <h5>Qty</h5>
-                </div>
-                <div className="product-col-action">
-                  <h5>Action</h5>
                 </div>
               </div>
             ) : (

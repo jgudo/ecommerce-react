@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addToBasket, removeFromBasket } from '../../actions/basketActions';
+import { displayActionMessage } from '../../helpers/utils';
 
 const ProductItem = (props) => {
   const { 
@@ -14,7 +15,13 @@ const ProductItem = (props) => {
   };
 
   const onAddToBasket = () => {
-    foundOnBasket() ? dispatchRemoveFromBasket(product.id) : dispatchAddToBasket(product);
+    if (foundOnBasket()) {
+      dispatchRemoveFromBasket(product.id);
+      displayActionMessage('Item removed from basket');
+    } else {
+      dispatchAddToBasket(product);
+      displayActionMessage('Item added to basket');
+    }
   };
 
   return props.children({

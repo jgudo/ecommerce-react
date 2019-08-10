@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signOut } from '../../../../actions/authActions';
 
-const AdminNavigation = ({ dispatchSignOut }) => {
+import SignOut from '../../../auth/SignOut';
+
+const AdminNavigation = () => {
   return (
     <nav className="navigation background-dark padding-left-l">
       <div className="logo">
@@ -13,20 +13,20 @@ const AdminNavigation = ({ dispatchSignOut }) => {
       </div>
       <ul className="navigation-menu">
         <li className="navigation-menu-item">
-          <button 
-              className="button button-small color-light"
-              onClick={dispatchSignOut}
-          >
-            Sign Out
-          </button>
+          <SignOut>
+           {({ onSignOut }) => (
+               <button 
+                    className="button button-small color-light"
+                    onClick={onSignOut}
+                >
+                  Sign Out
+                </button>
+           )} 
+          </SignOut>
         </li>
       </ul>
     </nav>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  dispatchSignOut: () => dispatch(signOut())
-});
-
-export default connect(undefined, mapDispatchToProps)(AdminNavigation);
+export default AdminNavigation;

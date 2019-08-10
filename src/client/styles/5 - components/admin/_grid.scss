@@ -1,0 +1,42 @@
+.grid {
+  align-items: center;
+  position: relative;
+  // border: 1px solid transparent;
+}
+
+.grid-col {
+  position: relative;
+}
+
+.product-admin-header {
+  display: flex;
+  align-items: center;
+  padding: 0 $s-size;
+  border-bottom: 1px solid $border-color;
+}
+
+.product-admin-header-title {
+  flex-grow: 1;
+}
+
+.product-admin-filter {
+  position: relative;
+  z-index: map-get($z-index, 'filter');
+  margin-right: $s-size;
+}
+
+.product-admin-filter-wrapper {
+  width: 250px;
+  padding: $m-size;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  background: $white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+  display: none;
+}
+
+.product-admin-filter:hover > .product-admin-filter-wrapper {
+  display: block;
+}
+

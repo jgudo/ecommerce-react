@@ -5,19 +5,8 @@ import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import UserNav from '../user/UserNav';
 
-import { signOut } from '../../actions/authActions';
-import { clearBasket } from '../../actions/basketActions';
-import { clearProfile } from '../../actions/profileActions';
-
 const Navigation = (props) => {
-  const { 
-    basket, 
-    profile, 
-    isAuth, 
-    dispatchSignOut,
-    dispatchClearBasket,
-    dispatchClearProfile 
-  } = props;
+  const { basket, profile, isAuth } = props;
   const navbar = useRef(null);
 
   document.addEventListener('scroll', () => {
@@ -29,13 +18,6 @@ const Navigation = (props) => {
       }
     }
   });
-
-  const onSignOut = () => {
-    dispatchSignOut();
-    dispatchClearBasket();
-    dispatchClearProfile();
-    props.history.push('/signin');
-  };
 
   return (
     <nav 
@@ -68,7 +50,7 @@ const Navigation = (props) => {
         </li>
         {isAuth ? (
           <li className="navigation-menu-item">
-            <UserNav profile={profile} onSignOut={onSignOut}/>
+            <UserNav profile={profile} />
           </li>
         ) : document.location.pathname !== '/signin' ? (
           <li className="navigation-menu-item">
@@ -94,10 +76,4 @@ const mapStateToProps = ({ basket, profile, auth }) => ({
   isAuth: !!auth.id && !!auth.type
 });
 
-const mapDispatchToProps = dispatch => ({
-  dispatchSignOut: () => dispatch(signOut()),
-  dispatchClearBasket: () => dispatch(clearBasket()),
-  dispatchClearProfile: () => dispatch(clearProfile())
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));
+export default withRouter(connect(mapStateToProps)(Navigation));

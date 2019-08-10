@@ -130,3 +130,15 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.grid-count-4 {
+  display: grid;
+  grid-gap: $s-size;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-count-6 {
+  display: grid;
+  grid-gap: $s-size;
+  grid-template-columns: repeat(6, 1fr);
+}

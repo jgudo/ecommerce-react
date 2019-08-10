@@ -45,10 +45,13 @@
 @import './5 - components/modal';
 @import './5 - components/signup';
 @import './5 - components/signin';
+@import './5 - components/toast';
 
 // -- Admin components
+@import './5 - components/admin/grid';
 @import './5 - components/admin/product';
 @import './5 - components/sidenavigation';
+// @import './5 - components/admin/user';
 
 // -- Profile components
 @import './5 - components/profile/usernav';

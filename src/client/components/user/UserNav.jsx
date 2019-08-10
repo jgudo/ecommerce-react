@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
+import SignOut from '../auth/SignOut';
 
-const UserNav = ({ profile, onSignOut }) => (
+const UserNav = ({ profile }) => (
   <div className="user-nav">
     <h5>{profile.firstname}</h5>
     <div className="user-nav-img-wrapper">
@@ -18,12 +19,16 @@ const UserNav = ({ profile, onSignOut }) => (
       >
         View Profile
       </Link>
-      <span 
-          className="user-nav-sub-link"
-          onClick={onSignOut}
-      >
-        <strong>Logout</strong>
-      </span>
+      <SignOut>
+        {({ onSignOut }) => (
+          <span 
+              className="user-nav-sub-link"
+              onClick={onSignOut}
+          >
+            <strong>Logout</strong>
+          </span>
+        )}
+      </SignOut>
     </div>
   </div>
 );

@@ -15,3 +15,20 @@ export const displayMoney = (n) => {
   // or use toLocaleString()
   return format.format(n);
 };
+
+export const displayActionMessage = (msg) => {
+  const div = document.createElement('div');
+  const span = document.createElement('span');
+
+  div.className = 'toast';
+  span.className = 'toast-msg';
+
+  span.textContent = msg;
+  div.appendChild(span);
+
+  document.body.appendChild(div);
+
+  setTimeout(() => {
+    document.body.removeChild(div);
+  }, 3000);
+};

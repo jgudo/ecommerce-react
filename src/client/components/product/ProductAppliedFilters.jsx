@@ -5,7 +5,7 @@ const ProductAppliedFilters = ({ products, filter }) => (
   <div className="product-applied-filters">
     {((filter.keyword || filter.brand || !!filter.minPrice || !!filter.maxPrice)) && (
         <>
-          <span>Applied filters:</span> &nbsp;
+          <span>Applied filters: [</span> &nbsp;
           {filter.keyword && (<span>Keyword: <mark>{filter.keyword}</mark>&nbsp;</span>)}
           {filter.brand && (<span>Brand: <mark>{filter.brand}</mark>&nbsp;</span>)}
           {(!!filter.minPrice || !!filter.maxPrice) && (
@@ -15,6 +15,7 @@ const ProductAppliedFilters = ({ products, filter }) => (
               &nbsp;
             </span>
           )}
+          <span>]</span>
         </>
     )}
   </div>

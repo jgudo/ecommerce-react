@@ -1,6 +1,18 @@
 import { ADD_USER, EDIT_USER, DELETE_USER } from '../constants/constants';
 
-export default (state = [], action) => {
+const initState = [
+  {
+    firstname: 'Gago',
+    lastname: 'Ka',
+    email: 'gagoka@mail.com',
+    password: 'gagooo',
+    avatar: '',
+    banner: '',
+    dateJoined: 0
+  }
+];
+
+export default (state = initState, action) => {
   switch (action.type) {
     case ADD_USER:
       return [...state, action.payload];

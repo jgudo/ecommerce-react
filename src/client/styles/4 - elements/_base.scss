@@ -13,6 +13,7 @@ body {
   font-family: 'Tajawal', Helvetica, Arial, sans-serif;
   font-size: $baseFontSize;
   background: $background-color;
+  overflow-x: hidden;
 }
 
 button:hover {

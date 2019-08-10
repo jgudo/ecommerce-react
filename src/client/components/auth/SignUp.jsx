@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from '../ui/Button';
 
 class SignUp extends Component {
   state = {
@@ -72,7 +71,7 @@ class SignUp extends Component {
     const regex = /[A-Z\W]/;
 
     if (val === '') {
-      this.setState({ error: { ...this.state.error, password: 'Password name is required' } });
+      this.setState({ error: { ...this.state.error, password: 'Password is required' } });
     } else if (val.length < 8) {
       this.setState({ error: { ...this.state.error, password: 'Password should be 8 characters long' } });
     } else if (!regex.test(val)) {
@@ -87,7 +86,14 @@ class SignUp extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
-  }
+    const { error } = this.state;
+    const isError = Object.keys(error).some(field => error[field] !== '') 
+      || Object.keys(this.state).some(field => this.state[field] === '');
+
+    if (!isError) {
+      // submit
+    } 
+  } 
 
   errorClassName = (field) => {
     return this.state.error[field] ? 'input-error' : '';
@@ -142,11 +148,11 @@ class SignUp extends Component {
             </div>
             <br/>
             <div className="signup-field signup-action">
-              <Button
+              <button
                   className="button"
               >
                 Sign Up
-              </Button>
+              </button>
             </div>
           </form>
         </div>
