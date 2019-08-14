@@ -56,7 +56,7 @@ const Navigation = (props) => {
           <li className="navigation-menu-item">
             <NavLink 
                 activeClassName="navigation-menu-active"
-                className="navigation-menu-link button-border button-border-gray margin-left-xxl"
+                className="navigation-menu-button button-border button-border-gray margin-left-xxl"
                 exact
                 to="/signin" 
             >

@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
+import { signUp } from '../../actions/authActions';
+
+import CircularProgress from '../ui/CircularProgress';
 
 class SignUp extends Component {
   state = {
@@ -86,12 +90,17 @@ class SignUp extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
-    const { error } = this.state;
+    const { firstname, lastname, email, password, error } = this.state;
     const isError = Object.keys(error).some(field => error[field] !== '') 
       || Object.keys(this.state).some(field => this.state[field] === '');
 
     if (!isError) {
-      // submit
+      this.props.dispatchSignUp({
+        firstname,
+        lastname,
+        email,
+        password
+      });
     } 
   } 
 
@@ -101,8 +110,11 @@ class SignUp extends Component {
 
   render() {
     const { error } = this.state;
+    const { loading, status } = this.props;
+
     return (
       <div className="signup">
+        {status && <strong><span className="input-message text-center padding-s">{status}</span></strong>}
         <div className="signup-wrapper">
           <h3>Sign up to Salinaka</h3>
           <form onSubmit={this.onFormSubmit}>
@@ -113,6 +125,8 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('firstname')}`}
                   onKeyUp={this.onFirstnameInput}
                   placeholder="First Name"
+                  readOnly={loading}
+                  style={{ textTransform: 'capitalize' }}
                   type="text" 
               />
             </div>
@@ -123,6 +137,8 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('lastname')}`}
                   onInput={this.onLastNameInput}
                   placeholder="Last Name" 
+                  readOnly={loading}
+                  style={{ textTransform: 'capitalize' }}
                   type="text"
               />
             </div>
@@ -133,6 +149,7 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('email')}`}
                   onInput={this.onEmailInput}
                   placeholder="Your Email"
+                  readOnly={loading}
                   type="email" 
               />
             </div>
@@ -143,6 +160,7 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('password')}`}
                   onInput={this.onPasswordInput}
                   placeholder="Password" 
+                  readOnly={loading}
                   type="password"
               />
             </div>
@@ -150,7 +168,9 @@ class SignUp extends Component {
             <div className="signup-field signup-action">
               <button
                   className="button"
+                  disabled={loading}
               >
+                <CircularProgress visible={loading} theme="light" />
                 Sign Up
               </button>
             </div>
@@ -161,4 +181,13 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = ({ auth, app }) => ({
+  loading: app.loading,
+  status: auth.authStatus
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatchSignUp: user => dispatch(signUp(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

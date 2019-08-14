@@ -1,0 +1,22 @@
+.circular-progress-light {
+    width: 15px;
+    height: 15px;
+    margin-left: $s-size;
+    margin-right: $s-size;
+    border-radius: 50%;
+    border-top: 2px solid $white;
+    border-left: 2px solid $white;
+    animation: spin .2s ease infinite;
+}
+
+.circular-progress-dark {
+    @extend .circular-progress-light;
+    border-top: 2px solid $black;
+    border-left: 2px solid $black;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

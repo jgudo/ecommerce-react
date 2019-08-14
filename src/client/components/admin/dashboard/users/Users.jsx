@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { deleteUser } from '../../../../actions/userActions';
-
+import firebase from '../../../../firebase/firebase';
 import UserItem from './UserItem';
 
 const Users = ({ users, dispatchDeleteUser }) => {
+  firebase.createAccount('juliusguevarra101@gmail.com', '09154982243');
   return (
     <>
       <div className="product-admin-header">

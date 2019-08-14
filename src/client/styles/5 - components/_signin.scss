@@ -2,13 +2,15 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .signin-wrapper {
   width: 350px;
   height: auto;
-  border: 1px solid $border-color;
+  border: 1px solid $border-color-focus;
   padding: $m-size;
+  margin: auto;
 }
 
 .signin-action {
@@ -17,9 +19,11 @@
 }
 
 .signin-message {
+  width: 350px;
   display: flex;
   align-items: center;
   padding: $s-size;
+  margin: auto;
 }
 
 .signin-info {

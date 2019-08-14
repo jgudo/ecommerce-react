@@ -35,6 +35,11 @@
   position: relative;
 }
 
+.navigation-menu-button {
+  @extend .navigation-menu-link;
+  text-transform: capitalize;
+}
+
 .navigation-menu-active {
   font-weight: bold;
   text-decoration: underline;

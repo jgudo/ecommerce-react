@@ -17,9 +17,6 @@ input::-webkit-input-placeholder {
 }
 
 input[type=number] {
-  // border: 1px solid #ddd;
-  // text-align: center;
-  // font-size: 1.6em;
   -moz-appearance: textfield;
 }
 input[type=number]::-webkit-outer-spin-button,
@@ -55,7 +52,6 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
-  animate: 0.2s;
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, .2) !important;
   border-radius: 1px;
   box-shadow: none;
@@ -80,7 +76,6 @@ input[type=range]::-moz-range-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
-  animate: 0.2s;
   background: $button-color;
   border-radius: 1px;
   box-shadow: none;
@@ -103,7 +98,6 @@ input[type=range]::-ms-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
-  animate: 0.2s;
   background: transparent;
   border-color: transparent;
   color: transparent;

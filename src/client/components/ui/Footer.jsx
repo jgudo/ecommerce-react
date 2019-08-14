@@ -11,7 +11,7 @@ const Footer = () => (
     </div>
     <div className="footer-col-3">
       <span>
-        Fork this project 
+        Fork this project &nbsp;
         <strong>
           <a href="https://github.com/jgudo/ecommerce-react">here</a>
         </strong>

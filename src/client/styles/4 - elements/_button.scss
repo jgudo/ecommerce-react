@@ -4,11 +4,14 @@
   border: 1px solid $button-color;
   color: $white;
   position: relative;
+  display: flex;
+  align-items: center;
   @include bezier-transition(all, .3s, ease);
 
   &:hover {
     background: $button-hover;
     border: 1px solid $button-hover;
+    text-decoration: none;
   }
 }
 
