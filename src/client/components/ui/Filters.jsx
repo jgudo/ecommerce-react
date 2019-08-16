@@ -11,7 +11,8 @@ const Filters = (props) => {
     dispatchApplyFilter,
     max, 
     min,
-    filter 
+    filter,
+    isLoading 
   } = props;
 
   const [brandFilter, setBrandState] = useState(filter.brand);
@@ -49,6 +50,7 @@ const Filters = (props) => {
         <select 
             className="filters-brand"
             defaultValue={brandFilter || 'Brand'}
+            disabled={isLoading}
             onChange={onBrandFilterChange}
         >
           <option value="">All Brands</option>
@@ -70,12 +72,14 @@ const Filters = (props) => {
       <div className="filters-action">
         <button
             className="filters-button button button-small"
+            disabled={isLoading}
             onClick={onApplyFilter}
         >
           Apply filters
         </button>
         <button
             className="filters-button button button-border button-small"
+            disabled={isLoading}
             onClick={dispatchResetFilter}
         >
           Reset filters
@@ -85,11 +89,12 @@ const Filters = (props) => {
   );
 };
 
-const mapStateToProps = ({ products, filter }) => ({
+const mapStateToProps = ({ products, filter, app }) => ({
   products,
   filter,
   min: selectMin(products),
-  max: selectMax(products)
+  max: selectMax(products),
+  isLoading: app.loading
 });
 
 const mapDispatchToProps = dispatch => ({

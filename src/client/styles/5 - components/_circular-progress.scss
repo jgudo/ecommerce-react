@@ -20,3 +20,12 @@
         transform: rotate(360deg);
     }
 }
+
+.progress-loading {
+    width: 100%;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

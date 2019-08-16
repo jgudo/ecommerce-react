@@ -1,7 +1,8 @@
-import { LOADING } from '../constants/constants';
+import { LOADING, IS_AUTHENTICATING } from '../constants/constants';
 
 const initState = {
   loading: false,
+  isAuthenticating: false,
   theme: 'default'
 };
 
@@ -11,6 +12,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         loading: action.payload
+      };
+    case IS_AUTHENTICATING:
+      return {
+        ...state,
+        isAuthenticating: action.payload
       };
     default:
       return state;

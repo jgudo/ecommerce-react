@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { signIn } from '../../actions/authActions';
+import { signIn, signInWithGoogle, getRedirectResult } from '../../actions/authActions';
 
 import CircularProgress from '../ui/CircularProgress';
 
 const SignIn = (props) => {
-  const { dispatchSignIn, status, loading } = props;
+  const { dispatchSignIn, dispatchSignInWithGoogle, status, isAuthenticating } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorField, setErrorField] = useState({});
@@ -56,54 +56,76 @@ const SignIn = (props) => {
   };
 
   return (
-    <div className="signin">
+    <div className="signin-content">
       {status && <strong><span className="input-message text-center padding-s">{status}</span></strong>}
-      <div className="signin-wrapper">
-        <h3>Sign in to Salinaka</h3>
-        {errorField.auth && <span className="input-message">{errorField.auth}</span>}
-        <form onSubmit={onSubmitForm}>
-          <div className="signin-field">
-            {errorField.email && <span className="input-message">{errorField.email}</span>}
-            <span className="d-block padding-s">Email</span>
-            <input 
-                className={`input-form d-block ${errorClassName('email')}`}
-                onChange={onEmailInput}
-                placeholder="test@example.com"
-                readOnly={loading}
-                type="email"
-            />
+      <div className="signin">
+        <div className="signin-main">
+          <div className="signin-wrapper">
+            <h3>Sign in to Salinaka</h3>
+            {errorField.auth && <span className="input-message">{errorField.auth}</span>}
+            <form onSubmit={onSubmitForm}>
+              <div className="signin-field">
+                {errorField.email && <span className="input-message">{errorField.email}</span>}
+                <span className="d-block padding-s">Email</span>
+                <input 
+                    className={`input-form d-block ${errorClassName('email')}`}
+                    onChange={onEmailInput}
+                    placeholder="test@example.com"
+                    readOnly={isAuthenticating}
+                    type="email"
+                />
+              </div>
+              <div className="signin-field">
+                {errorField.password && <span className="input-message">{errorField.password}</span>}
+                <span className="d-block padding-s">Password</span>
+                <input 
+                    className={`input-form d-block ${errorClassName('password')}`}
+                    onChange={onPasswordInput}
+                    placeholder="Your Password"
+                    readOnly={isAuthenticating}
+                    type="password"
+                />
+              </div>
+              <br/>
+              <div className="signin-field signin-action">
+                <button
+                    className="button"
+                    disabled={isAuthenticating}
+                    type="submit"
+                >
+                  <CircularProgress visible={isAuthenticating} theme="light" />
+                  {isAuthenticating ? 'Signing In' : 'Sign In'}
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="signin-field">
-            {errorField.password && <span className="input-message">{errorField.password}</span>}
-            <span className="d-block padding-s">Password</span>
-            <input 
-                className={`input-form d-block ${errorClassName('password')}`}
-                onChange={onPasswordInput}
-                placeholder="Your Password"
-                readOnly={loading}
-                type="password"
-            />
-          </div>
-          <br/>
-          <div className="signin-field signin-action">
-            <button
-                className="button"
-                disabled={loading}
-                type="submit"
-            >
-              <CircularProgress visible={loading} theme="light" />
-              Sign In
-            </button>
-          </div>
-        </form>
+        </div>
+        <div className="signin-divider">
+          <h6>OR</h6>
+        </div>
+        <div className="signin-provider">
+          <button
+              className="signin-provider-button provider-facebook"
+              disabled={isAuthenticating}
+          >
+            Sign in with Facebook
+          </button>
+          <button
+              className="signin-provider-button provider-google"
+              disabled={isAuthenticating}
+              onClick={dispatchSignInWithGoogle}
+          >
+            Sign in with Google
+          </button>
+        </div>
       </div>
       <div className="signin-message">
         <span className="signin-info">
           <strong>Don't have an account?</strong>
         </span>
         <button 
-            className="button button-border button-border-gray"
-            disabled={loading}
+            className="button button-small button-border button-border-gray"
+            disabled={isAuthenticating}
             onClick={onSignUp}
         >
           Sign Up
@@ -115,11 +137,12 @@ const SignIn = (props) => {
 
 const mapStateToProps = ({ auth, app }) => ({
   status: auth.authStatus,
-  loading: app.loading
+  isAuthenticating: app.isAuthenticating
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchSignIn: (email, password) => dispatch(signIn(email, password))
+  dispatchSignIn: (email, password) => dispatch(signIn(email, password)),
+  dispatchSignInWithGoogle: () => dispatch(signInWithGoogle())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));

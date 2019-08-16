@@ -5,6 +5,9 @@ import banner from '../../../static/banner.jpg';
 const initState = {
   firstname: 'Pedro',
   lastname: 'Juan',
+  email: 'juanpedro@gmail.com',
+  address: '',
+  mobile: '09264546942',
   avatar: profile,
   banner
 };

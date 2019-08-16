@@ -8,6 +8,7 @@
   z-index: map-get($z-index, navigation);
   position: fixed;
   top: 0;
+  @include bezier-transition(all, .3s, ease);
 }
 
 .navigation-menu {
@@ -33,11 +34,6 @@
   text-transform: uppercase;
   font-weight: bold;
   position: relative;
-}
-
-.navigation-menu-button {
-  @extend .navigation-menu-link;
-  text-transform: capitalize;
 }
 
 .navigation-menu-active {

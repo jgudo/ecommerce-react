@@ -1,0 +1,13 @@
+label {
+    font-size: $font-small;
+    font-weight: bold;
+    background: $border-color;
+    border: 1px solid $border-color-focus;
+    padding: $s-size $m-size;
+    display: inline-block;
+
+    &:hover {
+        cursor: pointer;
+        background: $border-color-focus;
+    }
+}

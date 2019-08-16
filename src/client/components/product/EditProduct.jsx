@@ -1,31 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { editProduct } from '../../actions/productActions';
-import { displayActionMessage } from '../../helpers/utils';
 import ProductForm from './ProductForm';
 
 const EditProduct = (props) => {
   const onSubmitForm = (updates) => {
-    props.dispatchEditProduct(updates);
-    props.history.push('/dashboard/products');
-    displayActionMessage('Item successfully edited');
+    props.dispatchEditProduct(props.product.id, updates);
   };
 
   return (
     <>
+      {!props.product && <Redirect to="/dashboard/products" />}
       <h2>Edit Product</h2>
-      <ProductForm product={props.product} onSubmit={onSubmitForm}/>
+      <ProductForm 
+          isLoading={props.isLoading}
+          onSubmit={onSubmitForm}
+          product={props.product} 
+      />
     </>
   );
 };
 
-const mapStateToProps = ({ products }, props) => ({
-  product: products.find(product => product.id === props.match.params.id)
+const mapStateToProps = ({ products, app }, props) => ({
+  product: products.find(product => product.id === props.match.params.id),
+  isLoading: app.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchEditProduct: updates => dispatch(editProduct(updates))
+  dispatchEditProduct: (id, updates) => dispatch(editProduct(id, updates))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditProduct));

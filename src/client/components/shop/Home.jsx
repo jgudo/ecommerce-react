@@ -4,6 +4,7 @@ import ProductClient from '../product/ProductClient';
 import SearchBar from '../ui/SearchBar';
 import Sidebar from '../ui/Sidebar';
 import Modal from '../ui/Modal';
+import CircularProgress from '../ui/CircularProgress';
 
 import ProductAppliedFilters from '../product/ProductAppliedFilters';
 import ProductModalDetails from '../product/ProductModalDetails';
@@ -44,7 +45,7 @@ const Home = () => {
       <Sidebar />
       <section className="product-list-wrapper">
         <ProductList>
-          {({ products, basket, removeFromBasket, filter, addToBasket }) => (
+          {({ products, basket, removeFromBasket, filter, addToBasket, isLoading }) => (
             <>
               <div className="product-list-header">
                 <h2 className="product-list-title">
@@ -71,10 +72,17 @@ const Home = () => {
                   />
                 ))}
               </div>
-              {products.length === 0 && (
+              {(products.length === 0 && !isLoading) && (
                 <div className="product-list-empty">
                   <h4>There are no items found</h4>
                   <span>Try using correct filters and keyword</span>
+                </div>
+              )}
+              {(products.length === 0 && isLoading) && (
+                <div className="progress-loading">
+                  <CircularProgress visible={isLoading} theme="dark" />
+                  <br/>
+                  <h5>Fetching products, please wait</h5>
                 </div>
               )}
             </>

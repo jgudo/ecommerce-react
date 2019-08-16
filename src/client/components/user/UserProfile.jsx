@@ -19,6 +19,23 @@ const UserProfile = ({ profile }) => {
         </div>
         <div className="user-profile-details">
           <h2>{`${profile.firstname} ${profile.lastname}`}</h2>
+          <span>Email</span>
+          <br/>
+          <h5>{profile.email}</h5>
+          <span>Address</span>
+          <br />
+          {profile.address ? (
+            <h5>{profile.address}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">Address not set</h5>
+          )}
+          <span>Mobile</span>
+          <br />
+          {profile.mobile ? (
+            <h5>{profile.mobile}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">Mobile not set</h5>
+          )}
         </div>
       </div>
     </div>

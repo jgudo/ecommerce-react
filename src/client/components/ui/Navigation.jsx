@@ -8,13 +8,18 @@ import UserNav from '../user/UserNav';
 const Navigation = (props) => {
   const { basket, profile, isAuth } = props;
   const navbar = useRef(null);
+  const getStyleProperty = (property) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(property);
+  };
 
   document.addEventListener('scroll', () => {
     if (navbar.current) {
       if (window.pageYOffset === 0) {
-        navbar.current.style.background = getComputedStyle(document.documentElement).getPropertyValue('--nav-bg');
+        navbar.current.style.background = getStyleProperty('--nav-bg');
+        navbar.current.style.boxShadow = 'none';
       } else {
-        navbar.current.style.background = getComputedStyle(document.documentElement).getPropertyValue('--nav-bg-scrolled');
+        navbar.current.style.background = getStyleProperty('--nav-bg-scrolled');
+        navbar.current.style.boxShadow = getStyleProperty('--nav-bg-shadow');
       }
     }
   });
@@ -56,7 +61,7 @@ const Navigation = (props) => {
           <li className="navigation-menu-item">
             <NavLink 
                 activeClassName="navigation-menu-active"
-                className="navigation-menu-button button-border button-border-gray margin-left-xxl"
+                className="button button-small margin-left-xxl"
                 exact
                 to="/signin" 
             >

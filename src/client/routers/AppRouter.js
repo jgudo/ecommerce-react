@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { Router, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 import ClientRoute from './ClientRoute';
 import AdminRoute from './AdminRoute';
@@ -19,8 +20,10 @@ import UserProfile from '../components/user/UserProfile';
 import Home from '../components/shop/Home';
 import CheckOut from '../components/payment/CheckOut';
 
+export const history = createBrowserHistory();
+
 const AppRouter = () => (
-  <BrowserRouter>
+  <Router history={history}>
     <>
       <Switch>
         <PublicRoute 
@@ -67,7 +70,7 @@ const AppRouter = () => (
         />
       </Switch>
     </>
-  </BrowserRouter>
+  </Router>
 );
 
 export default AppRouter;

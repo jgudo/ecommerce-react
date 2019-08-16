@@ -6,7 +6,7 @@ const initState = {
   authStatus: null
 };
 
-export default (state = initState, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case SIGNIN_SUCCESS:
       return {

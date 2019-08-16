@@ -5,6 +5,7 @@
 :root {
   --nav-bg: #f8f8f8;
   --nav-bg-scrolled: #fff; 
+  --nav-bg-shadow: 0 5px 10px rgba(0, 0, 0, .02);
 }
 
 $background-color: #f8f8f8;
@@ -28,3 +29,7 @@ $red: rgba(247, 45, 45, 0.986);
 // Buttons
 $button-color: #101010;
 $button-hover: lighten($button-color, 10%);
+
+// Social
+$color-facebook: rgb(19, 84, 182);
+$color-facebook-hover: rgb(15, 70, 153);

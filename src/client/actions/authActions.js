@@ -2,9 +2,10 @@ import {
   SIGNIN, 
   SIGNIN_SUCCESS,
   SIGNUP,
-  SIGNUP_SUCCESS, 
+  ON_AUTHSTATE_CHANGED, 
   SIGNOUT, 
-  SET_AUTH_STATUS 
+  SET_AUTH_STATUS,
+  SIGNIN_WITH_GOOGLE,
 } from '../constants/constants';
 
 export const signIn = (email, password) => ({
@@ -13,6 +14,10 @@ export const signIn = (email, password) => ({
     email,
     password 
   }
+});
+
+export const signInWithGoogle = () => ({
+  type: SIGNIN_WITH_GOOGLE
 });
 
 export const signUp = user => ({
@@ -32,4 +37,8 @@ export const signOut = () => ({
 export const setAuthStatus = status => ({
   type: SET_AUTH_STATUS,
   payload: status
+});
+
+export const onAuthStateChanged = () => ({
+  type: ON_AUTHSTATE_CHANGED
 });

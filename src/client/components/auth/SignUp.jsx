@@ -110,7 +110,7 @@ class SignUp extends Component {
 
   render() {
     const { error } = this.state;
-    const { loading, status } = this.props;
+    const { isAuthenticating, status } = this.props;
 
     return (
       <div className="signup">
@@ -125,7 +125,7 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('firstname')}`}
                   onKeyUp={this.onFirstnameInput}
                   placeholder="First Name"
-                  readOnly={loading}
+                  readOnly={isAuthenticating}
                   style={{ textTransform: 'capitalize' }}
                   type="text" 
               />
@@ -137,7 +137,7 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('lastname')}`}
                   onInput={this.onLastNameInput}
                   placeholder="Last Name" 
-                  readOnly={loading}
+                  readOnly={isAuthenticating}
                   style={{ textTransform: 'capitalize' }}
                   type="text"
               />
@@ -149,7 +149,7 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('email')}`}
                   onInput={this.onEmailInput}
                   placeholder="Your Email"
-                  readOnly={loading}
+                  readOnly={isAuthenticating}
                   type="email" 
               />
             </div>
@@ -160,7 +160,7 @@ class SignUp extends Component {
                   className={`input-form d-block ${this.errorClassName('password')}`}
                   onInput={this.onPasswordInput}
                   placeholder="Password" 
-                  readOnly={loading}
+                  readOnly={isAuthenticating}
                   type="password"
               />
             </div>
@@ -168,10 +168,10 @@ class SignUp extends Component {
             <div className="signup-field signup-action">
               <button
                   className="button"
-                  disabled={loading}
+                  disabled={isAuthenticating}
               >
-                <CircularProgress visible={loading} theme="light" />
-                Sign Up
+                <CircularProgress visible={isAuthenticating} theme="light" />
+                {isAuthenticating ? 'Signing Up' : 'Sign Up'}
               </button>
             </div>
           </form>
@@ -182,7 +182,7 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = ({ auth, app }) => ({
-  loading: app.loading,
+  isAuthenticating: app.isAuthenticating,
   status: auth.authStatus
 });
 

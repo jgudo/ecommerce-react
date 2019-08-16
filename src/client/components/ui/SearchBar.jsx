@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setTextFilter } from '../../actions/filterActions';
 
-const SearchBar = ({ dispatchSetTextFilter }) => {
+const SearchBar = ({ dispatchSetTextFilter, isLoading }) => {
   let input = '';
   const onSubmitSearch = () => {
     dispatchSetTextFilter(input);
@@ -26,10 +26,12 @@ const SearchBar = ({ dispatchSetTextFilter }) => {
           onChange={onSearchChange}
           onKeyUp={onKeyUp}
           placeholder="Search for product"
+          readOnly={isLoading}
           type="text" 
       />
       <button 
           className="button button-small searchbar-button"
+          disabled={isLoading}
           onClick={onSubmitSearch}
       >
         Search
@@ -38,8 +40,12 @@ const SearchBar = ({ dispatchSetTextFilter }) => {
   );
 };
 
+const mapStateToProps = ({ app }) => ({
+  isLoading: app.loading
+});
+
 const mapDispatchToProps = dispatch => ({
   dispatchSetTextFilter: keyword => dispatch(setTextFilter(keyword))
 });
 
-export default connect(undefined, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

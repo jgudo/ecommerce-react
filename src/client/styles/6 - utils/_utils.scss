@@ -6,6 +6,16 @@
   width: 100%;
 }
 
+.d-flex {
+  display: flex;
+}
+
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .background-dark {
   background: $black;
 }
@@ -16,6 +26,10 @@
 
 .text-center {
   text-align: center;
+}
+
+.text-italic {
+  font-style: italic;
 }
 
 .text-overflow-ellipsis {

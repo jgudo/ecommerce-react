@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
+
 import { displayMoney, displayActionMessage } from '../../../../helpers/utils';
 
 const ProductAdmin = (props) => {
@@ -71,17 +72,17 @@ const ProductAdmin = (props) => {
         <div className="item-action-confirm">
           <h5>Are you sure you want to delete this?</h5>
           <button 
-              className="button button-small"
-              onClick={onConfirmDelete}
-          >
-            Yes
-          </button>
-          &nbsp;
-          <button 
               className="button button-small button-border"
               onClick={onCancelDelete}
           >
             No
+          </button>
+          &nbsp;
+          <button 
+              className="button button-small"
+              onClick={onConfirmDelete}
+          >
+            Yes
           </button>
         </div>
       </div>

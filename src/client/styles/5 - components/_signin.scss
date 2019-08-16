@@ -1,16 +1,85 @@
+.signin-content {
+  margin: auto;
+}
+
 .signin {
-  width: 100%;
+  border: 1px solid $border-color-focus;
   display: flex;
   justify-content: center;
+  padding: $l-size;
+}
+
+.signin-main {
+  width: 350px;
+  height: auto;
+}
+
+.signin-provider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
-.signin-wrapper {
-  width: 350px;
-  height: auto;
+.signin-provider-button {
+  display: block;
+  width: 100%;
+  margin: $s-size;
+}
+
+.provider-facebook {
+  @extend .button;
+  background: $color-facebook;
+  color: $white;
+  border: 1px solid $color-facebook;
+  
+  &:hover {
+    background: $color-facebook-hover;
+    border: 1px solid $color-facebook;
+  }
+}
+
+.provider-google {
+  @extend .button;
+  background: $white;
+  color: $paragraph-color-01;
   border: 1px solid $border-color-focus;
-  padding: $m-size;
-  margin: auto;
+
+  &:hover {
+    background: $border-color;
+    border: 1px solid $border-color;
+  }
+}
+
+.signin-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0 $xl-size;
+
+  h6 {
+    background: $background-color;
+    padding: $s-size;
+    z-index: 1;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    height: 30%;
+    width: 1px;
+    background: $border-color;
+  }
+
+  &:before {
+    top: 25%;
+  }
+
+  &:after {
+    bottom: 25%;
+  }
 }
 
 .signin-action {
@@ -19,7 +88,7 @@
 }
 
 .signin-message {
-  width: 350px;
+  width: 250px;
   display: flex;
   align-items: center;
   padding: $s-size;

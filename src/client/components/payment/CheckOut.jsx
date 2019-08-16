@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 const CheckOut = ({ isAuth, basket }) => {
-  // console.log(props);
   return (
     <div>
-      {(!isAuth && basket.length === 0) && (
-          <Redirect to="/signin" />
-      )}
+      {!isAuth ? (
+        <Redirect to="/signin" />
+      ) : basket.length === 0 ? (
+        <Redirect to="/" />
+      ) : null}
       <h1>Check Out</h1>
     </div>
   );

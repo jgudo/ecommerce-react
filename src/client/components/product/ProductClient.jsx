@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../ui/Button';
 import ProductItem from './ProductItem';
+import { displayMoney } from '../../helpers/utils';
 
 const ProductClient = ({ product, onOpenModal, onClickProduct }) => {
   const onClickItem = () => {
@@ -24,7 +25,7 @@ const ProductClient = ({ product, onOpenModal, onClickProduct }) => {
             </div>
             <h5 className="product-card-name">{product.name}</h5>
             <p className="product-card-brand">{product.brand}</p>
-            <h4 className="product-card-price">$ {product.price}</h4>
+            <h4 className="product-card-price">{displayMoney(product.price)}</h4>
           </div>
           <Button 
               className={`product-card-button button button-block ${foundOnBasket() ? 'button-border button-border-gray' : ''}`} 

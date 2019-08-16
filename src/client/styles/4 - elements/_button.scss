@@ -3,9 +3,11 @@
   padding: $s-size $m-size;
   border: 1px solid $button-color;
   color: $white;
+  font-weight: bold;
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   @include bezier-transition(all, .3s, ease);
 
   &:hover {

@@ -4,6 +4,7 @@ import ProductList from '../../../product/ProductList';
 import ProductAdmin from './ProductAdmin';
 import Filters from '../../../ui/Filters';
 import SearchBar from '../../../ui/SearchBar';
+import CircularProgress from '../../../ui/CircularProgress';
 import ProductAppliedFilters from '../../../product/ProductAppliedFilters';
 
 const Products = (props) => {
@@ -14,7 +15,7 @@ const Products = (props) => {
   return (
     <>
       <ProductList>
-        {({ products, filter, removeProduct }) => (
+        {({ products, filter, removeProduct, isLoading }) => (
           <>
             <div className="product-admin-header">
               <h2 className="product-admin-header-title">
@@ -60,10 +61,16 @@ const Products = (props) => {
                   <h5>Qty</h5>
                 </div>
               </div>
-            ) : (
+            ) : products.length === 0 && !isLoading ? (
               <div className="product-list-empty">
                 <h4>There are no items found</h4>
                 <span>Try using correct filters and keyword</span>
+              </div>
+            ) : (
+              <div className="progress-loading">
+                <CircularProgress visible={isLoading} theme="dark" />
+                <br/>
+                <h5>Fetching products, please wait</h5>
               </div>
             )}
             {products.map(product => (

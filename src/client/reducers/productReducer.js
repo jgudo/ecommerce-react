@@ -1,4 +1,9 @@
-import { ADD_PRODUCT, REMOVE_PRODUCT, EDIT_PRODUCT } from '../constants/constants';
+import { 
+  ADD_PRODUCT_SUCCESS, 
+  REMOVE_PRODUCT_SUCCESS, 
+  EDIT_PRODUCT_SUCCESS,
+  GET_PRODUCTS_SUCCESS 
+} from '../constants/constants';
 import img1 from '../../../static/salt-image-1.png';
 import img2 from '../../../static/salt-image-7.png';
 import img3 from '../../../static/salt-image-10.png';
@@ -95,18 +100,20 @@ const initState = [
   }
 ];
 
-export default (state = initState, action) => {
+export default (state = [], action) => {
   switch (action.type) {
-    case ADD_PRODUCT:
+    case GET_PRODUCTS_SUCCESS:
+      return action.payload;
+    case ADD_PRODUCT_SUCCESS:
       return [...state, action.payload];
-    case REMOVE_PRODUCT:
+    case REMOVE_PRODUCT_SUCCESS:
       return state.filter(product => product.id !== action.payload);
-    case EDIT_PRODUCT:
+    case EDIT_PRODUCT_SUCCESS:
       return state.map((product) => {
         if (product.id === action.payload.id) {
           return {
             ...product,
-            ...action.payload
+            ...action.payload.updates
           };
         }
         return product;
