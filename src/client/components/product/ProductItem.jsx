@@ -1,25 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addToBasket, removeFromBasket } from '../../actions/basketActions';
 import { displayActionMessage } from '../../helpers/utils';
 
 const ProductItem = (props) => {
-  const { 
-    product,
-    basket,
-    dispatchAddToBasket,
-    dispatchRemoveFromBasket
-  } = props;
+  const basket = useSelector(state => state.basket);
+  const dispatch = useDispatch();
+  const { product } = props;
+
   const foundOnBasket = () => {
     return !!basket.find(item => item.id === product.id); 
   };
 
   const onAddToBasket = () => {
     if (foundOnBasket()) {
-      dispatchRemoveFromBasket(product.id);
+      dispatch(removeFromBasket(product.id));
       displayActionMessage('Item removed from basket');
     } else {
-      dispatchAddToBasket(product);
+      dispatch(addToBasket(product));
       displayActionMessage('Item added to basket');
     }
   };
@@ -36,13 +34,4 @@ const ProductItem = (props) => {
   });
 };
 
-const mapStateToProps = ({ basket }) => ({
-  basket
-});
-
-const mapDispatchToprops = dispatch => ({
-  dispatchAddToBasket: product => dispatch(addToBasket(product)),
-  dispatchRemoveFromBasket: id => dispatch(removeFromBasket(id))
-});
-
-export default connect(mapStateToProps, mapDispatchToprops)(ProductItem);
+export default ProductItem;

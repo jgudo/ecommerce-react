@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { resetFilter, applyFilter } from '../../actions/filterActions';
 import { selectMax, selectMin } from '../../selectors/selector';
 
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
-  const { 
-    dispatchResetFilter,
-    dispatchApplyFilter,
-    max, 
-    min,
-    filter,
-    isLoading 
-  } = props;
+  const dispatch = useDispatch();
+  const { max, min, filter, isLoading } = useSelector(state => ({
+    max: selectMax(state.products),
+    min: selectMin(state.products),
+    filter: state.filter,
+    isLoading: state.app.loading
+  }));
 
   const [brandFilter, setBrandState] = useState(filter.brand);
   const [minPriceFilter, setMinPriceState] = useState(filter.minPrice);
@@ -34,11 +33,15 @@ const Filters = (props) => {
   };
 
   const onApplyFilter = () => {
-    dispatchApplyFilter({ 
+    dispatch(applyFilter({
       brand: brandFilter,
       minPrice: minPriceFilter,
       maxPrice: maxPriceFilter
-    });
+    }));
+  };
+
+  const onResetFilter = () => {
+    dispatch(resetFilter());
   };
 
   return (
@@ -80,7 +83,7 @@ const Filters = (props) => {
         <button
             className="filters-button button button-border button-small"
             disabled={isLoading}
-            onClick={dispatchResetFilter}
+            onClick={onResetFilter}
         >
           Reset filters
         </button>
@@ -89,17 +92,4 @@ const Filters = (props) => {
   );
 };
 
-const mapStateToProps = ({ products, filter, app }) => ({
-  products,
-  filter,
-  min: selectMin(products),
-  max: selectMax(products),
-  isLoading: app.loading
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatchResetFilter: () => dispatch(resetFilter()),
-  dispatchApplyFilter: filters => dispatch(applyFilter(filters))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filters);
+export default Filters;

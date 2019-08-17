@@ -1,22 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setTextFilter } from '../../actions/filterActions';
 
-const SearchBar = ({ dispatchSetTextFilter, isLoading }) => {
+const SearchBar = () => {
+  const isLoading = useSelector(state => state.app.loading);
+  const dispatch = useDispatch();
   let input = '';
+  
   const onSubmitSearch = () => {
-    dispatchSetTextFilter(input);
+    dispatch(setTextFilter(input));
   };
 
   const onSearchChange = (e) => {
     const val = e.target.value.trim();
     input = val;
 
-    if (val === '') dispatchSetTextFilter(val);
+    if (val === '') dispatch(setTextFilter(val));
   };
 
   const onKeyUp = (e) => {
-    if (e.keyCode === 13) dispatchSetTextFilter(input);
+    if (e.keyCode === 13) dispatch(setTextFilter(input));
   };
 
   return (
@@ -40,12 +43,4 @@ const SearchBar = ({ dispatchSetTextFilter, isLoading }) => {
   );
 };
 
-const mapStateToProps = ({ app }) => ({
-  isLoading: app.loading
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatchSetTextFilter: keyword => dispatch(setTextFilter(keyword))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default SearchBar;

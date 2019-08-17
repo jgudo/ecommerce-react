@@ -1,13 +1,18 @@
 import React, { useRef } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import UserNav from '../user/UserNav';
 
 const Navigation = (props) => {
-  const { basket, profile, isAuth } = props;
+  const { basket, profile, isAuth } = useSelector(state => ({
+    basket: state.basket,
+    profile: state.profile,
+    isAuth: !!state.auth.id && !!state.auth.type
+  }));
   const navbar = useRef(null);
+
   const getStyleProperty = (property) => {
     return getComputedStyle(document.documentElement).getPropertyValue(property);
   };
@@ -74,11 +79,4 @@ const Navigation = (props) => {
   );
 };
 
-const mapStateToProps = ({ basket, profile, auth }) => ({
-  basket,
-  profile,
-  auth,
-  isAuth: !!auth.id && !!auth.type
-});
-
-export default withRouter(connect(mapStateToProps)(Navigation));
+export default withRouter(Navigation);

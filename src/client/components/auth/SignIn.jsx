@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { signIn, signInWithGoogle, getRedirectResult } from '../../actions/authActions';
+import { signIn, signInWithGoogle } from '../../actions/authActions';
 
 import CircularProgress from '../ui/CircularProgress';
 
 const SignIn = (props) => {
-  const { dispatchSignIn, dispatchSignInWithGoogle, status, isAuthenticating } = props;
+  const { authStatus, isAuthenticating } = useSelector(state => ({
+    authStatus: state.auth.authStatus,
+    isAuthenticating: state.app.isAuthenticating
+  }));
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorField, setErrorField] = useState({});
@@ -43,13 +48,15 @@ const SignIn = (props) => {
     const noError = (!!email && !!password) && !errorField.email && !errorField.password;
 
     if (noError) {
-      dispatchSignIn(email, password);
+      dispatch(signIn(email, password));
     }
   };
 
   const onSignUp = () => {
     props.history.push('/signup');
   };
+  
+  const onSignInWithGoogle = () => dispatch(signInWithGoogle());
 
   const errorClassName = (field) => {
     return errorField[field] ? 'input-error' : '';
@@ -57,7 +64,7 @@ const SignIn = (props) => {
 
   return (
     <div className="signin-content">
-      {status && <strong><span className="input-message text-center padding-s">{status}</span></strong>}
+      {authStatus && <strong><span className="input-message text-center padding-s">{authStatus}</span></strong>}
       <div className="signin">
         <div className="signin-main">
           <div className="signin-wrapper">
@@ -113,7 +120,7 @@ const SignIn = (props) => {
           <button
               className="signin-provider-button provider-google"
               disabled={isAuthenticating}
-              onClick={dispatchSignInWithGoogle}
+              onClick={onSignInWithGoogle}
           >
             Sign in with Google
           </button>
@@ -135,14 +142,4 @@ const SignIn = (props) => {
   );
 };
 
-const mapStateToProps = ({ auth, app }) => ({
-  status: auth.authStatus,
-  isAuthenticating: app.isAuthenticating
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatchSignIn: (email, password) => dispatch(signIn(email, password)),
-  dispatchSignInWithGoogle: () => dispatch(signInWithGoogle())
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));
+export default withRouter(SignIn);

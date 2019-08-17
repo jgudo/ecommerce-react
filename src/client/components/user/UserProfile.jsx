@@ -1,7 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const UserProfile = ({ profile }) => {
+const UserProfile = () => {
+  const profile = useSelector(state => state.profile);
+
   return (
     <div className="user-profile">
       <div className="user-profile-block">
@@ -42,8 +44,4 @@ const UserProfile = ({ profile }) => {
   );
 };
 
-const mapStateToProps = ({ profile }) => ({
-  profile
-});
-
-export default connect(mapStateToProps)(UserProfile);
+export default UserProfile;

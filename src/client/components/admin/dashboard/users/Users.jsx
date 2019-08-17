@@ -1,11 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { deleteUser } from '../../../../actions/userActions';
-import firebase from '../../../../firebase/firebase';
 import UserItem from './UserItem';
 
-const Users = ({ users, dispatchDeleteUser }) => {
-  firebase.createAccount('juliusguevarra101@gmail.com', '09154982243');
+const Users = (props) => {
+  const users = useSelector(state => state.users);
+  const dispatch = useDispatch();
+
+  const onDeleteUser = id => dispatch(deleteUser(id));
+
   return (
     <>
       <div className="product-admin-header">
@@ -40,7 +43,7 @@ const Users = ({ users, dispatchDeleteUser }) => {
       {users.map(user => (
         <UserItem 
             key={user.email} 
-            onDeleteUser={dispatchDeleteUser}
+            onDeleteUser={onDeleteUser}
             user={user} 
         />
       ))}
@@ -48,12 +51,4 @@ const Users = ({ users, dispatchDeleteUser }) => {
   );
 };
 
-const mapStateToProps = ({ users }) => ({ 
-  users
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatchDeleteUser: id => dispatch(deleteUser(id))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default Users;

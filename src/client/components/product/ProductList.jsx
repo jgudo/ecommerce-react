@@ -1,39 +1,37 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { removeProduct, getProducts } from '../../actions/productActions';
 import { addToBasket, removeFromBasket } from '../../actions/basketActions';
 import { selectFilter } from '../../selectors/selector';
 
 const ProductList = props => {
+  const { products, basket, filter, isLoading } = useSelector(state => ({
+    products: selectFilter(state.products, state.filter),
+    basket: state.basket,
+    filter: state.filter,
+    isLoading: state.app.isLoading
+  }));
+  const dispatch = useDispatch();
+
+  const onAddToBasket = product => dispatch(addToBasket(product));
+  const onRemoveFromBasket = id => dispatch(removeFromBasket(id));
+  const onRemoveProduct = id => dispatch(removeProduct(id));
+
   useEffect(() => {
-    props.dispatchGetProducts();
+    products.length === 0 && dispatch(getProducts());
   }, []);
 
   return (
     props.children({
-      products: props.products,
-      basket: props.basket,
-      addToBasket: props.dispatchAddToBasket,
-      filter: props.filter,
-      removeFromBasket: props.dispatchRemoveFromBasket,
-      removeProduct: props.dispatchRemoveProduct,
-      isLoading: props.isLoading
+      products,
+      basket,
+      filter,
+      addToBasket: onAddToBasket,
+      removeFromBasket: onRemoveFromBasket,
+      removeProduct:onRemoveProduct,
+      isLoading
     })
   );
 }
 
-const mapStateToProps = ({ products, basket, filter, app }) => ({
-  products: selectFilter(products, filter),
-  basket,
-  filter,
-  isLoading: app.loading
-});
-
-const mapDispatchToProps = dispatch => ({
-  dispatchAddToBasket: product => dispatch(addToBasket(product)),
-  dispatchRemoveFromBasket: id => dispatch(removeFromBasket(id)),
-  dispatchRemoveProduct: id => dispatch(removeProduct(id)),
-  dispatchGetProducts: () => dispatch(getProducts())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default ProductList;

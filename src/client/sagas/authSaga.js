@@ -41,7 +41,7 @@ function* authSaga({ type, payload }) {
           // yield put({ type: SET_PROFILE, payload: snapshot.val() });
         }
       } catch (e) {
-        console.log(e);
+        yield handleError(e);
       }
       break;
     case ACTION.SIGNUP:
@@ -77,7 +77,7 @@ function* authSaga({ type, payload }) {
     case ACTION.ON_AUTHSTATE_CHANGED:
       try {
         const user = yield call(firebase.onAuthStateChanged);
-        
+        console.log('AUTH CHANGED: ', user);
         yield put({ type: ACTION.SIGNIN_SUCCESS, payload: { id: user.uid, type: 'client' }});
       } catch (e) {
         yield put({ type: ACTION.SIGNOUT });
