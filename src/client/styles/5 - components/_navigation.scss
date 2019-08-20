@@ -9,10 +9,16 @@
   position: fixed;
   top: 0;
   @include bezier-transition(all, .3s, ease);
+
+  @media (max-width: $mobile) {
+    padding: 0 $s-size;
+  }
 }
 
 .navigation-menu {
-  justify-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   padding: 0;
   margin: 0;
   flex-grow: 1;
@@ -26,6 +32,12 @@
   margin: 0;
 }
 
+.navigation-action {
+  display: flex;
+  align-items: center;
+  margin-left: $xxl-size;
+}
+
 .navigation-menu-link {
   color: $heading-color;
   padding: $s-size $m-size;
@@ -34,6 +46,11 @@
   text-transform: uppercase;
   font-weight: bold;
   position: relative;
+
+  &:hover {
+    text-decoration: none;
+    background: $background-color-01;
+  }
 }
 
 .navigation-menu-active {

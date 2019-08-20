@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { displayActionMessage } from '../../../../helpers/utils';
 
 const UserItem = ({ user, onDeleteUser }) => {
-  const userRef = useState(null);
+  const userRef = useRef(null);
 
   const onClickDeleteUser = () => {
     userRef.current.classList.toggle('item-active');
@@ -66,6 +67,11 @@ const UserItem = ({ user, onDeleteUser }) => {
       </div>
     </div>
   );
+};
+
+UserItem.propType = {
+  user: PropTypes.object.isRequired,
+  onDeleteUser: PropTypes.func.isRequired
 };
 
 export default UserItem;

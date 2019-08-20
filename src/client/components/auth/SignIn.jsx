@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { signIn, signInWithGoogle } from '../../actions/authActions';
-
+import { signIn, signInWithGoogle, signInWithFacebook } from '../../actions/authActions';
 import CircularProgress from '../ui/CircularProgress';
 
 const SignIn = (props) => {
+  useEffect(() => {
+    window.scrollTo(undefined, 0);
+  }, []);
+
   const { authStatus, isAuthenticating } = useSelector(state => ({
-    authStatus: state.auth.authStatus,
+    authStatus: state.app.authStatus,
     isAuthenticating: state.app.isAuthenticating
   }));
   const dispatch = useDispatch();
@@ -15,6 +18,7 @@ const SignIn = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorField, setErrorField] = useState({});
+  const [buttonClicked, setClicked] = useState(undefined);
 
   const onEmailInput = (e) => {
     const val = e.target.value.trim();
@@ -49,6 +53,7 @@ const SignIn = (props) => {
 
     if (noError) {
       dispatch(signIn(email, password));
+      setClicked('signin');
     }
   };
 
@@ -56,7 +61,15 @@ const SignIn = (props) => {
     props.history.push('/signup');
   };
   
-  const onSignInWithGoogle = () => dispatch(signInWithGoogle());
+  const onSignInWithGoogle = () => {
+    dispatch(signInWithGoogle());
+    setClicked('google');
+  };
+
+  const onSignInWithFacebook = () => {
+    dispatch(signInWithFacebook());
+    setClicked('facebook');
+  };
 
   const errorClassName = (field) => {
     return errorField[field] ? 'input-error' : '';
@@ -65,7 +78,7 @@ const SignIn = (props) => {
   return (
     <div className="signin-content">
       {authStatus && <strong><span className="input-message text-center padding-s">{authStatus}</span></strong>}
-      <div className="signin">
+      <div className={`signin ${authStatus && 'input-error'}`}>
         <div className="signin-main">
           <div className="signin-wrapper">
             <h3>Sign in to Salinaka</h3>
@@ -96,12 +109,15 @@ const SignIn = (props) => {
               <br/>
               <div className="signin-field signin-action">
                 <button
-                    className="button"
+                    className="button signin-button"
                     disabled={isAuthenticating}
                     type="submit"
                 >
-                  <CircularProgress visible={isAuthenticating} theme="light" />
-                  {isAuthenticating ? 'Signing In' : 'Sign In'}
+                  <CircularProgress 
+                      theme="light" 
+                      visible={isAuthenticating && buttonClicked === 'signin'} 
+                  />
+                  {isAuthenticating && buttonClicked === 'signin' ? 'Signing In' : 'Sign In'}
                 </button>
               </div>
             </form>
@@ -112,16 +128,25 @@ const SignIn = (props) => {
         </div>
         <div className="signin-provider">
           <button
-              className="signin-provider-button provider-facebook"
+              className="button signin-provider-button provider-facebook"
               disabled={isAuthenticating}
+              onClick={onSignInWithFacebook}
           >
+            <CircularProgress 
+                theme="light" 
+                visible={isAuthenticating && buttonClicked === 'facebook'} 
+            />
             Sign in with Facebook
           </button>
           <button
-              className="signin-provider-button provider-google"
+              className="button signin-provider-button provider-google"
               disabled={isAuthenticating}
               onClick={onSignInWithGoogle}
           >
+            <CircularProgress 
+                theme="dark" 
+                visible={isAuthenticating && buttonClicked === 'google'} 
+            />
             Sign in with Google
           </button>
         </div>

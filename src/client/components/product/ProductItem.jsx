@@ -1,37 +1,54 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToBasket, removeFromBasket } from '../../actions/basketActions';
-import { displayActionMessage } from '../../helpers/utils';
+import PropTypes from 'prop-types';
+import { displayMoney } from '../../helpers/utils';
 
-const ProductItem = (props) => {
-  const basket = useSelector(state => state.basket);
-  const dispatch = useDispatch();
-  const { product } = props;
+const ProductItem = ({ 
+  product, 
+  onOpenModal, 
+  onClickProduct,
+  addToBasket,
+  foundOnBasket
+ }) => {
 
-  const foundOnBasket = () => {
-    return !!basket.find(item => item.id === product.id); 
+  const onClickItem = () => {
+    onOpenModal();
+    onClickProduct(product);
   };
 
-  const onAddToBasket = () => {
-    if (foundOnBasket()) {
-      dispatch(removeFromBasket(product.id));
-      displayActionMessage('Item removed from basket');
-    } else {
-      dispatch(addToBasket(product));
-      displayActionMessage('Item added to basket');
-    }
-  };
+  return (
+    <div 
+        className="product-card"
+        style={{ borderBottom: foundOnBasket(product.id) ? '1px solid #4a4a4a' : '' }}
+    >
+      <div 
+          className="product-card-content"
+          onClick={onClickItem}    
+      >
+        <div className="product-card-img-wrapper">
+          <img className="product-card-img" src={product.image} alt="" />
+        </div>
+        <h5 className="product-card-name">{product.name}</h5>
+        <p className="product-card-brand">{product.brand}</p>
+        <h4 className="product-card-price">{displayMoney(product.price)}</h4>
+      </div>
+      <button 
+          className={`product-card-button button-small button button-block ${foundOnBasket(product.id) ? 'button-border button-border-gray' : ''}`} 
+          onClick={() => {
+            addToBasket(product.id, product);
+          }}
+      >
+        {foundOnBasket(product.id) ? 'Remove from basket' : 'Add to basket'}
+      </button>
+    </div>
+  );
+};
 
-  return props.children({
-    state: {
-      product,
-      basket
-    },
-    action: {
-      onAddToBasket
-    },
-    foundOnBasket
-  });
+ProductItem.propType = {
+  onClickItem: PropTypes.func.isRequired,
+  product: PropTypes.object.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
+  addToBasket: PropTypes.func.isRequired,
+  foundOnBasket: PropTypes.func.isRequired
 };
 
 export default ProductItem;

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { signUp } from '../../actions/authActions';
 
@@ -7,11 +8,13 @@ import CircularProgress from '../ui/CircularProgress';
 const SignUp = (props) => {
   const [error, setError] = useState({});
   const [field, setField] = useState({});
+  const [passwordHidden, setPasswordHidden] = useState(true);
   const { isAuthenticating, authStatus } = useSelector(state => ({
     isAuthenticating: state.app.isAuthenticating,
-    authStatus: state.authStatus
+    authStatus: state.app.authStatus
   }));
   const dispatch = useDispatch();
+  const passwordField = useRef(null);
 
   useEffect(() => {
     window.scrollTo(undefined, 0);
@@ -31,31 +34,17 @@ const SignUp = (props) => {
     }
   };
 
-  const onFirstnameInput = (e) => {
+  const onFullnameInput = (e) => {
     const val = e.target.value.trim();
     const regex = /[a-zA-Z]{2,}/;
 
     if (val === '') {
-      setError({ ...error, firstname: 'First name is required' });
+      setError({ ...error, fullname: 'First name is required' });
     } else if (!regex.test(val)) {
-      setError({ ...error, firstname: 'First name must be at least 2 letters' });
+      setError({ ...error, fullname: 'First name must be at least 2 letters' });
     } else {
-      setField({ ...field, firstname: val });
-      setError({ ...error, firstname: '' });
-    }
-  };
-
-  const onLastNameInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /[a-zA-Z]/g;
-
-    if (val === '') {
-      setError({ ...error, lastname: 'Last name is required' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, lastname: 'Last name should only contain letters' });
-    } else {
-      setField({ ...field, lastname: val });
-      setError({ ...error, lastname: '' });
+      setField({ ...field, fullname: val });
+      setError({ ...error, fullname: '' });
     }
   };
 
@@ -77,13 +66,17 @@ const SignUp = (props) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    const { firstname, lastname, email, password } = field;
-    const isError = Object.keys(error).some(key => error[key] !== '') 
-      || Object.keys(field).some(key => field[key] === '');
-
-    if (!isError) {
-      dispatch(signUp({ firstname, lastname, email, password }));
+    if (field.fullname && field.email && field.password) {
+      dispatch(signUp({ ...field }));
     } 
+  };
+
+  const onTogglePasswordVisibility = () => {
+    setPasswordHidden(!passwordHidden);
+  };
+
+  const onClickSignIn = () => {
+    props.history.push('/signin');
   };
 
   const errorClassName = (key) => {
@@ -97,27 +90,15 @@ const SignUp = (props) => {
         <h3>Sign up to Salinaka</h3>
         <form onSubmit={onFormSubmit}>
           <div className="signup-field">
-            {error.firstname && <span className="input-message">{error.firstname}</span>}
-            <span className="d-block padding-s">First Name</span>
+            {error.fullname && <span className="input-message">{error.fullname}</span>}
+            <span className="d-block padding-s">Full Name</span>
             <input 
-                className={`input-form d-block ${errorClassName('firstname')}`}
-                onKeyUp={onFirstnameInput}
-                placeholder="First Name"
+                className={`input-form d-block ${errorClassName('fullname')}`}
+                onKeyUp={onFullnameInput}
+                placeholder="Full name"
                 readOnly={isAuthenticating}
                 style={{ textTransform: 'capitalize' }}
                 type="text" 
-            />
-          </div>
-          <div className="signup-field">
-            {error.lastname && <span className="input-message">{error.lastname}</span>}
-            <span className="d-block padding-s">Last Name</span>
-            <input
-                className={`input-form d-block ${errorClassName('lastname')}`}
-                onInput={onLastNameInput}
-                placeholder="Last Name" 
-                readOnly={isAuthenticating}
-                style={{ textTransform: 'capitalize' }}
-                type="text"
             />
           </div>
           <div className="signup-field">
@@ -134,19 +115,31 @@ const SignUp = (props) => {
           <div className="signup-field">
             {error.password && <span className="input-message">{error.password}</span>}
             <span className="d-block padding-s">Password</span>
-            <input
-                className={`input-form d-block ${errorClassName('password')}`}
-                onInput={onPasswordInput}
-                placeholder="Password" 
-                readOnly={isAuthenticating}
-                type="password"
-            />
+            <div className="d-flex">
+              <input
+                  className={`input-form d-block margin-0 ${errorClassName('password')}`}
+                  onInput={onPasswordInput}
+                  placeholder="Password" 
+                  readOnly={isAuthenticating}
+                  ref={passwordField}
+                  type={passwordHidden ? 'password' : 'text'}
+              />
+              <button 
+                  className="button button-small button-muted"
+                  onClick={onTogglePasswordVisibility}
+                  type="button"
+              >
+                {passwordHidden ? 'Peek' : 'Hide'}
+              </button>
+            </div>
           </div>
+          <br/>
           <br/>
           <div className="signup-field signup-action">
             <button
-                className="button"
+                className="button signup-button"
                 disabled={isAuthenticating}
+                type="submit"
             >
               <CircularProgress visible={isAuthenticating} theme="light" />
               {isAuthenticating ? 'Signing Up' : 'Sign Up'}
@@ -154,8 +147,20 @@ const SignUp = (props) => {
           </div>
         </form>
       </div>
+      <div className="signin-message">
+        <span className="signin-info">
+          <strong>Already have an account?</strong>
+        </span>
+        <button 
+            className="button button-small button-border button-border-gray"
+            disabled={isAuthenticating}
+            onClick={onClickSignIn}
+        >
+          Sign In
+        </button>
+      </div>
     </div>
   );
 }
 
-export default SignUp;
+export default withRouter(SignUp);

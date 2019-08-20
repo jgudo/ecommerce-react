@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
-import Button from '../ui/Button';
 import Modal from '../ui/Modal';
 
 import { 
@@ -16,7 +15,12 @@ import { displayMoney } from '../../helpers/utils';
 
 const Basket = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const { basket, action, isAuth } = props;
+  const { basket, isAuth } = useSelector(state => ({
+    basket: state.basket,
+    isAuth: !!state.auth.id && !!state.auth.type
+  }));
+  const dispatch = useDispatch();
+
   const calculateTotal = () => {
     let total = 0;
 
@@ -50,6 +54,10 @@ const Basket = (props) => {
     document.body.classList.remove('basket-open');
     props.history.push('/signin');
   };
+
+  const onClearBasket = () => {
+    basket.length !== 0 && dispatch(clearBasket());
+  }
 
   return (
     <>
@@ -91,12 +99,12 @@ const Basket = (props) => {
                 </span>
               )}
             </BasketToggle>
-            <Button
+            <button
                 className="basket-clear button button-border button-border-gray button-small"
-                onClick={action.clearBasket}
+                onClick={onClearBasket}
             >
               <span>Clear Basket</span>
-            </Button>
+            </button>
           </div>
           {basket.length <= 0 && (
             <div className="basket-empty">
@@ -108,8 +116,12 @@ const Basket = (props) => {
                 key={product.id}
                 product={product}
                 basket={basket}
-                action={action}
-                removeFrombasket={action.removeFromBasket}
+                action={{
+                  removeFromBasket: id => dispatch(removeFromBasket(id)),
+                  clearBasket: () => dispatch(clearBasket()),
+                  addQtyItem: id => dispatch(addQtyItem(id)),
+                  minusQtyItem: id => dispatch(minusQtyItem(id))
+                }}
             />
           ))}
         </div>
@@ -126,24 +138,9 @@ const Basket = (props) => {
             Check Out
           </button>
         </div>
-        
       </div>
     </>
   );
 };
 
-const mapStateToProps = ({ basket, auth }) => ({
-  basket,
-  isAuth: !!auth.id && !!auth.type
-});
-
-const mapDispatchToProps = dispatch => ({
-  action: {
-    removeFromBasket: id => dispatch(removeFromBasket(id)),
-    clearBasket: () => dispatch(clearBasket()),
-    addQtyItem: id => dispatch(addQtyItem(id)),
-    minusQtyItem: id => dispatch(minusQtyItem(id))
-  }
-});
- 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Basket));
+export default withRouter(Basket);

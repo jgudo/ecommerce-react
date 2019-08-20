@@ -3,8 +3,7 @@ import React from 'react';
 const Footer = () => (
   <footer className="footer">
     <div className="footer-col-1">
-      <h3>SALINAKA</h3>
-      <span>All rights reserved {new Date().getFullYear()}</span>
+      <h4>SALINAKA &nbsp;<span>{new Date().getFullYear()}</span></h4>
     </div>
     <div className="footer-col-2">
       <span>Created by <strong><a href="https://github.com/jgudo">Julius Guevarra</a></strong></span>

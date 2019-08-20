@@ -1,6 +1,6 @@
 .button {
   background: $button-color;
-  padding: $s-size $m-size;
+  padding: $m-size;
   border: 1px solid $button-color;
   color: $white;
   font-weight: bold;
@@ -23,6 +23,17 @@
   &:hover {
     cursor: default;   
     // background: none;
+  }
+}
+
+.button-muted {
+  @extend .button;
+  background: $border-color;
+  color: $paragraph-color-00;
+  border: 1px solid $border-color;
+  &:hover {
+    background: $border-color-focus;
+    border: 1px solid $border-color-focus;
   }
 }
 
@@ -54,4 +65,5 @@
 
 .button-small {
   font-size: $font-small;
+  padding: $s-size $m-size;
 }

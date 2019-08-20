@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { displayMoney } from '../../helpers/utils';
 
 const PriceRange = ({ 
@@ -99,6 +100,13 @@ const PriceRange = ({
       </div>
     </div>
   );
+};
+
+PriceRange.propType = {
+  min: PropTypes.number,
+  max: PropTypes.number,
+  onMaxPriceChange: PropTypes.func,
+  onMinPriceChange: PropTypes.func
 };
 
 export default PriceRange;

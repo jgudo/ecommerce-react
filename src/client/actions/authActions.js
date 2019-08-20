@@ -3,9 +3,13 @@ import {
   SIGNIN_SUCCESS,
   SIGNUP,
   ON_AUTHSTATE_CHANGED, 
+  ON_AUTHSTATE_FAIL,
+  ON_AUTHSTATE_SUCCESS,
   SIGNOUT, 
   SET_AUTH_STATUS,
   SIGNIN_WITH_GOOGLE,
+  SIGNIN_WITH_FACEBOOK,
+  SET_AUTH_PERSISTENCE
 } from '../constants/constants';
 
 export const signIn = (email, password) => ({
@@ -20,6 +24,10 @@ export const signInWithGoogle = () => ({
   type: SIGNIN_WITH_GOOGLE
 });
 
+export const signInWithFacebook = () => ({
+  type: SIGNIN_WITH_FACEBOOK
+});
+
 export const signUp = user => ({
   type: SIGNUP,
   payload: user
@@ -28,6 +36,10 @@ export const signUp = user => ({
 export const signInSuccess = auth => ({
   type: SIGNIN_SUCCESS,
   payload: auth
+});
+
+export const setAuthPersistence = () => ({
+  type: SET_AUTH_PERSISTENCE
 });
 
 export const signOut = () => ({
@@ -41,4 +53,14 @@ export const setAuthStatus = status => ({
 
 export const onAuthStateChanged = () => ({
   type: ON_AUTHSTATE_CHANGED
+});
+
+export const onAuthStateSuccess = user => ({
+  type: ON_AUTHSTATE_SUCCESS,
+  payload: user
+});
+
+export const onAuthStateFail = error => ({
+  type: ON_AUTHSTATE_FAIL,
+  payload: error
 });

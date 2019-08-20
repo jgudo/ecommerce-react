@@ -1,5 +1,9 @@
 .signin-content {
   margin: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .signin {
@@ -7,11 +11,20 @@
   display: flex;
   justify-content: center;
   padding: $l-size;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+    padding: $m-size;
+  }
 }
 
 .signin-main {
   width: 350px;
   height: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .signin-provider {
@@ -22,9 +35,14 @@
 }
 
 .signin-provider-button {
-  display: block;
   width: 100%;
   margin: $s-size;
+}
+
+.signin-button {
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .provider-facebook {
@@ -71,14 +89,29 @@
     height: 30%;
     width: 1px;
     background: $border-color;
+
+    @media (max-width: $mobile) {
+      width: 50%;
+      height: 1px;
+    }
   }
 
   &:before {
     top: 25%;
+
+    @media (max-width: $mobile) {
+      top: 50%;
+      left: 0;
+    }
   }
 
   &:after {
     bottom: 25%;
+
+    @media (max-width: $mobile) {
+      right: 0;
+      bottom: 50%;
+    }
   }
 }
 

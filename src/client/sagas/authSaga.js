@@ -1,6 +1,7 @@
 import firebase from '../firebase/firebase';
 import { call, put } from 'redux-saga/effects';
 import * as ACTION from '../constants/constants';
+import { history } from '../routers/AppRouter';
 
 function* handleError(e) {
   yield put({ type: ACTION.SET_AUTH_STATUS, payload: e.message });
@@ -18,28 +19,23 @@ function* authSaga({ type, payload }) {
     case ACTION.SIGNIN:
       try {
         yield initRequest();
-    
-        const auth = yield call(firebase.signIn, payload.email, payload.password);
-        const uid = auth.user.uid;
-        const snapshot = yield call(firebase.getUser, uid);
-
-        yield put({ type: ACTION.SET_PROFILE, payload: snapshot.val() });
-        yield put({ type: ACTION.SIGNIN_SUCCESS, payload: { id: uid, type: 'client' }});
-        yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+        yield call(firebase.signIn, payload.email, payload.password);
       } catch (e) {
         yield handleError(e);
       }
       break;
     case ACTION.SIGNIN_WITH_GOOGLE:
       try {
-        const result = yield call(firebase.signInWithGoogle);
-
-        if (result) {
-          const snapshot = yield call(firebase.getUser, result.user.uid);
-
-          console.log(snapshot);
-          // yield put({ type: SET_PROFILE, payload: snapshot.val() });
-        }
+        yield initRequest();
+        yield call(firebase.signInWithGoogle);
+      } catch (e) {
+        yield handleError(e);
+      }
+      break;
+    case ACTION.SIGNIN_WITH_FACEBOOK:
+      try {
+        yield initRequest();
+        yield call(firebase.signInWithFacebook);
       } catch (e) {
         yield handleError(e);
       }
@@ -51,8 +47,7 @@ function* authSaga({ type, payload }) {
         const auth = yield call(firebase.createAccount, payload.email, payload.password);
         const uid = auth.user.uid;
         const ref = yield call(firebase.addUser, uid, {
-          firstname: payload.firstname,
-          lastname: payload.lastname,
+          fullname: payload.fullname,
           email: payload.email
         });
         console.log(ref);
@@ -66,21 +61,46 @@ function* authSaga({ type, payload }) {
       break;
     case ACTION.SIGNOUT:
       try {
+        yield initRequest();
         yield call(firebase.signOut);
         yield put({ type: ACTION.CLEAR_BASKET });
         yield put({ type: ACTION.CLEAR_PROFILE });
         yield put({ type: ACTION.RESET_FILTER });
+        yield put({ type: ACTION.SIGNOUT_SUCCESS });
+        yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+        yield call(history.push, '/signin');
       } catch (e) {
         console.log(e);
       }
       break;
-    case ACTION.ON_AUTHSTATE_CHANGED:
+    case ACTION.ON_AUTHSTATE_SUCCESS:
+      const snapshot = yield call(firebase.getUser, payload.uid);
+
+      if (snapshot.val()) { // if user exists in database
+        yield put({ type: ACTION.SET_PROFILE, payload: snapshot.val() });
+      } else { // add the user
+        const user = {
+          fullname: payload.displayName ? payload.displayName : 'User',
+          avatar: payload.photoURL,
+          email: payload.email,
+          address: '',
+          mobile: ''
+        };
+        yield call(firebase.addUser, payload.uid, user);
+        yield put({ type: ACTION.SET_PROFILE, payload: user });
+      }
+     
+      yield put({ type: ACTION.SIGNIN_SUCCESS, payload: { id: payload.uid, type: 'client' }});
+      yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+      break;
+    case ACTION.ON_AUTHSTATE_FAIL:
+      yield put({ type: ACTION.SIGNOUT });
+      yield handleError(payload);
+      break;
+    case ACTION.SET_AUTH_PERSISTENCE:
       try {
-        const user = yield call(firebase.onAuthStateChanged);
-        console.log('AUTH CHANGED: ', user);
-        yield put({ type: ACTION.SIGNIN_SUCCESS, payload: { id: user.uid, type: 'client' }});
+        yield call(firebase.setAuthPersistence);
       } catch (e) {
-        yield put({ type: ACTION.SIGNOUT });
         console.log(e);
       }
       break;

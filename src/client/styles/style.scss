@@ -48,12 +48,17 @@
 @import './5 - components/signin';
 @import './5 - components/toast';
 @import './5 - components/circular-progress';
+@import './5 - components/preloader';
 
 // -- Admin components
 @import './5 - components/admin/grid';
 @import './5 - components/admin/product';
 @import './5 - components/sidenavigation';
 // @import './5 - components/admin/user';
+
+// -- Mobile components
+// @import './5 - components/mobile/bottom-navigation';
+@import './5 - components/mobile/mobile-navigation';
 
 // -- Profile components
 @import './5 - components/profile/usernav';
@@ -65,4 +70,5 @@
 // 06 - UTILS
 
 @import './6 - utils/state';
+@import './6 - utils/animation';
 @import './6 - utils/utils';

@@ -30,7 +30,9 @@ class Firebase {
   signIn = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
 
   signInWithGoogle = () => this.auth.signInWithPopup(new app.auth.GoogleAuthProvider());
-
+  
+  signInWithFacebook = () => this.auth.signInWithPopup(new app.auth.FacebookAuthProvider());
+  
   signOut = () => this.auth.signOut();
 
   passwordReset = email => this.auth.sendPasswordResetEmail(email);
@@ -45,29 +47,48 @@ class Firebase {
     return new Promise((resolve, reject) => {
       this.auth.onAuthStateChanged((user) => {
         if (user) {
-          resolve(user);
+          return resolve(user);
         } else {
-          reject(new Error('Auth State Changed failed'));
+          return reject(new Error('Auth State Changed failed'));
         }
       });
     });
   }
+
+  setAuthPersistence = () => this.auth.setPersistence(app.auth.Auth.Persistence.LOCAL);
   // PRODUCT ACTIONS
   // ---------
 
-  getProducts = async () => {
-    const snapshot = await this.database.ref('products').once('value');
-    const products = [];
+  getProducts = () => {
+    let didTimeout = false;
 
-    snapshot.forEach((childSnapshot) => {
-        products.push({
-            id: childSnapshot.key,
-            ...childSnapshot.val()
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        didTimeout = true;
+        reject('Request timeout, please try again');
+      }, 15000);  
+
+      this.database.ref('products').once('value')
+        .then((snapshot) => {
+          clearTimeout(timeout);
+          if (!didTimeout) {
+            const products = [];
+
+            snapshot.forEach((childSnapshot) => {
+                products.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+            resolve(products);
+          }
+        })
+        .catch ((e) => {
+          if (didTimeout) return;
+          reject(e);
         });
     });
-
-    return products;
-}
+  }
     
 
   addProduct = (id, product) => this.database.ref('products').child(id).set(product);

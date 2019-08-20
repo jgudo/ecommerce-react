@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { displayMoney, displayActionMessage } from '../../../../helpers/utils';
 
-const ProductAdmin = (props) => {
+const ProductItem = (props) => {
   const { product, removeProduct } = props;
   const productRef = useRef(null);
 
@@ -90,4 +90,4 @@ const ProductAdmin = (props) => {
   );
 };
 
-export default withRouter(ProductAdmin);
+export default withRouter(ProductItem);

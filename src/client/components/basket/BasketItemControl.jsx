@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-
-const BasketItemControl = ({ action, basket, product }) => {
+const BasketItemControl = ({ action, product }) => {
   const onAddQty = () => {
     if (product.maxQuantity !== product.quantity) {
       action.addQtyItem(product.id);
@@ -32,6 +32,11 @@ const BasketItemControl = ({ action, basket, product }) => {
       </button>
     </div>
   );
+};
+
+BasketItemControl.propType = {
+  action: PropTypes.objectOf(PropTypes.func).isRequired,
+  product: PropTypes.object.isRequired
 };
 
 export default BasketItemControl;

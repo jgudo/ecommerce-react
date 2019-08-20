@@ -58,11 +58,22 @@ h6 {
 //   outline: 1px solid lighten($heading-color, 10%);
 // }
 
+#app {
+  width: 100%;
+}
+
 .content {
   width: 100%;
+  height: 100%;
   position: relative;
   padding: $top $xxl-size;
   display: flex;
+  animation: fadeIn .5s ease;
+
+  @media (max-width: $mobile) {
+    padding: $top-mobile $s-size;
+    flex-direction: column;
+  }
 }
 
 .content-admin {
@@ -70,10 +81,11 @@ h6 {
   height: 100vh;
   position: fixed;
   top: 0;
+  left: 0;
   padding-top: $xxl-size;
-  // padding-bottom: $l-size;
   overflow: hidden;
   display: flex;
+  animation: fadeIn .5s ease;
 }
 
 .content-admin-wrapper {

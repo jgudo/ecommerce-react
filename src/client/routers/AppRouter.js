@@ -17,7 +17,7 @@ import AddProduct from '../components/product/AddProduct'; // AddProduct
 import SignUp from '../components/auth/SignUp';
 import SignIn from '../components/auth/SignIn';
 import UserProfile from '../components/user/UserProfile';
-import Home from '../components/shop/Home';
+import Home from '../components/store/Home';
 import CheckOut from '../components/payment/CheckOut';
 
 export const history = createBrowserHistory();

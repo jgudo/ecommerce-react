@@ -1,12 +1,20 @@
 .user-profile {
   display: flex;
   margin: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .user-profile-block {
   width: 500px;
   height: auto;
   padding: $m-size;
+
+  @media (max-width: $mobile) {
+    padding: 0;
+  }
 }
 
 .user-profile-banner {

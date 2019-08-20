@@ -1,15 +1,16 @@
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter, NavLink, Link} from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import UserNav from '../user/UserNav';
 
-const Navigation = (props) => {
-  const { basket, profile, isAuth } = useSelector(state => ({
+const Navigation = ({ path }) => {
+  const { basket, profile, isAuth, isAuthenticating } = useSelector(state => ({
     basket: state.basket,
     profile: state.profile,
-    isAuth: !!state.auth.id && !!state.auth.type
+    isAuth: !!state.auth.id && !!state.auth.type,
+    isAuthenticating: state.app.isAuthenticating
   }));
   const navbar = useRef(null);
 
@@ -35,7 +36,9 @@ const Navigation = (props) => {
         ref={navbar}
     >
       <div className="logo">
-        <h2>SALINAKA</h2>
+        <Link to="/">
+          <h2>SALINAKA</h2>
+        </Link>
       </div>
       <ul className="navigation-menu">
         <li className="navigation-menu-item">
@@ -50,30 +53,42 @@ const Navigation = (props) => {
         </li>
         <li className="navigation-menu-item">
           <BasketToggle>
-             {({ onClickToggle }) => (
-                <a href="" className="navigation-menu-link" onClick={onClickToggle}>
-                  <Badge count={basket.length}/>
-                  Basket
-                </a>
-             )}
+            {({ onClickToggle }) => (
+              <a href="" className="navigation-menu-link" onClick={onClickToggle}>
+                <Badge count={basket.length}/>
+                My Basket
+              </a>
+            )}
           </BasketToggle>
         </li>
         {isAuth ? (
           <li className="navigation-menu-item">
-            <UserNav profile={profile} />
+            <UserNav isAuthenticating={isAuthenticating} profile={profile} />
           </li>
-        ) : document.location.pathname !== '/signin' ? (
-          <li className="navigation-menu-item">
-            <NavLink 
-                activeClassName="navigation-menu-active"
-                className="button button-small margin-left-xxl"
-                exact
-                to="/signin" 
-            >
-              Sign In
-            </NavLink>
+        ) : (
+          <li className="navigation-action">
+            {(path === '/signin' || path === '/') && (
+              <NavLink 
+                  activeClassName="navigation-menu-active"
+                  className="button button-small"
+                  exact
+                  to="/signup" 
+              >
+                Sign Up
+              </NavLink>
+            )}
+            {(path === '/signup' || path === '/') && (
+                <NavLink 
+                    activeClassName="navigation-menu-active"
+                    className="button button-small button-muted margin-left-s"
+                    exact
+                    to="/signin" 
+                >
+                  Sign In
+                </NavLink>
+            )}
           </li>
-        ) : null}
+        )} 
       </ul>
     </nav>
   );

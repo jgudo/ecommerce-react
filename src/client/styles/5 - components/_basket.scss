@@ -10,6 +10,9 @@
   @include bezier-transition(transform);
   z-index: map-get($z-index, 'basket');
 
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .basket-open {
@@ -91,6 +94,10 @@
   width: 100px;
   height: 60px;
   margin-right: $m-size;
+
+  @media (max-width: $mobile) {
+    width: 70px;
+  }
 }
 
 .basket-item-img {

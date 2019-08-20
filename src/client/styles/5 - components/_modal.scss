@@ -11,3 +11,9 @@
   top: $s-size;
   right: $s-size;
 }
+
+.ReactModal__Content {
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
+}

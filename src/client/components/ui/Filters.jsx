@@ -7,10 +7,11 @@ import PriceRange from './PriceRange';
 
 const Filters = (props) => {
   const dispatch = useDispatch();
-  const { max, min, filter, isLoading } = useSelector(state => ({
+  const { max, min, filter, isLoading, productCount } = useSelector(state => ({
     max: selectMax(state.products),
     min: selectMin(state.products),
     filter: state.filter,
+    productCount: state.products.length,
     isLoading: state.app.loading
   }));
 
@@ -50,27 +51,35 @@ const Filters = (props) => {
         <span>Brand</span>
         <br/>
         <br/>
-        <select 
-            className="filters-brand"
-            defaultValue={brandFilter || 'Brand'}
-            disabled={isLoading}
-            onChange={onBrandFilterChange}
-        >
-          <option value="">All Brands</option>
-          <option value="salt">Salt Maalat</option>
-          <option value="betsin">Betsin Maalat</option>
-        </select>
+        {productCount === 0 && isLoading ? (
+           <h5 className="text-subtle">Loading Filter</h5>
+        ) : (
+          <select 
+              className="filters-brand"
+              defaultValue={brandFilter || 'Brand'}
+              disabled={isLoading}
+              onChange={onBrandFilterChange}
+          >
+            <option value="">All Brands</option>
+            <option value="salt">Salt Maalat</option>
+            <option value="betsin">Betsin Maalat</option>
+          </select>
+        )}
       </div>
       <div className="filters-field">
         <span>Price Range</span>
         <br/>
         <br/>
-        <PriceRange 
-            min={min} 
-            max={max} 
-            onMaxPriceChange={onMaxPriceChange}
-            onMinPriceChange={onMinPriceChange}
-        />
+        {productCount === 0 && isLoading ? (
+          <h5 className="text-subtle">Loading Filter</h5>
+        ) : (
+          <PriceRange 
+              min={min} 
+              max={max} 
+              onMaxPriceChange={onMaxPriceChange}
+              onMinPriceChange={onMinPriceChange}
+          />
+        )}
       </div>
       <div className="filters-action">
         <button

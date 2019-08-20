@@ -6,10 +6,12 @@ import { history } from '../routers/AppRouter';
 
 function* initRequest() {
   yield put({ type: ACTION.LOADING, payload: true });
+  yield put({ type: ACTION.SET_REQUEST_STATUS, payload: null });
 }
 
 function* handleError(e) {
   yield put({ type: ACTION.LOADING, payload: false });
+  yield put({ type: ACTION.SET_REQUEST_STATUS, payload: e });
   console.log('ERROR: ', e);
 }
 

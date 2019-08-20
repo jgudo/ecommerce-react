@@ -23,9 +23,19 @@
   padding: $m-size;
   border: 1px solid $border-color-focus;
   margin: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .signup-action {
   display: flex;
   justify-content: flex-end;
+}
+
+.signup-button {
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }

@@ -20,7 +20,7 @@ const UserProfile = () => {
           />
         </div>
         <div className="user-profile-details">
-          <h2>{`${profile.firstname} ${profile.lastname}`}</h2>
+          <h2>{profile.fullname}</h2>
           <span>Email</span>
           <br/>
           <h5>{profile.email}</h5>

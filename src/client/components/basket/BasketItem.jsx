@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '../ui/Button';
+import PropTypes from 'prop-types';
 import BasketItemControl from './BasketItemControl';
 
-const BasketItem = ({ action, basket, product, removeFrombasket }) => {
+const BasketItem = ({ action, basket, product }) => {
   const onRemoveFromBasket = () => {
-    removeFrombasket(product.id);
+    action.removeFromBasket(product.id);
   };
 
   return (
@@ -25,15 +25,21 @@ const BasketItem = ({ action, basket, product, removeFrombasket }) => {
             <span>{` (x ${product.quantity}) `}</span>
           </h5>
         </div>
-        <Button 
+        <button 
             className="basket-item-remove button button-border button-border-gray button-small" 
             onClick={onRemoveFromBasket}
         >
-          Remove
-        </Button>
+          x
+        </button>
       </div>
     </div>
   );
+};
+
+BasketItem.propType = {
+  action: PropTypes.objectOf(PropTypes.func).isRequired,
+  product: PropTypes.object.isRequired,
+  basket: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default BasketItem;

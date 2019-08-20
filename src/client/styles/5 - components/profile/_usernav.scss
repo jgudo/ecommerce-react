@@ -44,7 +44,7 @@
   height: 10px;
   position: relative;
   margin-left: $s-size;
-  @include bezier-transition();
+  transition: all .2s ease;
 
   &:before, 
   &:after {
@@ -68,11 +68,11 @@
 }
 
 .user-nav-sub {
-  width: 120px;
+  width: 100%;
   height: auto;
   background: $white;
   position: absolute;
-  top: 108%;
+  top: 104%;
   right: 0;
   box-shadow: 0 5px 12px rgba(0, 0, 0, .1);
   display: none;

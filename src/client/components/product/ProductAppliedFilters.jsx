@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { displayMoney } from '../../helpers/utils';
 
-const ProductAppliedFilters = ({ products, filter }) => (
+const ProductAppliedFilters = ({ filter }) => (
   <div className="product-applied-filters">
     {((filter.keyword || filter.brand || !!filter.minPrice || !!filter.maxPrice)) && (
         <>
@@ -20,5 +21,14 @@ const ProductAppliedFilters = ({ products, filter }) => (
     )}
   </div>
 );
+
+ProductAppliedFilters.propType = {
+  filter: PropTypes.shape({
+    brand: PropTypes.string,
+    keyword: PropTypes.string,
+    minPrice: PropTypes.number,
+    maxPrice: PropTypes.number
+  })
+};
 
 export default ProductAppliedFilters;

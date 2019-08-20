@@ -7,8 +7,13 @@ function* rootSaga() {
     yield takeLatest([ 
         ACTION.SIGNIN, 
         ACTION.SIGNUP, 
+        ACTION.SIGNOUT,
         ACTION.SIGNIN_WITH_GOOGLE,
-        ACTION.ON_AUTHSTATE_CHANGED
+        ACTION.SIGNIN_WITH_FACEBOOK,
+        ACTION.ON_AUTHSTATE_CHANGED,
+        ACTION.ON_AUTHSTATE_SUCCESS,
+        ACTION.ON_AUTHSTATE_FAIL,
+        ACTION.SET_AUTH_PERSISTENCE
     ], authSaga);
     yield takeLatest([ 
         ACTION.ADD_PRODUCT, 

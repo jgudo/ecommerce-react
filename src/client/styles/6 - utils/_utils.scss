@@ -1,6 +1,15 @@
 // 
 // UTILS ---------
 //
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+
 .d-block {
   display: block;
   width: 100%;
@@ -8,11 +17,18 @@
 
 .d-flex {
   display: flex;
+  align-items: center;
 }
 
 .d-flex-center {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.d-flex-end {
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -54,6 +70,10 @@
 
 .text-subtle {
   color: $paragraph-color-10;
+}
+
+.padding-0 {
+  padding: 0;
 }
 
 .padding-s {
@@ -138,6 +158,10 @@
 
 .margin-right-xxl {
   margin-right: $xxl-size;
+}
+
+.margin-0 {
+  margin: 0;
 }
 
 .flex-justify-end {

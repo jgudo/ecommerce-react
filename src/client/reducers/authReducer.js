@@ -1,9 +1,8 @@
-import { SIGNIN_SUCCESS, SIGNOUT, SET_AUTH_STATUS } from '../constants/constants';
+import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from '../constants/constants';
 
 const initState = {
   id: 'test-123',
-  type: 'admin',
-  authStatus: null
+  type: 'client'
 };
 
 export default (state = initState, action) => {
@@ -13,13 +12,8 @@ export default (state = initState, action) => {
         id: action.payload.id,
         type: action.payload.type
       };
-    case SIGNOUT:
+    case SIGNOUT_SUCCESS:
       return {};
-    case SET_AUTH_STATUS:
-      return {
-        ...state,
-        authStatus: action.payload
-      }
     default: 
       return state;
   }
