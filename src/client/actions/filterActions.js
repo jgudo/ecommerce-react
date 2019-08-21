@@ -4,7 +4,8 @@ import {
   SET_MAX_PRICE_FILTER,
   SET_MIN_PRICE_FILTER,
   RESET_FILTER,
-  APPLY_FILTER 
+  APPLY_FILTER,
+  CLEAR_RECENT_SEARCH 
 } from '../constants/constants';
 
 export const setTextFilter = keyword => ({
@@ -29,6 +30,10 @@ export const setMaxPriceFilter = max => ({
 
 export const resetFilter = () => ({
   type: RESET_FILTER
+});
+
+export const clearRecentSearch = () => ({
+  type: CLEAR_RECENT_SEARCH
 });
 
 export const applyFilter = filters => ({

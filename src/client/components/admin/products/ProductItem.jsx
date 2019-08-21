@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
-import { displayMoney, displayActionMessage } from '../../../../helpers/utils';
+import { displayMoney, displayActionMessage } from '../../../helpers/utils';
 
 const ProductItem = (props) => {
   const { product, removeProduct } = props;

@@ -7,9 +7,19 @@ import CircularProgress from '../ui/CircularProgress';
 const UserNav = (props) => {
   const { profile } = props;
   const userNav = useRef(null);
-  const onClickNav = () => {
+  const onClickNav = (e) => {
     userNav.current.classList.toggle('user-sub-open');
   };
+
+  document.addEventListener('click', (e) => {
+    const closest = e.target.closest('div.user-nav');
+
+    try {
+      if (!closest && userNav.current.classList.contains('user-sub-open')) {
+        userNav.current.classList.remove('user-sub-open');
+      }
+    } catch (e) {}
+  });
 
   return (
     <div 

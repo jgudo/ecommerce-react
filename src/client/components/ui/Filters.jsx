@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetFilter, applyFilter } from '../../actions/filterActions';
+import { withRouter } from 'react-router-dom';
+import { resetFilter, applyFilter, setBrandFilter } from '../../actions/filterActions';
 import { selectMax, selectMin } from '../../selectors/selector';
+import { displayActionMessage } from '../../helpers/utils';
 
 import PriceRange from './PriceRange';
 
@@ -39,10 +41,14 @@ const Filters = (props) => {
       minPrice: minPriceFilter,
       maxPrice: maxPriceFilter
     }));
+    props.history.push('/');
+    displayActionMessage('Filters applied successfully!');
   };
 
   const onResetFilter = () => {
     dispatch(resetFilter());
+    props.history.push('/');
+    displayActionMessage('Filters reset successfully!');
   };
 
   return (
@@ -52,11 +58,11 @@ const Filters = (props) => {
         <br/>
         <br/>
         {productCount === 0 && isLoading ? (
-           <h5 className="text-subtle">Loading Filter</h5>
+          <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <select 
               className="filters-brand"
-              defaultValue={brandFilter || 'Brand'}
+              value={brandFilter}
               disabled={isLoading}
               onChange={onBrandFilterChange}
           >
@@ -101,4 +107,4 @@ const Filters = (props) => {
   );
 };
 
-export default Filters;
+export default withRouter(Filters);

@@ -4,10 +4,12 @@ import {
   SET_MAX_PRICE_FILTER,
   SET_MIN_PRICE_FILTER,
   RESET_FILTER,
-  APPLY_FILTER 
+  APPLY_FILTER,
+  CLEAR_RECENT_SEARCH 
 } from '../constants/constants';
 
 const initState = {
+  recent: ['gago', 'sira'],
   keyword: '',
   brand: '',
   minPrice: 0,
@@ -19,6 +21,7 @@ export default (state = initState, action) => {
     case SET_TEXT_FILTER:
       return {
         ...state,
+        recent: [action.payload, ...state.recent],
         keyword: action.payload
       };
     case SET_BRAND_FILTER:
@@ -38,6 +41,11 @@ export default (state = initState, action) => {
       };
     case RESET_FILTER:
       return initState;
+    case CLEAR_RECENT_SEARCH:
+      return {
+        ...state,
+        recent: []
+      };
     case APPLY_FILTER:
       return {
         ...state,

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { displayMoney } from '../../helpers/utils'; 
 
@@ -31,6 +32,12 @@ const ProductModalDetails = ({ product, addToBasket, foundOnBasket }) => {
       </div>
     </div>
   );
+};
+
+ProductModalDetails.propType = {
+  product: PropTypes.object.isRequired,
+  addToBasket: PropTypes.func.isRequired,
+  foundOnBasket: PropTypes.func.isRequired
 };
 
 export default ProductModalDetails;

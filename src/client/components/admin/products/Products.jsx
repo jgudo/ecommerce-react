@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ProductList from '../../../product/ProductList';
+import ProductList from '../../product/ProductList';
 import ProductItem from './ProductItem';
-import Filters from '../../../ui/Filters';
-import SearchBar from '../../../ui/SearchBar';
-import CircularProgress from '../../../ui/CircularProgress';
-import ProductAppliedFilters from '../../../product/ProductAppliedFilters';
+import Filters from '../../ui/Filters';
+import SearchBar from '../../ui/SearchBar';
+import CircularProgress from '../../ui/CircularProgress';
+import ProductAppliedFilters from '../../product/ProductAppliedFilters';
 
 const Products = (props) => {
   const onClickAddProduct = () => {
@@ -29,7 +29,27 @@ const Products = (props) => {
             <Filters />
           </div>
         </div>
-        <SearchBar />
+        <SearchBar>
+          {({ onSearchChange, onKeyUp, isLoading, onSubmitSearch }) => (
+            <div className="searchbar">
+              <input
+                  className="searchbar-input" 
+                  onChange={onSearchChange}
+                  onKeyUp={onKeyUp}
+                  placeholder="Search for product"
+                  readOnly={isLoading}
+                  type="text" 
+              />
+              <button 
+                  className="button button-small searchbar-button"
+                  disabled={isLoading}
+                  onClick={onSubmitSearch}
+              >
+                Search
+              </button>
+            </div>
+          )}
+        </SearchBar>
         &nbsp;&nbsp;
         <button 
             className="button button-small"

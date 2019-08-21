@@ -5,6 +5,7 @@ export const DASHBOARD_PRODUCTS = '/dashboard/products';
 export const DASHBOARD_USERS = '/dashboard/users';
 export const ADD_PRODUCT = '/dashboard/add';
 export const EDIT_PRODUCT = '/dashboard/edit/:id';
+export const SEARCH = '/search'; 
 export const SIGNIN = '/signin';
 export const SIGNOUT = '/signout';
 export const SIGNUP = '/signup';

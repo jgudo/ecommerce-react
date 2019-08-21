@@ -65,7 +65,7 @@ const Basket = (props) => {
           isOpen={isModalOpen}
           onRequestClose={onCloseModal}
       >
-        <p>You must sign in to continue checking out</p>
+        <p className="text-center">You must sign in to continue checking out</p>
         <div className="d-flex-center">
           <button 
               className="button button-border button-border-gray button-small"

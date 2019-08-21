@@ -54,10 +54,12 @@ const Navigation = ({ path }) => {
         <li className="navigation-menu-item">
           <BasketToggle>
             {({ onClickToggle }) => (
-              <a href="" className="navigation-menu-link" onClick={onClickToggle}>
-                <Badge count={basket.length}/>
-                My Basket
-              </a>
+              <button className="button-link navigation-menu-link basket-toggle" onClick={onClickToggle}>
+                <span>
+                  <Badge count={basket.length}/>
+                  My Basket 
+                </span>
+              </button>
             )}
           </BasketToggle>
         </li>

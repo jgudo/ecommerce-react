@@ -33,6 +33,7 @@ p {
 span {
   color: $paragraph-color-00;
   font-size: $font-small;
+  position: relative;
 }
 
 h1,
@@ -71,7 +72,7 @@ h6 {
   animation: fadeIn .5s ease;
 
   @media (max-width: $mobile) {
-    padding: $top-mobile $s-size;
+    padding: $top $s-size;
     flex-direction: column;
   }
 }

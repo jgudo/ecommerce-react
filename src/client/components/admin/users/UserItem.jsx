@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { displayActionMessage } from '../../../../helpers/utils';
+import { displayActionMessage } from '../../../helpers/utils';
 
 const UserItem = ({ user, onDeleteUser }) => {
   const userRef = useRef(null);

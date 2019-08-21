@@ -1,0 +1,16 @@
+.pill {
+    background: $border-color;
+    padding: $s-size $m-size;
+    border-radius: 10%;
+    display: inline-block;
+    margin: 10px 5px;
+
+    &:hover {
+        background: $border-color-focus;
+    }
+}
+
+.pill-title {
+    margin: 0;
+}
+

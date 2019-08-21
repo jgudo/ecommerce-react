@@ -30,8 +30,9 @@ const ProductList = props => {
   const onRemoveFromBasket = id => dispatch(removeFromBasket(id));
   const onRemoveProduct = id => dispatch(removeProduct(id));
   const onGetProducts = () => dispatch(getProducts());
+
   useEffect(() => {
-    products.length === 0 && onGetProducts();
+    (products.length === 0 && (!filter.keyword && !filter.brand && !filter.minPrice && !filter.maxPrice)) && onGetProducts();
   }, []);
 
   return products.length === 0 && isLoading ? (

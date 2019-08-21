@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { signIn, signInWithGoogle, signInWithFacebook } from '../../actions/authActions';
 import CircularProgress from '../ui/CircularProgress';
 
 const SignIn = (props) => {
-  useEffect(() => {
-    window.scrollTo(undefined, 0);
-  }, []);
-
   const { authStatus, isAuthenticating } = useSelector(state => ({
     authStatus: state.app.authStatus,
     isAuthenticating: state.app.isAuthenticating

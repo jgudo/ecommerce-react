@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-import AdminNavigation from '../components/admin/dashboard/components/Navigation';
-import SideNavigation from '../components/admin/dashboard/components/SideNavigation'
+import AdminNavigation from '../components/admin/components/Navigation';
+import SideNavigation from '../components/admin/components/SideNavigation'
 
 const AdminRoute = ({ isAuth, component: Component, ...rest }) => (
   <Route 

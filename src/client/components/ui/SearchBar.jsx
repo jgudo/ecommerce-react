@@ -1,8 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTextFilter } from '../../actions/filterActions';
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const isLoading = useSelector(state => state.app.loading);
   const dispatch = useDispatch();
   let input = '';
@@ -20,27 +21,15 @@ const SearchBar = () => {
 
   const onKeyUp = (e) => {
     if (e.keyCode === 13) dispatch(setTextFilter(input));
+
   };
 
-  return (
-    <div className="searchbar">
-      <input
-          className="searchbar-input" 
-          onChange={onSearchChange}
-          onKeyUp={onKeyUp}
-          placeholder="Search for product"
-          readOnly={isLoading}
-          type="text" 
-      />
-      <button 
-          className="button button-small searchbar-button"
-          disabled={isLoading}
-          onClick={onSubmitSearch}
-      >
-        Search
-      </button>
-    </div>
-  );
+  return props.children({
+    onSearchChange,
+    onKeyUp,
+    isLoading,
+    onSubmitSearch
+  });
 };
 
 export default SearchBar;

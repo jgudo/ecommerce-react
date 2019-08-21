@@ -26,6 +26,18 @@
   }
 }
 
+.button-link {
+  @extend .button;
+  background: none;
+  color: $black;
+  border: none;
+
+  &:hover {
+    background: none;
+    border: none;
+  }
+}
+
 .button-muted {
   @extend .button;
   background: $border-color;

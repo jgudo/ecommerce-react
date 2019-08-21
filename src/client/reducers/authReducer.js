@@ -2,7 +2,7 @@ import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from '../constants/constants';
 
 const initState = {
   id: 'test-123',
-  type: 'client'
+  type: 'admin'
 };
 
 export default (state = initState, action) => {

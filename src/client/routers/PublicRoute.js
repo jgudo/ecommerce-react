@@ -21,7 +21,7 @@ const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) 
         ) 
         : (
           <>
-            {window.screen.width <= 480 ? <MobileNavigation /> : <Navigation path={path}/>}
+            {window.screen.width <= 480 ? (<MobileNavigation path={path} />) : <Navigation path={path} />}
             <Basket />
             <main className="content">
               <Component {...props} />

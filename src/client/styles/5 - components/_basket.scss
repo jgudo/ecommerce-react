@@ -15,25 +15,6 @@
   }
 }
 
-.basket-open {
-  overflow-y: hidden;
-
-  // &:before {
-  //   content: '';
-  //   width: 100%;
-  //   height: 100%;
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   background: rgba(0, 0, 0, .5);
-  //   @include bezier-transition();
-  // }
-}
-
-.basket-open .basket {
-  transform: translateX(0);
-}
-
 .basket-toggle {
   &:hover {
     cursor: pointer;

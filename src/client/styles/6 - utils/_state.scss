@@ -6,3 +6,11 @@
   font-weight: bold;
   color: green;
 }
+
+.is-basket-open {
+  overflow-y: hidden;
+}
+
+.is-basket-open .basket {
+  transform: translateX(0);
+}

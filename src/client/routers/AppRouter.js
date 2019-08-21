@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import ClientRoute from './ClientRoute';
@@ -10,15 +10,17 @@ import * as ROUTES from '../constants/routes';
 
 // components
 import Dashboard from '../components/admin/dashboard/Dashboard'; // Dashboard
-import DashboardProducts from '../components/admin/dashboard/products/Products'; // Dashboard
-import DashboardUsers from '../components/admin/dashboard/users/Users'; // Dashboard
+import DashboardProducts from '../components/admin/products/Products'; // Dashboard
+import DashboardUsers from '../components/admin/users/Users'; // Dashboard
 import EditProduct from '../components/product/EditProduct';
 import AddProduct from '../components/product/AddProduct'; // AddProduct
+import ProductSearch from '../components/product/ProductSearch'; // AddProduct
 import SignUp from '../components/auth/SignUp';
 import SignIn from '../components/auth/SignIn';
 import UserProfile from '../components/user/UserProfile';
-import Home from '../components/store/Home';
-import CheckOut from '../components/payment/CheckOut';
+import Home from '../components/pages/Home';
+import CheckOut from '../components/checkout/CheckOut';
+import ScrollToTop from '../components/ui/ScrollToTop';
 
 export const history = createBrowserHistory();
 
@@ -27,45 +29,50 @@ const AppRouter = () => (
     <>
       <Switch>
         <PublicRoute 
-            component={Home} 
+            component={ScrollToTop(Home)} 
             exact
             path={ROUTES.HOME} 
         />
+        <Route 
+            component={ProductSearch} 
+            exact
+            path={ROUTES.SEARCH} 
+        />
         <AdminRoute 
-            component={Dashboard} 
+            component={ScrollToTop(Dashboard)} 
             exact
             path={ROUTES.DASHBOARD} 
         />
         <AdminRoute 
-            component={DashboardProducts} 
+            component={ScrollToTop(DashboardProducts)} 
             path={ROUTES.DASHBOARD_PRODUCTS} 
         />
         <AdminRoute 
-            component={DashboardUsers} 
+            component={ScrollToTop(DashboardUsers)} 
             path={ROUTES.DASHBOARD_USERS} 
         />
         <AdminRoute 
-            component={AddProduct} 
+            component={ScrollToTop(AddProduct)} 
             path={ROUTES.ADD_PRODUCT} 
         />
         <AdminRoute 
-            component={EditProduct} 
+            component={ScrollToTop(EditProduct)} 
             path={ROUTES.EDIT_PRODUCT} 
         />
         <PublicRoute 
-            component={SignUp} 
+            component={ScrollToTop(SignUp)} 
             path={ROUTES.SIGNUP} 
         />
         <PublicRoute 
-            component={SignIn} 
+            component={ScrollToTop(SignIn)} 
             path={ROUTES.SIGNIN} 
         />
         <ClientRoute 
-            component={UserProfile} 
+            component={ScrollToTop(UserProfile)} 
             path={ROUTES.PROFILE} 
         />
         <ClientRoute 
-            component={CheckOut} 
+            component={ScrollToTop(CheckOut)} 
             path={ROUTES.CHECKOUT} 
         />
       </Switch>

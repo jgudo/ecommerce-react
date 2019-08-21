@@ -37,7 +37,27 @@ const Home = () => {
           </h2>
           {window.screen.width > 480 && (
             <div className="product-list-search">
-              <SearchBar />
+              <SearchBar>
+                {({ onSearchChange, onKeyUp, isLoading, onSubmitSearch }) => (
+                  <div className="searchbar">
+                    <input
+                        className="searchbar-input" 
+                        onChange={onSearchChange}
+                        onKeyUp={onKeyUp}
+                        placeholder="Search for product"
+                        readOnly={isLoading}
+                        type="text" 
+                    />
+                    <button 
+                        className="button button-small searchbar-button"
+                        disabled={isLoading}
+                        onClick={onSubmitSearch}
+                    >
+                      Search
+                    </button>
+                  </div>
+                )}
+              </SearchBar>
             </div>
           )}
         </div>

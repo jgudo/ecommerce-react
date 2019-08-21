@@ -5,11 +5,12 @@ import BasketToggle from '../../basket/BasketToggle';
 import Badge from '../Badge';
 import UserNav from '../../user/UserNav';
 
-const Navigation = () => {
-  const { basket, isAuthenticating, profile} = useSelector(state => ({
+const Navigation = ({ path }) => {
+  const { basket, isAuthenticating, profile, isAuth} = useSelector(state => ({
     basket: state.basket,
     isAuthenticating: state.app.isAuthenticating,
-    profile: state.profile
+    profile: state.profile,
+    isAuth: !!state.auth.id && !!state.auth.type
   }));
 
   return (
@@ -21,27 +22,56 @@ const Navigation = () => {
           </Link>
         </div>
         <div className="mobile-navigation-search">
-          <h5 className="text-subtle mobile-navigation-search-title">Search for product</h5>
-          <div className="icon-magnify" />
+          <Link className="d-flex" to="/search">
+            <h5 className="text-subtle mobile-navigation-search-title">Search for product</h5>
+            <div className="icon-magnify" />
+          </Link>
         </div>
       </div>
       <ul className="mobile-navigation-menu"> 
         <BasketToggle>
           {({ onClickToggle }) => (
             <li 
-                className="mobile-navigation-item"
+                className="basket-toggle mobile-navigation-item"
                 onClick={onClickToggle}
             >
-              <a href="" className="navigation-menu-link">
-                <Badge count={basket.length}/>
-                My Basket
-              </a>
+              <button className="navigation-menu-link button-link">
+                <span>
+                  <Badge count={basket.length}/>
+                  My Basket
+                </span>
+              </button>
             </li>
           )}
         </BasketToggle>
-        <li className="mobile-navigation-item">
-          <UserNav isAuthenticating={isAuthenticating} profile={profile} />
-        </li>
+        {isAuth ? (
+          <li className="mobile-navigation-item">
+            <UserNav isAuthenticating={isAuthenticating} profile={profile} />
+          </li>
+        ) : (
+          <>
+            {path !== '/signup' && (
+              <li className="mobile-navigation-item">
+                <Link 
+                    className="navigation-menu-link"
+                    to="/signup"
+                >
+                  Sign Up
+                </Link>
+              </li>
+            )}
+            {path !== '/signin' && (
+              <li className="mobile-navigation-item">
+                <Link 
+                    className="navigation-menu-link"
+                    to="/signin"
+                >
+                  Sign In
+                </Link>
+              </li>
+            )}
+          </>
+        )}
       </ul>
     </nav>
   );

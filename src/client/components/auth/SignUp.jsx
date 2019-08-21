@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { signUp } from '../../actions/authActions';
@@ -15,11 +15,6 @@ const SignUp = (props) => {
   }));
   const dispatch = useDispatch();
   const passwordField = useRef(null);
-
-  useEffect(() => {
-    window.scrollTo(undefined, 0);
-  }, []);
-
   const onEmailInput = (e) => {
     const val = e.target.value.trim();
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;

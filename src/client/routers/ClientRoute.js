@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import Basket from '../components/basket/basket';
 // ui
 import Navigation from '../components/ui/Navigation';
+import MobileNavigation from '../components/ui/mobile/MobileNavigation';
 import Footer from '../components/ui/Footer';
 
 const PrivateRoute = ({ 
   isAuthenticated, 
   userType, 
   component: Component, 
+  path,
   ...rest 
 }) => (
   <Route  
@@ -19,7 +21,7 @@ const PrivateRoute = ({
         isAuthenticated && userType === 'client' 
         ? (
           <>
-            <Navigation />
+            {window.screen.width <= 480 ? <MobileNavigation path={path} /> : <Navigation path={path} />}
             <Basket />
             <main className="content">
               <Component {...props} />

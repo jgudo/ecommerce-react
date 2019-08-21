@@ -11,7 +11,7 @@ const initState = {
   banner
 };
 
-export default (state = initState, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case SET_PROFILE:
       return action.payload

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import SignOut from '../../../auth/SignOut';
+import SignOut from '../../auth/SignOut';
 
 const AdminNavigation = () => {
   return (
