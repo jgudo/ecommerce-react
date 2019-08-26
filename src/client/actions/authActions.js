@@ -6,6 +6,7 @@ import {
   ON_AUTHSTATE_FAIL,
   ON_AUTHSTATE_SUCCESS,
   SIGNOUT, 
+  SIGNOUT_SUCCESS,
   SET_AUTH_STATUS,
   SIGNIN_WITH_GOOGLE,
   SIGNIN_WITH_FACEBOOK,
@@ -44,6 +45,10 @@ export const setAuthPersistence = () => ({
 
 export const signOut = () => ({
   type: SIGNOUT
+});
+
+export const signOutSuccess = () => ({
+  type: SIGNOUT_SUCCESS
 });
 
 export const setAuthStatus = status => ({

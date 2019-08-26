@@ -1,0 +1,172 @@
+import React, { useState } from 'react';
+import withAuth from '../hoc/withAuth';
+import CheckOutHeader from '../header/CheckOutHeader';
+
+const ShippingDetails = (props) => {
+  const { profile } = props;
+  const [field, setField] = useState({
+    fullname: profile.fullname ? profile.fullname : '',
+    email: profile.email ? profile.email : '',
+    address: profile.address ? profile.address : '',
+    mobile: profile.mobile ? profile.mobile : ''
+  });
+  const [error, setError] = useState({});
+
+  const onFullNameInput = (e) => {
+    const val = e.target.value.trim();
+    const regex = /[a-zA-Z]{2,}/;
+
+    setField({ ...field, fullname: val });
+
+    if (val === '') {
+      setError({ ...error, fullname: 'First name is required' });
+    } else if (!regex.test(val)) {
+      setError({ ...error, fullname: 'First name must be at least 2 letters' });
+    } else {
+      setError({ ...error, fullname: '' });
+    }
+  };
+
+  const onEmailInput = (e) => {
+    const val = e.target.value.trim();
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+
+    setField({ ...field, email: val });
+
+    if (val === '') {
+      setError({ ...error, email: 'Email is required' });
+    } else if (!regex.test(val)) {
+      setError({ ...error, email: 'Email is invalid' });
+    } else {
+      setError({ ...error, email: '' });
+    }
+  };
+
+  const onAddressInput = (e) => {
+    const val = e.target.value.trim();
+
+    setField({ ...field, address: val });
+
+    if (val === '') {
+      setError({ ...error, address: 'Address is required' });
+    } else {
+      setError({ ...error, address: '' });
+    }
+  };
+
+  const onMobileInput = (e) => {
+    const val = e.target.value.trim();
+
+    setField({ ...field, mobile: val });
+
+    if (val === '') {
+      setError({ ...error, mobile: 'Mobile number is required' });
+    } else {
+      setError({ ...error, mobile: '' });
+    }
+  };
+
+  const errorClassName = (field) => {
+    return error[field] ? 'input-error' : '';
+  };
+
+  return (
+    <div className="checkout">
+      <CheckOutHeader current={2}/>
+      <div className="checkout-step-2">
+        <h3 className="text-center">
+          Shipping Details
+        </h3>
+        <div className="checkout-shipping-wrapper">
+          <div className="checkout-shipping-form">
+            <div className="checkout-fieldset">
+              <div className="d-block checkout-field">
+                {error.fullname && <span className="input-message">{error.fullname}</span>}
+                <span className="d-block padding-s">Full Name</span>
+                <input 
+                    className={`input-form d-block ${errorClassName('fullname')}`}
+                    onChange={onFullNameInput}
+                    placeholder="Your full name"
+                    type="text"
+                    value={field.fullname}
+                />
+              </div>
+              <div className="d-block checkout-field">
+                {error.email && <span className="input-message">{error.email}</span>}
+                <span className="d-block padding-s">Email</span>
+                <input 
+                    className={`input-form d-block ${errorClassName('email')}`}
+                    onChange={onEmailInput}
+                    placeholder="Your email"
+                    type="email"
+                    value={field.email}
+                />
+              </div>
+            </div>
+            <div className="checkout-fieldset">
+              <div className="d-block checkout-field">
+                {error.address && <span className="input-message">{error.address}</span>}
+                <span className="d-block padding-s">Address</span>
+                <input 
+                    className={`input-form d-block ${errorClassName('address')}`}
+                    onChange={onAddressInput}
+                    placeholder="Complete Address"
+                    type="text"
+                    value={field.address}
+                />
+              </div>
+              <div className="d-block checkout-field">
+                {error.mobile && <span className="input-message">{error.mobile}</span>}
+                <span className="d-block padding-s">Mobile Number</span>
+                <input 
+                    className={`input-form d-block ${errorClassName('mobile')}`}
+                    onChange={onMobileInput}
+                    placeholder="Your mobile number"
+                    type="number"
+                    value={field.mobile}
+                />
+              </div>
+            </div>
+            <div className="checkout-fieldset">
+              <div className="checkout-field">
+                <span className="d-block padding-s">Shipping Option</span>
+                <div className="checkout-checkbox-field">
+                  <input 
+                      className=""
+                      id="shipping-option-checkbox"
+                      type="checkbox"
+                  />
+                  <label className="d-flex w-100" htmlFor="shipping-option-checkbox">
+                    <h5 className="d-flex-grow-1 margin-0">
+                      &nbsp; International Shipping &nbsp; 
+                      <span className="text-subtle">7-14 days</span>
+                    </h5>
+                    <h4 className="margin-0">$50.00</h4>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div className="checkout-shipping-action">
+              <button 
+                  className="button button-muted checkout-shipping-back"
+                  onClick={() => props.history.push('/checkout/step1')}
+                  type="button"
+              >
+                Back
+              </button>
+              <button 
+                  className="button checkout-shipping-back"
+                  onClick={() => props.history.push('/checkout/step3')}
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default withAuth(ShippingDetails);

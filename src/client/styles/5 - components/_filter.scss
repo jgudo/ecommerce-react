@@ -21,3 +21,27 @@
 .filters-button {
   flex-grow: 1;
 }
+
+.filters-toggle {
+  position: relative;
+}
+
+.filters-toggle-sub {
+  width: 250px;
+  background: $white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding: $m-size;
+  z-index: 1;
+  display: none;
+}
+
+.is-open-filters .filters-toggle-sub {
+  display: block;
+}
+
+.is-open-filters .filters-toggle-caret {
+  transform: rotate(180deg);
+}

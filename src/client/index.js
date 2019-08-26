@@ -27,12 +27,11 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 }
 
 const { store, persistor } = configureStore();
+// ReactDOM.render(<Preloader />, document.getElementById('app'));
+
 
 // firebase.auth.onAuthStateChanged((user) => {
-//   ReactDOM.render(<Preloader />, document.getElementById('app'));
-
 //   if (user) {
-//     console.log(user);
 //     store.dispatch(onAuthStateSuccess(user));
 //   } else {
 //     store.dispatch(onAuthStateFail('Fail'));
@@ -40,7 +39,7 @@ const { store, persistor } = configureStore();
 
 //   ReactDOM.render(
 //     <Provider store={store}>
-//       <PersistGate loading={<h2>Loading</h2>} persistor={persistor}>
+//       <PersistGate loading={<Preloader />} persistor={persistor}>
 //         <AppRouter />
 //       </PersistGate>
 //     </Provider>, 
@@ -51,7 +50,7 @@ const { store, persistor } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={<h2>Loading</h2>} persistor={persistor}>
+    <PersistGate loading={<Preloader />} persistor={persistor}>
       <AppRouter />
     </PersistGate>
   </Provider>, 

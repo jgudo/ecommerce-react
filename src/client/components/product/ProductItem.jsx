@@ -18,7 +18,7 @@ const ProductItem = ({
   return (
     <div 
         className="product-card"
-        style={{ borderBottom: foundOnBasket(product.id) ? '1px solid #4a4a4a' : '' }}
+        style={{ borderBottom: foundOnBasket(product.id) ? '1px solid #4a4a4a' : null }}
     >
       <div 
           className="product-card-content"

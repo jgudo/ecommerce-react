@@ -5,7 +5,8 @@ label {
     border: 1px solid $border-color-focus;
     padding: $s-size $m-size;
     display: inline-block;
-
+    position: relative;
+    
     &:hover {
         cursor: pointer;
         background: $border-color-focus;

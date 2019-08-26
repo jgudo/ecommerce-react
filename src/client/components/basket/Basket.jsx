@@ -5,12 +5,7 @@ import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 
-import { 
-  removeFromBasket, 
-  clearBasket, 
-  addQtyItem,
-  minusQtyItem
-} from '../../actions/basketActions';
+import { removeFromBasket, clearBasket, addQtyItem, minusQtyItem } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils';
 
 const Basket = (props) => {
@@ -41,9 +36,9 @@ const Basket = (props) => {
   };
 
   const onCheckOut = () => {
-    if (basket.length !== 0 && isAuth) {
-      props.history.push('/checkout');
-      alert('Authenticated');
+    if ((basket.length !== 0 && isAuth)) {
+      document.body.classList.remove('is-basket-open');
+      props.history.push('/checkout/step1');
     } else {
       onOpenModal();
     }
@@ -127,12 +122,12 @@ const Basket = (props) => {
         </div>
         <div className="basket-checkout">
           <div className="basket-total">
-            <p className="basket-total-title">Total Amout:</p>
+            <p className="basket-total-title">Subtotal Amout:</p>
             <h2 className="basket-total-amount">{calculateTotal()}</h2>
           </div>
           <button 
               className="basket-checkout-button button"
-              disabled={basket.length === 0}
+              disabled={basket.length === 0 || props.location.pathname === '/checkout'}
               onClick={onCheckOut}
           >
             Check Out

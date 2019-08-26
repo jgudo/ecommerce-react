@@ -122,3 +122,79 @@ input[type=range]::-ms-thumb {
   background: #a1d0ff;
   cursor: pointer;
 }
+
+input[type=range]:disabled {
+  opacity: .4;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+input[type=checkbox] + label,
+input[type=radio] + label {
+  font-size: $font-medium;
+  background: none;
+  border: none;
+  padding: $s-size 0;
+  display: flex;
+  align-items: center;
+}
+
+
+input[type=checkbox] + label:before,
+input[type=radio] + label:before {
+  content:'';
+  -webkit-appearance: none;
+  background-color: $white;
+  border: 2px solid $border-color-focus;
+  // box-shadow: 0 0 0 $white,  inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 50%;
+  transition: all .3s ease;
+}
+
+input[type=checkbox] + label:after,
+input[type=radio] + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  bottom: 0;
+  margin: auto;
+  width: 3px;
+  height: 10px;
+  border: solid $border-color;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: all .3s ease;
+}
+
+input[type=checkbox]:hover + label:before,
+input[type=radio]:hover + label:before {
+  border: 2px solid darken($border-color-focus, 5%);
+}
+
+input[type=checkbox]:checked + label:before,
+input[type=radio]:checked + label:before {
+  border: 2px solid $black;
+	background: $black;
+}
+
+input[type=checkbox]:checked + label:after,
+input[type=radio]:checked + label:after {
+  border: solid $white;
+  border-width: 0 2px 2px 0;
+}

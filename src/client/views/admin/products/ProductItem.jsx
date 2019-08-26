@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
 import { displayMoney, displayActionMessage } from '../../../helpers/utils';
@@ -26,6 +25,13 @@ const ProductItem = (props) => {
     productRef.current.classList.remove('item-active');
   };
 
+  const parseDate = (date) => {
+    const d = new Date(date);
+
+    return `${d.getMonth() + 1}/ ${d.getDay()}/ ${d.getFullYear()}`;
+  };
+
+
   return (
     <div 
         className="item item-products"
@@ -49,7 +55,7 @@ const ProductItem = (props) => {
           <span>{displayMoney(product.price)}</span>
         </div>
         <div className="grid-col">
-          <span>{moment(product.dateAdded).format('ll')}</span>
+          <span>{parseDate(product.dateAdded)}</span>
         </div>
         <div className="grid-col">
           <span>{product.maxQuantity}</span>

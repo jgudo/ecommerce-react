@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BasketToggle from '../../basket/BasketToggle';
 import Badge from '../Badge';
-import UserNav from '../../user/UserNav';
+import UserNav from '../../../views/profile/UserAvatar';
 
 const Navigation = ({ path }) => {
   const { basket, isAuthenticating, profile, isAuth} = useSelector(state => ({
@@ -35,7 +35,10 @@ const Navigation = ({ path }) => {
                 className="basket-toggle mobile-navigation-item"
                 onClick={onClickToggle}
             >
-              <button className="navigation-menu-link button-link">
+              <button 
+                  className="navigation-menu-link button-link"
+                  disabled={path === '/checkout/step1' || path === '/checkout/step2' || path === '/checkout/step3'}
+              >
                 <span>
                   <Badge count={basket.length}/>
                   My Basket

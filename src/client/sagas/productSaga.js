@@ -1,5 +1,5 @@
 import firebase from '../firebase/firebase';
-import { call, put } from 'redux-saga/effects';
+import { call, put, cancel } from 'redux-saga/effects';
 import * as ACTION from '../constants/constants';
 import { displayActionMessage } from '../helpers/utils';
 import { history } from '../routers/AppRouter';
@@ -20,19 +20,27 @@ function* handleAction(location, message) {
   yield call(displayActionMessage, message);
 }
 
+function* getProducts() {
+  try {
+    yield initRequest();
+    
+    const products = yield call(firebase.getProducts);
+
+    yield put({ type: ACTION.GET_PRODUCTS_SUCCESS, payload: products });
+    yield put({ type: ACTION.LOADING, payload: false });
+  } catch (e) {
+    yield handleError(e);
+  }
+}
+
 function* productSaga({ type, payload }) {
   switch (type) {
     case ACTION.GET_PRODUCTS:
-      try {
-        yield initRequest();
-        
-        const products = yield call(firebase.getProducts);
-
-        yield put({ type: ACTION.GET_PRODUCTS_SUCCESS, payload: products });
-        yield put({ type: ACTION.LOADING, payload: false });
-      } catch (e) {
-        yield handleError(e);
-      }
+      yield getProducts();
+      break;
+    case ACTION.CANCEL_GET_PRODUCTS:
+      yield cancel(getProducts);
+      console.log('Task cancelled');
       break;
     case ACTION.ADD_PRODUCT:
       try {

@@ -1,7 +1,17 @@
-import { ADD_PRODUCT, REMOVE_PRODUCT, EDIT_PRODUCT, GET_PRODUCTS } from '../constants/constants';
+import { 
+  ADD_PRODUCT, 
+  REMOVE_PRODUCT, 
+  EDIT_PRODUCT, 
+  GET_PRODUCTS,
+  CANCEL_GET_PRODUCTS 
+} from '../constants/constants';
 
 export const getProducts = () => ({
   type: GET_PRODUCTS
+});
+
+export const cancelGetProducts = () => ({
+  type: CANCEL_GET_PRODUCTS
 });
 
 export const addProduct = product => ({

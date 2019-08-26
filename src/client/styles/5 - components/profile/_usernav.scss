@@ -39,34 +39,6 @@
   object-fit: cover;
 }
 
-.user-carret {
-  width: 10px;
-  height: 10px;
-  position: relative;
-  margin-left: $s-size;
-  transition: all .2s ease;
-
-  &:before, 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    width: 7px;
-    height: 2px;
-    background: $button-color;
-  }
-
-  &:before {
-    left: 0;
-    transform: rotate(45deg);
-  }
-
-  &:after {
-    transform: rotate(-45deg);
-    right: -1px;
-  }
-}
-
 .user-nav-sub {
   width: 100%;
   height: auto;
@@ -99,7 +71,7 @@
   border-bottom: 2px solid $black;
 }
 
-.user-sub-open .user-carret {
+.user-sub-open .user-caret {
   transform: rotate(180deg);
 }
 

@@ -1,17 +1,29 @@
 import firebase from '../firebase/firebase';
-import { call, put } from 'redux-saga/effects';
+import { call, put, fork } from 'redux-saga/effects';
 import * as ACTION from '../constants/constants';
 import { history } from '../routers/AppRouter';
+import { setAuthStatus, signInSuccess, signOut, signOutSuccess } from '../actions/authActions';
+import { clearBasket } from '../actions/basketActions';
+import { setProfile, clearProfile } from '../actions/profileActions';
+import { resetFilter } from '../actions/filterActions';
 
 function* handleError(e) {
-  yield put({ type: ACTION.SET_AUTH_STATUS, payload: e.message });
   yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+  
+  switch (e.code) {
+    case 'auth/network-request-failed':
+      yield put(setAuthStatus('Network error has occured. Please try again.'));
+      break;
+    default:
+      yield put(setAuthStatus(e.messsage));
+      break;
+  }
   console.log('ERROR: ', e);
 }
 
 function* initRequest() {
   yield put({ type: ACTION.IS_AUTHENTICATING, payload: true });
-  yield put({ type: ACTION.SET_AUTH_STATUS, payload: null });
+  yield put(setAuthStatus(null));
 }
 
 function* authSaga({ type, payload }) {
@@ -52,8 +64,8 @@ function* authSaga({ type, payload }) {
         });
         console.log(ref);
 
-        yield put({ type: ACTION.SET_PROFILE, payload });
-        yield put({ type: ACTION.SIGNIN_SUCCESS, payload: { id: uid, type: 'client' }});
+        yield put(setProfile(payload));
+        yield put(signInSuccess({ id: uid, type: 'client' }));
         yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
       } catch (e) {
         yield handleError(e);
@@ -62,11 +74,11 @@ function* authSaga({ type, payload }) {
     case ACTION.SIGNOUT:
       try {
         yield initRequest();
-        yield call(firebase.signOut);
-        yield put({ type: ACTION.CLEAR_BASKET });
-        yield put({ type: ACTION.CLEAR_PROFILE });
-        yield put({ type: ACTION.RESET_FILTER });
-        yield put({ type: ACTION.SIGNOUT_SUCCESS });
+        yield call(firebase.signOut); // synchronously 
+        yield put(clearBasket());
+        yield put(clearProfile());
+        yield put(resetFilter());
+        yield put(signOutSuccess());
         yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
         yield call(history.push, '/signin');
       } catch (e) {
@@ -77,7 +89,7 @@ function* authSaga({ type, payload }) {
       const snapshot = yield call(firebase.getUser, payload.uid);
 
       if (snapshot.val()) { // if user exists in database
-        yield put({ type: ACTION.SET_PROFILE, payload: snapshot.val() });
+        yield put(setProfile(snapshot.val()));
       } else { // add the user
         const user = {
           fullname: payload.displayName ? payload.displayName : 'User',
@@ -87,14 +99,14 @@ function* authSaga({ type, payload }) {
           mobile: ''
         };
         yield call(firebase.addUser, payload.uid, user);
-        yield put({ type: ACTION.SET_PROFILE, payload: user });
+        yield put(setProfile(user));
       }
      
-      yield put({ type: ACTION.SIGNIN_SUCCESS, payload: { id: payload.uid, type: 'client' }});
+      yield put(signInSuccess({ id: payload.uid, type: 'client' }));
       yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
       break;
     case ACTION.ON_AUTHSTATE_FAIL:
-      yield put({ type: ACTION.SIGNOUT });
+      yield put(signOut());
       yield handleError(payload);
       break;
     case ACTION.SET_AUTH_PERSISTENCE:

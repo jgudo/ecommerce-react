@@ -1,26 +1,28 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTextFilter } from '../../actions/filterActions';
 
 const SearchBar = (props) => {
-  const isLoading = useSelector(state => state.app.loading);
+  const { isLoading, products } = useSelector(state => ({
+    isLoading: state.app.loading,
+    products: state.products
+  }));
   const dispatch = useDispatch();
   let input = '';
   
   const onSubmitSearch = () => {
-    dispatch(setTextFilter(input));
+    products.length !== 0 && dispatch(setTextFilter(input));
   };
 
   const onSearchChange = (e) => {
     const val = e.target.value.trim();
     input = val;
 
-    if (val === '') dispatch(setTextFilter(val));
+    if (val === '' && products.length !== 0) dispatch(setTextFilter(val));
   };
 
   const onKeyUp = (e) => {
-    if (e.keyCode === 13) dispatch(setTextFilter(input));
+    if (e.keyCode === 13 && products.length !== 0) dispatch(setTextFilter(input));
 
   };
 

@@ -15,6 +15,7 @@ $background-color-01: #f2f2f2;
 $paragraph-color-01: #3a3a3a;
 $paragraph-color-00: #4a4a4a; // base
 $paragraph-color-10: #818181;
+$paragraph-color-20: #b6b6b6;
 // Heading
 $heading-color: #1a1a1a;
 
@@ -25,6 +26,7 @@ $border-color-focus: #c5c5c5;
 // General
 $white: #fff;
 $black: #000;
+$off-black: #303030;
 $red: rgba(247, 45, 45, 0.986);
 
 // Buttons
@@ -34,3 +36,5 @@ $button-hover: lighten($button-color, 10%);
 // Social
 $color-facebook: rgb(19, 84, 182);
 $color-facebook-hover: rgb(15, 70, 153);
+
+$color-success: #000;

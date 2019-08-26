@@ -1,23 +1,35 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import defaultBanner from '../../images/defaultBanner.jpg';
+import defaultAvatar from '../../images/defaultAvatar.jpg';
 
-const UserProfile = () => {
+const UserProfile = (props) => {
   const profile = useSelector(state => state.profile);
 
   return (
     <div className="user-profile">
       <div className="user-profile-block">
         <div className="user-profile-banner">
-          <img 
-              alt="Banner"
-              className="user-profile-banner-img"
-              src={profile.banner} 
-          />
-          <img 
-              alt="Avatar"
-              className="user-profile-img"
-              src={profile.avatar} 
-          />
+          <div className="user-profile-banner-wrapper">
+            <img 
+                alt="Banner"
+                className="user-profile-banner-img"
+                src={profile.banner ? profile.banner : defaultBanner} 
+            />
+          </div>
+          <div className="user-profile-img-wrapper">
+            <img 
+                alt="Avatar"
+                className="user-profile-img"
+                src={profile.avatar ? profile.avatar : defaultAvatar} 
+            />
+          </div>
+          <button 
+              className="button button-muted button-small user-profile-edit"
+              onClick={() => props.history.push('/profile/edit')}
+          >
+            Edit Profile
+          </button>
         </div>
         <div className="user-profile-details">
           <h2>{profile.fullname}</h2>

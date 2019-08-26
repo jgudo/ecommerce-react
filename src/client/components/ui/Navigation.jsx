@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { withRouter, NavLink, Link} from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import UserNav from '../user/UserNav';
+import UserAvatar from '../../views/profile/UserAvatar';
 
 const Navigation = ({ path }) => {
   const { basket, profile, isAuth, isAuthenticating } = useSelector(state => ({
@@ -48,13 +48,17 @@ const Navigation = ({ path }) => {
               exact
               to="/" 
           >
-            Store
+            Home
           </NavLink>
         </li>
         <li className="navigation-menu-item">
           <BasketToggle>
             {({ onClickToggle }) => (
-              <button className="button-link navigation-menu-link basket-toggle" onClick={onClickToggle}>
+              <button 
+                  className="button-link navigation-menu-link basket-toggle" 
+                  disabled={path === '/checkout/step1' || path === '/checkout/step2' || path === '/checkout/step3'}
+                  onClick={onClickToggle}
+              >
                 <span>
                   <Badge count={basket.length}/>
                   My Basket 
@@ -65,7 +69,7 @@ const Navigation = ({ path }) => {
         </li>
         {isAuth ? (
           <li className="navigation-menu-item">
-            <UserNav isAuthenticating={isAuthenticating} profile={profile} />
+            <UserAvatar isAuthenticating={isAuthenticating} profile={profile} />
           </li>
         ) : (
           <li className="navigation-action">

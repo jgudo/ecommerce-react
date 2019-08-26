@@ -72,13 +72,9 @@
 }
 
 .basket-item-img-wrapper {
-  width: 100px;
+  width: 70px;
   height: 60px;
   margin-right: $m-size;
-
-  @media (max-width: $mobile) {
-    width: 70px;
-  }
 }
 
 .basket-item-img {
@@ -97,6 +93,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; 
+  position: relative;
 }
 
 .basket-item-price {
@@ -119,6 +116,7 @@
   padding: $m-size;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 
   &:before {
@@ -139,7 +137,7 @@
 }
 
 .basket-total {
-  flex-grow: 1;
+  // flex-grow: 1;
 }
 
 .basket-total-title {
@@ -168,18 +166,4 @@
 
 .basket-control-count {
   margin: 5px;
-}
-
-
-
-@keyframes slide-up {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

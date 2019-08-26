@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CircularProgress from '../ui/CircularProgress';
+import CircularProgress from '../../../components/ui/CircularProgress';
 // import uuid from 'uuid';
 
 class ProductForm extends Component {

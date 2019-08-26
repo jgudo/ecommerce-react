@@ -8,8 +8,16 @@ import CircularProgress from '../ui/CircularProgress';
 import ProductAppliedFilters from './ProductAppliedFilters';
 
 const ProductList = props => {
-  const { products, basket, filter, isLoading, requestStatus } = useSelector(state => ({
-    products: selectFilter(state.products, state.filter),
+  const { 
+    filteredProducts, 
+    products, 
+    basket, 
+    filter, 
+    isLoading, 
+    requestStatus 
+  } = useSelector(state => ({
+    filteredProducts: selectFilter(state.products, state.filter),
+    products: state.products,
     basket: state.basket,
     filter: state.filter,
     isLoading: state.app.loading,
@@ -32,21 +40,21 @@ const ProductList = props => {
   const onGetProducts = () => dispatch(getProducts());
 
   useEffect(() => {
-    (products.length === 0 && (!filter.keyword && !filter.brand && !filter.minPrice && !filter.maxPrice)) && onGetProducts();
+    products.length === 0 && onGetProducts();
   }, []);
 
-  return products.length === 0 && isLoading ? (
+  return filteredProducts.length === 0 && isLoading ? (
     <div className="loader">
       <CircularProgress />
       <br/>
       <h5 className="text-subtle">Fetching products, please wait</h5>
     </div>
-  ) : products.length === 0 && !isLoading && !requestStatus ? (
+  ) : filteredProducts.length === 0 && !isLoading && !requestStatus ? (
     <div className="loader">
       <h4>There are no items found</h4>
       <span>Try using correct filters and keyword</span>
       <br/> 
-      <ProductAppliedFilters products={products} filter={filter} />
+      <ProductAppliedFilters filter={filter} />
     </div>
   ) : requestStatus ? (
     <div className="loader">
@@ -61,13 +69,17 @@ const ProductList = props => {
     </div>
   ) : (
     props.children({
-      products,
-      basket,
-      filter,
+      state: {
+        products: filteredProducts,
+        basket,
+        filter
+      },
+      action: {
+        addToBasket: onAddToBasket,
+        removeFromBasket: onRemoveFromBasket,
+        removeProduct:onRemoveProduct
+      },
       foundOnBasket: foundOnBasket,
-      addToBasket: onAddToBasket,
-      removeFromBasket: onRemoveFromBasket,
-      removeProduct:onRemoveProduct,
       isLoading
     })
   );

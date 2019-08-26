@@ -1,0 +1,42 @@
+.edit-user {
+  width: 600px;
+  height: auto;
+  padding: $m-size;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $mobile) {
+    padding: 0;
+  }
+}
+
+.edit-user-details {
+  width: 60%;
+}
+
+.edit-user-images {
+  width: 40%;
+}
+
+.edit-button {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  position: absolute;
+  border-radius: 50%;
+  background: $black;
+  color: $white;
+  display: none;
+}
+
+.edit-avatar-button {
+  bottom: 10px;
+  right: -10px;
+}
+
+.user-profile-img-wrapper:hover .edit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; 
 import { signUp } from '../../actions/authActions';
 
-import CircularProgress from '../ui/CircularProgress';
+import CircularProgress from '../../components/ui/CircularProgress';
 
 const SignUp = (props) => {
   const [error, setError] = useState({});
@@ -15,6 +15,7 @@ const SignUp = (props) => {
   }));
   const dispatch = useDispatch();
   const passwordField = useRef(null);
+
   const onEmailInput = (e) => {
     const val = e.target.value.trim();
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -81,7 +82,7 @@ const SignUp = (props) => {
   return (
     <div className="signup">
       {authStatus && <strong><span className="input-message text-center padding-s">{authStatus}</span></strong>}
-      <div className="signup-wrapper">
+      <div className={`signup-wrapper ${authStatus && 'input-error'}`}>
         <h3>Sign up to Salinaka</h3>
         <form onSubmit={onFormSubmit}>
           <div className="signup-field">

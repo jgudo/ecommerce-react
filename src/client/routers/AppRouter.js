@@ -9,17 +9,21 @@ import PublicRoute from './PublicRoute';
 import * as ROUTES from '../constants/routes';
 
 // components
-import Dashboard from '../components/admin/dashboard/Dashboard'; // Dashboard
-import DashboardProducts from '../components/admin/products/Products'; // Dashboard
-import DashboardUsers from '../components/admin/users/Users'; // Dashboard
-import EditProduct from '../components/product/EditProduct';
-import AddProduct from '../components/product/AddProduct'; // AddProduct
+import Dashboard from '../views/admin/dashboard/Dashboard'; // Dashboard
+import DashboardProducts from '../views/admin/products/Products'; // Dashboard
+import DashboardUsers from '../views/admin/users/Users'; // Dashboard
+import EditProduct from '../views/admin/products/EditProduct';
+import AddProduct from '../views/admin/products/AddProduct'; // AddProduct
 import ProductSearch from '../components/product/ProductSearch'; // AddProduct
-import SignUp from '../components/auth/SignUp';
-import SignIn from '../components/auth/SignIn';
-import UserProfile from '../components/user/UserProfile';
-import Home from '../components/pages/Home';
-import CheckOut from '../components/checkout/CheckOut';
+import SignUp from '../views/auth/SignUp';
+import SignIn from '../views/auth/SignIn';
+import UserProfile from '../views/profile/UserProfile';
+import EditProfile from '../views/profile/EditProfile';
+import Home from '../views/home/Home';
+import CheckOutStep1 from '../views/checkout/step1/OrderSummary';
+import CheckOutStep2 from '../views/checkout/step2/ShippingDetails';
+import CheckOutStep3 from '../views/checkout/step3/Payment';
+import PageNotFound from '../views/404/PageNotFound';
 import ScrollToTop from '../components/ui/ScrollToTop';
 
 export const history = createBrowserHistory();
@@ -69,12 +73,27 @@ const AppRouter = () => (
         />
         <ClientRoute 
             component={ScrollToTop(UserProfile)} 
+            exact
             path={ROUTES.PROFILE} 
         />
         <ClientRoute 
-            component={ScrollToTop(CheckOut)} 
-            path={ROUTES.CHECKOUT} 
+            component={ScrollToTop(EditProfile)} 
+            exact
+            path={ROUTES.PROFILE_EDIT} 
         />
+        <ClientRoute 
+            component={ScrollToTop(CheckOutStep1)} 
+            path={ROUTES.CHECKOUT_STEP_1} 
+        />
+        <ClientRoute 
+            component={ScrollToTop(CheckOutStep2)} 
+            path={ROUTES.CHECKOUT_STEP_2} 
+        />
+        <ClientRoute 
+            component={ScrollToTop(CheckOutStep3)} 
+            path={ROUTES.CHECKOUT_STEP_3} 
+        />
+        <PublicRoute component={ScrollToTop(PageNotFound)} />
       </Switch>
     </>
   </Router>

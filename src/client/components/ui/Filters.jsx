@@ -36,19 +36,25 @@ const Filters = (props) => {
   };
 
   const onApplyFilter = () => {
-    dispatch(applyFilter({
+    const newFilter = {
       brand: brandFilter,
       minPrice: minPriceFilter,
       maxPrice: maxPriceFilter
-    }));
-    props.history.push('/');
-    displayActionMessage('Filters applied successfully!');
+    };
+
+    if (Object.keys(newFilter).some(key => filter[key] !== newFilter[key])) {
+      dispatch(applyFilter(newFilter));
+      props.history.push('/');
+      displayActionMessage('Filters applied successfully!');
+    }
   };
 
   const onResetFilter = () => {
-    dispatch(resetFilter());
-    props.history.push('/');
-    displayActionMessage('Filters reset successfully!');
+    if (['brand', 'minPrice', 'maxPrice'].some(key => !!filter[key])) {
+      dispatch(resetFilter());
+      props.history.push('/');
+      displayActionMessage('Filters reset successfully!');
+    }
   };
 
   return (
@@ -63,7 +69,7 @@ const Filters = (props) => {
           <select 
               className="filters-brand"
               value={brandFilter}
-              disabled={isLoading}
+              disabled={isLoading || productCount === 0}
               onChange={onBrandFilterChange}
           >
             <option value="">All Brands</option>
@@ -84,20 +90,21 @@ const Filters = (props) => {
               max={max} 
               onMaxPriceChange={onMaxPriceChange}
               onMinPriceChange={onMinPriceChange}
+              productCount={productCount}
           />
         )}
       </div>
       <div className="filters-action">
         <button
             className="filters-button button button-small"
-            disabled={isLoading}
+            disabled={isLoading || productCount === 0}
             onClick={onApplyFilter}
         >
           Apply filters
         </button>
         <button
             className="filters-button button button-border button-small"
-            disabled={isLoading}
+            disabled={isLoading || productCount === 0}
             onClick={onResetFilter}
         >
           Reset filters

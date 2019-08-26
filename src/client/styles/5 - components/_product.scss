@@ -1,11 +1,11 @@
 .product-list {
   display: grid;
-  grid-template-columns: repeat(5, 180px);
+  grid-template-columns: repeat(6, 180px);
   grid-gap: $s-size;
   justify-content: center;
 
   @media (max-width: $mobile) {
-    grid-template-columns: repeat(2, 160px);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -61,9 +61,9 @@
   padding: $m-size;
   @include bezier-transition();
 
-  @media (max-width: $mobile) {
-    transform: translateY(-25px);
-  }
+  // @media (max-width: $mobile) {
+  //   transform: translateY(-25px);
+  // }
 }
 
 .product-card-img-wrapper {
@@ -109,6 +109,7 @@
 
   @media (max-width: $mobile) {
     bottom: 0;
+    display: none;
   }
 }
 

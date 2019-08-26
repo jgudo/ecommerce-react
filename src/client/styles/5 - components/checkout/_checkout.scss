@@ -1,0 +1,205 @@
+.checkout {
+  width: 100%;
+  animation: slide-up .5s ease;
+}
+
+.checkout-header {
+  display: flex;
+  justify-content: center;
+}
+
+.checkout-header-menu {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin: auto;
+  position: relative;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+    margin: 0;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 85%;
+    height: 3px;
+    background: transparentize($border-color, .5);
+  }
+}
+
+.checkout-header-list {
+  display: flex;
+  justify-content: center;
+}
+
+.checkout-header-item {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.checkout-header-step {
+  margin: 0;
+  padding: $m-size;
+  background: $border-color;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $paragraph-color-10;
+}
+
+.checkout-header-subtitle {
+  color: $paragraph-color-20;
+  margin-top: $s-size;
+}
+
+.is-active-step .checkout-header-step {
+  background: $black;
+  color: $white;
+}
+
+.is-done-step .checkout-header-step {
+  background: $border-color-focus;
+  color: $white;
+}
+
+.is-active-step .checkout-header-subtitle {
+  color: $black;
+}
+
+.checkout-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: $mobile) {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    button {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.checkout-step-1 {
+  width: 50%;
+  margin: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
+}
+
+.checkout-step-2 {
+  width: 70%;
+  margin: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
+}
+
+.checkout-step-3 {
+  width: 50%;
+  margin: auto;
+
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
+}
+
+.checkout-shipping-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.checkout-shipping-form {
+  width: 100%;
+  padding: $xxl-size;
+
+  @media (max-width: $mobile) {
+    padding: 0;
+  }
+}
+
+.checkout-field {
+  width: 100%;
+  margin: 0 $s-size;
+  
+  @media (max-width: $mobile) {
+    margin: 0
+  }
+}
+
+.checkout-fieldset {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+  }
+}
+
+.checkout-fieldset-collapse {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 97px;
+  overflow: hidden;
+  transition: all .5s ease;
+}
+
+.checkout-checkbox-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $m-size;
+  border: 1px solid $border-color;
+  background: #f1f1f1;
+}
+
+.checkout-shipping-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $m-size;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+    padding: $m-size 0;
+
+    button {
+      width: 100%;
+      display: block;
+      margin: $s-size 0;
+    }
+  }
+}
+
+.checkout-collapse-sub {
+  width: 100%;
+  padding: $m-size;
+  border: 1px solid $border-color;
+  background: $white;
+}
+
+.is-selected-payment {
+  // height: auto;
+}

@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom'; 
-import SignOut from '../auth/SignOut';
-import CircularProgress from '../ui/CircularProgress';
+import SignOut from '../../components/auth/SignOut';
+import CircularProgress from '../../components/ui/CircularProgress';
+import defaultAvatar from '../../images/defaultAvatar.jpg';
 
 const UserNav = (props) => {
   const { profile } = props;
@@ -32,10 +33,10 @@ const UserNav = (props) => {
         <img 
             alt=""
             className="user-nav-img"
-            src={profile.avatar} 
+            src={profile.avatar ? profile.avatar : defaultAvatar} 
         />
       </div>
-      <div className="user-carret" />
+      <div className="icon-caret user-caret" />
       <div className="user-nav-sub">
         <Link 
             to="/profile"

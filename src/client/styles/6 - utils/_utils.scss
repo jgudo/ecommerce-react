@@ -32,6 +32,10 @@
   align-items: center;
 }
 
+.d-flex-grow-1 {
+  flex-grow: 1;
+}
+
 .background-dark {
   background: $black;
 }
@@ -78,6 +82,10 @@
 
 .padding-s {
   padding: $s-size;
+}
+
+.padding-xl {
+  padding: $xl-size;
 }
 
 .padding-left-s {
@@ -160,6 +168,14 @@
   margin-right: $xxl-size;
 }
 
+.margin-top-s {
+  margin-top: $s-size;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
 .margin-0 {
   margin: 0;
 }
@@ -167,6 +183,7 @@
 .flex-justify-end {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .grid-count-4 {
@@ -179,4 +196,39 @@
   display: grid;
   grid-gap: $s-size;
   grid-template-columns: repeat(6, 1fr);
+}
+
+.position-relative {
+  position: relative;
+}
+
+// ICONS
+/// --------
+
+.icon-caret {
+  width: 10px;
+  height: 10px;
+  position: relative;
+  margin-left: $s-size;
+  transition: all .2s ease;
+
+  &:before, 
+  &:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    width: 7px;
+    height: 2px;
+    background: $button-color;
+  }
+
+  &:before {
+    left: 0;
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+    right: -1px;
+  }
 }

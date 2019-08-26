@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ProductList from '../../product/ProductList';
+import ProductList from '../../../components/product/ProductList';
 import ProductItem from './ProductItem';
-import Filters from '../../ui/Filters';
-import SearchBar from '../../ui/SearchBar';
-import CircularProgress from '../../ui/CircularProgress';
-import ProductAppliedFilters from '../../product/ProductAppliedFilters';
+import Filters from '../../../components/ui/Filters';
+import SearchBar from '../../../components/ui/SearchBar';
+import FiltersToggle from '../../../components/ui/FiltersToggle';
+import ProductAppliedFilters from '../../../components/product/ProductAppliedFilters';
 
 const Products = (props) => {
   const onClickAddProduct = () => {
@@ -21,14 +21,7 @@ const Products = (props) => {
             {products.length} {products.length > 1 ? 'items ' : 'item '}
           </span> */}
         </h2>
-        <div className="product-admin-filter">
-          <button className="button button-border button-border-gray button-small">
-            Filters
-          </button>
-          <div className="product-admin-filter-wrapper">
-            <Filters />
-          </div>
-        </div>
+        <FiltersToggle /> &nbsp;
         <SearchBar>
           {({ onSearchChange, onKeyUp, isLoading, onSubmitSearch }) => (
             <div className="searchbar">
@@ -59,10 +52,10 @@ const Products = (props) => {
         </button>
       </div>
       <ProductList>
-        {({ products, filter, removeProduct, isLoading }) => (
+        {({ state, action, isLoading }) => (
           <>
-            <ProductAppliedFilters products={products} filter={filter}/>
-            {products.length > 0 ? (
+            <ProductAppliedFilters products={state.products} filter={state.filter}/>
+            {state.products.length > 0 && (
               <div className="grid grid-product grid-count-6">
                 <div className="grid-col" />
                 <div className="grid-col">
@@ -81,23 +74,12 @@ const Products = (props) => {
                   <h5>Qty</h5>
                 </div>
               </div>
-            ) : products.length === 0 && !isLoading ? (
-              <div className="product-list-empty">
-                <h4>There are no items found</h4>
-                <span>Try using correct filters and keyword</span>
-              </div>
-            ) : (
-              <div className="progress-loading">
-                <CircularProgress visible={isLoading} theme="dark" />
-                <br/>
-                <h5>Fetching products, please wait</h5>
-              </div>
-            )}
-            {products.map(product => (
+            )} 
+            {state.products.map(product => (
               <ProductItem 
                   key={product.id}
                   product={product}
-                  removeProduct={removeProduct}
+                  removeProduct={action.removeProduct}
               />
             ))}
           </>

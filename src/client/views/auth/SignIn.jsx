@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { signIn, signInWithGoogle, signInWithFacebook } from '../../actions/authActions';
-import CircularProgress from '../ui/CircularProgress';
+import CircularProgress from '../../components/ui/CircularProgress';
 
 const SignIn = (props) => {
   const { authStatus, isAuthenticating } = useSelector(state => ({
