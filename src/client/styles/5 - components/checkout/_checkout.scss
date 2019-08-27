@@ -164,6 +164,11 @@
   height: 97px;
   overflow: hidden;
   transition: all .5s ease;
+  opacity: .6;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .checkout-checkbox-field {
@@ -190,6 +195,14 @@
       display: block;
       margin: $s-size 0;
     }
+
+    button:first-child {
+      order: 2;
+    }
+
+    button:last-child {
+      order: 1;
+    }
   }
 }
 
@@ -200,6 +213,41 @@
   background: $white;
 }
 
-.is-selected-payment {
-  // height: auto;
+.checkout-cards-accepted {
+  .payment-img {
+    margin: 0 2px;
+  }
+}
+
+.payment-img {
+  width: 48px;
+  height: 32px;
+  background: url('/static/creditcards.png');
+  background-size: 300px 200px;
+  filter: grayscale(1);
+  border-radius: 2px;
+}
+
+.payment-img-paypal {
+  background-position: 103px 115px;
+}
+
+.payment-img-visa {
+  background-position: -55px -15px;
+}
+
+.payment-img-mastercard {
+  background-position: 103px -15px;
+}
+
+.payment-img-express {
+  background-position: -126px -15px;
+}
+
+.payment-img-maestro {
+  background-position: -55px 47px;
+}
+
+.payment-img-discover {
+  background-position: 175px 115px;
 }

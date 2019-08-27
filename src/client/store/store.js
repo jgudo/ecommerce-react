@@ -12,6 +12,7 @@ import basketReducer from '../reducers/basketReducer';
 import authReducer from '../reducers/authReducer';
 import profileReducer from '../reducers/profileReducer';
 import filterReducer from '../reducers/filterReducer';
+import checkoutReducer from '../reducers/checkoutReducer';
 import userReducer from '../reducers/userReducer';
 import appReducer from '../reducers/appReducer';
 
@@ -23,7 +24,7 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const authPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'profile', 'basket']
+  whitelist: ['auth', 'profile', 'basket', 'checkout']
 }
 
 const rootReducer = {
@@ -33,6 +34,7 @@ const rootReducer = {
   profile: profileReducer,
   filter: filterReducer,
   users: userReducer,
+  checkout: checkoutReducer,
   app: appReducer,
 }
 

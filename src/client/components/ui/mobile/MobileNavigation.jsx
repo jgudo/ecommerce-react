@@ -31,13 +31,11 @@ const Navigation = ({ path }) => {
       <ul className="mobile-navigation-menu"> 
         <BasketToggle>
           {({ onClickToggle }) => (
-            <li 
-                className="basket-toggle mobile-navigation-item"
-                onClick={onClickToggle}
-            >
+            <li className="basket-toggle mobile-navigation-item">
               <button 
                   className="navigation-menu-link button-link"
                   disabled={path === '/checkout/step1' || path === '/checkout/step2' || path === '/checkout/step3'}
+                  onClick={onClickToggle}
               >
                 <span>
                   <Badge count={basket.length}/>

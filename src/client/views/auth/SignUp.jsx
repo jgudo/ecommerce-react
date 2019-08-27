@@ -31,13 +31,13 @@ const SignUp = (props) => {
   };
 
   const onFullnameInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /[a-zA-Z]{2,}/;
+    const val = e.target.value.trimStart();
+    const regex = /[a-zA-Z]{5,}/;
 
     if (val === '') {
-      setError({ ...error, fullname: 'First name is required' });
+      setError({ ...error, fullname: 'Full name is required' });
     } else if (!regex.test(val)) {
-      setError({ ...error, fullname: 'First name must be at least 2 letters' });
+      setError({ ...error, fullname: 'Full name must be at least 5 letters' });
     } else {
       setField({ ...field, fullname: val });
       setError({ ...error, fullname: '' });
@@ -90,6 +90,7 @@ const SignUp = (props) => {
             <span className="d-block padding-s">Full Name</span>
             <input 
                 className={`input-form d-block ${errorClassName('fullname')}`}
+                maxlength={30}
                 onKeyUp={onFullnameInput}
                 placeholder="Full name"
                 readOnly={isAuthenticating}

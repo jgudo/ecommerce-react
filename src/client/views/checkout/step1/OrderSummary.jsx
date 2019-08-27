@@ -6,20 +6,13 @@ import { removeFromBasket, clearBasket, addQtyItem, minusQtyItem } from '../../.
 import { displayMoney } from '../../../helpers/utils';
 
 const OrderSummary = (props) => {
-  const { basket, dispatch } = props;
-
-  const calculateTotal = () => {
-    let total = 0;
-
-    if (basket.length !== 0) {
-      const result = basket.map(product => product.price * product.quantity).reduce((a, b) => a + b);
-      total = result.toFixed(2);
-    }
-
-    return displayMoney(total);
-  };
+  const { basket, subtotal, dispatch } = props;
 
   const onContinue = () => {
+    props.history.push('/');
+  };
+
+  const onNext = () => {
     props.history.push('/checkout/step2');
   };
 
@@ -28,6 +21,8 @@ const OrderSummary = (props) => {
       <CheckOutHeader current={1}/>
       <div className="checkout-step-1">
         <h3 className="text-center">Order Summary</h3>
+        <span className="d-block text-center">Review all your orders</span>
+        <br/>
         {basket.map(product => (
           <BasketItem 
               key={product.id}
@@ -42,17 +37,24 @@ const OrderSummary = (props) => {
           />
         ))}
         <br/>
-        <div className="checkout-action">
-          <div className="basket-total">
-            <p className="basket-total-title">Subtotal:</p>
-            <h2 className="basket-total-amount">{calculateTotal()}</h2>
-          </div>
+        <div className="basket-total text-right">
+          <p className="basket-total-title">Subtotal:</p>
+          <h2 className="basket-total-amount">{displayMoney(subtotal)}</h2>
+        </div>
+        <br/>
+        <div className="checkout-shipping-action">
+          <button 
+              className="button button-muted"
+              onClick={onContinue}
+          >
+            Continue Shopping
+          </button>
           <br/>
           <button 
               className="button"
-              onClick={onContinue}
+              onClick={onNext}
           >
-            Continue
+            Next Step
           </button>
         </div>
       </div>

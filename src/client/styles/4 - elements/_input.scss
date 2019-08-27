@@ -27,6 +27,12 @@ input[type=number]:invalid,
 input[type=number]:out-of-range {
   border: 2px solid #ff6347;
 }
+
+input[type=date] {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+}
+
 input[type=range] {
   -webkit-appearance: none;
   width: 100%;

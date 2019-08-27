@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import withAuth from '../hoc/withAuth';
 import CheckOutHeader from '../header/CheckOutHeader';
 
+import { displayMoney } from '../../../helpers/utils';
+import setShippingDetails from '../../../actions/checkoutActions';
+
 const ShippingDetails = (props) => {
-  const { profile } = props;
+  const { profile, dispatch, shipping, subtotal } = props;
   const [field, setField] = useState({
     fullname: profile.fullname ? profile.fullname : '',
     email: profile.email ? profile.email : '',
-    address: profile.address ? profile.address : '',
-    mobile: profile.mobile ? profile.mobile : ''
+    address: profile.address ? profile.address : shipping.address ? shipping.address : '',
+    mobile: profile.mobile ? profile.mobile : shipping.mobile ? shipping.mobile : '',
+    isInternational: !!shipping.isInternational ? shipping.isInternational : false,
+    isDone: false
   });
   const [error, setError] = useState({});
 
@@ -43,7 +48,7 @@ const ShippingDetails = (props) => {
   };
 
   const onAddressInput = (e) => {
-    const val = e.target.value.trim();
+    const val = e.target.value.trimStart();
 
     setField({ ...field, address: val });
 
@@ -70,6 +75,25 @@ const ShippingDetails = (props) => {
     return error[field] ? 'input-error' : '';
   };
 
+  const onShippingOptionChange = (e) => {
+    if (e.target.checked) {
+      setField({ ...field, isInternational: true });
+    } else {
+      setField({ ...field, isInternational: false });
+    }
+  };
+
+  const onClickNext = () => {
+    const clear = Object.keys(error).every(key => error[key] === '') 
+      && Object.keys(field).every(key => field[key] !== '');
+
+    if (clear) {
+      dispatch(setShippingDetails({ ...field, isDone: true }));
+      props.history.push('/checkout/step3');
+    }
+  };
+
+
   return (
     <div className="checkout">
       <CheckOutHeader current={2}/>
@@ -87,6 +111,7 @@ const ShippingDetails = (props) => {
                     className={`input-form d-block ${errorClassName('fullname')}`}
                     onChange={onFullNameInput}
                     placeholder="Your full name"
+                    style={{ textTransform: 'capitalize' }}
                     type="text"
                     value={field.fullname}
                 />
@@ -133,7 +158,9 @@ const ShippingDetails = (props) => {
                 <div className="checkout-checkbox-field">
                   <input 
                       className=""
+                      checked={field.isInternational}
                       id="shipping-option-checkbox"
+                      onChange={onShippingOptionChange}
                       type="checkbox"
                   />
                   <label className="d-flex w-100" htmlFor="shipping-option-checkbox">
@@ -147,6 +174,37 @@ const ShippingDetails = (props) => {
               </div>
             </div>
             <br/>
+            <div className="checkout-total d-flex-end padding-right-m">
+              <table>
+                <tr>
+                  <td>
+                    <span className="d-block margin-0 padding-right-s text-right">International Shipping: &nbsp;</span>
+                  </td>
+                  <td>
+                    <h4 className="basket-total-amount text-subtle text-right margin-0 ">{field.isInternational ? '$50.00' : '$0.00'}</h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="d-block margin-0 padding-right-s text-right">Subtotal: &nbsp;</span>
+                  </td>
+                  <td>
+                    <h4 className="basket-total-amount text-subtle text-right margin-0">{displayMoney(subtotal)}</h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span className="d-block margin-0 padding-right-s text-right">Total: &nbsp;</span>
+                  </td>
+                  <td>
+                    <h2 className="basket-total-amount text-right">
+                      {displayMoney(subtotal + (field.isInternational ? 50 : 0))}
+                    </h2>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <br/>
             <div className="checkout-shipping-action">
               <button 
                   className="button button-muted checkout-shipping-back"
@@ -157,9 +215,11 @@ const ShippingDetails = (props) => {
               </button>
               <button 
                   className="button checkout-shipping-back"
-                  onClick={() => props.history.push('/checkout/step3')}
+                  disabled={!(Object.keys(error).every(key => error[key] === '') 
+                            && Object.keys(field).every(key => field[key] !== ''))}
+                  onClick={onClickNext}
               >
-                Continue
+                Next Step
               </button>
             </div>
           </div>
