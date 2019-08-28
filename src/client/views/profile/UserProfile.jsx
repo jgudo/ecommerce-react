@@ -1,7 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import defaultBanner from '../../images/defaultBanner.jpg';
-import defaultAvatar from '../../images/defaultAvatar.jpg';
 
 const UserProfile = (props) => {
   const profile = useSelector(state => state.profile);
@@ -14,14 +12,14 @@ const UserProfile = (props) => {
             <img 
                 alt="Banner"
                 className="user-profile-banner-img"
-                src={profile.banner ? profile.banner : defaultBanner} 
+                src={profile.banner} 
             />
           </div>
           <div className="user-profile-img-wrapper">
             <img 
                 alt="Avatar"
                 className="user-profile-img"
-                src={profile.avatar ? profile.avatar : defaultAvatar} 
+                src={profile.avatar} 
             />
           </div>
           <button 
@@ -32,7 +30,7 @@ const UserProfile = (props) => {
           </button>
         </div>
         <div className="user-profile-details">
-          <h2>{profile.fullname}</h2>
+          <h2 className="user-profile-name">{profile.fullname}</h2>
           <span>Email</span>
           <br/>
           <h5>{profile.email}</h5>

@@ -10,7 +10,8 @@ import {
   SET_AUTH_STATUS,
   SIGNIN_WITH_GOOGLE,
   SIGNIN_WITH_FACEBOOK,
-  SET_AUTH_PERSISTENCE
+  SET_AUTH_PERSISTENCE,
+  RESET_PASSWORD
 } from '../constants/constants';
 
 export const signIn = (email, password) => ({
@@ -68,4 +69,9 @@ export const onAuthStateSuccess = user => ({
 export const onAuthStateFail = error => ({
   type: ON_AUTHSTATE_FAIL,
   payload: error
+});
+
+export const resetPassword = email => ({
+  type: RESET_PASSWORD,
+  payload: email
 });

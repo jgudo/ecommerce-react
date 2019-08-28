@@ -9,9 +9,22 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
 }
 
-
 .toast-msg {
   font-weight: bold;
+}
+
+.toast-error {
+  color: $red;
+  border: 1px solid $red;
+  padding: $m-size;
+  background: $white;
+}
+
+.toast-success {
+  color: $green;
+  border: 1px solid $green;
+  padding: $m-size;
+  background: $white;
 }
 
 @keyframes slideIn {

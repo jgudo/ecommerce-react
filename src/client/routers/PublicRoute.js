@@ -10,26 +10,30 @@ import MobileNavigation from '../components/ui/mobile/MobileNavigation';
 const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) => (
   <Route 
       {...rest} 
-      component={props => (
-        isAuth && userType === 'admin'
-        ? (
-          <Redirect to="/dashboard"/>
-        ) 
-        : (isAuth && userType === 'client') && (path === '/signup' || path === '/signin')
-        ? (
-          <Redirect to="/"/>
-        ) 
-        : (
-          <>
-            {window.screen.width <= 480 ? (<MobileNavigation path={path} />) : <Navigation path={path} />}
-            <Basket />
-            <main className="content">
-              <Component {...props} />
-            </main>
-            <Footer />
-          </>
-        )
-      )}
+      component={(props) => {
+        const { from } = props.location.state || { from: { pathname: '/' } }; 
+
+        return (
+          isAuth && userType === 'admin'
+          ? (
+            <Redirect to="/dashboard"/>
+          ) 
+          : (isAuth && userType === 'client') && (path === '/signup' || path === '/signin' || path === '/forgot_password')
+          ? (
+            <Redirect to={from}/>
+          ) 
+          : (
+            <>
+              {window.screen.width <= 480 ? (<MobileNavigation path={path} />) : <Navigation path={path} />}
+              <Basket />
+              <main className="content">
+                <Component {...props} />
+              </main>
+              <Footer />
+            </>
+          )
+        );
+      }}
   />
 );
 

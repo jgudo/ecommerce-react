@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom'; 
 import SignOut from '../../components/auth/SignOut';
 import CircularProgress from '../../components/ui/CircularProgress';
-import defaultAvatar from '../../images/defaultAvatar.jpg';
 
 const UserNav = (props) => {
   const { profile } = props;
@@ -33,7 +32,7 @@ const UserNav = (props) => {
         <img 
             alt=""
             className="user-nav-img"
-            src={profile.avatar ? profile.avatar : defaultAvatar} 
+            src={profile.avatar} 
         />
       </div>
       <div className="icon-caret user-caret" />

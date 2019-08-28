@@ -27,32 +27,32 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 }
 
 const { store, persistor } = configureStore();
-// ReactDOM.render(<Preloader />, document.getElementById('app'));
+ReactDOM.render(<Preloader />, document.getElementById('app'));
 
 
-// firebase.auth.onAuthStateChanged((user) => {
-//   if (user) {
-//     store.dispatch(onAuthStateSuccess(user));
-//   } else {
-//     store.dispatch(onAuthStateFail('Fail'));
-//   }
+firebase.auth.onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(onAuthStateSuccess(user));
+  } else {
+    store.dispatch(onAuthStateFail('Fail'));
+  }
 
-//   ReactDOM.render(
-//     <Provider store={store}>
-//       <PersistGate loading={<Preloader />} persistor={persistor}>
-//         <AppRouter />
-//       </PersistGate>
-//     </Provider>, 
-//     document.getElementById('app')
-//   );
+  ReactDOM.render(
+    <Provider store={store}>
+      <PersistGate loading={<Preloader />} persistor={persistor}>
+        <AppRouter />
+      </PersistGate>
+    </Provider>, 
+    document.getElementById('app')
+  );
   
-// });
+});
 
-ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={<Preloader />} persistor={persistor}>
-      <AppRouter />
-    </PersistGate>
-  </Provider>, 
-  document.getElementById('app')
-);
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <PersistGate loading={<Preloader />} persistor={persistor}>
+//       <AppRouter />
+//     </PersistGate>
+//   </Provider>, 
+//   document.getElementById('app')
+// );

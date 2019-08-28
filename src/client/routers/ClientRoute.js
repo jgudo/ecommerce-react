@@ -30,7 +30,11 @@ const PrivateRoute = ({
           </>
         ) : isAuthenticated && userType === 'admin'
         ? <Redirect to="/dashboard" />
-        :  <Redirect to="/signin" />
+        :  <Redirect to={{
+              pathname: '/signin',
+              state: { from: props.location }
+            }} 
+            />
       )}
   />
 );

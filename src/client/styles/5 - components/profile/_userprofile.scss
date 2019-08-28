@@ -22,6 +22,7 @@
   height: 100px;
   position: relative;
   background: lighten($border-color, 3%);
+  overflow: hidden;
 }
 
 .user-profile-banner {
@@ -49,6 +50,7 @@
   bottom: 50px;
   position: relative;
   background: $border-color;
+  overflow: hidden;
 }
 
 .user-profile-img {
@@ -66,4 +68,8 @@
 
 .user-profile-details {
   padding: $xl-size $m-size $l-size;
+}
+
+.user-profile-name {
+  text-transform: capitalize;
 }

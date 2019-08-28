@@ -42,7 +42,7 @@ const OrderSummary = (props) => {
           <h2 className="basket-total-amount">{displayMoney(subtotal)}</h2>
         </div>
         <br/>
-        <div className="checkout-shipping-action">
+        <div className="checkout-shipping-action padding-0">
           <button 
               className="button button-muted"
               onClick={onContinue}

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { signIn, signInWithGoogle, signInWithFacebook } from '../../actions/authActions';
+import { signIn, setAuthStatus, signInWithGoogle, signInWithFacebook } from '../../actions/authActions';
 import CircularProgress from '../../components/ui/CircularProgress';
 
 const SignIn = (props) => {
-  const { authStatus, isAuthenticating } = useSelector(state => ({
+  const { authStatus, isAuthenticating, auth } = useSelector(state => ({
+    auth: !!state.auth.id && !!state.auth.type,
     authStatus: state.app.authStatus,
     isAuthenticating: state.app.isAuthenticating
   }));
@@ -73,11 +74,11 @@ const SignIn = (props) => {
 
   return (
     <div className="signin-content">
-      {authStatus && <strong><span className="input-message text-center padding-s">{authStatus}</span></strong>}
-      <div className={`signin ${authStatus && 'input-error'}`}>
+      <h3>Sign in to Salinaka</h3>
+      {authStatus && <h5 className="toast-error text-center">{authStatus.message}</h5>}
+      <div className={`signin ${authStatus && (!authStatus.success && 'input-error')}`}>
         <div className="signin-main">
           <div className="signin-wrapper">
-            <h3>Sign in to Salinaka</h3>
             {errorField.auth && <span className="input-message">{errorField.auth}</span>}
             <form onSubmit={onSubmitForm}>
               <div className="signin-field">
@@ -104,6 +105,9 @@ const SignIn = (props) => {
               </div>
               <br/>
               <div className="signin-field signin-action">
+                <Link style={{textDecoration: 'underline'}} to="/forgot_password">
+                  <span>Forgot password?</span>
+                </Link>
                 <button
                     className="button signin-button"
                     disabled={isAuthenticating}

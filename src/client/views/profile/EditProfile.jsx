@@ -10,7 +10,8 @@ const EditProfile = (props) => {
     mobile: profile.mobile ? profile.mobile : '',
     avatar: profile.avatar ? profile.avatar : '',
     avatarFile: undefined,
-    banner: profile.banner ? profile.banner : ''
+    banner: profile.banner ? profile.banner : '',
+    bannerFile: undefined
   });
   const [error, setError] = useState({});
 
@@ -18,8 +19,14 @@ const EditProfile = (props) => {
     const img = e.target.files[0];
     const url = URL.createObjectURL(img);
 
-    console.log(url);
     setProfile({ ...user, avatar: url, avatarFile: img });
+  };
+
+  const onBannerChange = (e) => {
+    const img = e.target.files[0];
+    const url = URL.createObjectURL(img);
+
+    setProfile({ ...user, banner: url, bannerFile: img });
   };
 
   const onEmailChange = (e) => {
@@ -75,6 +82,20 @@ const EditProfile = (props) => {
               className="user-profile-banner-img"
               src={user.banner} 
           />
+          <input 
+              id="edit-banner"
+              hidden
+              onChange={onBannerChange}
+              type="file" 
+          />
+          <div className="edit-button-wrapper">
+              <label 
+                  className="edit-button edit-banner-button"
+                  htmlFor="edit-banner"
+              >
+                Change
+            </label>
+          </div>
         </div>
         <div className="user-profile-img-wrapper">
           <img 
@@ -103,7 +124,7 @@ const EditProfile = (props) => {
         <span className="d-block padding-s">Full Name</span>
         <input 
             className={`input-form d-block ${errorClassName('fullname')}`}
-            maxlength={30}
+            maxLength={30}
             onChange={onFullNameChange}
             placeholder="Full Name"
             style={{ textTransform: 'capitalize' }}

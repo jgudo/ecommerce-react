@@ -117,7 +117,7 @@
 
 .signin-action {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .signin-message {
@@ -130,4 +130,13 @@
 
 .signin-info {
   flex-grow: 1;
+}
+
+.forgot_password {
+  width: 50%;
+  margin: auto;
+  
+  @media (max-width: $mobile) {
+    width: 100%;
+  } 
 }

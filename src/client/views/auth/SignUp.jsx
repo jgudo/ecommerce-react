@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; 
-import { signUp } from '../../actions/authActions';
+import { signUp, setAuthStatus } from '../../actions/authActions';
 
 import CircularProgress from '../../components/ui/CircularProgress';
 
 const SignUp = (props) => {
+  const dispatch = useDispatch();
   const [error, setError] = useState({});
   const [field, setField] = useState({});
   const [passwordHidden, setPasswordHidden] = useState(true);
@@ -13,7 +14,6 @@ const SignUp = (props) => {
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus
   }));
-  const dispatch = useDispatch();
   const passwordField = useRef(null);
 
   const onEmailInput = (e) => {
@@ -31,29 +31,31 @@ const SignUp = (props) => {
   };
 
   const onFullnameInput = (e) => {
-    const val = e.target.value.trimStart();
-    const regex = /[a-zA-Z]{5,}/;
+    const val = e.target.value;
+    const regex = /[^a-zA-Z\s]/g;
 
     if (val === '') {
-      setError({ ...error, fullname: 'Full name is required' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, fullname: 'Full name must be at least 5 letters' });
+      setError({ ...error, fullname: 'Full name is required.' });
+    } else if (regex.test(val)) {
+      setError({ ...error, fullname: 'Full name must not include special characters.' });
+    } else if (val.length < 5) {
+      setError({ ...error, fullname: 'Full name must be at least 5 letters.' });
     } else {
-      setField({ ...field, fullname: val });
+      setField({ ...field, fullname: val.trim() });
       setError({ ...error, fullname: '' });
     }
   };
 
   const onPasswordInput = (e) => {
     const val = e.target.value.trim();
-    const regex = /[A-Z\W]/;
+    const regex = /[A-Z\W]/g;
 
     if (val === '') {
-      setError({ ...error, password: 'Password is required' });
+      setError({ ...error, password: 'Password is required.' });
     } else if (val.length < 8) {
-      setError({ ...error, password: 'Password should be 8 characters long' });
+      setError({ ...error, password: 'Password should be 8 characters long.' });
     } else if (!regex.test(val)) {
-      setError({ ...error, password: 'Password should contain uppercase or alphanumeric character' });
+      setError({ ...error, password: 'Password should contain uppercase or special character.' });
     } else {
       setField({ ...field, password: val });
       setError({ ...error, password: '' });
@@ -81,8 +83,8 @@ const SignUp = (props) => {
 
   return (
     <div className="signup">
-      {authStatus && <strong><span className="input-message text-center padding-s">{authStatus}</span></strong>}
-      <div className={`signup-wrapper ${authStatus && 'input-error'}`}>
+      {authStatus && <strong><span className="input-message text-center padding-s">{authStatus.message}</span></strong>}
+      <div className={`signup-wrapper ${authStatus && (!authStatus.success && 'input-error')}`}>
         <h3>Sign up to Salinaka</h3>
         <form onSubmit={onFormSubmit}>
           <div className="signup-field">
@@ -90,7 +92,7 @@ const SignUp = (props) => {
             <span className="d-block padding-s">Full Name</span>
             <input 
                 className={`input-form d-block ${errorClassName('fullname')}`}
-                maxlength={30}
+                maxLength={30}
                 onKeyUp={onFullnameInput}
                 placeholder="Full name"
                 readOnly={isAuthenticating}

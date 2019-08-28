@@ -1,9 +1,10 @@
-import { SET_CHECKOUT_SHIPPING_DETAILS } from '../constants/constants';
+import { SET_CHECKOUT_SHIPPING_DETAILS, RESET_CHECKOUT_SHIPPING_DETAILS } from '../constants/constants';
 
-const setShippingDetails = details => ({
+export const setShippingDetails = details => ({
   type: SET_CHECKOUT_SHIPPING_DETAILS,
   payload: details
 });
 
-export default setShippingDetails;
-
+export const resetShippingDetails = () => ({
+  type: RESET_CHECKOUT_SHIPPING_DETAILS
+});

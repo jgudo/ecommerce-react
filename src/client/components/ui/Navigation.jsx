@@ -83,7 +83,7 @@ const Navigation = ({ path }) => {
                 Sign Up
               </NavLink>
             )}
-            {(path === '/signup' || path === '/') && (
+            {(path === '/signup' || path === '/forgot_password' || path === '/') && (
                 <NavLink 
                     activeClassName="navigation-menu-active"
                     className="button button-small button-muted margin-left-s"

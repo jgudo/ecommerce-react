@@ -28,7 +28,6 @@
   margin: auto;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   background: rgba(0, 0, 0, .5);
   display: none;
 }
@@ -48,7 +47,21 @@
   }
 }
 
+.edit-banner-button {
+  background: none;
+
+  &:hover {
+    background: none;
+  }
+}
+
 .user-profile-img-wrapper:hover .edit-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-profile-banner-wrapper:hover .edit-button-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -47,7 +47,7 @@ const Basket = (props) => {
   const onSignInClick = () => {
     onCloseModal();
     document.body.classList.remove('basket-open');
-    props.history.push('/signin');
+    props.history.push('/checkout/step1');
   };
 
   const onClearBasket = () => {
@@ -61,6 +61,7 @@ const Basket = (props) => {
           onRequestClose={onCloseModal}
       >
         <p className="text-center">You must sign in to continue checking out</p>
+        <br/>
         <div className="d-flex-center">
           <button 
               className="button button-border button-border-gray button-small"
