@@ -2,7 +2,8 @@ input {
   border: 1px solid $border-color !important;
   background: transparent;
   font-size: $font-small !important;
-  padding: 5px $m-size !important;
+  padding: $s-size $m-size !important;
+  font-weight: bold;
   box-shadow: 0;
   outline: 0;
 
@@ -13,7 +14,12 @@ input {
 }
 
 input::-webkit-input-placeholder {
+  font-weight: bold;
   opacity: .7;
+}
+
+input:read-only {
+  opacity: .5;
 }
 
 input[type=number] {

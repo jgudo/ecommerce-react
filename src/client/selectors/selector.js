@@ -11,7 +11,18 @@ export const selectFilter = (products, filter) => {
     const matchBrand = product.brand.toLowerCase().includes(filter.brand);
 
     return ((matchKeyword || matchName || matchDescription) && matchBrand && isInRange);
+  }).sort((a,b) => {
+      if (filter.sortBy === 'name-desc') {
+        return a.name < b.name ? 1 : -1;
+      } else if (filter.sortBy === 'name-asc') {
+        return a.name > b.name ? 1 : -1;
+      } else if (filter.sortBy === 'price-desc') {
+        return a.price < b.price ? 1 : -1;
+      } else if (filter.sortBy === 'price-asc') {
+        return a.price > b.price ? 1 : -1;
+      }
   });
+  
 };
 
 // Select product with highest price

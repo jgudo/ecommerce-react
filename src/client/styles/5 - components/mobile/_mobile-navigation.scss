@@ -59,24 +59,3 @@
   margin: .6rem;
   font-weight: normal;
 }
-
-.icon-magnify {
-  width: 12px;
-  height: 12px;
-  border: 2px solid $white;
-  border-radius: 50%;
-  position: relative;
-  margin-left: $s-size;
-  opacity: .5;
-  
-  &:after {
-    content: '';
-    position: absolute;
-    right: -7px;
-    bottom: -1px;
-    width: 8px;
-    height: 2px;
-    transform: rotate(35deg);
-    background: $white;
-  }
-}

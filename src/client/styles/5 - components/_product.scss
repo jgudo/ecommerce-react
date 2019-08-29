@@ -1,6 +1,6 @@
 .product-list {
   display: grid;
-  grid-template-columns: repeat(6, 180px);
+  // grid-template-columns: repeat(6, 180px);
   grid-gap: $s-size;
   justify-content: center;
 
@@ -12,10 +12,17 @@
 .product-list-header {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-bottom: $m-size;
 
   @media (max-width: $mobile) {
     text-align: center;
   }
+}
+
+.product-list-search {
+  display: flex;
+  align-items: center;
 }
 
 .product-list-title {
@@ -124,7 +131,10 @@
 }
 
 .product-applied-filters {
-  padding: $m-size $s-size;
+  padding: $s-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // PRODUCT MODAL -------------------------------------------------
@@ -193,10 +203,6 @@
   margin-left: $l-size;
   display: flex;
   flex-direction: column;
-}
-
-.product-form-submit {
-  // grid-column-start: 2;
 }
 
 .product-form-image-preview {

@@ -5,6 +5,7 @@
 }
 
 .filters-field {
+  width: 100%;
   margin-bottom: $m-size;
   padding-bottom: $m-size;
   border-bottom: 1px solid $border-color;
@@ -27,7 +28,7 @@
 }
 
 .filters-toggle-sub {
-  width: 250px;
+  width: 300px;
   background: $white;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
   position: absolute;

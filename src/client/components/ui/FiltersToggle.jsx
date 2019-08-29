@@ -1,7 +1,13 @@
 import React, { useRef } from 'react';
 import Filters from './Filters';
 
-const FiltersToggle = () => {
+const FiltersToggle = ({ 
+  products, 
+  productsLength, 
+  filter, 
+  isLoading,
+  dispatch 
+}) => {
   const toggleRef = useRef(null);
 
   const onClickToggle = () => {
@@ -36,7 +42,13 @@ const FiltersToggle = () => {
         <div className="filters-toggle-caret icon-caret" />
       </button>
       <div className="filters-toggle-sub">
-        <Filters />
+        <Filters 
+            dispatch={dispatch}
+            products={products}
+            productsLength={productsLength}
+            filter={filter}
+            isLoading={isLoading}
+        />
       </div>
     </div>
   );

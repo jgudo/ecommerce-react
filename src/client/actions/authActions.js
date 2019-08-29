@@ -11,7 +11,8 @@ import {
   SIGNIN_WITH_GOOGLE,
   SIGNIN_WITH_FACEBOOK,
   SET_AUTH_PERSISTENCE,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  IS_AUTHENTICATING
 } from '../constants/constants';
 
 export const signIn = (email, password) => ({
@@ -74,4 +75,9 @@ export const onAuthStateFail = error => ({
 export const resetPassword = email => ({
   type: RESET_PASSWORD,
   payload: email
+});
+
+export const isAuthenticating = (bool = true) => ({
+  type: IS_AUTHENTICATING,
+  payload: bool
 });

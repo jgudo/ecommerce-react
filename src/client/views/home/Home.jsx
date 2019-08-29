@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import ProductList from '../../components/product/ProductList';
 import ProductItem from '../../components/product/ProductItem';
 import Header from './Header';
 import Modal from '../../components/ui/Modal';
 
-import ProductAppliedFilters from '../../components/product/ProductAppliedFilters';
 import ProductModalDetails from '../../components/product/ProductModalDetails';
 
 const Home = () => {
+  const { products, filter, isLoading } = useSelector(state => ({
+    products: state.products,
+    filter: state.filter,
+    isLoading: state.app.loading
+  }));
+  const dispatch = useDispatch();
   const [isOpenModal, setModalOpen] = useState(false);
   const [productSelected, setProductSelected] = useState(null);
+  const productListWrapper = useRef(null);
 
   const onClickProduct = (product) => {
     setProductSelected(product);
@@ -28,7 +36,12 @@ const Home = () => {
   return (
     <>
       <section className="product-list-wrapper">
-        <Header />
+        <Header 
+            dispatch={dispatch}
+            products={products}
+            filter={filter}
+            isLoading={isLoading}
+        />
         <ProductList>
           {({ state, action, foundOnBasket }) => (
             <>
@@ -48,8 +61,13 @@ const Home = () => {
                   X
                 </button>
               </Modal>
-              <ProductAppliedFilters products={state.products} filter={state.filter} />
-              <div className="product-list">
+              <div 
+                  className="product-list" 
+                  ref={productListWrapper}
+                  style={{
+                    gridTemplateColumns: `repeat(${state.columnCount}, 160px)`
+                  }}
+              >
                 {state.products.map(product => (
                   <ProductItem
                       addToBasket={action.addToBasket} 

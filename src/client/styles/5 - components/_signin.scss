@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center;
   padding: $l-size;
+  padding-top: $m-size;
 
   @media (max-width: $mobile) {
     flex-direction: column;
@@ -118,6 +119,15 @@
 .signin-action {
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+
+    a {
+      margin-bottom: $s-size;
+      text-align: center;
+    }
+  }
 }
 
 .signin-message {
@@ -138,5 +148,6 @@
   
   @media (max-width: $mobile) {
     width: 100%;
+    padding: $s-size;
   } 
 }

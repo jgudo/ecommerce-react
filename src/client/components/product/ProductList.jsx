@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeProduct, getProducts } from '../../actions/productActions';
 import { addToBasket, removeFromBasket } from '../../actions/basketActions';
@@ -8,6 +8,8 @@ import CircularProgress from '../ui/CircularProgress';
 import ProductAppliedFilters from './ProductAppliedFilters';
 
 const ProductList = props => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [columnCount, setColumnCount] = useState(6);
   const { 
     filteredProducts, 
     products, 
@@ -32,16 +34,26 @@ const ProductList = props => {
       displayActionMessage('Item removed from basket');
     } else {
       dispatch(addToBasket(product));
-      displayActionMessage('Item added to basket');
+      displayActionMessage('Item added to basket', 'success');
     }
   };
   const onRemoveFromBasket = id => dispatch(removeFromBasket(id));
   const onRemoveProduct = id => dispatch(removeProduct(id));
   const onGetProducts = () => dispatch(getProducts());
+  const onProductsLengthChanged = () => {
+    const width = window.screen.width - 120; // minus 120px padding
+
+    setColumnCount(Math.floor(width / 160));
+    columnCount >= filteredProducts.length && setColumnCount(filteredProducts.length);
+  };
 
   useEffect(() => {
     products.length === 0 && onGetProducts();
-  }, []);
+
+    onProductsLengthChanged();
+  }, [filteredProducts]);
+
+  // window.addEventListener('resize', onProductsLengthChanged);
 
   return filteredProducts.length === 0 && isLoading ? (
     <div className="loader">
@@ -53,8 +65,6 @@ const ProductList = props => {
     <div className="loader">
       <h4>There are no items found</h4>
       <span>Try using correct filters and keyword</span>
-      <br/> 
-      <ProductAppliedFilters filter={filter} />
     </div>
   ) : requestStatus ? (
     <div className="loader">
@@ -72,7 +82,8 @@ const ProductList = props => {
       state: {
         products: filteredProducts,
         basket,
-        filter
+        filter,
+        columnCount
       },
       action: {
         addToBasket: onAddToBasket,

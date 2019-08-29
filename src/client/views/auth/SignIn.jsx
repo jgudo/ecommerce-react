@@ -74,10 +74,15 @@ const SignIn = (props) => {
 
   return (
     <div className="signin-content">
-      <h3>Sign in to Salinaka</h3>
-      {authStatus && <h5 className="toast-error text-center">{authStatus.message}</h5>}
+      {authStatus && (
+        <h5 className={`text-center ${authStatus.success ? 'toast-success' : 'toast-error'}`}>
+          {authStatus.message}
+        </h5>
+      )}
       <div className={`signin ${authStatus && (!authStatus.success && 'input-error')}`}>
         <div className="signin-main">
+          <h3>Sign in to Salinaka</h3>
+          <br/>
           <div className="signin-wrapper">
             {errorField.auth && <span className="input-message">{errorField.auth}</span>}
             <form onSubmit={onSubmitForm}>

@@ -1,9 +1,11 @@
 .pill {
     background: $border-color;
-    padding: $s-size $m-size;
+    padding: 0.8rem $m-size;
     border-radius: 10%;
     display: inline-block;
     margin: 10px 5px;
+    position: relative;
+    text-align: center;
 
     &:hover {
         background: $border-color-focus;
@@ -14,3 +16,17 @@
     margin: 0;
 }
 
+.pill-remove {
+    position: absolute;
+    right: $s-size;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

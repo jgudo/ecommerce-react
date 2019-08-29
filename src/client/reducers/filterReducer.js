@@ -13,7 +13,8 @@ const initState = {
   keyword: '',
   brand: '',
   minPrice: 0,
-  maxPrice: 0
+  maxPrice: 0,
+  sortBy: ''
 };
 
 export default (state = initState, action) => {

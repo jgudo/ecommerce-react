@@ -1,12 +1,13 @@
 .toast {
   position: fixed;
-  bottom: $s-size;
-  left: $s-size;
+  top: 100px;
+  right: $l-size;
   background: $white;
-  animation: slideIn 3s ease;
+  animation: slideInToast 3s ease;
   padding: $s-size $m-size;
   border: 1px solid $border-color-focus;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  z-index: map-get($z-index, 'toast');
 }
 
 .toast-msg {
@@ -18,6 +19,17 @@
   border: 1px solid $red;
   padding: $m-size;
   background: $white;
+
+  .toast-msg { color: $red; }
+}
+
+.toast-info {
+  color: $yellow;
+  border: 1px solid $yellow;
+  padding: $m-size;
+  background: $white;
+
+  .toast-msg { color: $yellow; }
 }
 
 .toast-success {
@@ -25,19 +37,25 @@
   border: 1px solid $green;
   padding: $m-size;
   background: $white;
+
+  .toast-msg { color: $green; }
 }
 
-@keyframes slideIn {
+@keyframes slideInToast {
   0% {
-    transform: translateX(-120%);
+    opacity: 0;
+    transform: translateY(-120%);
   }
   20% {
-    transform: translateX(0);
+    opacity: 1;
+    transform: translateY(0);
   }
   90% {
-    transform: translateX(0);
+    opacity: 1;
+    transform: translateY(0);
   }
   100% {
-    transform: translateX(-120%);
+    opacity: 0;
+    transform: translateY(-120%);
   }
 }

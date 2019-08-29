@@ -1,59 +1,58 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { resetFilter, applyFilter, setBrandFilter } from '../../actions/filterActions';
+import { resetFilter, applyFilter } from '../../actions/filterActions';
 import { selectMax, selectMin } from '../../selectors/selector';
-import { displayActionMessage } from '../../helpers/utils';
 
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
-  const dispatch = useDispatch();
-  const { max, min, filter, isLoading, productCount } = useSelector(state => ({
-    max: selectMax(state.products),
-    min: selectMin(state.products),
-    filter: state.filter,
-    productCount: state.products.length,
-    isLoading: state.app.loading
-  }));
-
-  const [brandFilter, setBrandState] = useState(filter.brand);
-  const [minPriceFilter, setMinPriceState] = useState(filter.minPrice);
-  const [maxPriceFilter, setMaxPriceState] = useState(filter.maxPrice);
+  const { products, filter, isLoading, productsLength, dispatch } = props;
+  const max = selectMax(products);
+  const min = selectMin(products)
+  const [filterField, setFilter] = useState({
+    brandFilter: filter.brand,
+    minPriceFilter: filter.minPrice,
+    maxPriceFilter: filter.maxPrice,
+    sortByFilter: filter.sortBy
+  })
 
   const onMinPriceChange = (val) => {
-    setMinPriceState(val);
+    setFilter({ ...filterField, minPriceFilter: val });
   };
 
   const onMaxPriceChange = (val) => {
-    setMaxPriceState(val);
+    setFilter({ ...filterField, maxPriceFilter: val });
   };
 
   const onBrandFilterChange = (e) => {
     const val = e.target.value;
 
-    setBrandState(val);
+    setFilter({ ...filterField, brandFilter: val });
   };
+
+  const onSortFilterChange = (e) => {
+    setFilter({ ...filterField, sortByFilter: e.target.value });
+  };
+
 
   const onApplyFilter = () => {
     const newFilter = {
-      brand: brandFilter,
-      minPrice: minPriceFilter,
-      maxPrice: maxPriceFilter
+      brand: filterField.brandFilter,
+      minPrice: filterField.minPriceFilter,
+      maxPrice: filterField.maxPriceFilter,
+      sortBy: filterField.sortByFilter,
     };
 
     if (Object.keys(newFilter).some(key => filter[key] !== newFilter[key])) {
       dispatch(applyFilter(newFilter));
       props.history.push('/');
-      displayActionMessage('Filters applied successfully!');
     }
   };
 
   const onResetFilter = () => {
-    if (['brand', 'minPrice', 'maxPrice'].some(key => !!filter[key])) {
+    if (['brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!filter[key])) {
       dispatch(resetFilter());
       props.history.push('/');
-      displayActionMessage('Filters reset successfully!');
     }
   };
 
@@ -63,13 +62,13 @@ const Filters = (props) => {
         <span>Brand</span>
         <br/>
         <br/>
-        {productCount === 0 && isLoading ? (
+        {productsLength === 0 && isLoading ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <select 
               className="filters-brand"
-              value={brandFilter}
-              disabled={isLoading || productCount === 0}
+              value={filterField.brandFilter}
+              disabled={isLoading || productsLength === 0}
               onChange={onBrandFilterChange}
           >
             <option value="">All Brands</option>
@@ -79,10 +78,27 @@ const Filters = (props) => {
         )}
       </div>
       <div className="filters-field">
+        <span>Sort By</span>
+        <br/>
+        <br/>
+        <select 
+              className="filters-sort-by d-block"
+              // value={brandFilter}
+              disabled={isLoading || productsLength === 0}
+              onChange={onSortFilterChange}
+          >
+            <option value="">None</option>
+            <option value="name-asc">Name Ascending A - Z</option>
+            <option value="name-desc">Name Descending Z - A</option>
+            <option value="price-desc">Price High - Low</option>
+            <option value="price-asc">Price Low - High</option>
+          </select>
+      </div>
+      <div className="filters-field">
         <span>Price Range</span>
         <br/>
         <br/>
-        {productCount === 0 && isLoading ? (
+        {productsLength === 0 && isLoading ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <PriceRange 
@@ -90,21 +106,21 @@ const Filters = (props) => {
               max={max} 
               onMaxPriceChange={onMaxPriceChange}
               onMinPriceChange={onMinPriceChange}
-              productCount={productCount}
+              productsLength={productsLength}
           />
         )}
       </div>
       <div className="filters-action">
         <button
             className="filters-button button button-small"
-            disabled={isLoading || productCount === 0}
+            disabled={isLoading || productsLength === 0}
             onClick={onApplyFilter}
         >
           Apply filters
         </button>
         <button
             className="filters-button button button-border button-small"
-            disabled={isLoading || productCount === 0}
+            disabled={isLoading || productsLength === 0}
             onClick={onResetFilter}
         >
           Reset filters

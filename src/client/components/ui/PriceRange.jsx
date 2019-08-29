@@ -7,7 +7,7 @@ const PriceRange = ({
   max,
   onMaxPriceChange,
   onMinPriceChange,
-  productCount 
+  productsLength 
 }) => {
   const [minState, setMinState] = useState(min);
   const [maxState, setMaxState] = useState(max);
@@ -55,7 +55,7 @@ const PriceRange = ({
       <div className="price-range-control">
         <input 
             className="price-range-input"
-            disabled={productCount === 0}
+            disabled={productsLength === 0}
             max={max}
             min={min} 
             onChange={onInputChange}
@@ -66,7 +66,7 @@ const PriceRange = ({
         — 
         <input 
             className="price-range-input"
-            disabled={productCount === 0}
+            disabled={productsLength === 0}
             max={max}
             min={min}
             onChange={onInputChange}
@@ -78,7 +78,7 @@ const PriceRange = ({
       <div className="price-range-control">
         <input 
             className="price-range-slider"
-            disabled={productCount === 0}
+            disabled={productsLength === 0}
             max={max} 
             min={min}
             onChange={onRangeChange}
@@ -89,7 +89,7 @@ const PriceRange = ({
         />
         <input 
             className="price-range-slider"
-            disabled={productCount === 0}
+            disabled={productsLength === 0}
             max={max} 
             min={min}
             onChange={onRangeChange}

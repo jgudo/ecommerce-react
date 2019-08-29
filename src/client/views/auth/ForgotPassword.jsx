@@ -48,6 +48,7 @@ const ForgotPassword = () => {
           className={`input-form d-block ${emailError ? 'input-error' : ''}`}
           onChange={onEmailChange}
           placeholder="Enter your email"
+          readOnly={isLoading}
           type="text"
       />
       <br />

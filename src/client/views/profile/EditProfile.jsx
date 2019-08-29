@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const EditProfile = (props) => {
-  const profile = useSelector(state => state.profile);
+  const { profile, auth } = useSelector(state => ({
+    profile: state.profile,
+    auth: state.auth
+  }));
   const [user, setProfile] = useState({
     fullname: profile.fullname ? profile.fullname : '',
     email: profile.email ? profile.email : '',
@@ -137,6 +140,7 @@ const EditProfile = (props) => {
             className={`input-form d-block ${errorClassName('email')}`}
             onChange={onEmailChange}
             placeholder="Email"
+            readOnly={auth.provider !== 'password'}
             type="email"
             value={user.email}
         />

@@ -1,10 +1,27 @@
 .searchbar {
   width: 400px;
   display: flex;
+  position: relative;
 }
 
 .searchbar-input {
   width: 100%;
-  padding: 5px;
+  padding: $s-size $m-size;
   margin-right: 5px;
+  background: $background-color-01;
+}
+
+.searchbar-icon {
+  @extend .icon-magnify;
+  position: absolute;
+  right: $l-size;
+  top: -3px;
+  bottom: 0;
+  margin: auto;
+  opacity: 1;
+  border: 2px solid lighten($off-black, 15%);
+
+  &:after {
+    background: lighten($off-black,15%);
+  }
 }

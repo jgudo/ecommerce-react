@@ -16,11 +16,16 @@ export const displayMoney = (n) => {
   return format.format(n);
 };
 
-export const displayActionMessage = (msg) => {
+export const displayActionMessage = (msg, status = 'info') => {
   const div = document.createElement('div');
   const span = document.createElement('span');
 
-  div.className = 'toast';
+  div.className = `toast ${status === 'info' 
+    ? 'toast-info' 
+    : status === 'success' 
+    ? 'toast-success' 
+    : 'toast-error'
+  }`;
   span.className = 'toast-msg';
 
   span.textContent = msg;

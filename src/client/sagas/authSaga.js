@@ -2,7 +2,13 @@ import firebase from '../firebase/firebase';
 import { call, put, fork } from 'redux-saga/effects';
 import * as ACTION from '../constants/constants';
 import { history } from '../routers/AppRouter';
-import { setAuthStatus, signInSuccess, signOut, signOutSuccess } from '../actions/authActions';
+import { 
+  setAuthStatus, 
+  signInSuccess, 
+  signOut, 
+  signOutSuccess,
+  isAuthenticating 
+} from '../actions/authActions';
 import { clearBasket } from '../actions/basketActions';
 import { setProfile, clearProfile } from '../actions/profileActions';
 import { resetFilter } from '../actions/filterActions';
@@ -12,7 +18,7 @@ import defaultAvatar from '../images/defaultAvatar.jpg';
 import defaultBanner from '../images/defaultBanner.jpg';
 
 function* handleError(e) {
-  yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+  yield put(isAuthenticating(false));
   
   switch (e.code) {
     case 'auth/network-request-failed':
@@ -27,6 +33,9 @@ function* handleError(e) {
     case 'auth/user-not-found':
       yield put(setAuthStatus({ success: false, message: 'Incorrect email or password'}));
       break;
+    case 'auth/reset-password-error':
+      yield put(setAuthStatus({ success: false, message: 'Failed to send password reset email. Did you type your email correctly?'}));
+      break;
     default:
       yield put(setAuthStatus({ success: false, message: e.message}));
       break;
@@ -34,7 +43,7 @@ function* handleError(e) {
 }
 
 function* initRequest() {
-  yield put({ type: ACTION.IS_AUTHENTICATING, payload: true });
+  yield put(isAuthenticating());
   yield put(setAuthStatus(null));
 }
 
@@ -71,7 +80,7 @@ function* authSaga({ type, payload }) {
         const ref = yield call(firebase.createAccount, payload.email, payload.password);
         const fullname = payload.fullname.split(' ').map(name => name[0].toUpperCase().concat(name.substring(1))).join(' ');
         const user = {
-          fullname: fullname,
+          fullname,
           avatar: defaultAvatar,
           banner: defaultBanner,
           email: payload.email,
@@ -81,7 +90,7 @@ function* authSaga({ type, payload }) {
 
         yield call(firebase.addUser, ref.user.uid, user);
         yield put(setProfile(user));
-        yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+        yield put(isAuthenticating(false));
       } catch (e) {
         yield handleError(e);
       }
@@ -95,7 +104,7 @@ function* authSaga({ type, payload }) {
         yield put(resetFilter());
         yield put(resetShippingDetails());
         yield put(signOutSuccess());
-        yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+        yield put(isAuthenticating(false));
         // yield call(history.push, '/signin');
       } catch (e) {
         console.log(e);
@@ -105,15 +114,17 @@ function* authSaga({ type, payload }) {
       try {
         yield initRequest();
         yield call(firebase.passwordReset, payload);
-        yield put(setAuthStatus({success: true, message: 'Password reset email has been sent to your provided email.'}));
-        yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+        yield put(setAuthStatus({
+          success: true, 
+          message: 'Password reset email has been sent to your provided email.'
+        }));
+        yield put(isAuthenticating(false));
       } catch (e) {
-        console.log('Failed to send password reset email.');
-        yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
-        yield put(setAuthStatus({success: false, message: 'Failed to send password reset email. Did you type your email correctly?'}));
+        handleError({ code: 'auth/reset-password-error' });
       }
       break;
     case ACTION.ON_AUTHSTATE_SUCCESS:
+      yield put(setAuthStatus({ success: true, message: 'Successfully signed in.'}));
       const snapshot = yield call(firebase.getUser, payload.uid);
 
       if (snapshot.val()) { // if user exists in database
@@ -133,8 +144,12 @@ function* authSaga({ type, payload }) {
         yield put(setProfile(user));
       }
      
-      yield put(signInSuccess({ id: payload.uid, type: 'client' }));
-      yield put({ type: ACTION.IS_AUTHENTICATING, payload: false });
+      yield put(signInSuccess({ 
+        id: payload.uid, 
+        type: 'client', 
+        provider: payload.providerData[0].providerId 
+      }));
+      yield put(isAuthenticating(false));
       break;
     case ACTION.ON_AUTHSTATE_FAIL:
       yield put(clearProfile());
