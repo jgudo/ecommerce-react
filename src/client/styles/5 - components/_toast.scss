@@ -18,7 +18,7 @@
   color: $red;
   border: 1px solid $red;
   padding: $m-size;
-  background: $white;
+  background: lighten($red, 40%);
 
   .toast-msg { color: $red; }
 }
@@ -27,7 +27,7 @@
   color: $yellow;
   border: 1px solid $yellow;
   padding: $m-size;
-  background: $white;
+  background: lighten($yellow, 45%);
 
   .toast-msg { color: $yellow; }
 }
@@ -36,7 +36,7 @@
   color: $green;
   border: 1px solid $green;
   padding: $m-size;
-  background: $white;
+  background: lighten($green, 60%);
 
   .toast-msg { color: $green; }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; 
-import { signUp, setAuthStatus } from '../../actions/authActions';
+import { signUp } from '../../actions/authActions';
 
 import CircularProgress from '../../components/ui/CircularProgress';
 

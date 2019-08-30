@@ -1,13 +1,20 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import Header from '../../home/Header';
 import ProductList from '../../../components/product/ProductList';
 import ProductItem from './ProductItem';
-import Filters from '../../../components/ui/Filters';
-import SearchBar from '../../../components/ui/SearchBar';
-import FiltersToggle from '../../../components/ui/FiltersToggle';
 import ProductAppliedFilters from '../../../components/product/ProductAppliedFilters';
 
 const Products = (props) => {
+  const { products, filter, isLoading } = useSelector(state => ({
+    products: state.products,
+    filter: state.filter,
+    isLoading: state.app.loading
+  }));
+  const dispatch = useDispatch();
+
   const onClickAddProduct = () => {
     props.history.push('/dashboard/add');
   };
@@ -15,34 +22,13 @@ const Products = (props) => {
   return (
     <>
       <div className="product-admin-header">
-        <h2 className="product-admin-header-title">
-          Products &nbsp;
-          {/* <span className="text-subtle">
-            {products.length} {products.length > 1 ? 'items ' : 'item '}
-          </span> */}
-        </h2>
-        <FiltersToggle /> &nbsp;
-        <SearchBar>
-          {({ onSearchChange, onKeyUp, isLoading, onSubmitSearch }) => (
-            <div className="searchbar">
-              <input
-                  className="searchbar-input" 
-                  onChange={onSearchChange}
-                  onKeyUp={onKeyUp}
-                  placeholder="Search for product"
-                  readOnly={isLoading}
-                  type="text" 
-              />
-              <button 
-                  className="button button-small searchbar-button"
-                  disabled={isLoading}
-                  onClick={onSubmitSearch}
-              >
-                Search
-              </button>
-            </div>
-          )}
-        </SearchBar>
+        <h2 className="product-admin-header-title">Products</h2>
+        <Header 
+            dispatch={dispatch}
+            products={products}
+            filter={filter}
+            isLoading={isLoading}
+        />
         &nbsp;&nbsp;
         <button 
             className="button button-small"
@@ -52,7 +38,7 @@ const Products = (props) => {
         </button>
       </div>
       <ProductList>
-        {({ state, action, isLoading }) => (
+        {({ state, action }) => (
           <>
             <ProductAppliedFilters products={state.products} filter={state.filter}/>
             {state.products.length > 0 && (

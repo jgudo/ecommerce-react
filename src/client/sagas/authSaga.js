@@ -1,14 +1,25 @@
 import firebase from '../firebase/firebase';
 import { call, put, fork } from 'redux-saga/effects';
-import * as ACTION from '../constants/constants';
-import { history } from '../routers/AppRouter';
+
+import {
+  SIGNIN,
+  SIGNUP,
+  ON_AUTHSTATE_FAIL,
+  SIGNIN_WITH_GOOGLE,
+  SIGNIN_WITH_FACEBOOK,
+  RESET_PASSWORD,
+  SIGNOUT,
+  ON_AUTHSTATE_SUCCESS,
+  SET_AUTH_PERSISTENCE
+} from '../constants/constants';
+
 import { 
   setAuthStatus, 
   signInSuccess, 
-  signOut, 
   signOutSuccess,
   isAuthenticating 
 } from '../actions/authActions';
+
 import { clearBasket } from '../actions/basketActions';
 import { setProfile, clearProfile } from '../actions/profileActions';
 import { resetFilter } from '../actions/filterActions';
@@ -49,7 +60,7 @@ function* initRequest() {
 
 function* authSaga({ type, payload }) {
   switch (type) {
-    case ACTION.SIGNIN:
+    case SIGNIN:
       try {
         yield initRequest();
         yield call(firebase.signIn, payload.email, payload.password);
@@ -57,7 +68,7 @@ function* authSaga({ type, payload }) {
         yield handleError(e);
       }
       break;
-    case ACTION.SIGNIN_WITH_GOOGLE:
+    case SIGNIN_WITH_GOOGLE:
       try {
         yield initRequest();
         yield call(firebase.signInWithGoogle);
@@ -65,7 +76,7 @@ function* authSaga({ type, payload }) {
         yield handleError(e);
       }
       break;
-    case ACTION.SIGNIN_WITH_FACEBOOK:
+    case SIGNIN_WITH_FACEBOOK:
       try {
         yield initRequest();
         yield call(firebase.signInWithFacebook);
@@ -73,7 +84,7 @@ function* authSaga({ type, payload }) {
         yield handleError(e);
       }
       break;
-    case ACTION.SIGNUP:
+    case SIGNUP:
       try {
         yield initRequest();
     
@@ -85,7 +96,8 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: ''
+          mobile: '',
+          dateJoined: ref.user.metadata.creationTime
         };
 
         yield call(firebase.addUser, ref.user.uid, user);
@@ -95,7 +107,7 @@ function* authSaga({ type, payload }) {
         yield handleError(e);
       }
       break;
-    case ACTION.SIGNOUT:
+    case SIGNOUT:
       try {
         yield initRequest();
         yield call(firebase.signOut); // synchronously 
@@ -110,7 +122,7 @@ function* authSaga({ type, payload }) {
         console.log(e);
       }
       break;
-    case ACTION.RESET_PASSWORD:
+    case RESET_PASSWORD:
       try {
         yield initRequest();
         yield call(firebase.passwordReset, payload);
@@ -123,7 +135,7 @@ function* authSaga({ type, payload }) {
         handleError({ code: 'auth/reset-password-error' });
       }
       break;
-    case ACTION.ON_AUTHSTATE_SUCCESS:
+    case ON_AUTHSTATE_SUCCESS:
       yield put(setAuthStatus({ success: true, message: 'Successfully signed in.'}));
       const snapshot = yield call(firebase.getUser, payload.uid);
 
@@ -138,7 +150,8 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: ''
+          mobile: '',
+          dateJoined: payload.metadata.creationTime
         };
         yield call(firebase.addUser, payload.uid, user);
         yield put(setProfile(user));
@@ -151,11 +164,11 @@ function* authSaga({ type, payload }) {
       }));
       yield put(isAuthenticating(false));
       break;
-    case ACTION.ON_AUTHSTATE_FAIL:
+    case ON_AUTHSTATE_FAIL:
       yield put(clearProfile());
-      yield put(signOutSuccess());
+      // yield put(signOutSuccess());
       break;
-    case ACTION.SET_AUTH_PERSISTENCE:
+    case SET_AUTH_PERSISTENCE:
       try {
         yield call(firebase.setAuthPersistence);
       } catch (e) {

@@ -1,10 +1,18 @@
-export const parseDate = (date) => {
-  const m = date.getMonth() + 1;
-  const d = date.getDate();
-  const y = date.getFullYear();
+export const displayDate = (timestamp) => {
+  const date = new Date(timestamp);
 
-  return `${m.length >= 10 ? m : `0${m}`}/${d}/${y}`;
-};
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July',
+     'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const day = date.getDate();
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
+
+  // return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  return `${monthNames[monthIndex]} ${day}, ${year}`;
+}
 
 export const displayMoney = (n) => {
   const format = new Intl.NumberFormat('en-US', {

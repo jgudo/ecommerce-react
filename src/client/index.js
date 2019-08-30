@@ -33,6 +33,7 @@ ReactDOM.render(<Preloader />, document.getElementById('app'));
 
 firebase.auth.onAuthStateChanged((user) => {
   if (user) {
+    console.log(user);
     store.dispatch(onAuthStateSuccess(user));
   } else {
     store.dispatch(onAuthStateFail('Fail'));

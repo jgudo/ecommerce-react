@@ -1,12 +1,8 @@
 import firebase from '../firebase/firebase';
 import { call, put, select } from 'redux-saga/effects';
 import { history } from '../routers/AppRouter';
-import { 
-  UPDATE_PROFILE, 
-  UPDATE_EMAIL,
-  UPDATE_PROFILE_SUCCESS,
-  LOADING
-} from '../constants/constants';
+import { UPDATE_PROFILE, UPDATE_EMAIL, LOADING } from '../constants/constants';
+import { updateProfileSuccess } from '../actions/profileActions';
 import { displayActionMessage } from '../helpers/utils';
 
 function* profileSaga({ type, payload }) {
@@ -31,20 +27,22 @@ function* profileSaga({ type, payload }) {
 
         yield put({ type: LOADING, payload: true });
         
+        // if email & password exist && the email has been edited
+        // update the email
         if (email && password && email !== state.profile.email) {
           yield call(firebase.updateEmail, password, email);
         }
         
         if (avatarFile || bannerFile) {
-          const bannerURL = bannerFile ? yield call(firebase.storeBannerImage, state.auth.id, bannerFile) : payload.updates.banner;
-          const avatarURL = avatarFile ? yield call(firebase.storeAvatarImage, state.auth.id, avatarFile) : payload.updates.avatar;
+          const bannerURL = bannerFile ? yield call(firebase.storeImage, 'banner', state.auth.id, bannerFile) : payload.updates.banner;
+          const avatarURL = avatarFile ? yield call(firebase.storeImage, 'avatar', state.auth.id, avatarFile) : payload.updates.avatar;
           const updates = { ...payload.updates, avatar: avatarURL, banner: bannerURL };
 
           yield call(firebase.updateProfile, state.auth.id, updates);
-          yield put({ type: UPDATE_PROFILE_SUCCESS, payload: updates });
+          yield put(updateProfileSuccess(updates));
         } else {
           yield call(firebase.updateProfile, state.auth.id, payload.updates);
-          yield put({ type: UPDATE_PROFILE_SUCCESS, payload: payload.updates });
+          yield put(updateProfileSuccess(payload.updates));
         }
 
         yield put({ type: LOADING, payload: false });

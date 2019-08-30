@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ProductList from '../../components/product/ProductList';
 import ProductItem from '../../components/product/ProductItem';
+import ProductAppliedFilters from '../../components/product/ProductAppliedFilters';
 import Header from './Header';
 import Modal from '../../components/ui/Modal';
 
@@ -36,12 +37,15 @@ const Home = () => {
   return (
     <>
       <section className="product-list-wrapper">
-        <Header 
-            dispatch={dispatch}
-            products={products}
-            filter={filter}
-            isLoading={isLoading}
-        />
+        <div className="product-list-header">
+          <Header 
+              dispatch={dispatch}
+              products={products}
+              filter={filter}
+              isLoading={isLoading}
+          />
+        </div>
+        <ProductAppliedFilters filter={filter}/>
         <ProductList>
           {({ state, action, foundOnBasket }) => (
             <>

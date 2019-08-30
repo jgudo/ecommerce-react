@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { displayDate } from '../../helpers/utils';
 
 const UserProfile = (props) => {
   const profile = useSelector(state => state.profile);
@@ -47,6 +48,13 @@ const UserProfile = (props) => {
             <h5>{profile.mobile}</h5>
           ) : (
             <h5 className="text-subtle text-italic">Mobile not set</h5>
+          )}
+          <span>Date Joined</span>
+          <br />
+          {profile.dateJoined ? (
+            <h5>{displayDate(profile.dateJoined)}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">Not available</h5>
           )}
         </div>
       </div>

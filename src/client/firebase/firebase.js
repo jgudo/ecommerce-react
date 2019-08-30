@@ -43,6 +43,17 @@ class Firebase {
 
   passwordUpdate = password => this.auth.currentUser.updatePassword(password);
 
+  changePassword = (currentPassword, newPassword) => {
+    return new Promise((resolve, reject) => {
+      this.reauthenticate(currentPassword).then(() => {
+        const user = this.auth.currentUser;
+        user.updatePassword(newPassword).then(() => {
+          resolve('Password updated successfully!');
+        }).catch(error =>  reject(error));
+      }).catch(error =>  reject(error));
+    });
+  }
+
   reauthenticate = (currentPassword) => {
     const user = this.auth.currentUser;
     const cred = app.auth.EmailAuthProvider.credential(user.email, currentPassword);
@@ -62,20 +73,6 @@ class Firebase {
   }
 
   updateProfile = (id, updates) => this.database.ref(`users/${id}`).update(updates);
-
-  storeAvatarImage = async (id, imageFile) => {
-    const snapshot = await this.storage.ref('avatar').child(id).put(imageFile);
-    const downloadURL = await snapshot.ref.getDownloadURL();
-
-    return downloadURL;
-  }
-
-  storeBannerImage = async (id, imageFile) => {
-    const snapshot = await this.storage.ref('banner').child(id).put(imageFile);
-    const downloadURL = await snapshot.ref.getDownloadURL();
-
-    return downloadURL;
-  }
 
   onAuthStateChanged = () => {
     return new Promise((resolve, reject) => {
@@ -129,8 +126,8 @@ class Firebase {
 
   generateKey = () => this.database.ref('products').push().key;
 
-  storeImage = async (id, imageFile) => {
-    const snapshot = await this.storage.ref('products').child(id).put(imageFile);
+  storeImage = async (id, folder, imageFile) => {
+    const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
     const downloadURL = await snapshot.ref.getDownloadURL();
 
     return downloadURL;

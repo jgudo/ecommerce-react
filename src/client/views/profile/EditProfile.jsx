@@ -4,6 +4,7 @@ import ReactPhoneInput from 'react-phone-input-2';
 import Modal from '../../components/ui/Modal';
 import CircularProgress from '../../components/ui/CircularProgress';
 
+import { displayActionMessage } from '../../helpers/utils';
 import { updateEmail, updateProfile } from '../../actions/profileActions';
 
 const EditProfile = (props) => {
@@ -21,27 +22,36 @@ const EditProfile = (props) => {
     avatar: profile.avatar ? profile.avatar : '',
     banner: profile.banner ? profile.banner : '',
   });
-  const [bannerFile, setBanner] = useState(undefined);
-  const [avatarFile, setAvatar] = useState(undefined);
   const [isOpenModal, setModalOpen] = useState(false);
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState({});
+  const [imageFile, setImageFile] = useState({});
   const [password, setPassword] = useState(null);
 
-  const onAvatarChange = (e) => {
+  const handleFile = (e, field) => {
+    const val = e.target.value;
     const img = e.target.files[0];
-    const url = URL.createObjectURL(img);
+    const size = img.size / 1024 / 1024;
+    const regex = /(\.jpg|\.png)$/i;
 
-    setProfile({ ...user, avatar: url });
-    setAvatar(img);
-  };
+    setLoading({ ...loading, [field]: true });
 
-  const onBannerChange = (e) => {
-    const img = e.target.files[0];
-    const url = URL.createObjectURL(img);
-
-    setProfile({ ...user, banner: url });
-    setBanner(img);
-  };
+    if (!regex.exec(val)) {
+      displayActionMessage('File type must be JPEG or PNG', 'error');
+      setLoading({ ...loading, [field]: false });
+    } else if (size > 1) {
+      displayActionMessage('File size exceeds 1MB', 'error');
+      setLoading({ ...loading, [field]: false });
+    } else {
+      const reader = new FileReader();
+      reader.addEventListener('load', (e) => {
+        setProfile({ ...user, [field]: e.target.result });
+        setImageFile({ ...imageFile, [field]: img });
+        setLoading({ ...loading, [field]: false });
+      });
+      reader.readAsDataURL(img);
+    }
+  }
 
   const onEmailChange = (e) => {
     const val = e.target.value.trim();
@@ -100,22 +110,24 @@ const EditProfile = (props) => {
   };
 
   const onConfirmUpdate = () => {
-    dispatch(updateProfile({ 
-      updates: { ...user },
-      files: { bannerFile, avatarFile },
-      credentials: { email: user.email, password }
-    }));
-    setModalOpen(false);
+    if (password) {
+      dispatch(updateProfile({ 
+        updates: { ...user },
+        files: { bannerFile: imageFile.banner, avatarFile: imageFile.avatar },
+        credentials: { email: user.email, password }
+      }));
+      setModalOpen(false);
+    }
   };
 
   const onSubmitUpdate = () => {
     if (Object.keys(error).every(key => error[key] === '')) {
       if (user.email !== profile.email) {
         setModalOpen(true);
-      } else {
+      } else if (Object.keys(user).some(key => profile[key] !== user[key])) {
         dispatch(updateProfile({ 
           updates: { ...user },
-          files: { bannerFile, avatarFile },
+          files: { bannerFile: imageFile.banner, avatarFile: imageFile.avatar },
           credentials: {}
         }));
       }
@@ -139,7 +151,7 @@ const EditProfile = (props) => {
               className="input-form d-block"
               onChange={onPassworInput}
               placeholder="Enter your password"
-              type="text"
+              type="password"
           />
         </div>
         <br/>
@@ -167,20 +179,27 @@ const EditProfile = (props) => {
               src={user.banner} 
           />
           <input 
+              accept="image/x-png,image/jpeg"
               disabled={isLoading}
               id="edit-banner"
               hidden
-              onChange={onBannerChange}
+              onChange={(e) => handleFile(e, 'banner')}
               type="file" 
           />
-          <div className="edit-button-wrapper">
-              <label 
-                  className="edit-button edit-banner-button"
-                  htmlFor="edit-banner"
-              >
-                Change
-            </label>
-          </div>
+          {loading.banner ? (
+            <div className="loading-wrapper">
+              <CircularProgress visible={true} theme="light" />
+            </div>
+          ) : (
+            <div className="edit-button-wrapper">
+                <label 
+                    className="edit-button edit-banner-button"
+                    htmlFor="edit-banner"
+                >
+                  Change
+              </label>
+            </div>
+          )}
         </div>
         <div className="user-profile-img-wrapper">
           <img 
@@ -189,20 +208,27 @@ const EditProfile = (props) => {
               src={user.avatar} 
           />
           <input 
+              accept="image/x-png,image/jpeg"
               id="edit-avatar"
               disabled={isLoading}
               hidden
-              onChange={onAvatarChange}
+              onChange={(e) => handleFile(e, 'avatar')}
               type="file" 
           />
-          <div className="edit-button-wrapper">
-              <label 
-                  className="edit-button edit-avatar-button"
-                  htmlFor="edit-avatar"
-              >
-                Change
-            </label>
-          </div>
+          {loading.avatar ? (
+            <div className="loading-wrapper">
+              <CircularProgress visible={true} theme="light" />
+            </div>
+          ) : (
+            <div className="edit-button-wrapper">
+                <label 
+                    className="edit-button edit-avatar-button"
+                    htmlFor="edit-avatar"
+                >
+                  Change
+              </label>
+            </div>
+          )}
         </div>
       </div>
       <div className="user-profile-details">
@@ -266,21 +292,3 @@ const EditProfile = (props) => {
 };
 
 export default EditProfile;
-
-
-// changePassword = (currentPassword, newPassword) => {
-//   this.reauthenticate(currentPassword).then(() => {
-//     var user = firebase.auth().currentUser;
-//     user.updatePassword(newPassword).then(() => {
-//       console.log("Password updated!");
-//     }).catch((error) => { console.log(error); });
-//   }).catch((error) => { console.log(error); });
-// }
-// changeEmail = (currentPassword, newEmail) => {
-//   this.reauthenticate(currentPassword).then(() => {
-//     var user = firebase.auth().currentUser;
-//     user.updateEmail(newEmail).then(() => {
-//       console.log("Email updated!");
-//     }).catch((error) => { console.log(error); });
-//   }).catch((error) => { console.log(error); });
-// }
