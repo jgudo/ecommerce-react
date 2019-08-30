@@ -1,7 +1,7 @@
 .pill {
     background: $border-color;
     padding: 0.8rem $m-size;
-    border-radius: 10%;
+    border-radius: $m-size;
     display: inline-block;
     margin: 10px 5px;
     position: relative;

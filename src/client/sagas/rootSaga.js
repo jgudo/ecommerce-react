@@ -2,6 +2,7 @@ import { takeLatest, takeEvery } from 'redux-saga/effects';
 import * as ACTION from '../constants/constants';
 import authSaga from './authSaga';
 import productSaga from './productSaga';
+import profileSaga from './profileSaga';
 
 function* rootSaga() {
     yield takeLatest([ 
@@ -22,6 +23,10 @@ function* rootSaga() {
         ACTION.EDIT_PRODUCT,
         ACTION.GET_PRODUCTS 
     ], productSaga);
+    yield takeLatest([
+        ACTION.UPDATE_EMAIL,
+        ACTION.UPDATE_PROFILE
+    ], profileSaga);
 }
 
 export default rootSaga;

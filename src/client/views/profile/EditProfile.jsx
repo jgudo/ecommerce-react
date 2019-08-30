@@ -1,35 +1,46 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import ReactPhoneInput from 'react-phone-input-2';
+import Modal from '../../components/ui/Modal';
+import CircularProgress from '../../components/ui/CircularProgress';
+
+import { updateEmail, updateProfile } from '../../actions/profileActions';
 
 const EditProfile = (props) => {
-  const { profile, auth } = useSelector(state => ({
+  const { profile, auth, isLoading } = useSelector(state => ({
     profile: state.profile,
-    auth: state.auth
+    auth: state.auth,
+    isLoading: state.app.loading
   }));
+  const dispatch = useDispatch();
   const [user, setProfile] = useState({
     fullname: profile.fullname ? profile.fullname : '',
     email: profile.email ? profile.email : '',
     address: profile.address ? profile.address : '',
     mobile: profile.mobile ? profile.mobile : '',
     avatar: profile.avatar ? profile.avatar : '',
-    avatarFile: undefined,
     banner: profile.banner ? profile.banner : '',
-    bannerFile: undefined
   });
+  const [bannerFile, setBanner] = useState(undefined);
+  const [avatarFile, setAvatar] = useState(undefined);
+  const [isOpenModal, setModalOpen] = useState(false);
   const [error, setError] = useState({});
+  const [password, setPassword] = useState(null);
 
   const onAvatarChange = (e) => {
     const img = e.target.files[0];
     const url = URL.createObjectURL(img);
 
-    setProfile({ ...user, avatar: url, avatarFile: img });
+    setProfile({ ...user, avatar: url });
+    setAvatar(img);
   };
 
   const onBannerChange = (e) => {
     const img = e.target.files[0];
     const url = URL.createObjectURL(img);
 
-    setProfile({ ...user, banner: url, bannerFile: img });
+    setProfile({ ...user, banner: url });
+    setBanner(img);
   };
 
   const onEmailChange = (e) => {
@@ -48,14 +59,13 @@ const EditProfile = (props) => {
   };
 
   const onFullNameChange = (e) => {
-    const val = e.target.value.trimStart();
-    const regex = /[a-zA-Z]{5,}/;
-    
+    const val = e.target.value.replace(/[^a-zA-Z\s]/g, '').trimStart();
+
     setProfile({ ...user, fullname: val });
 
-    if (val === '') {
+    if (user.fullname === '') {
       setError({ ...error, fullname: 'Full name is required' });
-    } else if (!regex.test(val)) {
+    } else if (user.fullname.length < 5) {
       setError({ ...error, fullname: 'Full name must be at least 5 letters' });
     } else {
       setError({ ...error, fullname: '' });
@@ -63,13 +73,53 @@ const EditProfile = (props) => {
   };
 
   const onAddressChange = (e) => {
-    const val = e.target.value.trim();
+    const val = e.target.value.trimStart();
     setProfile({ ...user, address: val });
   };
 
-  const onMobileChange = (e) => {
-    const val = e.target.value.trim();
-    setProfile({ ...user, mobile: val });
+  const onMobileChange = (mob, data) => {
+    const mobile = mob.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
+    const len = mobile.toString().length;
+    setProfile({ ...user, mobile});
+
+    if (!user.mobile) {
+      setError({ ...error, mobile: 'Mobile number is required' });
+    } else if (len <= 9) {
+      setError({ ...error, mobile: 'Mobile number invalid' });
+    }else {
+      setError({ ...error, mobile: '' });
+    }
+  };
+
+  const onCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const onPassworInput = (e) => {
+    setPassword(e.target.value.trim());
+  };
+
+  const onConfirmUpdate = () => {
+    dispatch(updateProfile({ 
+      updates: { ...user },
+      files: { bannerFile, avatarFile },
+      credentials: { email: user.email, password }
+    }));
+    setModalOpen(false);
+  };
+
+  const onSubmitUpdate = () => {
+    if (Object.keys(error).every(key => error[key] === '')) {
+      if (user.email !== profile.email) {
+        setModalOpen(true);
+      } else {
+        dispatch(updateProfile({ 
+          updates: { ...user },
+          files: { bannerFile, avatarFile },
+          credentials: {}
+        }));
+      }
+    }
   };
 
   const errorClassName = (field) => {
@@ -78,6 +128,37 @@ const EditProfile = (props) => {
 
   return (
     <div className="edit-user">
+      <Modal 
+          isOpen={isOpenModal}
+          onRequestClose={onCloseModal}
+      >
+        <div className="text-center padding-l">
+          <h4>Confirm Update</h4>
+          <p>To continue updating profile including your <strong>email</strong>, <br/> please confirm by entering your password</p>
+          <input 
+              className="input-form d-block"
+              onChange={onPassworInput}
+              placeholder="Enter your password"
+              type="text"
+          />
+        </div>
+        <br/>
+        <div className="d-flex-center">
+        <button 
+            className="button"
+            onClick={onConfirmUpdate}
+        >
+          Confirm
+        </button>
+        </div>
+        <button 
+            className="modal-close-button button button-border button-border-gray button-small"
+            onClick={onCloseModal}
+        >
+          X
+        </button>
+      </Modal>
+      <h3 className="text-center">Update Your Profile</h3>
       <div className="user-profile-banner">
         <div className="user-profile-banner-wrapper">
           <img 
@@ -86,6 +167,7 @@ const EditProfile = (props) => {
               src={user.banner} 
           />
           <input 
+              disabled={isLoading}
               id="edit-banner"
               hidden
               onChange={onBannerChange}
@@ -108,6 +190,7 @@ const EditProfile = (props) => {
           />
           <input 
               id="edit-avatar"
+              disabled={isLoading}
               hidden
               onChange={onAvatarChange}
               type="file" 
@@ -130,6 +213,7 @@ const EditProfile = (props) => {
             maxLength={30}
             onChange={onFullNameChange}
             placeholder="Full Name"
+            readOnly={isLoading}
             style={{ textTransform: 'capitalize' }}
             type="text"
             value={user.fullname}
@@ -140,7 +224,7 @@ const EditProfile = (props) => {
             className={`input-form d-block ${errorClassName('email')}`}
             onChange={onEmailChange}
             placeholder="Email"
-            readOnly={auth.provider !== 'password'}
+            readOnly={auth.provider !== 'password' || isLoading}
             type="email"
             value={user.email}
         />
@@ -149,20 +233,54 @@ const EditProfile = (props) => {
             className={`input-form d-block`}
             placeholder="Complete Address"
             onChange={onAddressChange}
+            readOnly={isLoading}
             type="text"
             value={user.address}
         />
+        {error.mobile && <span className="input-message">{error.mobile}</span>}
         <span className="d-block padding-s">Mobile</span>
-        <input 
-            className={`input-form d-block`}
+        <ReactPhoneInput 
+            defaultCountry={'ph'} 
+            disabled={isLoading}
+            inputExtraProps={{ required: true }}
+            inputClass={`input-form d-block ${errorClassName('mobile')}`}
+            masks={{'ph': '+.. .... ... ....'}}
             onChange={onMobileChange}
-            placeholder="Mobile Number"
-            type="number"
-            value={user.mobile}
+            placeholder="09264538861"
+            value={user.mobile} 
         />
+      </div>
+      <br/>
+      <div>
+        <button
+            className="button"
+            disabled={isLoading}
+            onClick={onSubmitUpdate}
+        >
+          <CircularProgress visible={isLoading} theme="light" />
+          {isLoading ? 'Updating Profile' : 'Update Profile'}
+        </button>
       </div>
     </div>
   );
 };
 
 export default EditProfile;
+
+
+// changePassword = (currentPassword, newPassword) => {
+//   this.reauthenticate(currentPassword).then(() => {
+//     var user = firebase.auth().currentUser;
+//     user.updatePassword(newPassword).then(() => {
+//       console.log("Password updated!");
+//     }).catch((error) => { console.log(error); });
+//   }).catch((error) => { console.log(error); });
+// }
+// changeEmail = (currentPassword, newEmail) => {
+//   this.reauthenticate(currentPassword).then(() => {
+//     var user = firebase.auth().currentUser;
+//     user.updateEmail(newEmail).then(() => {
+//       console.log("Email updated!");
+//     }).catch((error) => { console.log(error); });
+//   }).catch((error) => { console.log(error); });
+// }

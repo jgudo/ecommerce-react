@@ -43,6 +43,40 @@ class Firebase {
 
   passwordUpdate = password => this.auth.currentUser.updatePassword(password);
 
+  reauthenticate = (currentPassword) => {
+    const user = this.auth.currentUser;
+    const cred = app.auth.EmailAuthProvider.credential(user.email, currentPassword);
+
+    return user.reauthenticateWithCredential(cred);
+  }
+
+  updateEmail = (currentPassword, newEmail) => {
+    return new Promise((resolve, reject) => {
+      this.reauthenticate(currentPassword).then(() => {
+        const user = this.auth.currentUser;
+        user.updateEmail(newEmail).then((data) => {
+          resolve('Email Successfully updated');
+        }).catch(error => reject(error));
+      }).catch(error => reject(error));
+    });
+  }
+
+  updateProfile = (id, updates) => this.database.ref(`users/${id}`).update(updates);
+
+  storeAvatarImage = async (id, imageFile) => {
+    const snapshot = await this.storage.ref('avatar').child(id).put(imageFile);
+    const downloadURL = await snapshot.ref.getDownloadURL();
+
+    return downloadURL;
+  }
+
+  storeBannerImage = async (id, imageFile) => {
+    const snapshot = await this.storage.ref('banner').child(id).put(imageFile);
+    const downloadURL = await snapshot.ref.getDownloadURL();
+
+    return downloadURL;
+  }
+
   onAuthStateChanged = () => {
     return new Promise((resolve, reject) => {
       this.auth.onAuthStateChanged((user) => {

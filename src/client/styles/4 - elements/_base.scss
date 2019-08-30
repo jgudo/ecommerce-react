@@ -30,6 +30,10 @@ p {
   line-height: $line-height;
 }
 
+strong { 
+  font-weight: bold;
+}
+
 span {
   color: $paragraph-color-00;
   font-size: $font-small;

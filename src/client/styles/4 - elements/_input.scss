@@ -22,6 +22,12 @@ input:read-only {
   opacity: .5;
 }
 
+input[type=tel] {
+  background: transparent;
+  border-radius: 0;
+  padding-left: 48px !important;
+}
+
 input[type=number] {
   -moz-appearance: textfield;
 }
@@ -209,4 +215,23 @@ input[type=checkbox]:checked + label:after,
 input[type=radio]:checked + label:after {
   border: solid $white;
   border-width: 0 2px 2px 0;
+}
+
+
+// override react-phone-input-2
+.react-tel-input input[type=tel] {
+  @extend input;
+  width: 100% !important;
+  font-family: 'Tajawal' !important;
+  margin-bottom: 1.2rem !important;
+  font-size: $font-medium !important;
+  border: 1px solid $border-color-focus !important;
+}
+
+.react-tel-input input[type=tel].input-error {
+  border: 1px solid $red !important;
+}
+
+.react-tel-input input[type=tel].input-error ~ .flag-dropdown {
+  border: 1px solid $red !important;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import withAuth from '../hoc/withAuth';
+import ReactPhoneInput from 'react-phone-input-2';
 import CheckOutHeader from '../header/CheckOutHeader';
 
 import { displayMoney } from '../../../helpers/utils';
@@ -59,14 +60,16 @@ const ShippingDetails = (props) => {
     }
   };
 
-  const onMobileInput = (e) => {
-    const val = e.target.value.trim();
+  const onMobileInput = (mob, data) => {
+    const mobile = mob.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
+    const len = mobile.toString().length;
+    setField({ ...field, mobile});
 
-    setField({ ...field, mobile: val });
-
-    if (val === '') {
+    if (!field.mobile) {
       setError({ ...error, mobile: 'Mobile number is required' });
-    } else {
+    } else if (len <= 9) {
+      setError({ ...error, mobile: 'Mobile number invalid' });
+    }else {
       setError({ ...error, mobile: '' });
     }
   };
@@ -92,7 +95,6 @@ const ShippingDetails = (props) => {
       props.history.push('/checkout/step3');
     }
   };
-
 
   return (
     <div className="checkout">
@@ -143,12 +145,14 @@ const ShippingDetails = (props) => {
               <div className="d-block checkout-field">
                 {error.mobile && <span className="input-message">{error.mobile}</span>}
                 <span className="d-block padding-s">Mobile Number</span>
-                <input 
-                    className={`input-form d-block ${errorClassName('mobile')}`}
+                <ReactPhoneInput 
+                    defaultCountry={'ph'} 
+                    inputExtraProps={{ required: true }}
+                    inputClass={`input-form d-block ${errorClassName('mobile')}`}
+                    masks={{'ph': '+.. .... ... ....'}}
                     onChange={onMobileInput}
-                    placeholder="Your mobile number"
-                    type="number"
-                    value={field.mobile}
+                    placeholder="09264538861"
+                    value={field.mobile} 
                 />
               </div>
             </div>

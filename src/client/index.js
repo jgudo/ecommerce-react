@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import firebase from './firebase/firebase';
 import 'normalize.css/normalize.css';
+import 'react-phone-input-2/dist/style.css';
 import './styles/style.scss';
 import WebFont from 'webfontloader';
 import App from './App';

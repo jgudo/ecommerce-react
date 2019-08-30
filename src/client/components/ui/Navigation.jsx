@@ -5,6 +5,8 @@ import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import UserAvatar from '../../views/profile/UserAvatar';
 
+import * as ROUTE from '../../constants/routes';
+
 const Navigation = ({ path }) => {
   const { basket, profile, isAuth, isAuthenticating } = useSelector(state => ({
     basket: state.basket,
@@ -30,6 +32,16 @@ const Navigation = ({ path }) => {
     }
   });
 
+  // disable the basket toggle to these paths
+  const basketDisabledPaths = [
+    ROUTE.CHECKOUT_STEP_1, 
+    ROUTE.CHECKOUT_STEP_2, 
+    ROUTE.CHECKOUT_STEP_3,
+    ROUTE.SIGNIN,
+    ROUTE.SIGNUP,
+    ROUTE.FORGOT_PASSWORD
+  ];
+
   return (
     <nav 
         className="navigation"
@@ -46,7 +58,7 @@ const Navigation = ({ path }) => {
               activeClassName="navigation-menu-active"
               className="navigation-menu-link"
               exact
-              to="/" 
+              to={ROUTE.HOME} 
           >
             Home
           </NavLink>
@@ -56,7 +68,7 @@ const Navigation = ({ path }) => {
             {({ onClickToggle }) => (
               <button 
                   className="button-link navigation-menu-link basket-toggle" 
-                  disabled={path === '/checkout/step1' || path === '/checkout/step2' || path === '/checkout/step3'}
+                  disabled={basketDisabledPaths.includes(path)}
                   onClick={onClickToggle}
               >
                 <span>
@@ -73,22 +85,22 @@ const Navigation = ({ path }) => {
           </li>
         ) : (
           <li className="navigation-action">
-            {(path === '/signin' || path === '/') && (
+            {(path === ROUTE.SIGNIN || path === ROUTE.HOME) && (
               <NavLink 
                   activeClassName="navigation-menu-active"
                   className="button button-small"
                   exact
-                  to="/signup" 
+                  to={ROUTE.SIGNUP} 
               >
                 Sign Up
               </NavLink>
             )}
-            {(path === '/signup' || path === '/forgot_password' || path === '/') && (
+            {(path === ROUTE.SIGNUP || path === ROUTE.FORGOT_PASSWORD || path === ROUTE.HOME) && (
                 <NavLink 
                     activeClassName="navigation-menu-active"
                     className="button button-small button-muted margin-left-s"
                     exact
-                    to="/signin" 
+                    to={ROUTE.SIGNIN} 
                 >
                   Sign In
                 </NavLink>
