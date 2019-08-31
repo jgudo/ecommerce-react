@@ -124,22 +124,32 @@
     flex-direction: column;
 
     a {
-      margin-bottom: $s-size;
+      margin-top: $m-size;
+      margin-bottom: 0;
       text-align: center;
+      order: 2;
+    }
+
+    button {
+      order: 1;
     }
   }
 }
 
 .signin-message {
-  width: 250px;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: $s-size;
   margin: auto;
+  background: $background-color-01;
+  border: 1px solid $border-color-focus;
+  border-top: none;
 }
 
 .signin-info {
-  flex-grow: 1;
+  margin-right: $l-size;
 }
 
 .forgot_password {

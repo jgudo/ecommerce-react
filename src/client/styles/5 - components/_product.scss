@@ -5,7 +5,7 @@
   justify-content: center;
 
   @media (max-width: $mobile) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
@@ -17,6 +17,7 @@
 
   @media (max-width: $mobile) {
     text-align: center;
+    display: none;
   }
 }
 
@@ -41,6 +42,7 @@
   position: relative;
   // box-shadow: 0 10px 15px rgba(0, 0, 0, .05);
   overflow: hidden;
+  animation: slide-up .3s ease;
 
   &:hover {
     cursor: pointer;
@@ -135,6 +137,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: $mobile) {
+    display: block;
+  }
 }
 
 // PRODUCT MODAL -------------------------------------------------
@@ -216,22 +222,22 @@
 
 .product-search {
   width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   background: $background-color;
   z-index: map-get($z-index, 'search');
 }
 
 .product-search-header {
   width: 100%;
-  height: 60px;
+  height: 50px;
   background: $black;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   color: $white;
-  padding: 0 $s-size;
+  padding: 0 $m-size;
+  position: sticky;
+  top: 0;
 }
 
 .product-search-body {
@@ -240,17 +246,22 @@
 }
 
 .product-search-input {
+  width: 90%;
   border: none !important;
-  border-bottom: 1px solid $paragraph-color-10 !important;
   color: $white;
   flex-grow: 1;
-  margin: 0 $s-size 0 $m-size;
   font-size: $font-medium !important;
 
   &:focus {
     border: none !important;
-    border-bottom: 1px solid $border-color !important;
   }
+}
+
+.product-search-wrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin-left: $m-size;
 }
 
 .product-search-button {

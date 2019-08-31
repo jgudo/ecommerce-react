@@ -4,9 +4,12 @@
   position: relative;
 }
 
+.search-input {
+  padding-left: $xl-size !important;
+}
+
 .searchbar-input {
   width: 100%;
-  padding: $s-size $m-size;
   margin-right: 5px;
   background: $background-color-01;
 }
@@ -14,7 +17,7 @@
 .searchbar-icon {
   @extend .icon-magnify;
   position: absolute;
-  right: $l-size;
+  left: $m-size;
   top: -3px;
   bottom: 0;
   margin: auto;

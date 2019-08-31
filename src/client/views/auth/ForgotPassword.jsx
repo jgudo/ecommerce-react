@@ -53,7 +53,7 @@ const ForgotPassword = () => {
       />
       <br />
       <button
-          className="button"
+          className="button w-100-mobile"
           disabled={isLoading}
           onClick={onSubmitEmail}
           type="button"

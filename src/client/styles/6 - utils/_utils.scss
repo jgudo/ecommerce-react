@@ -1,6 +1,7 @@
 // 
 // UTILS ---------
 //
+
 .w-100 {
   width: 100%;
 }
@@ -13,6 +14,12 @@
 .d-block {
   display: block;
   width: 100%;
+}
+
+.w-100-mobile {
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 }
 
 .d-flex {

@@ -30,3 +30,11 @@
         cursor: pointer;
     }
 }
+
+.pill-wrapper {
+    text-align: center;
+
+    @media (max-width: $mobile) {
+        display: inline-block;
+    }
+}

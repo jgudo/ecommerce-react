@@ -24,3 +24,7 @@
       transform: translateY(0);
     }
   }
+
+@keyframes fullWidth {
+    100% { width: 100%; }
+}

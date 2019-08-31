@@ -141,9 +141,7 @@ function* authSaga({ type, payload }) {
 
       if (snapshot.val()) { // if user exists in database
         yield put(setProfile(snapshot.val()));
-      } 
-
-      if (payload.providerData[0].providerId !== 'password') { // add the user
+      } else if (payload.providerData[0].providerId !== 'password') { // add the user
         const user = {
           fullname: payload.displayName ? payload.displayName : 'User',
           avatar: payload.photoURL ? payload.photoURL : defaultAvatar,
@@ -166,7 +164,7 @@ function* authSaga({ type, payload }) {
       break;
     case ON_AUTHSTATE_FAIL:
       yield put(clearProfile());
-      // yield put(signOutSuccess());
+      yield put(signOutSuccess());
       break;
     case SET_AUTH_PERSISTENCE:
       try {

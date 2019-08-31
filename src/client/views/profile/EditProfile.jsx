@@ -275,17 +275,17 @@ const EditProfile = (props) => {
             placeholder="09264538861"
             value={user.mobile} 
         />
-      </div>
-      <br/>
-      <div>
-        <button
-            className="button"
-            disabled={isLoading}
-            onClick={onSubmitUpdate}
-        >
-          <CircularProgress visible={isLoading} theme="light" />
-          {isLoading ? 'Updating Profile' : 'Update Profile'}
-        </button>
+        <br/>
+        <div>
+          <button
+              className="button w-100-mobile"
+              disabled={isLoading}
+              onClick={onSubmitUpdate}
+          >
+            <CircularProgress visible={isLoading} theme="light" />
+            {isLoading ? 'Updating Profile' : 'Update Profile'}
+          </button>
+        </div>
       </div>
     </div>
   );

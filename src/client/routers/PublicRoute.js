@@ -5,7 +5,6 @@ import { Route, Redirect } from 'react-router-dom';
 import Basket from '../components/basket/basket';
 import Navigation from '../components/ui/Navigation';
 import Footer from '../components/ui/Footer';
-import MobileNavigation from '../components/ui/mobile/MobileNavigation';
 
 const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) => (
   <Route 
@@ -24,12 +23,12 @@ const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) 
           ) 
           : (
             <>
-              {window.screen.width <= 480 ? (<MobileNavigation path={path} />) : <Navigation path={path} />}
+              <Navigation path={path} />
               <Basket />
               <main className="content">
                 <Component {...props} />
               </main>
-              <Footer />
+              <Footer path={path} />
             </>
           )
         );

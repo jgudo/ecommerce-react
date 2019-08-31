@@ -31,15 +31,18 @@
   width: 300px;
   background: $white;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   right: 0;
+  bottom: 0;
+  margin: auto;
   padding: $m-size;
-  z-index: 1;
+  z-index: map-get($z-index, 'filter');
   display: none;
 }
 
-.is-open-filters .filters-toggle-sub {
+.is-open-filters > .filters-toggle-sub {
   display: block;
 }
 

@@ -4,12 +4,13 @@ import { withRouter, NavLink, Link} from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import UserAvatar from '../../views/profile/UserAvatar';
+import MobileNavigation from './mobile/MobileNavigation';
 
 import * as ROUTE from '../../constants/routes';
 
 const Navigation = ({ path }) => {
-  const { basket, profile, isAuth, isAuthenticating } = useSelector(state => ({
-    basket: state.basket,
+  const { basketLength, profile, isAuth, isAuthenticating } = useSelector(state => ({
+    basketLength: state.basket.length,
     profile: state.profile,
     isAuth: !!state.auth.id && !!state.auth.type,
     isAuthenticating: state.app.isAuthenticating
@@ -42,7 +43,16 @@ const Navigation = ({ path }) => {
     ROUTE.FORGOT_PASSWORD
   ];
 
-  return (
+  return window.screen.width <= 480 ? (
+    <MobileNavigation 
+        basketLength={basketLength}
+        profile={profile}
+        isAuth={isAuth}
+        isAuthenticating={isAuthenticating}
+        path={path} 
+        disabledPaths={basketDisabledPaths} 
+    />
+  ) : (
     <nav 
         className="navigation"
         ref={navbar}
@@ -72,7 +82,7 @@ const Navigation = ({ path }) => {
                   onClick={onClickToggle}
               >
                 <span>
-                  <Badge count={basket.length}/>
+                  <Badge count={basketLength}/>
                   My Basket 
                 </span>
               </button>

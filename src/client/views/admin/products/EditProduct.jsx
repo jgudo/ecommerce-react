@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import { editProduct } from '../../../actions/productActions';
+
 import ProductForm from './ProductForm';
 
 const EditProduct = (props) => {

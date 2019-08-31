@@ -11,22 +11,24 @@
 }
 
 .signup {
-  width: 100%;
+  width: 500px;
+  margin: auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-
-.signup-wrapper {
-  width: 400px;
-  height: auto;
-  padding: $l-size;
-  padding-top: $m-size;
-  border: 1px solid $border-color-focus;
-  margin: auto;
 
   @media (max-width: $mobile) {
     width: 100%;
+  }
+}
+
+.signup-wrapper {
+  width: 100%;
+  padding: $l-size;
+  padding-top: $m-size;
+  border: 1px solid $border-color-focus;
+
+  @media (max-width: $mobile) {
     padding: $m-size;
   }
 }

@@ -5,6 +5,12 @@
   position: relative;
   padding: 0 $s-size;
   border-bottom: 2px solid transparent;
+  display: flex;
+  justify-content: center;
+  
+  @media (max-width: $mobile) {
+    width: 100%;
+  }
 
   &:hover {
     cursor: pointer;

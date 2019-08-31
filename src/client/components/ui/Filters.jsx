@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { resetFilter, applyFilter } from '../../actions/filterActions';
 import { selectMax, selectMin } from '../../selectors/selector';
@@ -6,9 +6,18 @@ import { selectMax, selectMin } from '../../selectors/selector';
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
-  const { products, filter, isLoading, productsLength, dispatch } = props;
+  const { 
+    products, 
+    filter, 
+    isLoading, 
+    productsLength, 
+    dispatch, 
+    toggleRef 
+  } = props;
+
   const max = selectMax(products);
-  const min = selectMin(products)
+  const min = selectMin(products);
+  const [isMounted, setMounted] = useState(false);
   const [filterField, setFilter] = useState({
     brandFilter: filter.brand,
     minPriceFilter: filter.minPrice,
@@ -16,12 +25,17 @@ const Filters = (props) => {
     sortByFilter: filter.sortBy
   })
 
-  const onMinPriceChange = (val) => {
-    setFilter({ ...filterField, minPriceFilter: val });
-  };
+  useEffect(() => {
+    toggleRef && toggleRef.current.classList.remove('is-open-filters');
+    document.body.classList.remove('is-open-filters');
+    (isMounted && window.screen.width <= 480) && props.history.push('/');
+    setMounted(true);
+    window.scrollTo(0, 0);
+  }, [filter]);
 
-  const onMaxPriceChange = (val) => {
-    setFilter({ ...filterField, maxPriceFilter: val });
+
+  const onPriceChange = (min, max) => {
+    setFilter({ ...filterField, minPriceFilter: min, maxPriceFilter: max });
   };
 
   const onBrandFilterChange = (e) => {
@@ -45,14 +59,12 @@ const Filters = (props) => {
 
     if (Object.keys(newFilter).some(key => filter[key] !== newFilter[key])) {
       dispatch(applyFilter(newFilter));
-      props.history.push('/');
     }
   };
 
   const onResetFilter = () => {
     if (['brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!filter[key])) {
       dispatch(resetFilter());
-      props.history.push('/');
     }
   };
 
@@ -83,7 +95,7 @@ const Filters = (props) => {
         <br/>
         <select 
               className="filters-sort-by d-block"
-              // value={brandFilter}
+              value={filterField.sortByFilter}
               disabled={isLoading || productsLength === 0}
               onChange={onSortFilterChange}
           >
@@ -104,8 +116,9 @@ const Filters = (props) => {
           <PriceRange 
               min={min} 
               max={max} 
-              onMaxPriceChange={onMaxPriceChange}
-              onMinPriceChange={onMinPriceChange}
+              currentMin={filterField.minPriceFilter}
+              currentMax={filterField.maxPriceFilter}
+              onPriceChange={onPriceChange}
               productsLength={productsLength}
           />
         )}

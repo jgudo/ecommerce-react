@@ -5,12 +5,13 @@ import { displayMoney } from '../../helpers/utils';
 const PriceRange = ({ 
   min, 
   max,
-  onMaxPriceChange,
-  onMinPriceChange,
+  currentMin,
+  currentMax,
+  onPriceChange,
   productsLength 
 }) => {
-  const [minState, setMinState] = useState(min);
-  const [maxState, setMaxState] = useState(max);
+  const [minState, setMinState] = useState(currentMin || min);
+  const [maxState, setMaxState] = useState(currentMax || max);
   const slider = useRef(null);
   const inputMin = useRef(null);
   const inputMax = useRef(null);
@@ -27,8 +28,7 @@ const PriceRange = ({
 
     setMinState(slide1);
     setMaxState(slide2);
-    onMinPriceChange(slide1);
-    onMaxPriceChange(slide2);
+    onPriceChange(slide1, slide2);
   };
 
   const onInputChange = () => {
@@ -43,8 +43,7 @@ const PriceRange = ({
 
     setMinState(valMin);
     setMaxState(valMax);
-    onMinPriceChange(valMin);
-    onMaxPriceChange(valMax);
+    onPriceChange(valMin, valMax);
   };
 
   return (

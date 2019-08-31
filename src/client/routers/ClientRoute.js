@@ -21,19 +21,19 @@ const PrivateRoute = ({
         isAuthenticated && userType === 'client' 
         ? (
           <>
-            {window.screen.width <= 480 ? <MobileNavigation path={path} /> : <Navigation path={path} />}
+            <Navigation path={path} />
             <Basket />
             <main className="content">
               <Component {...props} />
             </main>
-            <Footer />
+            <Footer path={path}/>
           </>
-        ) : isAuthenticated && userType === 'admin'
-        ? <Redirect to="/dashboard" />
+        ) 
+        : isAuthenticated && userType === 'admin' ? <Redirect to="/dashboard" />
         :  <Redirect to={{
-              pathname: '/signin',
-              state: { from: props.location }
-            }} 
+                pathname: '/signin',
+                state: { from: props.location }
+              }} 
             />
       )}
   />

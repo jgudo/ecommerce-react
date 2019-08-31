@@ -4,16 +4,38 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearRecentSearch, setTextFilter } from '../../actions/filterActions';
 
 import Filters from '../ui/Filters';
-import SearchBar from '../ui/SearchBar';
 
 const ProductSearch = (props) => {
-  const filter = useSelector(state => state.filter);
+  const { productsLength, filter, products, isLoading} = useSelector(state => ({
+    filter: state.filter,
+    products: state.products,
+    isLoading: state.app.loading,
+    productsLength: state.products.length
+  }));
   const dispatch = useDispatch();
   const searchInput = useRef(null);
+  let input = '';
 
   useEffect(() => {
     searchInput.current.focus();
   }, []);
+
+  const onSearchChange = (e) => {
+    const val = e.target.value.trim();
+    input = val;
+    
+    if (val === '' && productsLength !== 0) {
+      dispatch(setTextFilter(val));
+      props.history.push('/');
+    }
+  };
+
+  const onKeyUp = (e) => {
+    if (e.keyCode === 13 && productsLength !== 0) {
+      dispatch(setTextFilter(input));
+      props.history.push('/');
+    }
+  };
 
   const onClearRecentSearch = () => {
     dispatch(clearRecentSearch());
@@ -23,40 +45,30 @@ const ProductSearch = (props) => {
     <div className="product-search">
       <div className="product-search-header">
         <h5 className="color-light" onClick={props.history.goBack}>Back</h5>
-        <SearchBar>
-          {({ onSearchChange, onSubmitSearch}) => (
-            <>
-              <input 
-                  className="product-search-input"
-                  onChange={onSearchChange}
-                  onKeyUp={(e) => {
-                    if (e.keyCode === 13)  {
-                      onSubmitSearch();
-                      props.history.push('/');
-                    }
-                  }}
-                  placeholder="Search for product" 
-                  ref={searchInput}
-                  type="text" 
-              />
-              <div 
-                  className="product-search-button"
-                  onClick={() => {
-                    onSubmitSearch();
-                    props.history.push('/');
-                  }}
-              />
-            </>
-          )}
-        </SearchBar>
-        
+        <div className="product-search-wrapper">
+          <input 
+              className="search-input product-search-input"
+              onChange={onSearchChange}
+              onKeyUp={onKeyUp}
+              placeholder="Search for product" 
+              ref={searchInput}
+              type="text" 
+          />
+          <div className="searchbar-icon" />
+        </div>
       </div>
       <div className="product-search-body">
         <div className="product-search-filter">
           <h5 className="margin-0">Choose Filters</h5>
         </div>
         <div className="product-search-filter-sub">
-          <Filters />
+          <Filters 
+              products={products}
+              dispatch={dispatch}
+              isLoading={isLoading}
+              productsLength={productsLength}
+              filter={filter}
+          />
         </div>
         <div className="product-search-recent">
           <div className="product-search-recent-header">

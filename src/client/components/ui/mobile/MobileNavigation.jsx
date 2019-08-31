@@ -1,31 +1,39 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import BasketToggle from '../../basket/BasketToggle';
 import Badge from '../Badge';
 import UserNav from '../../../views/profile/UserAvatar';
 
-const Navigation = ({ path }) => {
-  const { basket, isAuthenticating, profile, isAuth} = useSelector(state => ({
-    basket: state.basket,
-    isAuthenticating: state.app.isAuthenticating,
-    profile: state.profile,
-    isAuth: !!state.auth.id && !!state.auth.type
-  }));
+import { HOME, SIGNIN, SIGNUP, SEARCH } from '../../../constants/routes';
 
+const Navigation = (props) => {
+  const { 
+    path,  
+    disabledPaths, 
+    basketLength, 
+    isAuthenticating, 
+    profile, 
+    isAuth 
+  } = props;
+  
   return (
     <nav className="mobile-navigation">
       <div className="mobile-navigation-main"> 
         <div className="mobile-navigation-logo">
-          <Link to="/">
+          <Link to={HOME}>
             <h3 className="margin-0 color-light">SALINAKA</h3>
           </Link>
         </div>
-        <div className="mobile-navigation-search">
-          <Link className="d-flex" to="/search">
-            <h5 className="text-subtle mobile-navigation-search-title">Search for product</h5>
-            <div className="icon-magnify" />
-          </Link>
+        <div className="product-search-wrapper">
+          <input 
+              className="search-input product-search-input"
+              onClick={() => props.history.push(SEARCH)}
+              readOnly={true}
+              placeholder="Search for product" 
+              type="text" 
+          />
+          <div className="searchbar-icon" />
         </div>
       </div>
       <ul className="mobile-navigation-menu"> 
@@ -34,11 +42,11 @@ const Navigation = ({ path }) => {
             <li className="basket-toggle mobile-navigation-item">
               <button 
                   className="navigation-menu-link button-link"
-                  disabled={path === '/checkout/step1' || path === '/checkout/step2' || path === '/checkout/step3'}
+                  disabled={disabledPaths.includes(path)}
                   onClick={onClickToggle}
               >
                 <span>
-                  <Badge count={basket.length}/>
+                  <Badge count={basketLength}/>
                   My Basket
                 </span>
               </button>
@@ -51,21 +59,21 @@ const Navigation = ({ path }) => {
           </li>
         ) : (
           <>
-            {path !== '/signup' && (
+            {path !== SIGNUP && (
               <li className="mobile-navigation-item">
                 <Link 
                     className="navigation-menu-link"
-                    to="/signup"
+                    to={SIGNUP}
                 >
                   Sign Up
                 </Link>
               </li>
             )}
-            {path !== '/signin' && (
+            {path !== SIGNIN && (
               <li className="mobile-navigation-item">
                 <Link 
                     className="navigation-menu-link"
-                    to="/signin"
+                    to={SIGNIN}
                 >
                   Sign In
                 </Link>
@@ -78,4 +86,9 @@ const Navigation = ({ path }) => {
   );
 };
 
-export default Navigation;
+Navigation.propType = {
+  path: PropTypes.string.isRequired,
+  disabledPaths: PropTypes.arrayOf(PropTypes.string).isRequired
+};
+
+export default withRouter(Navigation);

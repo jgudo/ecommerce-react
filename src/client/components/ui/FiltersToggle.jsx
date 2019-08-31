@@ -14,8 +14,10 @@ const FiltersToggle = ({
     const target = toggleRef.current;
     if (target.classList.contains('is-open-filters')) {
       target.classList.remove('is-open-filters');
+      document.body.classList.remove('is-open-filters');
     } else {
       target.classList.add('is-open-filters');
+      document.body.classList.add('is-open-filters');
     }
   };
 
@@ -24,7 +26,8 @@ const FiltersToggle = ({
 
     try {
       if (!toggleClosest && toggleRef.current.classList.contains('is-open-filters')) {
-        toggleRef.current.classList.remove('is-open-filters')
+        toggleRef.current.classList.remove('is-open-filters');
+        document.body.classList.remove('is-open-filters');
       }
     } catch (e) {}
   });
@@ -43,6 +46,7 @@ const FiltersToggle = ({
       </button>
       <div className="filters-toggle-sub">
         <Filters 
+            toggleRef={toggleRef}
             dispatch={dispatch}
             products={products}
             productsLength={productsLength}
