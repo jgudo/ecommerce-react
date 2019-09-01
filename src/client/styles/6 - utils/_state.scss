@@ -34,3 +34,12 @@
     background: rgba(255, 255, 255, .6);
   }
 }
+
+.is-img-loading {
+  opacity: 0;
+}
+
+.is-img-loaded {
+  animation: fadeIn .3s ease;
+  opacity: 1;
+}

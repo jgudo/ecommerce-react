@@ -5,29 +5,33 @@ import { addToBasket, removeFromBasket } from '../../actions/basketActions';
 import { selectFilter } from '../../selectors/selector';
 import { displayActionMessage } from '../../helpers/utils';
 import CircularProgress from '../ui/CircularProgress';
-import ProductAppliedFilters from './ProductAppliedFilters';
+
 
 const ProductList = props => {
-  const [isMounted, setIsMounted] = useState(false);
   const [columnCount, setColumnCount] = useState(6);
-  const { 
-    filteredProducts, 
-    products, 
-    basket, 
-    filter, 
-    isLoading, 
-    requestStatus 
-  } = useSelector(state => ({
-    filteredProducts: selectFilter(state.products, state.filter),
-    products: state.products,
-    basket: state.basket,
-    filter: state.filter,
-    isLoading: state.app.loading,
-    requestStatus: state.app.requestStatus
+  const { storeProps } = useSelector(state => ({
+    storeProps: {
+      filteredProducts: selectFilter(state.products, state.filter),
+      products: state.products,
+      basket: state.basket,
+      filter: state.filter,
+      isLoading: state.app.loading,
+      requestStatus: state.app.requestStatus
+    }
   }));
+
+  
+  useEffect(() => {
+    storeProps.products.length === 0 && onGetProducts();
+  }, []);
+  
+  useEffect(() => {
+    onProductsLengthChanged();
+  }, [storeProps.filteredProducts]);
+
   const dispatch = useDispatch();
 
-  const foundOnBasket = (id) => !!basket.find(item => item.id === id); 
+  const foundOnBasket = (id) => !!storeProps.basket.find(item => item.id === id); 
   const onAddToBasket = (id, product) => {
     if (foundOnBasket(id)) {
       dispatch(removeFromBasket(id));
@@ -44,31 +48,25 @@ const ProductList = props => {
     const width = window.screen.width - 120; // minus 120px padding
 
     setColumnCount(Math.floor(width / 160));
-    columnCount >= filteredProducts.length && setColumnCount(filteredProducts.length);
+    columnCount >= storeProps.filteredProducts.length && setColumnCount(storeProps.filteredProducts.length);
   };
-
-  useEffect(() => {
-    products.length === 0 && onGetProducts();
-
-    onProductsLengthChanged();
-  }, [filteredProducts]);
 
   // window.addEventListener('resize', onProductsLengthChanged);
 
-  return filteredProducts.length === 0 && isLoading ? (
+  return storeProps.filteredProducts.length === 0 && storeProps.isLoading ? (
     <div className="loader">
       <CircularProgress />
       <br/>
       <h5 className="text-subtle">Fetching products, please wait</h5>
     </div>
-  ) : filteredProducts.length === 0 && !isLoading && !requestStatus ? (
+  ) : storeProps.filteredProducts.length === 0 && !storeProps.isLoading && !storeProps.requestStatus ? (
     <div className="loader">
       <h4>There are no items found</h4>
       <span>Try using correct filters and keyword</span>
     </div>
-  ) : requestStatus ? (
+  ) : storeProps.requestStatus ? (
     <div className="loader">
-      <h4>{requestStatus}</h4>
+      <h4>{storeProps.requestStatus}</h4>
       <br/>
       <button 
           className="button button-small"
@@ -80,9 +78,9 @@ const ProductList = props => {
   ) : (
     props.children({
       state: {
-        products: filteredProducts,
-        basket,
-        filter,
+        products: storeProps.filteredProducts,
+        basket: storeProps.basket,
+        filter: storeProps.filter,
         columnCount
       },
       action: {
@@ -91,9 +89,10 @@ const ProductList = props => {
         removeProduct:onRemoveProduct
       },
       foundOnBasket: foundOnBasket,
-      isLoading
+      isLoading: storeProps.isLoading
     })
   );
 }
 
 export default ProductList;
+

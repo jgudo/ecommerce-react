@@ -8,7 +8,10 @@ const Footer = ({ path }) => {
     ROUTE.SIGNUP,
     ROUTE.FORGOT_PASSWORD,
     ROUTE.PROFILE,
-    ROUTE.PROFILE_EDIT
+    ROUTE.PROFILE_EDIT,
+    ROUTE.CHECKOUT_STEP_1,
+    ROUTE.CHECKOUT_STEP_2,
+    ROUTE.CHECKOUT_STEP_3
   ];
 
   return hiddenPaths.includes(path) ? null : (

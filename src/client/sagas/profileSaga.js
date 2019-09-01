@@ -52,7 +52,7 @@ function* profileSaga({ type, payload }) {
         console.log(e);
         yield put({ type: LOADING, payload: false });
         if (e.code === 'auth/wrong-password') {
-          yield call(displayActionMessage, 'Wrong password, email update failed :(', 'error');
+          yield call(displayActionMessage, 'Wrong password, profile update failed :(', 'error');
         } else {
           yield call(displayActionMessage, `:( Failed to update profile. ${e.message ? e.message : ''}`, 'error');
         }

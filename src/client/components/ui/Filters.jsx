@@ -6,55 +6,56 @@ import { selectMax, selectMin } from '../../selectors/selector';
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
-  const { 
-    products, 
-    filter, 
-    isLoading, 
-    productsLength, 
-    dispatch, 
-    toggleRef 
-  } = props;
-
+  const { products, filter, isLoading, dispatch } = props;
+  const productsLength = products.length;
   const max = selectMax(products);
   const min = selectMin(products);
   const [isMounted, setMounted] = useState(false);
   const [filterField, setFilter] = useState({
-    brandFilter: filter.brand,
-    minPriceFilter: filter.minPrice,
-    maxPriceFilter: filter.maxPrice,
-    sortByFilter: filter.sortBy
+    brand: filter.brand,
+    minPrice: filter.minPrice,
+    maxPrice: filter.maxPrice,
+    sortBy: filter.sortBy
   })
 
   useEffect(() => {
-    toggleRef && toggleRef.current.classList.remove('is-open-filters');
+    // toggleRef && toggleRef.current.classList.remove('is-open-filters');
     document.body.classList.remove('is-open-filters');
     (isMounted && window.screen.width <= 480) && props.history.push('/');
+
+    // update state upon prop filter change
+    setFilter({
+      brand: filter.brand,
+      minPrice: filter.minPrice,
+      maxPrice: filter.maxPrice,
+      sortBy: filter.sortBy
+    });
     setMounted(true);
     window.scrollTo(0, 0);
   }, [filter]);
 
 
   const onPriceChange = (min, max) => {
-    setFilter({ ...filterField, minPriceFilter: min, maxPriceFilter: max });
+    setFilter({ ...filterField, minPrice: min, maxPrice: max });
   };
 
   const onBrandFilterChange = (e) => {
     const val = e.target.value;
 
-    setFilter({ ...filterField, brandFilter: val });
+    setFilter({ ...filterField, brand: val });
   };
 
   const onSortFilterChange = (e) => {
-    setFilter({ ...filterField, sortByFilter: e.target.value });
+    setFilter({ ...filterField, sortBy: e.target.value });
   };
 
 
   const onApplyFilter = () => {
     const newFilter = {
-      brand: filterField.brandFilter,
-      minPrice: filterField.minPriceFilter,
-      maxPrice: filterField.maxPriceFilter,
-      sortBy: filterField.sortByFilter,
+      brand: filterField.brand,
+      minPrice: filterField.minPrice,
+      maxPrice: filterField.maxPrice,
+      sortBy: filterField.sortBy,
     };
 
     if (Object.keys(newFilter).some(key => filter[key] !== newFilter[key])) {
@@ -79,7 +80,7 @@ const Filters = (props) => {
         ) : (
           <select 
               className="filters-brand"
-              value={filterField.brandFilter}
+              value={filterField.brand}
               disabled={isLoading || productsLength === 0}
               onChange={onBrandFilterChange}
           >
@@ -95,7 +96,7 @@ const Filters = (props) => {
         <br/>
         <select 
               className="filters-sort-by d-block"
-              value={filterField.sortByFilter}
+              value={filterField.sortBy}
               disabled={isLoading || productsLength === 0}
               onChange={onSortFilterChange}
           >
@@ -116,8 +117,8 @@ const Filters = (props) => {
           <PriceRange 
               min={min} 
               max={max} 
-              currentMin={filterField.minPriceFilter}
-              currentMax={filterField.maxPriceFilter}
+              initMin={filterField.minPrice}
+              initMax={filterField.maxPrice}
               onPriceChange={onPriceChange}
               productsLength={productsLength}
           />

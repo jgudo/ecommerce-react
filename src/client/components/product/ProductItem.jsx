@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { displayMoney } from '../../helpers/utils';
 
+import ImageLoader from '../ui/ImageLoader';
+
 const ProductItem = ({ 
   product, 
   onOpenModal, 
@@ -25,9 +27,13 @@ const ProductItem = ({
           onClick={onClickItem}    
       >
         <div className="product-card-img-wrapper">
-          <img className="product-card-img" src={product.image} alt="" />
+          <ImageLoader 
+              className="product-card-img" 
+              src={product.image}
+          />
+          {/* <img className="product-card-img" src={product.image} alt="" /> */}
         </div>
-        <h5 className="product-card-name">{product.name}</h5>
+        <h5 className="product-card-name text-overflow-ellipsis">{product.name}</h5>
         <p className="product-card-brand">{product.brand}</p>
         <h4 className="product-card-price">{displayMoney(product.price)}</h4>
       </div>

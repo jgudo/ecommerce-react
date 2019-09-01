@@ -96,7 +96,7 @@ const SignUp = (props) => {
             <span className="d-block padding-s">Full Name</span>
             <input 
                 className={`input-form d-block ${errorClassName('fullname')}`}
-                maxLength={30}
+                maxLength={40}
                 onKeyUp={onFullnameInput}
                 placeholder="Full name"
                 readOnly={isAuthenticating}
@@ -109,6 +109,7 @@ const SignUp = (props) => {
             <span className="d-block padding-s">Email</span>
             <input 
                 className={`input-form d-block ${errorClassName('email')}`}
+                maxLength={40}
                 onInput={onEmailInput}
                 placeholder="Your Email"
                 readOnly={isAuthenticating}
@@ -121,6 +122,7 @@ const SignUp = (props) => {
             <div className="d-flex">
               <input
                   className={`input-form d-block margin-0 ${errorClassName('password')}`}
+                  maxLength={40}
                   onInput={onPasswordInput}
                   placeholder="Password" 
                   readOnly={isAuthenticating}

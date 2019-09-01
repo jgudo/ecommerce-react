@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CircularProgress = ({ visible, theme }) => {
+const CircularProgress = ({ style, visible, theme }) => {
   const className = () => {
     return theme === 'light' ? 'circular-progress-light' : theme === 'dark' ? 'circular-progress-dark' : null; 
   };
 
-  return visible ? <div className={className()} /> : null;
+  return visible ? <div className={className()} style={style} /> : null;
 };
 
 CircularProgress.defaultProps = {
   visible: true,
-  theme: 'dark'
+  theme: 'dark',
+  style: {}
 };
 
 CircularProgress.propType = {

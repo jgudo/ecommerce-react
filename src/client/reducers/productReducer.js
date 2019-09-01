@@ -100,7 +100,7 @@ const initState = [
   }
 ];
 
-export default (state = initState, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS:
       return action.payload;

@@ -1,22 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { displayMoney } from '../../helpers/utils';
 
 const PriceRange = ({ 
   min, 
   max,
-  currentMin,
-  currentMax,
+  initMin,
+  initMax,
   onPriceChange,
   productsLength 
 }) => {
-  const [minState, setMinState] = useState(currentMin || min);
-  const [maxState, setMaxState] = useState(currentMax || max);
+  const [minState, setMinState] = useState(initMin ? initMin : min);
+  const [maxState, setMaxState] = useState(initMax ? initMax : max);
   const slider = useRef(null);
   const inputMin = useRef(null);
   const inputMax = useRef(null);
   const rangeMin = useRef(null);
   const rangeMax = useRef(null);
+
+  useEffect(() => {
+    setMinState(initMin ? initMin : min);
+    setMaxState(initMax ? initMax : max);
+  }, [initMin, initMax]);
 
   const onRangeChange = () => {
     let slide1 = +rangeMin.current.value;

@@ -19,7 +19,6 @@ const Home = () => {
   const [isOpenModal, setModalOpen] = useState(false);
   const [productSelected, setProductSelected] = useState(null);
   const productListWrapper = useRef(null);
-
   const onClickProduct = (product) => {
     setProductSelected(product);
   };

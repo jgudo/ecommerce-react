@@ -27,7 +27,7 @@ const UserNav = (props) => {
         onClick={onClickNav}
         ref={userNav}
     >
-      <h5>{profile.fullname && profile.fullname.split(' ')[0]}</h5>
+      <h5 className="text-overflow-ellipsis">{profile.fullname && profile.fullname.split(' ')[0]}</h5>
       <div className="user-nav-img-wrapper">
         <img 
             alt=""

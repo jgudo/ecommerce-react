@@ -64,7 +64,7 @@
 }
 
 .text-overflow-ellipsis {
-  width: 120px;
+  max-width: 120px;
   display: block;
   white-space: nowrap;
   overflow: hidden;

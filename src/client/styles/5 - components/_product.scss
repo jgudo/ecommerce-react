@@ -79,6 +79,7 @@
   width: 90%;
   height: 100px;
   margin: auto;
+  position: relative;
   @include bezier-transition();
 
   @media (max-width: $mobile) {

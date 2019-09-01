@@ -248,6 +248,7 @@ const EditProfile = (props) => {
         <span className="d-block padding-s">Email</span>
         <input 
             className={`input-form d-block ${errorClassName('email')}`}
+            maxLength={40}
             onChange={onEmailChange}
             placeholder="Email"
             readOnly={auth.provider !== 'password' || isLoading}
@@ -257,6 +258,7 @@ const EditProfile = (props) => {
         <span className="d-block padding-s">Address</span>
         <input 
             className={`input-form d-block`}
+            maxLength={120}
             placeholder="Complete Address"
             onChange={onAddressChange}
             readOnly={isLoading}
