@@ -44,6 +44,10 @@
   display: block;
 }
 
-.is-open-filters .filters-toggle-caret {
-  transform: rotate(180deg);
+.filters-toggle-caret {
+  transform: rotate(-90deg);
 }
+
+// .is-open-filters .filters-toggle-caret {
+//   transform: rotate(180deg);
+// }

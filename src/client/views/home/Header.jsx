@@ -4,7 +4,7 @@ import Filters from '../../components/ui/Filters';
 import { resetFilter, applyFilter } from '../../actions/filterActions';  
 
 const Header = (props) => {
-  const { dispatch, products, filter, isLoading } = props;
+  const { dispatch, products, filter, isLoading, filteredProducts } = props;
   const [searchInput, setSearchInput] = useState(filter.keyword);
 
   useEffect(() => {
@@ -13,9 +13,10 @@ const Header = (props) => {
 
   const isFiltered = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!filter[key]);
   const isMobile = window.screen.width <= 480 ? true : false;
+  const productsCount = filteredProducts.length;
 
   const onSearchChange = (e) => {
-    const val = e.target.value.trim();
+    const val = e.target.value.trimStart();
     setSearchInput(val);
     
     if (val === '' && products.length !== 0) {
@@ -51,43 +52,53 @@ const Header = (props) => {
   return (
     <>
       {isFiltered && (
-        <button
-            className="button button-muted button-small"
-            onClick={() => dispatch(resetFilter())}
-        >
-          Reset Filters
-        </button>
-      )}
-      &nbsp;
-      <div className="filters-toggle">
-        <button
-            className="button button-small button-border button-border-gray"
-            onClick={onClickToggle}
-        >
-          Filters
-          <div className="filters-toggle-caret icon-caret" />
-        </button>
-        <div className="filters-toggle-sub">
-          <Filters 
-              dispatch={dispatch}
-              products={products}
-              filter={filter}
-              isLoading={isLoading}
-          />
+        <div className="product-list-header-title">
+          <h3>{productsCount === 0 ? 'No product found' : 
+          `Found ${productsCount} ${productsCount > 1 ? 'products' : 'product'}`}
+          </h3>
         </div>
-      </div>
-      &nbsp;
-      <div className="searchbar">
-        <input
-            className="search-input searchbar-input" 
-            onChange={onSearchChange}
-            onKeyUp={onKeyUp}
-            placeholder="Search for product"
-            readOnly={isLoading}
-            type="text" 
-            value={searchInput}
-        />
-        <div className="searchbar-icon" />
+      )}
+      <div className="product-list-header-actions">
+        {isFiltered && (
+          <button
+              className="button button-muted button-small"
+              onClick={() => dispatch(resetFilter())}
+          >
+            Reset Filters
+          </button>
+        )}
+        &nbsp;
+        <div className="filters-toggle">
+          <button
+              className="button button-small button-border button-border-gray"
+              disabled={isLoading}
+              onClick={onClickToggle}
+          >
+            Filters
+            <div className="filters-toggle-caret icon-caret" />
+          </button>
+          <div className="filters-toggle-sub">
+            <Filters 
+                dispatch={dispatch}
+                products={products}
+                filter={filter}
+                isLoading={isLoading}
+            />
+          </div>
+        </div>
+        &nbsp;
+        <div className="searchbar">
+          <input
+              className="search-input searchbar-input" 
+              onChange={onSearchChange}
+              onKeyUp={onKeyUp}
+              placeholder="Search for product"
+              readOnly={isLoading}
+              type="text" 
+              value={searchInput}
+          />
+          <div className="searchbar-icon" style={{ opacity: isLoading ? .5 : 1 }}/>
+        </div>
       </div>
     </>
   );

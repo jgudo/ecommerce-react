@@ -98,7 +98,7 @@ const PriceRange = ({
             min={min}
             onChange={onRangeChange}
             ref={rangeMax} 
-            step="50"
+            step="20"
             type="range"
             value={maxState} 
         />

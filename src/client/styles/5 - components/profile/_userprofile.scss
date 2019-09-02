@@ -23,6 +23,9 @@
   position: relative;
   background: lighten($border-color, 3%);
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .user-profile-banner {
@@ -51,6 +54,9 @@
   position: relative;
   background: $border-color;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .user-profile-img {

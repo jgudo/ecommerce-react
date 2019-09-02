@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BasketItemControl from './BasketItemControl';
 import Badge from '../ui/Badge';
-
+import ImageLoader from '../ui/ImageLoader';
 import { displayMoney } from '../../helpers/utils';
 
 const BasketItem = ({ action, basket, product }) => {
@@ -19,7 +19,10 @@ const BasketItem = ({ action, basket, product }) => {
       />
       <div className="basket-item-wrapper">
         <div className="basket-item-img-wrapper">
-          <img className="basket-item-img" src={product.image} alt=""/>
+          <ImageLoader 
+              className="basket-item-img" 
+              src={product.image}
+          />
         </div>
         <div className="basket-item-details">
           <h5 className="basket-item-name">

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import ImageLoader from '../ui/ImageLoader';
 import { displayMoney } from '../../helpers/utils'; 
 
 const ProductModalDetails = ({ product, addToBasket, foundOnBasket }) => {
   return !product ? null : (
     <div className="product-modal">
       <div className="product-modal-image-wrapper">
-        <img 
+        <ImageLoader 
             alt={product.name}
             className="product-modal-image"
             src={product.image} 

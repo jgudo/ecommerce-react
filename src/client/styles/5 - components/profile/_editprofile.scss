@@ -38,6 +38,15 @@
   padding: $s-size;
 }
 
+.edit-user-action {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+  }
+}
+
 .edit-avatar-button {
   border: none;
   background: none;

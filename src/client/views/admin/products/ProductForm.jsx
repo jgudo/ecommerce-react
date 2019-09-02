@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CircularProgress from '../../../components/ui/CircularProgress';
+import ImageLoader from '../../../components/ui/ImageLoader';
 // import uuid from 'uuid';
 
 class ProductForm extends Component {
@@ -23,7 +24,7 @@ class ProductForm extends Component {
   }
 
   onProductPriceInput = (e) => {
-    this.setState({ price: e.target.value });
+    this.setState({ price: Number(e.target.value) });
   }
 
   onProductDescriptionInput = (e) => {
@@ -31,7 +32,7 @@ class ProductForm extends Component {
   }
 
   onProductMaxQuantityInput = (e) => {
-    this.setState({ maxQuantity: e.target.value });
+    this.setState({ maxQuantity: Number(e.target.value) });
   }
 
   onImageChange = (e) => {
@@ -168,11 +169,13 @@ class ProductForm extends Component {
               </label>
             </div>
             {imageUrl && (
-              <img 
-                  alt=""
-                  className="product-form-image-preview"
-                  src={imageUrl} 
-              />
+              <div className="product-form-img-wrapper">
+                <ImageLoader
+                    alt=""
+                    className="product-form-image-preview"
+                    src={imageUrl} 
+                />
+              </div>
             )}
           </div>
         </form>

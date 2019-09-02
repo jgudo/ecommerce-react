@@ -15,6 +15,12 @@
   }
 }
 
+.navigation-admin {
+  background: $white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
+  padding-left: $l-size;
+}
+
 .navigation-menu {
   display: flex;
   align-items: center;

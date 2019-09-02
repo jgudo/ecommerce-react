@@ -14,7 +14,7 @@ const ScrollToTop = Component => withRouter((props) => {
             dispatch(setAuthStatus(null));
             dispatch(isAuthenticating(false));
         }
-    }, [])
+    }, [props.location])
 
     return <Component {...props}/>
 });

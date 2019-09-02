@@ -5,10 +5,10 @@ import SignOut from '../../auth/SignOut';
 
 const AdminNavigation = () => {
   return (
-    <nav className="navigation background-dark padding-left-l">
+    <nav className="navigation navigation-admin">
       <div className="logo">
         <Link to="/dashboard">
-          <h2 className="color-light">DASHBOARD</h2>
+          <h2>DASHBOARD</h2>
         </Link>
       </div>
       <ul className="navigation-menu">
@@ -16,7 +16,7 @@ const AdminNavigation = () => {
           <SignOut>
            {({ onSignOut }) => (
                <button 
-                    className="button button-small color-light"
+                    className="button button-small"
                     onClick={onSignOut}
                 >
                   Sign Out

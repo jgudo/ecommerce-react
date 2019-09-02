@@ -67,6 +67,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-loading-skeleton": "^1.1.2",
     "react-modal": "^3.9.1",
     "react-phone-input-2": "^2.9.5",
     "react-redux": "^7.1.0",

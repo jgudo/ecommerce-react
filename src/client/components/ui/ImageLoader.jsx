@@ -20,19 +20,15 @@ const ImageLoader = (props) => {
 
   return (
     <>
-
       {!loaded && <CircularProgress style={spinnerStyle}/>} 
       <img 
-          className={`${props.className} ${loaded ? 'is-img-loaded' : 'is-img-loading'}`} 
+          alt={props.alt || ''}
+          className={`${props.className || ''} ${loaded ? 'is-img-loaded' : 'is-img-loading'}`} 
           onLoad={onLoad} 
           src={props.src} 
       />
     </>  
   );
-};
-
-ImageLoader.defaultProps = {
-  className: ''
 };
 
 export default ImageLoader;

@@ -22,13 +22,22 @@ const Navigation = ({ path }) => {
   };
 
   document.addEventListener('scroll', () => {
-    if (navbar.current) {
-      if (window.pageYOffset === 0) {
-        navbar.current.style.background = getStyleProperty('--nav-bg');
-        navbar.current.style.boxShadow = 'none';
+    if (navbar.current && window.screen.width > 480) {
+      if (window.pageYOffset >= 70) {
+        Object.assign(navbar.current.style, {
+          position: 'fixed',
+          animation: 'slide-down .3s ease',
+          top: 0,
+          background: getStyleProperty('--nav-bg-scrolled'),
+          boxShadow: getStyleProperty('--nav-bg-shadow')
+        });
       } else {
-        navbar.current.style.background = getStyleProperty('--nav-bg-scrolled');
-        navbar.current.style.boxShadow = getStyleProperty('--nav-bg-shadow');
+        Object.assign(navbar.current.style, {
+          position: 'absolute',
+          animation: 'none',
+          background: getStyleProperty('--nav-bg'),
+          boxShadow: 'none'
+        });
       }
     }
   });

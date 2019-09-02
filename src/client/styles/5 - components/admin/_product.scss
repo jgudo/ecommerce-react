@@ -22,6 +22,20 @@
   display: flex;
 }
 
+// reset styles for loading item
+.item-loading {
+  &:nth-child(even) {
+    background: none;
+  }
+}
+
+.item-loading:hover {
+  border: none;
+  box-shadow: none;
+}
+
+// ---- 
+
 .item-action {
   position: absolute;
   right: 0;
@@ -73,9 +87,14 @@
   display: flex;
 }
 
-.item-img {
+.item-img-wrapper {
   width: 80px;
   height: 50px;
-  object-fit: contain;
   margin-left: $s-size;
+}
+
+.item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

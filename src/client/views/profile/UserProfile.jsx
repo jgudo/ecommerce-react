@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { displayDate } from '../../helpers/utils';
+import ImageLoader from '../../components/ui/ImageLoader';
 
 const UserProfile = (props) => {
   const profile = useSelector(state => state.profile);
@@ -10,14 +11,14 @@ const UserProfile = (props) => {
       <div className="user-profile-block">
         <div className="user-profile-banner">
           <div className="user-profile-banner-wrapper">
-            <img 
+            <ImageLoader 
                 alt="Banner"
                 className="user-profile-banner-img"
                 src={profile.banner} 
             />
           </div>
           <div className="user-profile-img-wrapper">
-            <img 
+            <ImageLoader 
                 alt="Avatar"
                 className="user-profile-img"
                 src={profile.avatar} 

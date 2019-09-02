@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import ReactPhoneInput from 'react-phone-input-2';
 import Modal from '../../components/ui/Modal';
 import CircularProgress from '../../components/ui/CircularProgress';
+import ImageLoader from '../../components/ui/ImageLoader';
 
 import { displayActionMessage } from '../../helpers/utils';
 import { updateEmail, updateProfile } from '../../actions/profileActions';
@@ -92,11 +94,9 @@ const EditProfile = (props) => {
     const len = mobile.toString().length;
     setProfile({ ...user, mobile});
 
-    if (!user.mobile) {
-      setError({ ...error, mobile: 'Mobile number is required' });
-    } else if (len <= 9) {
+    if (len >= 1 && len <= 9) {
       setError({ ...error, mobile: 'Mobile number invalid' });
-    }else {
+    } else {
       setError({ ...error, mobile: '' });
     }
   };
@@ -146,7 +146,12 @@ const EditProfile = (props) => {
       >
         <div className="text-center padding-l">
           <h4>Confirm Update</h4>
-          <p>To continue updating profile including your <strong>email</strong>, <br/> please confirm by entering your password</p>
+          <p>
+            To continue updating profile including your 
+            <strong>email</strong>,
+            <br/> 
+            please confirm by entering your password
+          </p>
           <input 
               className="input-form d-block"
               onChange={onPassworInput}
@@ -173,7 +178,7 @@ const EditProfile = (props) => {
       <h3 className="text-center">Update Your Profile</h3>
       <div className="user-profile-banner">
         <div className="user-profile-banner-wrapper">
-          <img 
+          <ImageLoader  
               alt="Banner"
               className="user-profile-banner-img"
               src={user.banner} 
@@ -202,7 +207,7 @@ const EditProfile = (props) => {
           )}
         </div>
         <div className="user-profile-img-wrapper">
-          <img 
+          <ImageLoader 
               alt="Avatar"
               className="user-profile-img"
               src={user.avatar} 
@@ -278,7 +283,7 @@ const EditProfile = (props) => {
             value={user.mobile} 
         />
         <br/>
-        <div>
+        <div className="edit-user-action">
           <button
               className="button w-100-mobile"
               disabled={isLoading}
@@ -286,6 +291,14 @@ const EditProfile = (props) => {
           >
             <CircularProgress visible={isLoading} theme="light" />
             {isLoading ? 'Updating Profile' : 'Update Profile'}
+          </button>
+          &nbsp;
+          <button
+              className="button button-muted w-100-mobile"
+              disabled={isLoading}
+              onClick={() => props.history.push('/profile')}
+          >
+            Back to Profile
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 .sidenavigation {
   width: 250px;
   height: 100%;
-  background: darken($background-color, 3%); 
+  background: $black; 
   position: relative;
   padding-top: 1rem;
   border-right: 1px solid $border-color;
@@ -17,15 +17,19 @@
 .sidenavigation-menu {
   padding: $m-size 0 $m-size $l-size;
   display: block;
+  color: $white;
+  font-weight: bold;
+  opacity: .8;
 
   &:hover {
-    background: $border-color;
+    background: lighten($black, 5%);
     text-decoration: none;
+    opacity: 1;
   }
 }
 
 .sidenavigation-menu-active {
-  background: $border-color;
-  font-weight: bold;
-  border-right: 3px solid $black;
+  background: lighten($black, 7%);
+  opacity: 1;
+  border-right: 4px solid $yellow;
 }

@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 
 const BasketItemControl = ({ action, product }) => {
   const onAddQty = () => {
-    if (product.maxQuantity !== product.quantity) {
+    if (product.quantity < product.maxQuantity) {
       action.addQtyItem(product.id);
     }
   };
 
   const onMinusQty = () => {
-    if (product.maxQuantity >= product.quantity && product.quantity >= 2) {
+    if ((product.maxQuantity >= product.quantity) && product.quantity !== 0) {
       action.minusQtyItem(product.id);
     }
   };
+
 
   return (
     <div className="basket-item-control">
