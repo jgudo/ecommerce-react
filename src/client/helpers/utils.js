@@ -35,11 +35,19 @@ export const displayActionMessage = (msg, status = 'info') => {
     : 'toast-error'
   }`;
   span.className = 'toast-msg';
-
   span.textContent = msg;
   div.appendChild(span);
 
-  document.body.appendChild(div);
+  try {
+    if (document.querySelector('.toast')) {
+      document.body.removeChild(document.querySelector('.toast'));
+      document.body.appendChild(div);
+    } else {
+      document.body.appendChild(div);
+    }
+  } catch (e) {
+    console.log(e);
+  }
 
   setTimeout(() => {
     document.body.removeChild(div);

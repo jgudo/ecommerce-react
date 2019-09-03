@@ -5,11 +5,12 @@ import {
   SET_MIN_PRICE_FILTER,
   RESET_FILTER,
   APPLY_FILTER,
-  CLEAR_RECENT_SEARCH 
+  CLEAR_RECENT_SEARCH,
+  REMOVE_SELECTED_RECENT 
 } from '../constants/constants';
 
 const initState = {
-  recent: ['gago', 'sira'],
+  recent: [],
   keyword: '',
   brand: '',
   minPrice: 0,
@@ -22,7 +23,7 @@ export default (state = initState, action) => {
     case SET_TEXT_FILTER:
       return {
         ...state,
-        recent: [action.payload, ...state.recent],
+        recent: (!!state.recent.find(n => n === action.payload) || action.payload === '') ? state.recent : [action.payload, ...state.recent],
         keyword: action.payload
       };
     case SET_BRAND_FILTER:
@@ -47,6 +48,11 @@ export default (state = initState, action) => {
         ...state,
         recent: []
       };
+    case REMOVE_SELECTED_RECENT:
+      return {
+        ...state,
+        recent: state.recent.filter(item => item !== action.payload)
+      }
     case APPLY_FILTER:
       return {
         ...state,

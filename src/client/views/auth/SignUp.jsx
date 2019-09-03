@@ -1,12 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'; 
-import { signUp } from '../../actions/authActions';
+import { signUp, setAuthStatus, isAuthenticating as authenticating } from '../../actions/authActions';
 
 import CircularProgress from '../../components/ui/CircularProgress';
 
 const SignUp = (props) => {
-  const dispatch = useDispatch();
   const [error, setError] = useState({});
   const [field, setField] = useState({});
   const [passwordHidden, setPasswordHidden] = useState(true);
@@ -14,8 +12,16 @@ const SignUp = (props) => {
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus
   }));
+  const dispatch = useDispatch();
   const passwordField = useRef(null);
 
+  useEffect(() => {
+    return () => {
+      dispatch(setAuthStatus(null));
+      dispatch(authenticating(false));
+    }
+  }, []);
+  
   const onEmailInput = (e) => {
     const val = e.target.value.trim();
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -168,4 +174,4 @@ const SignUp = (props) => {
   );
 }
 
-export default withRouter(SignUp);
+export default SignUp;

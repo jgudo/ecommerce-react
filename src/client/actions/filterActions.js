@@ -5,7 +5,8 @@ import {
   SET_MIN_PRICE_FILTER,
   RESET_FILTER,
   APPLY_FILTER,
-  CLEAR_RECENT_SEARCH 
+  CLEAR_RECENT_SEARCH,
+  REMOVE_SELECTED_RECENT 
 } from '../constants/constants';
 
 export const setTextFilter = keyword => ({
@@ -34,6 +35,11 @@ export const resetFilter = () => ({
 
 export const clearRecentSearch = () => ({
   type: CLEAR_RECENT_SEARCH
+});
+
+export const removeSelectedRecent = keyword => ({
+  type: REMOVE_SELECTED_RECENT,
+  payload: keyword
 });
 
 export const applyFilter = filters => ({

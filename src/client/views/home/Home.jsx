@@ -10,7 +10,7 @@ import Modal from '../../components/ui/Modal';
 
 import ProductModalDetails from '../../components/product/ProductModalDetails';
 
-const Home = () => {
+const Home = (props) => {
   const [isOpenModal, setModalOpen] = useState(false);
   const [productSelected, setProductSelected] = useState(null);
   const { products, filter, basket, isLoading, filteredProducts, requestStatus } = useSelector(state => ({
@@ -41,15 +41,17 @@ const Home = () => {
   return (
     <>
       <section className="product-list-wrapper">
-        <div className="product-list-header">
-          <Header 
-              dispatch={dispatch}
-              products={products}
-              filter={filter}
-              filteredProducts={filteredProducts}
-              isLoading={isLoading}
-          />
-        </div>
+        {!requestStatus && (
+          <div className="product-list-header">
+            <Header 
+                dispatch={dispatch}
+                products={products}
+                filter={filter}
+                filteredProducts={filteredProducts}
+                isLoading={isLoading}
+            />
+          </div>
+        )}
         <ProductAppliedFilters filter={filter}/>
         <ProductList
             dispatch={dispatch}

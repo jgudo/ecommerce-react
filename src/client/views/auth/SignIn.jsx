@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
-import { signIn, setAuthStatus, signInWithGoogle, signInWithFacebook } from '../../actions/authActions';
+import { Link } from 'react-router-dom';
+import { 
+  signIn, 
+  signInWithGoogle, 
+  signInWithFacebook, 
+  setAuthStatus, 
+  isAuthenticating as authenticating
+} from '../../actions/authActions';
 import CircularProgress from '../../components/ui/CircularProgress';
 
 const SignIn = (props) => {
-  const { authStatus, isAuthenticating, auth } = useSelector(state => ({
-    auth: !!state.auth.id && !!state.auth.type,
-    authStatus: state.app.authStatus,
-    isAuthenticating: state.app.isAuthenticating
-  }));
-  const dispatch = useDispatch();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorField, setErrorField] = useState({});
   const [buttonClicked, setClicked] = useState(undefined);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(setAuthStatus(null));
+      dispatch(authenticating(false));
+    }
+  }, []);
+
+  const { authStatus, isAuthenticating } = useSelector(state => ({
+    authStatus: state.app.authStatus,
+    isAuthenticating: state.app.isAuthenticating
+  }));
 
   const onEmailInput = (e) => {
     const val = e.target.value.trim();
@@ -172,4 +184,4 @@ const SignIn = (props) => {
   );
 };
 
-export default withRouter(SignIn);
+export default SignIn;

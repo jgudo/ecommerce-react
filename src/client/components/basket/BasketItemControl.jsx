@@ -14,7 +14,6 @@ const BasketItemControl = ({ action, product }) => {
     }
   };
 
-
   return (
     <div className="basket-item-control">
       <button 

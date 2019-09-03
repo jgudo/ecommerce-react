@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearRecentSearch, setTextFilter } from '../../actions/filterActions';
+import { clearRecentSearch, removeSelectedRecent, setTextFilter } from '../../actions/filterActions';
 
 import Filters from '../ui/Filters';
 
@@ -76,15 +76,21 @@ const ProductSearch = (props) => {
             <h5 onClick={onClearRecentSearch}>Clear</h5>
           </div>
           {filter.recent.map((item, index) => (
-            <div 
-                className="pill" 
-                key={`${item}${index}`}
-                onClick={() => {
-                  dispatch(setTextFilter(item));
-                  props.history.push('/');
-                }}
-            >
-              <h5 className="pill-title">{item}</h5>
+            <div className="pill-wrapper" key={`${item}${index}`}>
+              <div className="pill padding-right-l">
+                <h5 
+                    className="pill-title"
+                    onClick={() => {
+                      dispatch(setTextFilter(item));
+                      props.history.push('/');
+                    }}
+                >
+                  {item}
+                </h5>
+                <div className="pill-remove" onClick={() => dispatch(removeSelectedRecent(item))}>
+                  <h5 className="margin-0">x</h5>
+                </div>
+              </div>
             </div>
           ))}
           {filter.recent.length === 0 && (

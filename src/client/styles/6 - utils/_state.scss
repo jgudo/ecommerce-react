@@ -2,7 +2,7 @@
 // STATE ---------
 //
 
-.is-active {
+.is-active-link {
   font-weight: bold;
   color: green;
 }
@@ -42,4 +42,9 @@
 .is-img-loaded {
   animation: fadeIn .3s ease;
   opacity: 1;
+}
+
+.is-open-recent-search .searchbar-recent {
+  display: flex;
+  flex-direction: column;
 }

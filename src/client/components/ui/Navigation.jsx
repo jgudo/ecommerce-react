@@ -26,7 +26,8 @@ const Navigation = ({ path }) => {
       if (window.pageYOffset >= 70) {
         Object.assign(navbar.current.style, {
           position: 'fixed',
-          animation: 'slide-down .3s ease',
+          animation: 'slide-down .3s ease 1',
+          animationFillMode: 'forwards',
           top: 0,
           background: getStyleProperty('--nav-bg-scrolled'),
           boxShadow: getStyleProperty('--nav-bg-shadow')
@@ -68,7 +69,7 @@ const Navigation = ({ path }) => {
     >
       <div className="logo">
         <Link to="/">
-          <h2>SALINAKA</h2>
+          <h3>SALINAKA</h3>
         </Link>
       </div>
       <ul className="navigation-menu">

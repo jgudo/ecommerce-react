@@ -8,7 +8,8 @@
   z-index: map-get($z-index, navigation);
   position: fixed;
   top: 0;
-  @include bezier-transition(all, .3s, ease);
+  transform: translateY(0);
+  @include bezier-transition(transform, .3s, ease);
 
   @media (max-width: $mobile) {
     padding: 0 $s-size;

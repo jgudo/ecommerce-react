@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetPassword, setAuthStatus } from '../../actions/authActions';
+import { resetPassword, setAuthStatus, isAuthenticating as authenticating } from '../../actions/authActions';
 
 import CircularProgress from '../../components/ui/CircularProgress';
 
@@ -8,8 +8,16 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const dispatch = useDispatch();
-  const { authStatus, isLoading } = useSelector(state => ({
-    isLoading: state.app.isAuthenticating,
+
+  useEffect(() => {
+    return () => {
+      dispatch(setAuthStatus(null));
+      dispatch(authenticating(false));
+    }
+  }, []);
+  
+  const { authStatus, isAuthenticating } = useSelector(state => ({
+    isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus
   }));
 
@@ -48,21 +56,21 @@ const ForgotPassword = () => {
           className={`input-form d-block ${emailError ? 'input-error' : ''}`}
           onChange={onEmailChange}
           placeholder="Enter your email"
-          readOnly={isLoading}
+          readOnly={isAuthenticating}
           type="text"
       />
       <br />
       <button
           className="button w-100-mobile"
-          disabled={isLoading}
+          disabled={isAuthenticating}
           onClick={onSubmitEmail}
           type="button"
       >
         <CircularProgress 
             theme="light" 
-            visible={isLoading} 
+            visible={isAuthenticating} 
         />
-        {isLoading ? 'Sending Password Reset Email' : 'Send Password Reset Email'}
+        {isAuthenticating ? 'Sending Password Reset Email' : 'Send Password Reset Email'}
       </button>
     </div>
   );

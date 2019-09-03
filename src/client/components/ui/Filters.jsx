@@ -32,7 +32,7 @@ const Filters = (props) => {
     });
     setMounted(true);
     window.scrollTo(0, 0);
-  }, [filter]);
+  }, [filter.brand, filter.minPrice, filter.maxPrice, filter.sortBy]);
 
 
   const onPriceChange = (min, max) => {
@@ -87,6 +87,8 @@ const Filters = (props) => {
             <option value="">All Brands</option>
             <option value="salt">Salt Maalat</option>
             <option value="betsin">Betsin Maalat</option>
+            <option value="black">Black Kibal</option>
+            <option value="sexbomb">Sexbomb</option>
           </select>
         )}
       </div>

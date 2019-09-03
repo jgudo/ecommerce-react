@@ -4,9 +4,16 @@ import { addToBasket, removeFromBasket } from '../../actions/basketActions';
 import { displayActionMessage } from '../../helpers/utils';
 
 
-const ProductList = props => {
+const ProductList = ({ 
+  products, 
+  isLoading, 
+  requestStatus, 
+  filteredProducts, 
+  foundOnBasket, 
+  dispatch,
+  children 
+}) => {
   const [columnCount, setColumnCount] = useState(6);
-  const { products, isLoading, requestStatus, filteredProducts, foundOnBasket, dispatch } = props
   
   useEffect(() => {
     products.length === 0 && onGetProducts();
@@ -53,7 +60,7 @@ const ProductList = props => {
       </button>
     </div>
   ) : (
-    props.children({
+    children({
       columnCount,
       action: {
         addToBasket: onAddToBasket,

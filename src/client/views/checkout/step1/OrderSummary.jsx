@@ -5,15 +5,13 @@ import withAuth from '../hoc/withAuth';
 import { removeFromBasket, clearBasket, addQtyItem, minusQtyItem } from '../../../actions/basketActions';
 import { displayMoney } from '../../../helpers/utils';
 
-const OrderSummary = (props) => {
-  const { basket, subtotal, dispatch } = props;
-
+const OrderSummary = ({ basket, subtotal, dispatch, history }) => {
   const onContinue = () => {
-    props.history.push('/');
+    history.push('/');
   };
 
   const onNext = () => {
-    props.history.push('/checkout/step2');
+    history.push('/checkout/step2');
   };
 
   return (

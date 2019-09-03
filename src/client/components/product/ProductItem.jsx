@@ -37,7 +37,7 @@ const ProductItem = ({
               />
             ) : <Skeleton width={100} height={70}/>}
           </div>
-          <h5 className="product-card-name text-overflow-ellipsis">{product.name || <Skeleton />}</h5>
+          <h5 className="product-card-name text-overflow-ellipsis">{product.name || <Skeleton width={90} />}</h5>
           <p className="product-card-brand">{product.brand || <Skeleton width={70} />}</p>
           <h4 className="product-card-price">{product.price ? displayMoney(product.price) : <Skeleton width={50} />}</h4>
         </div>
