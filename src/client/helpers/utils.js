@@ -38,18 +38,17 @@ export const displayActionMessage = (msg, status = 'info') => {
   span.textContent = msg;
   div.appendChild(span);
 
-  try {
-    if (document.querySelector('.toast')) {
-      document.body.removeChild(document.querySelector('.toast'));
-      document.body.appendChild(div);
-    } else {
-      document.body.appendChild(div);
-    }
-  } catch (e) {
-    console.log(e);
+  
+  if (document.querySelector('.toast')) {
+    document.body.removeChild(document.querySelector('.toast'));
+    document.body.appendChild(div);
+  } else {
+    document.body.appendChild(div);
   }
 
   setTimeout(() => {
-    document.body.removeChild(div);
+    try {
+      document.body.removeChild(div);
+    } catch (e) {}
   }, 3000);
 };

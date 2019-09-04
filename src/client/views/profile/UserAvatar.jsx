@@ -20,10 +20,9 @@ const UserNav = ({ profile, isAuthenticating }) => {
 
   const toggleDropdown = (e) => {
     const closest = e.target.closest('div.user-nav');
-    const link = e.target.closest('.user-nav-sub-link');
 
     try {
-      if (!closest && !link && userNav.current.classList.contains('user-sub-open')) {
+      if (!closest && userNav.current.classList.contains('user-sub-open')) {
         userNav.current.classList.remove('user-sub-open');
       }
     } catch (e) {

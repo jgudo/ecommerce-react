@@ -20,15 +20,15 @@ const Footer = ({ path }) => {
         <h4>SALINAKA &nbsp;<span>{new Date().getFullYear()}</span></h4>
       </div>
       <div className="footer-col-2">
-        <span>Created by <strong><a href="https://github.com/jgudo">Julius Guevarra</a></strong></span>
+        <strong><span>Created by <a href="https://github.com/jgudo">Julius Guevarra</a></span></strong>
       </div>
       <div className="footer-col-3">
-        <span>
-          Fork this project &nbsp;
-          <strong>
+        <strong>
+          <span>
+            Fork this project &nbsp;
             <a href="https://github.com/jgudo/ecommerce-react">here</a>
-          </strong>
-        </span>
+          </span>
+        </strong>
       </div>
     </footer>
   );

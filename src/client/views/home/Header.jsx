@@ -38,15 +38,12 @@ const Header = ({
   const onSearchChange = (e) => {
     const val = e.target.value.trimStart();
     setSearchInput(val);
-    
-    // if (val === '' && products.length !== 0) {
-    //   dispatch(setTextFilter(val));
-    // }
   };
 
   const onKeyUp = (e) => {
     if (e.keyCode === 13 && products.length !== 0) {
       dispatch(setTextFilter(searchInput));
+      e.target.blur();
       searchbarRef.current.classList.remove('is-open-recent-search');
       isMobile && history.push('/');
     }
@@ -87,6 +84,14 @@ const Header = ({
     } catch (e) {}
   };
 
+  const onClearRecent = () => {
+    dispatch(clearRecentSearch());
+  };
+
+  const onResetFilter = () => {
+    dispatch(resetFilter())
+  };
+
   return (
     <>
       {isFiltered && (
@@ -100,7 +105,7 @@ const Header = ({
         {isFiltered && (
           <button
               className="button button-muted button-small"
-              onClick={() => dispatch(resetFilter())}
+              onClick={onResetFilter}
           >
             Reset Filters
           </button>
@@ -142,7 +147,7 @@ const Header = ({
                 <h5>Recent Search</h5>
                 <h5 
                     className="searchbar-recent-clear text-subtle"
-                    onClick={() => dispatch(clearRecentSearch())}
+                    onClick={onClearRecent}
                 >
                   Clear
                 </h5>

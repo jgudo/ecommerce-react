@@ -96,8 +96,8 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: '',
-          dateJoined: ref.user.metadata.creationTime
+          mobile: 0,
+          dateJoined: ref.user.metadata.creationTime || new Date().getTime()
         };
 
         yield call(firebase.addUser, ref.user.uid, user);
@@ -148,13 +148,13 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: '',
+          mobile: 0,
           dateJoined: payload.metadata.creationTime
         };
         yield call(firebase.addUser, payload.uid, user);
         yield put(setProfile(user));
       }
-     
+      
       yield put(signInSuccess({ 
         id: payload.uid, 
         type: 'client', 

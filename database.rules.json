@@ -1,0 +1,63 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": "auth !== null",
+    "users": {
+      "$user_id": {
+        ".read": "$user_id === auth.uid",
+        ".write": "$user_id === auth.uid",
+        "fullname": {
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "address": {
+          ".validate": "newData.isString()"
+        },
+        "mobile": {
+          ".validate": "newData.isNumber()"
+        },
+        "avatar": {
+          ".validate": "newData.isString()"
+        },
+        "banner": {
+          ".validate": "newData.isString()"
+        },
+        "dateJoined": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "products": {
+      ".read": true,
+      ".write": false,
+      "$product_id": {
+        "name": {
+          ".validate": "newData.isString()"
+        },
+        "description": {
+          ".validate": "newData.isString()"
+        },
+        "price": {
+          ".validate": "newData.isNumber()"
+        },
+        "brand": {
+          ".validate": "newData.isString()"
+        },
+        "image": {
+          ".validate": "newData.isString()"
+        },
+        "maxQuantity": {
+          ".validate": "newData.isNumber()"
+        },
+        "quantity": {
+          ".validate": "newData.isNumber()"
+        },
+        "dateAdded": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    }
+  }
+}

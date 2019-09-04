@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { removeProduct, getProducts } from '../../actions/productActions';
 import { addToBasket, removeFromBasket } from '../../actions/basketActions';
+import { isLoading as dispatchIsLoading } from '../../actions/appActions';
 import { displayActionMessage } from '../../helpers/utils';
-
 
 const ProductList = ({ 
   products, 
@@ -17,6 +17,10 @@ const ProductList = ({
   
   useEffect(() => {
     products.length === 0 && onGetProducts();
+
+    return () => {
+      isLoading && dispatch(dispatchIsLoading(false));
+    };
   }, []);
   
   useEffect(() => {

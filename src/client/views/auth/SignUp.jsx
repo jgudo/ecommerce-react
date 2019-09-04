@@ -137,6 +137,7 @@ const SignUp = (props) => {
               />
               <button 
                   className="button button-small button-muted"
+                  disabled={isAuthenticating}
                   onClick={onTogglePasswordVisibility}
                   type="button"
               >

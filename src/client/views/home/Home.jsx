@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from '../../selectors/selector';
 
@@ -7,12 +7,12 @@ import ProductItem from '../../components/product/ProductItem';
 import ProductAppliedFilters from '../../components/product/ProductAppliedFilters';
 import Header from './Header';
 import Modal from '../../components/ui/Modal';
-
 import ProductModalDetails from '../../components/product/ProductModalDetails';
 
 const Home = (props) => {
   const [isOpenModal, setModalOpen] = useState(false);
   const [productSelected, setProductSelected] = useState(null);
+
   const { products, filter, basket, isLoading, filteredProducts, requestStatus } = useSelector(state => ({
     products: state.products,
     filter: state.filter,

@@ -11,6 +11,7 @@ const Modal = (props) => {
       position: 'fixed',
       paddingTop: '50px',
       paddingBottom: '50px',
+      transition: 'all .5s ease',
       zIndex: 9999,
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)'
@@ -24,6 +25,7 @@ const Modal = (props) => {
         isOpen={props.isOpen}
         onAfterOpen={props.afterOpenModal}
         onRequestClose={props.closeModal}
+        shouldCloseOnOverlayClick={true}
         style={customStyles}
         contentLabel="Product Modal"
     >

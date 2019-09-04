@@ -3,16 +3,17 @@ import { call, put, select } from 'redux-saga/effects';
 import { history } from '../routers/AppRouter';
 import { UPDATE_PROFILE, UPDATE_EMAIL, LOADING } from '../constants/constants';
 import { updateProfileSuccess } from '../actions/profileActions';
+import { isLoading } from '../actions/appActions';
 import { displayActionMessage } from '../helpers/utils';
 
 function* profileSaga({ type, payload }) {
   switch (type) {
     case UPDATE_EMAIL:
       try {
-        yield put({ type: LOADING, payload: false });
+        yield put(isLoading(false));
         yield call(firebase.updateEmail, payload.password, payload.newEmail);
 
-        yield put({ type: LOADING, payload: false });
+        yield put(isLoading(false));
         yield call(history.push, '/profile');
         yield call(displayActionMessage, 'Email Updated Successfully!', 'success');
       } catch (e) {
@@ -25,7 +26,7 @@ function* profileSaga({ type, payload }) {
         const { email, password } = payload.credentials;
         const { avatarFile, bannerFile } = payload.files;
 
-        yield put({ type: LOADING, payload: true });
+        yield put(isLoading(true));
         
         // if email & password exist && the email has been edited
         // update the email
@@ -34,8 +35,8 @@ function* profileSaga({ type, payload }) {
         }
         
         if (avatarFile || bannerFile) {
-          const bannerURL = bannerFile ? yield call(firebase.storeImage, 'banner', state.auth.id, bannerFile) : payload.updates.banner;
-          const avatarURL = avatarFile ? yield call(firebase.storeImage, 'avatar', state.auth.id, avatarFile) : payload.updates.avatar;
+          const bannerURL = bannerFile ? yield call(firebase.storeImage, state.auth.id, 'banner', bannerFile) : payload.updates.banner;
+          const avatarURL = avatarFile ? yield call(firebase.storeImage, state.auth.id, 'avatar', avatarFile) : payload.updates.avatar;
           const updates = { ...payload.updates, avatar: avatarURL, banner: bannerURL };
 
           yield call(firebase.updateProfile, state.auth.id, updates);
@@ -45,12 +46,12 @@ function* profileSaga({ type, payload }) {
           yield put(updateProfileSuccess(payload.updates));
         }
 
-        yield put({ type: LOADING, payload: false });
+        yield put(isLoading(false));
         yield call(history.push, '/profile');
         yield call(displayActionMessage, 'Profile Updated Successfully!', 'success');
       } catch (e) {
         console.log(e);
-        yield put({ type: LOADING, payload: false });
+        yield put(isLoading(false));
         if (e.code === 'auth/wrong-password') {
           yield call(displayActionMessage, 'Wrong password, profile update failed :(', 'error');
         } else {

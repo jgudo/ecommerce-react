@@ -7,7 +7,7 @@ import CircularProgress from '../../components/ui/CircularProgress';
 import ImageLoader from '../../components/ui/ImageLoader';
 
 import { displayActionMessage } from '../../helpers/utils';
-import { updateEmail, updateProfile } from '../../actions/profileActions';
+import { updateProfile } from '../../actions/profileActions';
 
 const EditProfile = (props) => {
   const { profile, auth, isLoading } = useSelector(state => ({
@@ -92,6 +92,7 @@ const EditProfile = (props) => {
   const onMobileChange = (mob, data) => {
     const mobile = mob.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
     const len = mobile.toString().length;
+    
     setProfile({ ...user, mobile});
 
     if (len >= 1 && len <= 9) {
