@@ -16,7 +16,7 @@
           ".validate": "newData.isString()"
         },
         "mobile": {
-          ".validate": "newData.isNumber()"
+          ".validate": "newData.isString()"
         },
         "avatar": {
           ".validate": "newData.isString()"
