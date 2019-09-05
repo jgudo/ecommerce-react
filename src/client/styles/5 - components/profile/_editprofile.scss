@@ -41,9 +41,19 @@
 .edit-user-action {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   @media (max-width: $mobile) {
     flex-direction: column;
+
+    button:first-child {
+      order: 2;
+    }
+    
+    button:last-child {
+      order: 1;
+      margin-bottom: $s-size;
+    }
   }
 }
 

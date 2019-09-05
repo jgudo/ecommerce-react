@@ -22,8 +22,11 @@ const ProductItem = ({
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div 
-          className={`product-card ${!product.id && 'product-loading'}`}
-          style={{ borderBottom: foundOnBasket(product.id) ? '1px solid #4a4a4a' : null }}
+          className={`product-card ${!product.id ? 'product-loading' : ''}`}
+          style={{ 
+            border: foundOnBasket(product.id) ? '1px solid #cacaca' : '',
+            boxShadow: foundOnBasket(product.id) ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none' 
+          }}
       >
         <div 
             className="product-card-content"

@@ -8,10 +8,11 @@ const initState = {
   address: '',
   mobile: '09264546942',
   avatar: profile,
-  banner
+  banner,
+  dateJoined: 1954234787348
 };
 
-export default (state = {}, action) => {
+export default (state = initState, action) => {
   switch (action.type) {
     case SET_PROFILE:
       return action.payload

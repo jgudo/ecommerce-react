@@ -99,8 +99,9 @@ const SignIn = (props) => {
             {errorField.auth && <span className="input-message">{errorField.auth}</span>}
             <form onSubmit={onSubmitForm}>
               <div className="signin-field">
-                {errorField.email && <span className="input-message">{errorField.email}</span>}
-                <span className="d-block padding-s">Email</span>
+                {errorField.email ? <span className="input-message">{errorField.email}</span> : (
+                  <span className="d-block padding-s">Email</span>
+                )}
                 <input 
                     className={`input-form d-block ${errorClassName('email')}`}
                     onChange={onEmailInput}
@@ -110,8 +111,9 @@ const SignIn = (props) => {
                 />
               </div>
               <div className="signin-field">
-                {errorField.password && <span className="input-message">{errorField.password}</span>}
-                <span className="d-block padding-s">Password</span>
+                {errorField.password ? <span className="input-message">{errorField.password}</span> : (
+                  <span className="d-block padding-s">Password</span>
+                )}
                 <input 
                     className={`input-form d-block ${errorClassName('password')}`}
                     onChange={onPasswordInput}

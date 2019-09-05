@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { displayDate } from '../../helpers/utils';
 import ImageLoader from '../../components/ui/ImageLoader';
+import { ACCOUNT_EDIT } from '../../constants/routes';
 
 const UserProfile = (props) => {
   const profile = useSelector(state => state.profile);
@@ -26,9 +27,9 @@ const UserProfile = (props) => {
           </div>
           <button 
               className="button button-muted button-small user-profile-edit"
-              onClick={() => props.history.push('/profile/edit')}
+              onClick={() => props.history.push(ACCOUNT_EDIT)}
           >
-            Edit Profile
+            Edit Account
           </button>
         </div>
         <div className="user-profile-details">

@@ -94,13 +94,20 @@ const Header = ({
 
   return (
     <>
-      {isFiltered && (
-        <div className="product-list-header-title">
-          <h3>{productsCount === 0 ? 'No product found' : 
-          `Found ${productsCount} ${productsCount > 1 ? 'products' : 'product'}`}
+      <div className="product-list-header-title">
+        {isFiltered ? (
+          <h3>
+            {productsCount === 0 
+              ? `No product found` 
+              : `Found ${productsCount} ${productsCount > 1 ? 'products' : 'product'}`
+            }
           </h3>
-        </div>
-      )}
+        ) : (
+          <h3>
+            Eyewear &nbsp;<span>{`${productsCount} ${productsCount > 1 ? 'products' : 'product'}`}</span>
+          </h3>
+        )}
+      </div>
       <div className="product-list-header-actions">
         {isFiltered && (
           <button

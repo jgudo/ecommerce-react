@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import withAuth from '../hoc/withAuth';
 import CheckOutHeader from '../header/CheckOutHeader';
 
-import { displayMoney } from '../../../helpers/utils';
+import { displayMoney, displayActionMessage } from '../../../helpers/utils';
 
 const Payment = (props) => {
   const [field, setField] = useState({
@@ -95,7 +95,7 @@ const Payment = (props) => {
       if (ready) {
 
       } else {
-        console.log('all fields required');
+        displayActionMessage('All credentials for credit payment required!', 'error');
       }
     } else {
 
@@ -149,12 +149,13 @@ const Payment = (props) => {
             <div className="checkout-field margin-0">
               <div className="checkout-fieldset">
                 <div className="checkout-field">
-                  {error.name && <span className="input-message">{error.name}</span>}
-                  <span className="d-block padding-s">Name on Card</span>
+                  {error.name ? <span className="input-message">{error.name}</span> : (
+                    <span className="d-block padding-s">Name on Card</span>
+                  )}
                   <input 
                       className={`input-form d-block ${errorClassName('name')}`}
                       onChange={onCardNameInput}
-                      placeholder="Your name on card"
+                      placeholder="Jane Doe"
                       ref={cardInputRef}
                       style={{ textTransform: 'capitalize' }}
                       type="text"
@@ -162,8 +163,9 @@ const Payment = (props) => {
                   />
                 </div>
                 <div className="checkout-field">
-                {error.cardnumber && <span className="input-message">{error.cardnumber}</span>}
-                  <span className="d-block padding-s">Card Number</span>
+                  {error.cardnumber ? <span className="input-message">{error.cardnumber}</span> : (
+                    <span className="d-block padding-s">Card Number</span>
+                  )}
                   <input 
                       className={`input-form d-block ${errorClassName('cardnumber')}`}
                       onChange={onCardNumberInput}
@@ -175,8 +177,9 @@ const Payment = (props) => {
               </div>
               <div className="checkout-fieldset">
                 <div className="checkout-field">
-                  {error.expiry && <span className="input-message">{error.expiry}</span>}
-                  <span className="d-block padding-s">Expiry Date</span>
+                  {error.expiry ? <span className="input-message">{error.expiry}</span> : (
+                    <span className="d-block padding-s">Expiry Date</span>
+                  )}
                   <input 
                       className={`input-form d-block ${errorClassName('expiry')}`}
                       onChange={onExpiryInput}
@@ -186,8 +189,9 @@ const Payment = (props) => {
                   />
                 </div>
                 <div className="checkout-field">
-                  {error.ccv && <span className="input-message">{error.ccv}</span>}
-                  <span className="d-block padding-s">CCV Number</span>
+                  {error.ccv ? <span className="input-message">{error.ccv}</span> : (
+                    <span className="d-block padding-s">CCV Number</span>
+                  )}
                   <input 
                       className={`input-form d-block ${errorClassName('ccv')}`}
                       onChange={onCcvInput}

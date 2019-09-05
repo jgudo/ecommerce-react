@@ -18,8 +18,8 @@ import ProductSearch from '../components/product/ProductSearch'; // AddProduct
 import SignUp from '../views/auth/SignUp';
 import SignIn from '../views/auth/SignIn';
 import ForgotPassword from '../views/auth/ForgotPassword';
-import UserProfile from '../views/profile/UserProfile';
-import EditProfile from '../views/profile/EditProfile';
+import UserAccount from '../views/account/UserAccount';
+import EditAccount from '../views/account/EditAccount';
 import Home from '../views/home/Home';
 import CheckOutStep1 from '../views/checkout/step1/OrderSummary';
 import CheckOutStep2 from '../views/checkout/step2/ShippingDetails';
@@ -77,14 +77,14 @@ const AppRouter = () => (
             path={ROUTES.FORGOT_PASSWORD} 
         />
         <ClientRoute 
-            component={ScrollToTop(UserProfile)} 
+            component={ScrollToTop(UserAccount)} 
             exact
-            path={ROUTES.PROFILE} 
+            path={ROUTES.ACCOUNT} 
         />
         <ClientRoute 
-            component={ScrollToTop(EditProfile)} 
+            component={ScrollToTop(EditAccount)} 
             exact
-            path={ROUTES.PROFILE_EDIT} 
+            path={ROUTES.ACCOUNT_EDIT} 
         />
         <ClientRoute 
             component={ScrollToTop(CheckOutStep1)} 

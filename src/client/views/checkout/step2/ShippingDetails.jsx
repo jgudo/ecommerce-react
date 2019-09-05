@@ -19,15 +19,17 @@ const ShippingDetails = (props) => {
   const [error, setError] = useState({});
 
   const onFullNameInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /[a-zA-Z]{2,}/;
+    const val = e.target.value.trimStart();
+    const regex = /[^a-zA-Z\s]/gi;
 
     setField({ ...field, fullname: val });
 
     if (val === '') {
-      setError({ ...error, fullname: 'First name is required' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, fullname: 'First name must be at least 2 letters' });
+      setError({ ...error, fullname: 'Full name is required' });
+    } else if (regex.test(val)) {
+      setError({ ...error, fullname: 'Full name contains invalid characters' });
+    } else if (val.length < 6) {
+      setError({ ...error, fullname: 'Full name must be at least 6 characters' });
     } else {
       setError({ ...error, fullname: '' });
     }
@@ -107,8 +109,9 @@ const ShippingDetails = (props) => {
           <div className="checkout-shipping-form">
             <div className="checkout-fieldset">
               <div className="d-block checkout-field">
-                {error.fullname && <span className="input-message">{error.fullname}</span>}
-                <span className="d-block padding-s">Full Name</span>
+                {error.fullname ? <span className="input-message">{error.fullname}</span> : (
+                  <span className="d-block padding-s">Full Name</span>
+                )}
                 <input 
                     className={`input-form d-block ${errorClassName('fullname')}`}
                     onChange={onFullNameInput}
@@ -132,8 +135,9 @@ const ShippingDetails = (props) => {
             </div>
             <div className="checkout-fieldset">
               <div className="d-block checkout-field">
-                {error.address && <span className="input-message">{error.address}</span>}
-                <span className="d-block padding-s">Address</span>
+                {error.address ? <span className="input-message">{error.address}</span> : (
+                  <span className="d-block padding-s">Address</span>
+                )}
                 <input 
                     className={`input-form d-block ${errorClassName('address')}`}
                     onChange={onAddressInput}
@@ -143,8 +147,9 @@ const ShippingDetails = (props) => {
                 />
               </div>
               <div className="d-block checkout-field">
-                {error.mobile && <span className="input-message">{error.mobile}</span>}
-                <span className="d-block padding-s">Mobile Number</span>
+                {error.mobile ? <span className="input-message">{error.mobile}</span> : (
+                  <span className="d-block padding-s">Mobile Number</span>
+                )}
                 <ReactPhoneInput 
                     defaultCountry={'ph'} 
                     inputExtraProps={{ required: true }}

@@ -1,6 +1,6 @@
 export const HOME = '/';
-export const PROFILE = '/profile';
-export const PROFILE_EDIT = '/profile/edit';
+export const ACCOUNT = '/account';
+export const ACCOUNT_EDIT = '/account/edit';
 export const DASHBOARD = '/dashboard';
 export const DASHBOARD_PRODUCTS = '/dashboard/products';
 export const DASHBOARD_USERS = '/dashboard/users';

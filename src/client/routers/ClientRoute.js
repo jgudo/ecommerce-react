@@ -7,6 +7,8 @@ import Basket from '../components/basket/basket';
 import Navigation from '../components/ui/Navigation';
 import Footer from '../components/ui/Footer';
 
+import { SIGNIN } from '../constants/routes';
+
 const PrivateRoute = ({ isAuth, userType, component: Component, path, ...rest }) => (
   <Route  
       {...rest} 
@@ -24,7 +26,7 @@ const PrivateRoute = ({ isAuth, userType, component: Component, path, ...rest })
         ) 
         : isAuth && userType === 'admin' ? <Redirect to="/dashboard" />
         :  <Redirect to={{
-                pathname: '/signin',
+                pathname: SIGNIN,
                 state: { from: props.location }
               }} 
             />

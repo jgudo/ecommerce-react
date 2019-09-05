@@ -163,8 +163,8 @@ function* authSaga({ type, payload }) {
       yield put(isAuthenticating(false));
       break;
     case ON_AUTHSTATE_FAIL:
-      yield put(clearProfile());
-      yield put(signOutSuccess());
+      // yield put(clearProfile());
+      // yield put(signOutSuccess());
       break;
     case SET_AUTH_PERSISTENCE:
       try {

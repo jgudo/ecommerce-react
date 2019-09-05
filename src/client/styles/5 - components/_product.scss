@@ -11,7 +11,7 @@
 
 .product-list-header {
   width: 100%;
-  margin-bottom: $m-size;
+  margin-bottom: $line-height;
 }
 
 .product-list-header-title {
@@ -92,7 +92,7 @@
 
 .product-card-content {
   padding: $m-size;
-  @include bezier-transition();
+  @include bezier-transition(transform);
 
   // @media (max-width: $mobile) {
   //   transform: translateY(-25px);

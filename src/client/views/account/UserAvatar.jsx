@@ -4,6 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import SignOut from '../../components/auth/SignOut';
 import CircularProgress from '../../components/ui/CircularProgress';
 
+import { ACCOUNT } from '../../constants/routes';
+
 const UserNav = ({ profile, isAuthenticating }) => {
   useEffect(() => {
     document.addEventListener('click', toggleDropdown);
@@ -48,10 +50,10 @@ const UserNav = ({ profile, isAuthenticating }) => {
       <div className="icon-caret user-caret" />
       <div className="user-nav-sub">
         <Link 
-            to="/profile"
+            to={ACCOUNT}
             className="user-nav-sub-link"
         >
-          View Profile
+          View Account
         </Link>
         <SignOut>
           {({ onSignOut }) => (

@@ -19,7 +19,7 @@ const ProductList = ({
     products.length === 0 && onGetProducts();
 
     return () => {
-      isLoading && dispatch(dispatchIsLoading(false));
+      dispatch(dispatchIsLoading(false));
     };
   }, []);
   

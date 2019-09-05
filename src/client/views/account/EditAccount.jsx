@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import ReactPhoneInput from 'react-phone-input-2';
 import Modal from '../../components/ui/Modal';
 import CircularProgress from '../../components/ui/CircularProgress';
 import ImageLoader from '../../components/ui/ImageLoader';
 
 import { displayActionMessage } from '../../helpers/utils';
+import { isLoading as dispatchIsLoading } from '../../actions/appActions';
 import { updateProfile } from '../../actions/profileActions';
+import { ACCOUNT } from '../../constants/routes';
 
 const EditProfile = (props) => {
+  useEffect(() => {
+    return () => {
+      dispatch(dispatchIsLoading(false));
+    };
+  }, []);
+
   const { profile, auth, isLoading } = useSelector(state => ({
     profile: state.profile,
     auth: state.auth,
@@ -176,7 +183,7 @@ const EditProfile = (props) => {
           X
         </button>
       </Modal>
-      <h3 className="text-center">Update Your Profile</h3>
+      <h3 className="text-center">Edit Account Details</h3>
       <div className="user-profile-banner">
         <div className="user-profile-banner-wrapper">
           <ImageLoader  
@@ -238,8 +245,9 @@ const EditProfile = (props) => {
         </div>
       </div>
       <div className="user-profile-details">
-        {error.fullname && <span className="input-message">{error.fullname}</span>}
-        <span className="d-block padding-s">Full Name</span>
+        {error.fullname ? <span className="input-message">{error.fullname}</span> : (
+          <span className="d-block padding-s">Full Name</span>
+        )}
         <input 
             className={`input-form d-block ${errorClassName('fullname')}`}
             maxLength={30}
@@ -250,22 +258,23 @@ const EditProfile = (props) => {
             type="text"
             value={user.fullname}
         />
-        {error.email && <span className="input-message">{error.email}</span>}
-        <span className="d-block padding-s">Email</span>
+        {error.email ? <span className="input-message">{error.email}</span> : (
+          <span className="d-block padding-s">Email</span>
+        )}
         <input 
             className={`input-form d-block ${errorClassName('email')}`}
             maxLength={40}
             onChange={onEmailChange}
-            placeholder="Email"
+            placeholder="test@example.com"
             readOnly={auth.provider !== 'password' || isLoading}
             type="email"
             value={user.email}
         />
-        <span className="d-block padding-s">Address</span>
+        <span className="d-block padding-s">Shipping Address</span>
         <input 
             className={`input-form d-block`}
             maxLength={120}
-            placeholder="Complete Address"
+            placeholder="eg: #245 Brgy. Maligalig, Arayat Pampanga, Philippines"
             onChange={onAddressChange}
             readOnly={isLoading}
             type="text"
@@ -286,20 +295,19 @@ const EditProfile = (props) => {
         <br/>
         <div className="edit-user-action">
           <button
+              className="button button-muted w-100-mobile"
+              disabled={isLoading}
+              onClick={() => props.history.push(ACCOUNT)}
+          >
+            Back to Profile
+          </button>
+          <button
               className="button w-100-mobile"
               disabled={isLoading}
               onClick={onSubmitUpdate}
           >
             <CircularProgress visible={isLoading} theme="light" />
             {isLoading ? 'Updating Profile' : 'Update Profile'}
-          </button>
-          &nbsp;
-          <button
-              className="button button-muted w-100-mobile"
-              disabled={isLoading}
-              onClick={() => props.history.push('/profile')}
-          >
-            Back to Profile
           </button>
         </div>
       </div>

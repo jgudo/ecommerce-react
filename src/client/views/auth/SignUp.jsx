@@ -98,33 +98,36 @@ const SignUp = (props) => {
         <h3>Sign up to Salinaka</h3>
         <form onSubmit={onFormSubmit}>
           <div className="signup-field">
-            {error.fullname && <span className="input-message">{error.fullname}</span>}
-            <span className="d-block padding-s">Full Name</span>
+            {error.fullname ? <span className="input-message">{error.fullname}</span> : (
+              <span className="d-block padding-s">Full Name</span>
+            )}
             <input 
                 className={`input-form d-block ${errorClassName('fullname')}`}
                 maxLength={40}
                 onKeyUp={onFullnameInput}
-                placeholder="Full name"
+                placeholder="John Doe"
                 readOnly={isAuthenticating}
                 style={{ textTransform: 'capitalize' }}
                 type="text" 
             />
           </div>
           <div className="signup-field">
-            {error.email && <span className="input-message">{error.email}</span>}
-            <span className="d-block padding-s">Email</span>
+            {error.email ? <span className="input-message">{error.email}</span> : (
+              <span className="d-block padding-s">Email</span>
+            )}
             <input 
                 className={`input-form d-block ${errorClassName('email')}`}
                 maxLength={40}
                 onInput={onEmailInput}
-                placeholder="Your Email"
+                placeholder="test@example.com"
                 readOnly={isAuthenticating}
                 type="email" 
             />
           </div>
           <div className="signup-field">
-            {error.password && <span className="input-message">{error.password}</span>}
-            <span className="d-block padding-s">Password</span>
+            {error.password ? <span className="input-message">{error.password}</span> : (
+              <span className="d-block padding-s">Password</span>
+            )}
             <div className="d-flex">
               <input
                   className={`input-form d-block margin-0 ${errorClassName('password')}`}

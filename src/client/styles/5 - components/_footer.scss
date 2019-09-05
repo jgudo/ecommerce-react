@@ -1,15 +1,22 @@
 .footer {
   position: relative;
-  padding: $s-size $xxl-size;
-  background: darken($background-color, 3%);
+  padding: 0 $xxl-size;
+  background: $black;
   display: flex;
   align-items: center;
+  color: $white;
 
   @media (max-width: $mobile) {
     padding: $s-size;
     padding-bottom: $xl-size;
     flex-direction: column;
     text-align: center;
+  }
+
+  h4, 
+  a,
+  span {
+    color: $white;
   }
 }
 

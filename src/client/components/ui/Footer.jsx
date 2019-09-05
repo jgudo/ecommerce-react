@@ -7,8 +7,8 @@ const Footer = ({ path }) => {
     ROUTE.SIGNIN,
     ROUTE.SIGNUP,
     ROUTE.FORGOT_PASSWORD,
-    ROUTE.PROFILE,
-    ROUTE.PROFILE_EDIT,
+    ROUTE.ACCOUNT,
+    ROUTE.ACCOUNT_EDIT,
     ROUTE.CHECKOUT_STEP_1,
     ROUTE.CHECKOUT_STEP_2,
     ROUTE.CHECKOUT_STEP_3
@@ -20,7 +20,7 @@ const Footer = ({ path }) => {
         <h4>SALINAKA &nbsp;<span>{new Date().getFullYear()}</span></h4>
       </div>
       <div className="footer-col-2">
-        <strong><span>Created by <a href="https://github.com/jgudo">Julius Guevarra</a></span></strong>
+        <strong><span>Developed by <a href="https://github.com/jgudo">Julius Guevarra</a></span></strong>
       </div>
       <div className="footer-col-3">
         <strong>

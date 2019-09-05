@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 const PageNotFound = (props) => {
   return (
@@ -16,4 +15,4 @@ const PageNotFound = (props) => {
   );
 };
 
-export default withRouter(PageNotFound);
+export default PageNotFound;
