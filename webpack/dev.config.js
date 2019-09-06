@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const baseConfig = require('./base.config.js');
 
-DotEnv.config({ path: '.env'});
+DotEnv.config({ path: '.env.test'});
 
 module.exports = merge(baseConfig, {
   mode: 'development',
