@@ -26,12 +26,7 @@ const OrderSummary = ({ basket, subtotal, dispatch, history }) => {
               key={product.id}
               product={product}
               basket={basket}
-              action={{
-                removeFromBasket: id => dispatch(removeFromBasket(id)),
-                clearBasket: () => dispatch(clearBasket()),
-                addQtyItem: id => dispatch(addQtyItem(id)),
-                minusQtyItem: id => dispatch(minusQtyItem(id))
-              }}
+              dispatch={dispatch}
           />
         ))}
         <br/>

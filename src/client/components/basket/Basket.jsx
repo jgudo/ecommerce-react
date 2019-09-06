@@ -5,7 +5,7 @@ import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 
-import { removeFromBasket, clearBasket, addQtyItem, minusQtyItem } from '../../actions/basketActions';
+import { clearBasket } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils';
 
 const Basket = (props) => {
@@ -109,12 +109,7 @@ const Basket = (props) => {
                 key={product.id}
                 product={product}
                 basket={basket}
-                action={{
-                  removeFromBasket: id => dispatch(removeFromBasket(id)),
-                  clearBasket: () => dispatch(clearBasket()),
-                  addQtyItem: id => dispatch(addQtyItem(id)),
-                  minusQtyItem: id => dispatch(minusQtyItem(id))
-                }}
+                dispatch={dispatch}
             />
           ))}
         </div>

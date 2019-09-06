@@ -4,11 +4,10 @@
   display: flex;
   align-items: center;
   padding: 0 $xxl-size;
-  // box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
-  z-index: map-get($z-index, navigation);
   position: fixed;
   top: 0;
   transform: translateY(0);
+  z-index: map-get($z-index, navigation);
   @include bezier-transition(transform, .3s, ease);
 
   @media (max-width: $mobile) {

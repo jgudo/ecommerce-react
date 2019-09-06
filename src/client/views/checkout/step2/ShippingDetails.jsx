@@ -56,7 +56,7 @@ const ShippingDetails = (props) => {
     setField({ ...field, address: val });
 
     if (val === '') {
-      setError({ ...error, address: 'Address is required' });
+      setError({ ...error, address: 'Shipping address is required' });
     } else {
       setError({ ...error, address: '' });
     }
@@ -136,12 +136,12 @@ const ShippingDetails = (props) => {
             <div className="checkout-fieldset">
               <div className="d-block checkout-field">
                 {error.address ? <span className="input-message">{error.address}</span> : (
-                  <span className="d-block padding-s">Address</span>
+                  <span className="d-block padding-s">Shipping Address</span>
                 )}
                 <input 
                     className={`input-form d-block ${errorClassName('address')}`}
                     onChange={onAddressInput}
-                    placeholder="Complete Address"
+                    placeholder="#05 Brgy. Maligalig, Arayat Pampanga, Philippines"
                     type="text"
                     value={field.address}
                 />

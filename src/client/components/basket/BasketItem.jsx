@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import BasketItemControl from './BasketItemControl';
 import Badge from '../ui/Badge';
 import ImageLoader from '../ui/ImageLoader';
+import { removeFromBasket } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils';
 
-const BasketItem = ({ action, basket, product }) => {
-  const onRemoveFromBasket = () => {
-    action.removeFromBasket(product.id);
-  };
+const BasketItem = ({ basket, dispatch, product }) => {
+  const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
 
   return (
     <div className="basket-item">
       <BasketItemControl 
-          action={action} 
-          basket={basket}
+          dispatch={dispatch}
           product={product}
       />
       <div className="basket-item-wrapper">
@@ -48,7 +46,6 @@ const BasketItem = ({ action, basket, product }) => {
 };
 
 BasketItem.propType = {
-  action: PropTypes.objectOf(PropTypes.func).isRequired,
   product: PropTypes.object.isRequired,
   basket: PropTypes.arrayOf(PropTypes.object).isRequired
 };

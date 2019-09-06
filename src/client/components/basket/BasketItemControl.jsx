@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { addQtyItem, minusQtyItem } from '../../actions/basketActions';
 
-const BasketItemControl = ({ action, product }) => {
+const BasketItemControl = ({ product, dispatch }) => {
   const onAddQty = () => {
     if (product.quantity < product.maxQuantity) {
-      action.addQtyItem(product.id);
+      dispatch(addQtyItem(product.id));
     }
-  };
-
+  }
   const onMinusQty = () => {
     if ((product.maxQuantity >= product.quantity) && product.quantity !== 0) {
-      action.minusQtyItem(product.id);
+      dispatch(minusQtyItem(product.id));
     }
-  };
+  }
 
   return (
     <div className="basket-item-control">

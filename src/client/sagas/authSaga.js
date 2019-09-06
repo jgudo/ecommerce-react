@@ -1,5 +1,6 @@
 import firebase from '../firebase/firebase';
-import { call, put, fork } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
+import { history } from '../routers/AppRouter';
 
 import {
   SIGNIN,
@@ -110,14 +111,14 @@ function* authSaga({ type, payload }) {
     case SIGNOUT:
       try {
         yield initRequest();
-        yield call(firebase.signOut); // synchronously 
+        yield call(firebase.signOut);
         yield put(clearBasket());
         yield put(clearProfile());
         yield put(resetFilter());
         yield put(resetShippingDetails());
         yield put(signOutSuccess());
         yield put(isAuthenticating(false));
-        // yield call(history.push, '/signin');
+        yield call(history.push, '/signin');
       } catch (e) {
         console.log(e);
       }
@@ -141,7 +142,8 @@ function* authSaga({ type, payload }) {
 
       if (snapshot.val()) { // if user exists in database
         yield put(setProfile(snapshot.val()));
-      } else if (payload.providerData[0].providerId !== 'password') { // add the user
+      } else if (payload.providerData[0].providerId !== 'password') { 
+        // add the user if auth provider is not password
         const user = {
           fullname: payload.displayName ? payload.displayName : 'User',
           avatar: payload.photoURL ? payload.photoURL : defaultAvatar,

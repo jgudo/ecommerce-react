@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -7,7 +7,7 @@ import 'normalize.css/normalize.css';
 import 'react-phone-input-2/dist/style.css';
 import './styles/style.scss';
 import WebFont from 'webfontloader';
-import App from './App';
+// import App from './App';
 import AppRouter from './routers/AppRouter';
 import Preloader from './components/ui/Preloader';
 import configureStore from './store/store';
@@ -28,8 +28,18 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 }
 
 const { store, persistor } = configureStore();
-ReactDOM.render(<Preloader />, document.getElementById('app'));
+const AppRoot = () => (
+  <StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={<Preloader />} persistor={persistor}>
+        <AppRouter />
+      </PersistGate>
+    </Provider>
+  </StrictMode>  
+);
 
+// Render the preloader on initial load
+ReactDOM.render(<Preloader />, document.getElementById('app'));
 
 firebase.auth.onAuthStateChanged((user) => {
   if (user) {
@@ -38,15 +48,8 @@ firebase.auth.onAuthStateChanged((user) => {
     store.dispatch(onAuthStateFail('Fail'));
   }
 
-  ReactDOM.render(
-    <Provider store={store}>
-      <PersistGate loading={<Preloader />} persistor={persistor}>
-        <AppRouter />
-      </PersistGate>
-    </Provider>, 
-    document.getElementById('app')
-  );
-  
+  // then render the app after checking the auth state
+  ReactDOM.render(<AppRoot/>, document.getElementById('app'));
 });
 
 // ReactDOM.render(

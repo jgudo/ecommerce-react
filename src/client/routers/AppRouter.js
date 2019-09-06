@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import ClientRoute from './ClientRoute';
-import AdminRoute from './AdminRoute';
 import PublicRoute from './PublicRoute';
+// import AdminRoute from './AdminRoute';
 
 import * as ROUTES from '../constants/routes';
 
-// components
-import Dashboard from '../views/admin/dashboard/Dashboard'; // Dashboard
-import DashboardProducts from '../views/admin/products/Products'; // Dashboard
-import DashboardUsers from '../views/admin/users/Users'; // Dashboard
-import EditProduct from '../views/admin/products/EditProduct';
-import AddProduct from '../views/admin/products/AddProduct'; // AddProduct
-import ProductSearch from '../components/product/ProductSearch'; // AddProduct
+// Admin components
+// to be added on next update
+
+// import Dashboard from '../views/admin/dashboard/Dashboard'; 
+// import DashboardProducts from '../views/admin/products/Products'; 
+// import DashboardUsers from '../views/admin/users/Users'; 
+// import EditProduct from '../views/admin/products/EditProduct';
+// import AddProduct from '../views/admin/products/AddProduct'; 
+
+import ProductSearch from '../components/product/ProductSearch'; 
 import SignUp from '../views/auth/SignUp';
 import SignIn from '../views/auth/SignIn';
 import ForgotPassword from '../views/auth/ForgotPassword';
@@ -26,43 +29,23 @@ import CheckOutStep2 from '../views/checkout/step2/ShippingDetails';
 import CheckOutStep3 from '../views/checkout/step3/Payment';
 import PageNotFound from '../views/404/PageNotFound';
 import ScrollToTop from '../components/ui/ScrollToTop';
+import Preloader from '../components/ui/Preloader';
 
 export const history = createBrowserHistory();
 
 const AppRouter = () => (
   <Router history={history}>
-    <>
+    <Suspense fallback={<Preloader />}>
       <Switch>
-        <PublicRoute 
-            component={ScrollToTop(Home)} 
-            exact
-            path={ROUTES.HOME} 
-        />
         <Route 
             component={ProductSearch} 
             exact
             path={ROUTES.SEARCH} 
         />
-        <AdminRoute 
-            component={ScrollToTop(Dashboard)} 
+        <PublicRoute 
+            component={ScrollToTop(Home)} 
             exact
-            path={ROUTES.DASHBOARD} 
-        />
-        <AdminRoute 
-            component={ScrollToTop(DashboardProducts)} 
-            path={ROUTES.DASHBOARD_PRODUCTS} 
-        />
-        <AdminRoute 
-            component={ScrollToTop(DashboardUsers)} 
-            path={ROUTES.DASHBOARD_USERS} 
-        />
-        <AdminRoute 
-            component={ScrollToTop(AddProduct)} 
-            path={ROUTES.ADD_PRODUCT} 
-        />
-        <AdminRoute 
-            component={ScrollToTop(EditProduct)} 
-            path={ROUTES.EDIT_PRODUCT} 
+            path={ROUTES.HOME} 
         />
         <PublicRoute 
             component={ScrollToTop(SignUp)} 
@@ -99,8 +82,29 @@ const AppRouter = () => (
             path={ROUTES.CHECKOUT_STEP_3} 
         />
         <PublicRoute component={ScrollToTop(PageNotFound)} />
+         {/* <AdminRoute 
+            component={ScrollToTop(Dashboard)} 
+            exact
+            path={ROUTES.DASHBOARD} 
+        />
+        <AdminRoute 
+            component={ScrollToTop(DashboardProducts)} 
+            path={ROUTES.DASHBOARD_PRODUCTS} 
+        />
+        <AdminRoute 
+            component={ScrollToTop(DashboardUsers)} 
+            path={ROUTES.DASHBOARD_USERS} 
+        />
+        <AdminRoute 
+            component={ScrollToTop(AddProduct)} 
+            path={ROUTES.ADD_PRODUCT} 
+        />
+        <AdminRoute 
+            component={ScrollToTop(EditProduct)} 
+            path={ROUTES.EDIT_PRODUCT} 
+        /> */}
       </Switch>
-    </>
+    </Suspense>
   </Router>
 );
 
