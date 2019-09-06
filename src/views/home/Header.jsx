@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Filters from '../../components/ui/Filters';
 
 import { 
@@ -93,7 +94,7 @@ const Header = ({
   };
 
   return (
-    <>
+    <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div className="product-list-header-title">
         {isFiltered ? (
           <h3>
@@ -102,11 +103,7 @@ const Header = ({
               : `Found ${productsCount} ${productsCount > 1 ? 'products' : 'product'}`
             }
           </h3>
-        ) : (
-          <h3>
-            Eyewear &nbsp;<span>{`${productsCount} ${productsCount > 1 ? 'products' : 'product'}`}</span>
-          </h3>
-        )}
+        ) : <h3>Eyewear</h3>}
       </div>
       <div className="product-list-header-actions">
         {isFiltered && (
@@ -119,14 +116,16 @@ const Header = ({
         )}
         &nbsp;
         <div className="filters-toggle">
-          <button
-              className="button button-small button-border button-border-gray"
-              disabled={isLoading}
-              onClick={onClickToggle}
-          >
-            Filters
-            <div className="filters-toggle-caret icon-caret" />
-          </button>
+          {isLoading ? <Skeleton width={70} height={50}/> : (
+            <button
+                className="button button-small button-border button-border-gray"
+                disabled={isLoading}
+                onClick={onClickToggle}
+            >
+              Filters
+              <div className="filters-toggle-caret icon-caret" />
+            </button>
+          )}
           <div className="filters-toggle-sub">
             <Filters 
                 dispatch={dispatch}
@@ -183,7 +182,7 @@ const Header = ({
           <div className="searchbar-icon" style={{ opacity: isLoading ? .5 : 1 }}/>
         </div>
       </div>
-    </>
+    </SkeletonTheme>
   );
 };
 

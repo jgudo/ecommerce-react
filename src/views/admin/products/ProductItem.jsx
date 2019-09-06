@@ -2,11 +2,12 @@ import React, { useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
+import { removeProduct } from '../../../actions/productActions';
 import ImageLoader from '../../../components/ui/ImageLoader';
 import { displayMoney, displayDate, displayActionMessage } from '../../../helpers/utils';
 
 const ProductItem = (props) => {
-  const { product, removeProduct } = props;
+  const { product, dispatch } = props;
   const productRef = useRef(null);
 
   const onClickEdit = () => {
@@ -18,7 +19,7 @@ const ProductItem = (props) => {
   };
   
   const onConfirmDelete = () => {
-    removeProduct(product.id);
+    dispatch(removeProduct(product.id));
     displayActionMessage('Item successfully deleted');
     productRef.current.classList.remove('item-active');
   };

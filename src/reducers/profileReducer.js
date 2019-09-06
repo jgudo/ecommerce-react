@@ -1,6 +1,6 @@
 import { SET_PROFILE, UPDATE_PROFILE_SUCCESS, CLEAR_PROFILE } from '../constants/constants';
-import profile from '../../../static/profile.jpg';
-import banner from '../../../static/banner.jpg';
+import profile from '../../static/profile.jpg';
+import banner from '../../static/banner.jpg';
 
 const initState = {
   fullname: 'Pedro Juan',

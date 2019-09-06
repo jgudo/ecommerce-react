@@ -1,9 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageLoader from '../ui/ImageLoader';
+import { addToBasket, removeFromBasket } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils'; 
 
-const ProductModalDetails = ({ product, addToBasket, foundOnBasket }) => {
+const ProductModalDetails = ({ product, dispatch, foundOnBasket }) => {
+  const onAddToBasket = () => {
+    if (foundOnBasket(product.id)) {
+      dispatch(removeFromBasket(product.id));
+      displayActionMessage('Item removed from basket', 'info');
+    } else {
+      dispatch(addToBasket(product));
+      displayActionMessage('Item added to basket', 'success');
+    }
+  };
+
   return !product ? null : (
     <div className="product-modal">
       <div className="product-modal-image-wrapper">
@@ -24,7 +35,7 @@ const ProductModalDetails = ({ product, addToBasket, foundOnBasket }) => {
         <div className="product-modal-action">
           <button 
               className={`button button-small ${foundOnBasket(product.id) ? 'button-border button-border-gray' : ''}`} 
-              onClick={() => addToBasket(product.id, product)}
+              onClick={onAddToBasket}
           >
             {foundOnBasket(product.id) ? 'Remove From Basket' : 'Add To Basket'}
           </button>

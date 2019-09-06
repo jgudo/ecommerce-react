@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { displayMoney } from '../../helpers/utils';
+import { removeFromBasket, addToBasket } from '../../actions/basketActions';
+import { displayMoney, displayActionMessage } from '../../helpers/utils';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import ImageLoader from '../ui/ImageLoader';
 
@@ -8,7 +9,7 @@ const ProductItem = ({
   product, 
   onOpenModal, 
   onClickProduct,
-  addToBasket,
+  dispatch,
   foundOnBasket
  }) => {
 
@@ -16,6 +17,16 @@ const ProductItem = ({
     if (product.id) {
       onOpenModal();
       onClickProduct(product);
+    }
+  };
+
+  const onAddToBasket = () => {
+    if (foundOnBasket(product.id)) {
+      dispatch(removeFromBasket(product.id));
+      displayActionMessage('Item removed from basket', 'info');
+    } else {
+      dispatch(addToBasket(product));
+      displayActionMessage('Item added to basket', 'success');
     }
   };
 
@@ -47,9 +58,7 @@ const ProductItem = ({
         {product.id && (
           <button 
               className={`product-card-button button-small button button-block ${foundOnBasket(product.id) ? 'button-border button-border-gray' : ''}`} 
-              onClick={() => {
-                addToBasket(product.id, product);
-              }}
+              onClick={onAddToBasket}
           >
             {foundOnBasket(product.id) ? 'Remove from basket' : 'Add to basket'}
           </button>

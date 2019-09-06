@@ -47,44 +47,40 @@ const Products = (props) => {
           products={products}
           requestStatus={requestStatus}
       >
-        {({ action }) => (
-          <>
-            <ProductAppliedFilters filter={filter}/>
-            {filteredProducts.length > 0 && (
-              <div className="grid grid-product grid-count-6">
-                <div className="grid-col" />
-                <div className="grid-col">
-                  <h5>Name</h5>
-                </div>
-                <div className="grid-col">
-                  <h5>Brand</h5>
-                </div>
-                <div className="grid-col">
-                  <h5>Price</h5>
-                </div>
-                <div className="grid-col">
-                  <h5>Date Added</h5>
-                </div>
-                <div className="grid-col">
-                  <h5>Qty</h5>
-                </div>
+        <ProductAppliedFilters filter={filter}/>
+          {filteredProducts.length > 0 && (
+            <div className="grid grid-product grid-count-6">
+              <div className="grid-col" />
+              <div className="grid-col">
+                <h5>Name</h5>
               </div>
-            )} 
-            {filteredProducts.length === 0 ? new Array(10).fill({}).map((product, index) => (
-              <ProductItem 
-                  key={`product-skeleton ${index}`}
-                  product={product}
-                  removeProduct={action.removeProduct}
-              />
-            )): filteredProducts.map(product => (
-              <ProductItem 
-                  key={product.id}
-                  product={product}
-                  removeProduct={action.removeProduct}
-              />
-            ))}
-          </>
-        )}
+              <div className="grid-col">
+                <h5>Brand</h5>
+              </div>
+              <div className="grid-col">
+                <h5>Price</h5>
+              </div>
+              <div className="grid-col">
+                <h5>Date Added</h5>
+              </div>
+              <div className="grid-col">
+                <h5>Qty</h5>
+              </div>
+            </div>
+          )} 
+          {filteredProducts.length === 0 ? new Array(10).fill({}).map((product, index) => (
+            <ProductItem 
+                key={`product-skeleton ${index}`}
+                product={product}
+                removeProduct={action.removeProduct}
+            />
+          )): filteredProducts.map(product => (
+            <ProductItem 
+                key={product.id}
+                product={product}
+                dispatch={dispatch}
+            />
+          ))}
       </ProductList>
     </>
   );

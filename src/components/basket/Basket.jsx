@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
+import Boundary from '../ui/Boundary';
 
 import { clearBasket } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils';
@@ -55,7 +56,7 @@ const Basket = (props) => {
   }
 
   return (
-    <>
+    <Boundary>
       <Modal isOpen={isModalOpen} onRequestClose={onCloseModal}>
         <p className="text-center">You must sign in to continue checking out</p>
         <br/>
@@ -127,7 +128,7 @@ const Basket = (props) => {
           </button>
         </div>
       </div>
-    </>
+    </Boundary>
   );
 };
 

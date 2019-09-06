@@ -7,7 +7,6 @@ import 'normalize.css/normalize.css';
 import 'react-phone-input-2/dist/style.css';
 import './styles/style.scss';
 import WebFont from 'webfontloader';
-// import App from './App';
 import AppRouter from './routers/AppRouter';
 import Preloader from './components/ui/Preloader';
 import configureStore from './store/store';
@@ -45,18 +44,9 @@ firebase.auth.onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(onAuthStateSuccess(user));
   } else {
-    store.dispatch(onAuthStateFail('Fail'));
+    store.dispatch(onAuthStateFail('Failed to authenticate'));
   }
 
   // then render the app after checking the auth state
   ReactDOM.render(<AppRoot/>, document.getElementById('app'));
 });
-
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <PersistGate loading={<Preloader />} persistor={persistor}>
-//       <AppRouter />
-//     </PersistGate>
-//   </Provider>, 
-//   document.getElementById('app')
-// );

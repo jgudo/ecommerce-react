@@ -48,8 +48,6 @@ const SignIn = (props) => {
 
     if (val === '') {
       setErrorField({ ...errorField, password: 'Password is required' });
-    } else if (val.length < 6) {
-      setErrorField({ ...errorField, password: 'Password length must be greater than 6' });
     } else {
       setPassword(val);
       setErrorField({ ...errorField, password: '' });

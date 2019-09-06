@@ -4,9 +4,9 @@ import {
   EDIT_PRODUCT_SUCCESS,
   GET_PRODUCTS_SUCCESS 
 } from '../constants/constants';
-import img1 from '../../../static/salt-image-1.png';
-import img2 from '../../../static/salt-image-7.png';
-import img3 from '../../../static/salt-image-10.png';
+import img1 from '../../static/salt-image-1.png';
+import img2 from '../../static/salt-image-7.png';
+import img3 from '../../static/salt-image-10.png';
 
 const initState = [
   {
@@ -100,7 +100,7 @@ const initState = [
   }
 ];
 
-export default (state = initState, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS:
       return action.payload;
