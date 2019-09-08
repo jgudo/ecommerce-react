@@ -1,25 +1,55 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import CircularProgress from '../ui/CircularProgress';
 import { getProducts } from '../../actions/productActions';
 import { isLoading as dispatchIsLoading } from '../../actions/appActions';
+import { debounce } from '../../decorator/decorator';
 
 const ProductList = ({ 
   isLoading, 
   requestStatus, 
   productsLength,
   filteredProductsLength, 
+  lastRefKey,
+  totalItems,
   dispatch,
   children 
 }) => {
-  
-  useEffect(() => {
-    productsLength === 0 && onGetProducts();
+  const [lastScrollPos, setLastScrollPos] = useState(0);
+  const [isFetching, setFetching] = useState(false);
 
-    return () => {
-      dispatch(dispatchIsLoading(false));
-    };
-  }, []);
+  useEffect(() => {  
+    productsLength === 0 && onGetProducts();
   
-  const onGetProducts = () => dispatch(getProducts());
+    return () => dispatch(dispatchIsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    console.log(lastScrollPos);
+    debounce(() => window.scrollTo(0, lastScrollPos), 100)();
+    setFetching(false);
+  }, [filteredProductsLength]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', watchForScroll);
+
+    return () => window.removeEventListener('scroll', watchForScroll);
+  }, [lastRefKey, isLoading]);
+
+  const watchForScroll = () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = winScroll / height;  
+    
+    if (scrolled === 1 && lastRefKey !== '' && !isLoading && productsLength < totalItems ) {
+      setLastScrollPos(window.pageYOffset);
+      setFetching(true);
+
+      debounce(onGetProducts, 2000)();
+    }  
+  };
+  
+  const onGetProducts = () => dispatch(getProducts(lastRefKey));
 
   return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
     <div className="loader">
@@ -37,8 +67,31 @@ const ProductList = ({
         Try again
       </button>
     </div>
-  ) : children;
-}
+  ) : (
+    <>
+    {children}
+    {(isFetching) && (
+      <div className="d-flex-center padding-l">
+        <CircularProgress />
+        <span>&nbsp;Fetching more items...</span>
+      </div>
+    )}
+    {(!isFetching && productsLength === totalItems) && (
+      <div className="d-flex-center padding-l">
+        <span>End of result.</span>
+      </div>
+    )}
+    </>
+  )
+};
+
+ProductList.propType = {
+  isLoading: PropTypes.bool.isRequired,
+  requestStatus: PropTypes.string.isRequired,
+  productsLength: PropTypes.number.isRequired,
+  filteredProductsLength: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
 
 export default ProductList;
 

@@ -5,6 +5,7 @@ import { UPDATE_PROFILE, UPDATE_EMAIL, LOADING } from '../constants/constants';
 import { updateProfileSuccess } from '../actions/profileActions';
 import { isLoading } from '../actions/appActions';
 import { displayActionMessage } from '../helpers/utils';
+import { ACCOUNT } from '../constants/routes';
 
 function* profileSaga({ type, payload }) {
   switch (type) {
@@ -47,7 +48,7 @@ function* profileSaga({ type, payload }) {
         }
 
         yield put(isLoading(false));
-        yield call(history.push, '/profile');
+        yield call(history.push, ACCOUNT);
         yield call(displayActionMessage, 'Profile Updated Successfully!', 'success');
       } catch (e) {
         console.log(e);

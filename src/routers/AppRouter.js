@@ -81,8 +81,7 @@ const AppRouter = () => (
             component={ScrollToTop(CheckOutStep3)} 
             path={ROUTES.CHECKOUT_STEP_3} 
         />
-        <PublicRoute component={ScrollToTop(PageNotFound)} />
-         {/* <AdminRoute 
+        {/* <AdminRoute 
             component={ScrollToTop(Dashboard)} 
             exact
             path={ROUTES.DASHBOARD} 
@@ -103,6 +102,7 @@ const AppRouter = () => (
             component={ScrollToTop(EditProduct)} 
             path={ROUTES.EDIT_PRODUCT} 
         /> */}
+        <PublicRoute component={ScrollToTop(PageNotFound)} />
       </Switch>
     </Suspense>
   </Router>

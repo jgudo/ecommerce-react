@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from '../../../selectors/selector';
 import Header from '../../home/Header';
 import ProductList from '../../../components/product/ProductList';
+import Boundary from '../../../components/ui/Boundary';
 import ProductItem from './ProductItem';
 import ProductAppliedFilters from '../../../components/product/ProductAppliedFilters';
 
 const Products = (props) => {
   const { products, filter, isLoading, filteredProducts, requestStatus } = useSelector(state => ({
-    products: state.products,
+    products: state.products.items,
     filter: state.filter,
     basket: state.basket,
     isLoading: state.app.loading,
@@ -23,13 +24,14 @@ const Products = (props) => {
   };
 
   return (
-    <>
+    <Boundary>
       <div className="product-admin-header">
         <h2 className="product-admin-header-title">Products</h2>
         <Header 
             dispatch={dispatch}
             products={products}
             filter={filter}
+            filteredProducts={filteredProducts}
             isLoading={isLoading}
         />
         &nbsp;&nbsp;
@@ -44,7 +46,7 @@ const Products = (props) => {
           dispatch={dispatch}
           filteredProducts={filteredProducts}
           isLoading={isLoading}
-          products={products}
+          productsLength={products.length}
           requestStatus={requestStatus}
       >
         <ProductAppliedFilters filter={filter}/>
@@ -72,7 +74,6 @@ const Products = (props) => {
             <ProductItem 
                 key={`product-skeleton ${index}`}
                 product={product}
-                removeProduct={action.removeProduct}
             />
           )): filteredProducts.map(product => (
             <ProductItem 
@@ -82,7 +83,7 @@ const Products = (props) => {
             />
           ))}
       </ProductList>
-    </>
+    </Boundary>
   );
 };
 

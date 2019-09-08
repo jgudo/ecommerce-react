@@ -90,35 +90,63 @@ class Firebase {
   // PRODUCT ACTIONS
   // ---------
 
-  getProducts = () => {
-    let didTimeout = false;
+  getProducts = (lastRefKey) => {
+      let didTimeout = false;
 
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        didTimeout = true;
-        reject('Request timeout, please try again');
-      }, 15000);  
+      return new Promise(async (resolve, reject) => {
+        const timeout = setTimeout(() => {
+          didTimeout = true;
+          reject('Request timeout, please try again');
+        }, 15000);  
 
-      this.database.ref('products').once('value')
-        .then((snapshot) => {
-          clearTimeout(timeout);
-          if (!didTimeout) {
-            const products = [];
-
-            snapshot.forEach((childSnapshot) => {
-                products.push({
-                    id: childSnapshot.key,
-                    ...childSnapshot.val()
-                });
-            });
-            resolve(products);
+        if (lastRefKey) {
+          try {
+            const snapshot = await this.database.ref('products').orderByKey().endAt(lastRefKey).limitToLast(6).once('value');
+            
+            clearTimeout(timeout);
+            if (!didTimeout) {
+              const arrayOfKeys = Object.keys(snapshot.val()).sort().reverse().slice(1);
+              const products = arrayOfKeys.map(key => ({ id: key, ...snapshot.val()[key] }));
+              const lastKey = arrayOfKeys[arrayOfKeys.length - 1];
+              
+              resolve({ products, lastKey });
+              
+              // const products = [];
+              // snapshot.forEach((childSnapshot) => {
+              //     products.push({
+              //         id: childSnapshot.key,
+              //         ...childSnapshot.val()
+              //     });
+              // });
+              // resolve(products.sort((a, b) => a.id > b.id ? 1 : -1).reverse().slice(1));
+            }
+          } catch (e) {
+            if (didTimeout) return;
+            reject(':( Failed to fetch products.');
           }
-        })
-        .catch ((e) => {
-          if (didTimeout) return;
-          reject(e);
-        });
-    });
+        } else {
+          try {
+            // getting the total count of data through http request
+            // adding shallow parameter for smaller response size
+            // better than making a query from firebase
+            const request = await fetch(`${process.env.FIREBASE_DB_URL}/products.json?shallow=true`);
+            const total = await request.json();
+            const snapshot = await this.database.ref('products').orderByKey().limitToLast(5).once('value');
+            
+            clearTimeout(timeout);
+            if (!didTimeout) {
+              const arrayOfKeys = Object.keys(snapshot.val()).sort().reverse();
+              const products = arrayOfKeys.map(key => ({ id: key, ...snapshot.val()[key] }));
+              const lastKey = arrayOfKeys[arrayOfKeys.length - 1];
+              
+              resolve({ products, lastKey, total: Object.keys(total).length });
+            }
+          } catch (e) {
+            if (didTimeout) return;
+            reject(':( Failed to fetch products.');
+          }
+        }
+      });
   }
     
 

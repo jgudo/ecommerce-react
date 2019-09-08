@@ -1,5 +1,5 @@
 import firebase from '../firebase/firebase';
-import { call, put, cancel } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import {
   LOADING,
@@ -8,7 +8,8 @@ import {
   CANCEL_GET_PRODUCTS,
   ADD_PRODUCT,
   EDIT_PRODUCT,
-  REMOVE_PRODUCT
+  REMOVE_PRODUCT,
+  SET_LAST_REF_KEY
 } from '../constants/constants';
 
 import { 
@@ -37,27 +38,24 @@ function* handleAction(location, message, status) {
   yield call(displayActionMessage, message, status);
 }
 
-function* getProducts() {
-  try {
-    yield initRequest();
-    
-    const products = yield call(firebase.getProducts);
-
-    yield put(getProductsSuccess(products));
-    yield put({ type: LOADING, payload: false });
-  } catch (e) {
-    yield handleError(e);
-  }
-}
-
 function* productSaga({ type, payload }) {
   switch (type) {
     case GET_PRODUCTS:
-      yield getProducts();
-      break;
-    case CANCEL_GET_PRODUCTS:
-      yield cancel(getProducts);
-      console.log('Task cancelled');
+      try {
+        yield initRequest();
+        const state = yield select();
+        const result = yield call(firebase.getProducts, payload);
+    
+        yield put(getProductsSuccess({ 
+          products: result.products, 
+          lastKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
+          total: result.total ? result.total : state.products.total
+        }));
+        // yield put({ type: SET_LAST_REF_KEY, payload: result.lastKey });
+        yield put({ type: LOADING, payload: false });
+      } catch (e) {
+        yield handleError(e);
+      }
       break;
     case ADD_PRODUCT:
       try {

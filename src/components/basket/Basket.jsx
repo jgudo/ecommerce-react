@@ -6,6 +6,7 @@ import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
 
+import { CHECKOUT_STEP_1 } from '../../constants/routes';
 import { clearBasket } from '../../actions/basketActions';
 import { displayMoney } from '../../helpers/utils';
 
@@ -39,7 +40,7 @@ const Basket = (props) => {
   const onCheckOut = () => {
     if ((basket.length !== 0 && isAuth)) {
       document.body.classList.remove('is-basket-open');
-      props.history.push('/checkout/step1');
+      props.history.push(CHECKOUT_STEP_1);
     } else {
       onOpenModal();
     }
@@ -48,7 +49,7 @@ const Basket = (props) => {
   const onSignInClick = () => {
     onCloseModal();
     document.body.classList.remove('basket-open');
-    props.history.push('/checkout/step1');
+    props.history.push(CHECKOUT_STEP_1);
   };
 
   const onClearBasket = () => {
@@ -95,6 +96,7 @@ const Basket = (props) => {
             </BasketToggle>
             <button
                 className="basket-clear button button-border button-border-gray button-small"
+                disabled={basket.length === 0}
                 onClick={onClearBasket}
             >
               <span>Clear Basket</span>

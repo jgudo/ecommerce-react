@@ -100,16 +100,28 @@ const initState = [
   }
 ];
 
-export default (state = [], action) => {
+export default (state = {
+  lastRefKey: '',
+  total: 0,
+  items: []
+}, action) => {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS:
-      return action.payload;
+      return {
+        ...state,
+        lastRefKey: action.payload.lastKey,
+        total: action.payload.total,
+        items: [ ...state.items, ...action.payload.products ]
+      };
     case ADD_PRODUCT_SUCCESS:
-      return [...state, action.payload];
+      return {
+        ...state,
+        items: [...state, action.payload]
+      };
     case REMOVE_PRODUCT_SUCCESS:
-      return state.filter(product => product.id !== action.payload);
+      return state.items.filter(product => product.id !== action.payload);
     case EDIT_PRODUCT_SUCCESS:
-      return state.map((product) => {
+      return state.items.map((product) => {
         if (product.id === action.payload.id) {
           return {
             ...product,

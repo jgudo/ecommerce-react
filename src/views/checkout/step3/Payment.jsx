@@ -51,6 +51,8 @@ const Payment = (props) => {
 
     if (val === '') {
       setError({ ...error, cardnumber: 'Card number is required' });
+    } else if (!(val.length >= 13 && val.length <= 19)) {
+      setError({ ...error, cardnumber: 'Card number invalid' });
     } else {
       setError({ ...error, cardnumber: '' });
     }
@@ -75,6 +77,8 @@ const Payment = (props) => {
 
     if (val === '') {
       setError({ ...error, ccv: 'CCV is required' });
+    } else if (val.length < 3) {
+      setError({ ...error, ccv: 'CCV is invalid' });
     } else {
       setError({ ...error, ccv: '' });
     }
@@ -93,12 +97,12 @@ const Payment = (props) => {
         && Object.keys(error).every(key => error[key] === '');
       
       if (ready) {
-
+        displayActionMessage('Feature not ready yet :)', 'info');
       } else {
         displayActionMessage('All credentials for credit payment required!', 'error');
       }
     } else {
-
+      displayActionMessage('Feature not ready yet :)', 'info');
     }
 
   }
@@ -168,6 +172,7 @@ const Payment = (props) => {
                   )}
                   <input 
                       className={`input-form d-block ${errorClassName('cardnumber')}`}
+                      maxLength={19}
                       onChange={onCardNumberInput}
                       placeholder="Card Number"
                       type="number"
@@ -194,6 +199,7 @@ const Payment = (props) => {
                   )}
                   <input 
                       className={`input-form d-block ${errorClassName('ccv')}`}
+                      maxLength={4}
                       onChange={onCcvInput}
                       placeholder="CCV Number"
                       type="number"

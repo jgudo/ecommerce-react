@@ -2,7 +2,8 @@ import {
   LOADING, 
   IS_AUTHENTICATING, 
   SET_AUTH_STATUS,
-  SET_REQUEST_STATUS 
+  SET_REQUEST_STATUS,
+  SET_LAST_REF_KEY 
 } from '../constants/constants';
 
 const initState = {
@@ -10,6 +11,7 @@ const initState = {
   isAuthenticating: false,
   authStatus: null,
   requestStatus: null,
+  lastRefKey: '',
   theme: 'default'
 };
 
@@ -30,6 +32,11 @@ export default (state = initState, action) => {
         ...state,
         requestStatus: action.payload
       };
+    case SET_LAST_REF_KEY:
+        return {
+          ...state,
+          lastRefKey: action.payload
+        };
     case SET_AUTH_STATUS:
       return {
         ...state,

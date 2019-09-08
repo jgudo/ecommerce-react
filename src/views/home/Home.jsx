@@ -17,14 +17,17 @@ const Home = (props) => {
 
   useEffect(() => {
     onProductsLengthChanged();
+    
   }, [filteredProducts]);
 
-  const { products, filter, basket, isLoading, filteredProducts, requestStatus } = useSelector(state => ({
-    products: state.products,
+  const { products, filter, basket, isLoading, filteredProducts, requestStatus, lastRefKey, totalItems } = useSelector(state => ({
+    products: state.products.items,
     filter: state.filter,
     basket: state.basket,
+    lastRefKey: state.products.lastRefKey,
+    totalItems: state.products.total,
     isLoading: state.app.loading,
-    filteredProducts: selectFilter(state.products, state.filter),
+    filteredProducts: selectFilter(state.products.items, state.filter),
     requestStatus: state.app.requestStatus
   }));
   const dispatch = useDispatch();
@@ -75,6 +78,9 @@ const Home = (props) => {
               filteredProductsLength={filteredProducts.length}
               foundOnBasket={foundOnBasket}
               isLoading={isLoading}
+              lastRefKey={lastRefKey}
+              totalItems={totalItems}
+              lastItem={products[products.length - 1]}
               requestStatus={requestStatus}
           >
             <Modal isOpen={isOpenModal} onRequestClose={onCloseModal}>

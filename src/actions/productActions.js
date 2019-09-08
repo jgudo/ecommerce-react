@@ -10,8 +10,9 @@ import {
   CANCEL_GET_PRODUCTS 
 } from '../constants/constants';
 
-export const getProducts = () => ({
-  type: GET_PRODUCTS
+export const getProducts = lastRef => ({
+  type: GET_PRODUCTS,
+  payload: lastRef
 });
 
 export const getProductsSuccess = products => ({

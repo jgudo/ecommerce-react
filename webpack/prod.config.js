@@ -38,7 +38,7 @@ module.exports = merge(baseConfig, {
       new OptimizeCSSAssetsPlugin({}),
       // in case you got a minified error #307, just remove uglify js
       // problems may occur when using react hooks 
-      new UglifyJsPlugin()
+      // new UglifyJsPlugin()
     ]
   },
   plugins: [
