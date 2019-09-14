@@ -7,7 +7,7 @@ import ProductForm from './ProductForm';
 
 const EditProduct = (props) => {
   const { product, isLoading } = useSelector(state => ({
-    product: state.products.find(product => product.id === props.match.params.id),
+    product: state.products.items.find(product => product.id === props.match.params.id),
     isLoading: state.app.loading
   }));
   const dispatch = useDispatch();

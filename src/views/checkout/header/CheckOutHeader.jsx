@@ -2,7 +2,7 @@ import React from 'react';
 
 const CheckOutHeader = ({ current }) => {
   const className = (step) => {
-    return current === step ? `is-active-step` : step < current ? `is-done-step` : null;
+    return current === step ? `is-active-step` : step < current ? `is-done-step` : '';
   };
 
   return (

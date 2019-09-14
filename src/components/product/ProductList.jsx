@@ -25,10 +25,9 @@ const ProductList = ({
   }, []);
 
   useEffect(() => {
-    console.log(lastScrollPos);
     debounce(() => window.scrollTo(0, lastScrollPos), 100)();
     setFetching(false);
-  }, [filteredProductsLength]);
+  }, [lastRefKey]);
 
   useEffect(() => {
     window.addEventListener('scroll', watchForScroll);
@@ -53,12 +52,12 @@ const ProductList = ({
 
   return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
     <div className="loader">
-      <h4>There are no items found</h4>
+      <h3 className="text-center">There are no items found</h3>
       <span>Try using correct filters and keyword</span>
     </div>
   ) : requestStatus ? (
     <div className="loader">
-      <h4>{requestStatus}</h4>
+      <h3 className="text-center">{requestStatus}</h3>
       <br/>
       <button 
           className="button button-small"

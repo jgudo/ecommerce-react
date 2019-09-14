@@ -97,7 +97,7 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: 0,
+          mobile: '',
           dateJoined: ref.user.metadata.creationTime || new Date().getTime()
         };
 
@@ -150,7 +150,7 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: 0,
+          mobile: '',
           dateJoined: payload.metadata.creationTime
         };
         yield call(firebase.addUser, payload.uid, user);

@@ -77,9 +77,10 @@ module.exports = merge(baseConfig, {
     // new webpack.optimize.ModuleConcatenationPlugin(),
     // generate service worker
     new workboxPlugin.GenerateSW({
-      cacheId: 'boilerplate', // change this
+      cacheId: 'salinaka-ecommerce', // change this
       swDest: 'sw.js',
       navigateFallback: '/index.html',
+      navigateFallbackWhitelist: [ /^\/[^\_]+\/?/ ],
       clientsClaim: true,
       skipWaiting: true
     })

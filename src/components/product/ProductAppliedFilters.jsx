@@ -1,15 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { applyFilter, resetFilter } from '../../actions/filterActions';
+import { applyFilter } from '../../actions/filterActions';
 
 const ProductAppliedFilters = ({ filter }) => {
   const dispatch = useDispatch();
   const fields = ['brand', 'minPrice', 'maxPrice', 'sortBy', 'keyword'];
-
-  const onResetFilter = () => {
-    dispatch(resetFilter());
-  };
 
   const onRemoveKeywordFilter = () => {
     dispatch(applyFilter({ keyword: '' }));
@@ -35,7 +31,7 @@ const ProductAppliedFilters = ({ filter }) => {
           <div className="pill padding-right-l">
             <h5 className="margin-0">{filter.keyword}</h5>
             <div className="pill-remove" onClick={onRemoveKeywordFilter}>
-              <h5 className="margin-0">x</h5>
+              <h5 className="margin-0 text-subtle">x</h5>
             </div>
           </div>
         </div>
@@ -46,7 +42,7 @@ const ProductAppliedFilters = ({ filter }) => {
           <div className="pill padding-right-l">
             <h5 className="margin-0">{filter.brand}</h5>
             <div className="pill-remove"onClick={onRemoveBrandFilter}>
-              <h5 className="margin-0">x</h5>
+              <h5 className="margin-0 text-subtle">x</h5>
             </div>
           </div>
         </div>
@@ -57,7 +53,7 @@ const ProductAppliedFilters = ({ filter }) => {
           <div className="pill padding-right-l">
             <h5 className="margin-0">${filter.minPrice} - ${filter.maxPrice}</h5>
             <div className="pill-remove" onClick={onRemovePriceRangeFilter}>
-              <h5 className="margin-0">x</h5>
+              <h5 className="margin-0 text-subtle">x</h5>
             </div>
           </div>
         </div>
@@ -77,7 +73,7 @@ const ProductAppliedFilters = ({ filter }) => {
               }
             </h5>
             <div className="pill-remove" onClick={onRemoveSortFilter}>
-              <h5 className="margin-0">x</h5>
+              <h5 className="margin-0 text-subtle">x</h5>
             </div>
           </div>
         </div>

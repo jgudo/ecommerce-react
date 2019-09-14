@@ -6,8 +6,7 @@ import { selectMax, selectMin } from '../../selectors/selector';
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
-  const { products, filter, isLoading, dispatch } = props;
-  const productsLength = products.length;
+  const { productsLength, products, filter, isLoading, dispatch } = props;
   const max = selectMax(products);
   const min = selectMin(products);
   const [isMounted, setMounted] = useState(false);

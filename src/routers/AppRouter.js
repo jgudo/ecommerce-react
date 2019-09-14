@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
@@ -29,21 +29,19 @@ import CheckOutStep2 from '../views/checkout/step2/ShippingDetails';
 import CheckOutStep3 from '../views/checkout/step3/Payment';
 import PageNotFound from '../views/404/PageNotFound';
 import ScrollToTop from '../components/ui/ScrollToTop';
-import Preloader from '../components/ui/Preloader';
 
 export const history = createBrowserHistory();
 
 const AppRouter = () => (
   <Router history={history}>
-    <Suspense fallback={<Preloader />}>
-      <Switch>
+    <Switch>
         <Route 
-            component={ProductSearch} 
+            component={ScrollToTop(ProductSearch)} 
             exact
             path={ROUTES.SEARCH} 
         />
         <PublicRoute 
-            component={ScrollToTop(Home)} 
+            component={Home} 
             exact
             path={ROUTES.HOME} 
         />
@@ -103,8 +101,7 @@ const AppRouter = () => (
             path={ROUTES.EDIT_PRODUCT} 
         /> */}
         <PublicRoute component={ScrollToTop(PageNotFound)} />
-      </Switch>
-    </Suspense>
+    </Switch>
   </Router>
 );
 

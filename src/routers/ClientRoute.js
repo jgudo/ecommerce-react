@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Basket from '../components/basket/basket';
-// ui
 import Navigation from '../components/ui/Navigation';
 import Footer from '../components/ui/Footer';
 

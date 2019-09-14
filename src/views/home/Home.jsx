@@ -15,73 +15,67 @@ const Home = (props) => {
   const [productSelected, setProductSelected] = useState(null);
   const [columnCount, setColumnCount] = useState(6);
 
+  const { store } = useSelector(state => ({
+    store: {
+      productsLength: state.products.items.length,
+      products: state.products.items,
+      filter: state.filter,
+      basket: state.basket,
+      lastRefKey: state.products.lastRefKey,
+      totalItems: state.products.total,
+      isLoading: state.app.loading,
+      filteredProducts: selectFilter(state.products.items, state.filter),
+      requestStatus: state.app.requestStatus
+    }
+  }));
+
   useEffect(() => {
     onProductsLengthChanged();
-    
-  }, [filteredProducts]);
+  }, [store.filteredProducts]);
 
-  const { products, filter, basket, isLoading, filteredProducts, requestStatus, lastRefKey, totalItems } = useSelector(state => ({
-    products: state.products.items,
-    filter: state.filter,
-    basket: state.basket,
-    lastRefKey: state.products.lastRefKey,
-    totalItems: state.products.total,
-    isLoading: state.app.loading,
-    filteredProducts: selectFilter(state.products.items, state.filter),
-    requestStatus: state.app.requestStatus
-  }));
   const dispatch = useDispatch();
   const productListWrapper = useRef(null);
 
-  const onClickProduct = (product) => {
-    setProductSelected(product);
-  };
-
   const onProductsLengthChanged = () => {
-    const width = window.screen.width - 120; // minus 120px padding
+    const width = window.screen.width - 250; // minus 250px padding
 
     setColumnCount(Math.floor(width / 160));
-    if ((columnCount >= filteredProducts.length) && filteredProducts.length !== 0) {
-      setColumnCount(filteredProducts.length);
+    if ((columnCount >= store.filteredProducts.length) && store.filteredProducts.length !== 0) {
+      setColumnCount(store.filteredProducts.length);
     }
   };
 
-  const foundOnBasket = (id) => !!basket.find(item => item.id === id); 
-
-  const onOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const onCloseModal = () => {
-    setModalOpen(false);
-  };
- 
+  const onClickProduct = product => setProductSelected(product);
+  const foundOnBasket = id => !!store.basket.find(item => item.id === id); 
+  const onOpenModal = () => setModalOpen(true);
+  const onCloseModal = () => setModalOpen(false);
+  
   return (
     <>
       <section className="product-list-wrapper">
-        {(!requestStatus && !isLoading) &&(
+        {!store.requestStatus && (
           <div className="product-list-header">
             <Header 
                 dispatch={dispatch}
-                products={products}
-                filter={filter}
-                filteredProducts={filteredProducts}
-                isLoading={isLoading}
+                products={store.products}
+                productsLength={store.productsLength}
+                filteredProductsLength={store.filteredProducts.length}
+                filter={store.filter}
+                isLoading={store.isLoading}
             />
           </div>
         )}
-        <ProductAppliedFilters filter={filter}/>
+        <ProductAppliedFilters filter={store.filter}/>
         <Boundary>
           <ProductList
               dispatch={dispatch}
-              productsLength={products.length}
-              filteredProductsLength={filteredProducts.length}
+              productsLength={store.productsLength}
+              filteredProductsLength={store.filteredProducts.length}
               foundOnBasket={foundOnBasket}
-              isLoading={isLoading}
-              lastRefKey={lastRefKey}
-              totalItems={totalItems}
-              lastItem={products[products.length - 1]}
-              requestStatus={requestStatus}
+              isLoading={store.isLoading}
+              lastRefKey={store.lastRefKey}
+              totalItems={store.totalItems}
+              requestStatus={store.requestStatus}
           >
             <Modal isOpen={isOpenModal} onRequestClose={onCloseModal}>
               <ProductModalDetails 
@@ -101,13 +95,13 @@ const Home = (props) => {
                 ref={productListWrapper}
                 style={{ gridTemplateColumns: `repeat(${columnCount}, 160px)` }}
             >
-              {filteredProducts.length === 0 ? new Array(14).fill({}).map((product, index) => (
+              {store.filteredProducts.length === 0 ? new Array(14).fill({}).map((product, index) => (
                 <ProductItem
                     foundOnBasket={foundOnBasket}
                     key={`product-skeleton ${index}`}
                     product={product}
                 />
-              )) : filteredProducts.map(product => (
+              )) : store.filteredProducts.map(product => (
                 <ProductItem
                     foundOnBasket={foundOnBasket}
                     dispatch={dispatch}

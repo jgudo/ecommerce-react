@@ -9,12 +9,11 @@ import ProductItem from './ProductItem';
 import ProductAppliedFilters from '../../../components/product/ProductAppliedFilters';
 
 const Products = (props) => {
-  const { products, filter, isLoading, filteredProducts, requestStatus } = useSelector(state => ({
-    products: state.products.items,
+  const { productsLength, filter, isLoading, filteredProducts, requestStatus } = useSelector(state => ({
+    productsLength: state.products.items.length,
     filter: state.filter,
-    basket: state.basket,
     isLoading: state.app.loading,
-    filteredProducts: selectFilter(state.products, state.filter),
+    filteredProducts: selectFilter(state.products.items, state.filter),
     requestStatus: state.app.requestStatus
   }));
   const dispatch = useDispatch();
@@ -29,7 +28,7 @@ const Products = (props) => {
         <h2 className="product-admin-header-title">Products</h2>
         <Header 
             dispatch={dispatch}
-            products={products}
+            productsLength={productsLength}
             filter={filter}
             filteredProducts={filteredProducts}
             isLoading={isLoading}
@@ -46,7 +45,7 @@ const Products = (props) => {
           dispatch={dispatch}
           filteredProducts={filteredProducts}
           isLoading={isLoading}
-          productsLength={products.length}
+          productsLength={productsLength}
           requestStatus={requestStatus}
       >
         <ProductAppliedFilters filter={filter}/>

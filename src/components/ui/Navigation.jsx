@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter, NavLink, Link} from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
@@ -9,6 +9,12 @@ import MobileNavigation from './mobile/MobileNavigation';
 import * as ROUTE from '../../constants/routes';
 
 const Navigation = ({ path }) => {
+  useEffect(() => {
+    window.addEventListener('scroll', scrollHandler);
+
+    return () => window.removeEventListener('scroll', scrollHandler);
+  }, []);
+  
   const { basketLength, profile, isAuth, isAuthenticating } = useSelector(state => ({
     basketLength: state.basket.length,
     profile: state.profile,
@@ -21,7 +27,7 @@ const Navigation = ({ path }) => {
     return getComputedStyle(document.documentElement).getPropertyValue(property);
   };
 
-  document.addEventListener('scroll', () => {
+  const scrollHandler = () => {
     if (navbar.current && window.screen.width > 480) {
       if (window.pageYOffset >= 70) {
         Object.assign(navbar.current.style, {
@@ -41,7 +47,7 @@ const Navigation = ({ path }) => {
         });
       }
     }
-  });
+  };
 
   // disable the basket toggle to these paths
   const basketDisabledPaths = [

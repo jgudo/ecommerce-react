@@ -10,9 +10,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
   useEffect(() => {
     document.addEventListener('click', toggleDropdown);
 
-    return () => {
-      document.removeEventListener('click', toggleDropdown);
-    };
+    return () => document.removeEventListener('click', toggleDropdown);
   }, []);
   const userNav = useRef(null);
 
@@ -27,9 +25,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
       if (!closest && userNav.current.classList.contains('user-sub-open')) {
         userNav.current.classList.remove('user-sub-open');
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   

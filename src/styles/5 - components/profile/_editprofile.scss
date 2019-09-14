@@ -20,7 +20,7 @@
   width: 40%;
 }
 
-.edit-button-wrapper {
+.edit-wrapper {
   position: absolute;
   left: 0;
   right: 0;
@@ -75,13 +75,13 @@
   }
 }
 
-.user-profile-img-wrapper:hover .edit-button-wrapper {
+.user-profile-banner-wrapper:hover > .edit-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.user-profile-banner-wrapper:hover .edit-button-wrapper {
+.user-profile-avatar-wrapper:hover > .edit-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -10,6 +10,7 @@ html {
 }
 
 body {
+  min-height: 100vh;
   font-family: 'Tajawal', Helvetica, Arial, sans-serif;
   font-size: $baseFontSize;
   background: $background-color;
@@ -91,11 +92,11 @@ h6 {
   padding-top: $xxl-size;
   overflow: hidden;
   display: flex;
-  animation: fadeIn .5s ease;
 }
 
 .content-admin-wrapper {
   overflow-y: scroll;
   flex-grow: 1;
   padding: $m-size $l-size;
+  animation: fadeIn .5s ease;
 }

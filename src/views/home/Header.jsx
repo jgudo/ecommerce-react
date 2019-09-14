@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Filters from '../../components/ui/Filters';
 
 import { 
@@ -11,10 +10,11 @@ import {
 
 const Header = ({ 
   dispatch, 
-  products, 
   filter, 
   isLoading, 
-  filteredProducts,
+  products,
+  productsLength, 
+  filteredProductsLength,
   history 
 }) => {
   const [searchInput, setSearchInput] = useState(filter.keyword);
@@ -34,7 +34,6 @@ const Header = ({
 
   const isFiltered = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!filter[key]);
   const isMobile = window.screen.width <= 480 ? true : false;
-  const productsCount = filteredProducts.length;
 
   const onSearchChange = (e) => {
     const val = e.target.value.trimStart();
@@ -42,7 +41,7 @@ const Header = ({
   };
 
   const onKeyUp = (e) => {
-    if (e.keyCode === 13 && products.length !== 0) {
+    if (e.keyCode === 13 && productsLength !== 0) {
       dispatch(setTextFilter(searchInput));
       e.target.blur();
       searchbarRef.current.classList.remove('is-open-recent-search');
@@ -94,13 +93,13 @@ const Header = ({
   };
 
   return (
-    <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
+    <>
       <div className="product-list-header-title">
         {isFiltered ? (
           <h3>
-            {productsCount === 0 
+            {filteredProductsLength === 0 
               ? `No product found` 
-              : `Found ${productsCount} ${productsCount > 1 ? 'products' : 'product'}`
+              : `Found ${filteredProductsLength} ${filteredProductsLength > 1 ? 'products' : 'product'}`
             }
           </h3>
         ) : <h3>Eyewear</h3>}
@@ -116,7 +115,6 @@ const Header = ({
         )}
         &nbsp;
         <div className="filters-toggle">
-          {isLoading ? <Skeleton width={70} height={50}/> : (
             <button
                 className="button button-small button-border button-border-gray"
                 disabled={isLoading}
@@ -125,11 +123,11 @@ const Header = ({
               Filters
               <div className="filters-toggle-caret icon-caret" />
             </button>
-          )}
           <div className="filters-toggle-sub">
             <Filters 
                 dispatch={dispatch}
                 products={products}
+                productsLength={productsLength}
                 filter={filter}
                 isLoading={isLoading}
             />
@@ -142,7 +140,7 @@ const Header = ({
               onChange={onSearchChange}
               onKeyUp={onKeyUp}
               onFocus={onFocusInput}
-              placeholder="Search for product"
+              placeholder="Filter products by keyword"
               readOnly={isLoading}
               type="text" 
               value={searchInput}
@@ -182,7 +180,7 @@ const Header = ({
           <div className="searchbar-icon" style={{ opacity: isLoading ? .5 : 1 }}/>
         </div>
       </div>
-    </SkeletonTheme>
+    </>
   );
 };
 

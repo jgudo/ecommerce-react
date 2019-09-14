@@ -8,7 +8,7 @@ import Filters from '../ui/Filters';
 const ProductSearch = (props) => {
   const { productsLength, filter, products, isLoading} = useSelector(state => ({
     filter: state.filter,
-    products: state.products,
+    products: state.products.items,
     isLoading: state.app.loading,
     productsLength: state.products.length
   }));

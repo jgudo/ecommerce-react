@@ -1,5 +1,5 @@
 import React, { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import firebase from './firebase/firebase';
@@ -18,14 +18,6 @@ WebFont.load({
   }
 });
 
-if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then((registration) => {
-    console.log('SW registered: ', registration);
-  }).catch((registrationError) => {
-    console.log('SW registration failed: ', registrationError);
-  });
-}
-
 const { store, persistor } = configureStore();
 const AppRoot = () => (
   <StrictMode>
@@ -37,16 +29,32 @@ const AppRoot = () => (
   </StrictMode>  
 );
 
-// Render the preloader on initial load
-ReactDOM.render(<Preloader />, document.getElementById('app'));
+if (window.navigator.onLine) {
+  // Render the preloader on initial load
+  render(<Preloader />, document.getElementById('app'));
 
-firebase.auth.onAuthStateChanged((user) => {
-  if (user) {
-    store.dispatch(onAuthStateSuccess(user));
-  } else {
-    store.dispatch(onAuthStateFail('Failed to authenticate'));
-  }
+  firebase.auth.onAuthStateChanged((user) => {
+    if (user) {
+      store.dispatch(onAuthStateSuccess(user));
+    } else {
+      store.dispatch(onAuthStateFail('Failed to authenticate'));
+    }
 
-  // then render the app after checking the auth state
-  ReactDOM.render(<AppRoot/>, document.getElementById('app'));
-});
+    // then render the app after checking the auth state
+    render(<AppRoot/>, document.getElementById('app'));
+  });
+} else {
+  render((
+    <div className="loader">
+      <h2>:( No internet connection.</h2>
+    </div>
+  ), document.getElementById('app'));
+}
+
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then((registration) => {
+    console.log('SW registered: ', registration);
+  }).catch((registrationError) => {
+    console.log('SW registration failed: ', registrationError);
+  });
+}

@@ -171,7 +171,7 @@ const EditProfile = (props) => {
                 <CircularProgress visible={true} theme="light" />
               </div>
             ) : (
-              <div className="edit-button-wrapper">
+              <div className="edit-wrapper">
                   <label 
                       className="edit-button edit-banner-button"
                       htmlFor="edit-banner"
@@ -181,7 +181,7 @@ const EditProfile = (props) => {
               </div>
             )}
           </div>
-          <div className="user-profile-img-wrapper">
+          <div className="user-profile-avatar-wrapper">
             <ImageLoader 
                 alt="Avatar"
                 className="user-profile-img"
@@ -200,7 +200,7 @@ const EditProfile = (props) => {
                 <CircularProgress visible={true} theme="light" />
               </div>
             ) : (
-              <div className="edit-button-wrapper">
+              <div className="edit-wrapper">
                   <label 
                       className="edit-button edit-avatar-button"
                       htmlFor="edit-avatar"
@@ -286,7 +286,7 @@ const EditProfile = (props) => {
         <div className="text-center padding-l">
           <h4>Confirm Update</h4>
           <p>
-            To continue updating profile including your 
+            To continue updating profile including your &nbsp;
             <strong>email</strong>,
             <br/> 
             please confirm by entering your password

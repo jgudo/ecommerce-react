@@ -66,14 +66,14 @@ const Basket = (props) => {
               className="button button-border button-border-gray button-small"
               onClick={onCloseModal}
           >
-            Got It
+            Continue shopping
           </button>
           &nbsp;
           <button 
               className="button button-small"
               onClick={onSignInClick}
           >
-            Sign In
+            Sign in to checkout 
           </button>
         </div>
       </Modal>

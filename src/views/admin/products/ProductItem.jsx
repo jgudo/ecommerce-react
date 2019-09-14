@@ -6,12 +6,11 @@ import { removeProduct } from '../../../actions/productActions';
 import ImageLoader from '../../../components/ui/ImageLoader';
 import { displayMoney, displayDate, displayActionMessage } from '../../../helpers/utils';
 
-const ProductItem = (props) => {
-  const { product, dispatch } = props;
+const ProductItem = ({ product, dispatch, history }) => {
   const productRef = useRef(null);
 
   const onClickEdit = () => {
-    props.history.push(`/dashboard/edit/${product.id}`);
+    history.push(`/dashboard/edit/${product.id}`);
   };
 
   const onDeleteProduct = () => {
