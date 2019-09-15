@@ -10,10 +10,10 @@ Simple ecommerce react js app with firebase.
 $ npm install 
 ```
 ### Create a new firebase project
-Login into your google account and create a new firebase project. [here](https://console.firebase.google.com/u/0/)
+Login into your google account and create a new firebase project [here](https://console.firebase.google.com/u/0/)
 
 Create a `.env` file for production and `.env.test`for development in the root of your project folder
-and add the following config on found on your firebase project.
+and add the following configuration details. It can be found on your firebase project.
 
 ```
 FIREBASE_API_KEY=
