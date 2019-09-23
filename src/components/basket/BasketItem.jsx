@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import BasketItemControl from './BasketItemControl';
 import Badge from '../ui/Badge';
 import ImageLoader from '../ui/ImageLoader';
-import { removeFromBasket } from '../../actions/basketActions';
-import { displayMoney } from '../../helpers/utils';
+import { removeFromBasket } from 'actions/basketActions';
+import { displayMoney } from 'helpers/utils';
 
 const BasketItem = ({ basket, dispatch, product }) => {
   const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));

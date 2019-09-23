@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addQtyItem, minusQtyItem } from '../../actions/basketActions';
+import { addQtyItem, minusQtyItem } from 'actions/basketActions';
 
 const BasketItemControl = ({ product, dispatch }) => {
   const onAddQty = () => {

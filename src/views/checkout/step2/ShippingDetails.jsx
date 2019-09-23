@@ -3,8 +3,8 @@ import withAuth from '../hoc/withAuth';
 import ReactPhoneInput from 'react-phone-input-2';
 import CheckOutHeader from '../header/CheckOutHeader';
 
-import { displayMoney } from '../../../helpers/utils';
-import { setShippingDetails } from '../../../actions/checkoutActions';
+import { displayMoney } from 'helpers/utils';
+import { setShippingDetails } from 'actions/checkoutActions';
 
 const ShippingDetails = (props) => {
   const { profile, dispatch, shipping, subtotal } = props;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { displayMoney } from '../../helpers/utils';
+import { displayMoney } from 'helpers/utils';
 
 const PriceRange = ({ 
   min, 

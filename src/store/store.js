@@ -7,16 +7,16 @@ import {
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import createSagaMiddleware from 'redux-saga';
-import productReducer from '../reducers/productReducer';
-import basketReducer from '../reducers/basketReducer';
-import authReducer from '../reducers/authReducer';
-import profileReducer from '../reducers/profileReducer';
-import filterReducer from '../reducers/filterReducer';
-import checkoutReducer from '../reducers/checkoutReducer';
-import userReducer from '../reducers/userReducer';
-import appReducer from '../reducers/appReducer';
+import productReducer from 'reducers/productReducer';
+import basketReducer from 'reducers/basketReducer';
+import authReducer from 'reducers/authReducer';
+import profileReducer from 'reducers/profileReducer';
+import filterReducer from 'reducers/filterReducer';
+import checkoutReducer from 'reducers/checkoutReducer';
+import userReducer from 'reducers/userReducer';
+import appReducer from 'reducers/appReducer';
 
-import rootSaga from '../sagas/rootSaga';
+import rootSaga from 'sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

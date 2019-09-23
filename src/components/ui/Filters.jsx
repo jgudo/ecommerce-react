@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { resetFilter, applyFilter } from '../../actions/filterActions';
-import { selectMax, selectMin } from '../../selectors/selector';
+import { resetFilter, applyFilter } from 'actions/filterActions';
+import { selectMax, selectMin } from 'selectors/selector';
 
 import PriceRange from './PriceRange';
 

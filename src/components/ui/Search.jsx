@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { setTextFilter } from '../../actions/filterActions';
+import { setTextFilter } from 'actions/filterActions';
 
 const Search = (props) => {
   const { dispatch, productsLength, isLoading, searchFilter } = props;

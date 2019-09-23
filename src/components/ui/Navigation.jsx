@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { withRouter, NavLink, Link} from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import UserAvatar from '../../views/account/UserAvatar';
+import UserAvatar from 'views/account/UserAvatar';
 import MobileNavigation from './mobile/MobileNavigation';
 
-import * as ROUTE from '../../constants/routes';
+import * as ROUTE from 'constants/routes';
 
 const Navigation = ({ path }) => {
   useEffect(() => {

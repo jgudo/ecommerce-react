@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CircularProgress from '../../../components/ui/CircularProgress';
-import ImageLoader from '../../../components/ui/ImageLoader';
+import CircularProgress from 'components/ui/CircularProgress';
+import ImageLoader from 'components/ui/ImageLoader';
 // import uuid from 'uuid';
 
 class ProductForm extends Component {

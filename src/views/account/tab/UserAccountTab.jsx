@@ -1,9 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { displayDate } from '../../../helpers/utils';
-import { ACCOUNT_EDIT } from '../../../constants/routes';
-import ImageLoader from '../../../components/ui/ImageLoader';
+
+import { displayDate } from 'helpers/utils';
+import { ACCOUNT_EDIT } from 'constants/routes';
+import ImageLoader from 'components/ui/ImageLoader';
 
 const UserProfile = (props) => {
   const profile = useSelector(state => state.profile);

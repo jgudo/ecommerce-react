@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ProductForm from './ProductForm';
-import { addProduct } from '../../../actions/productActions';
+import { addProduct } from 'actions/productActions';
 
 const AddProduct = () => {
   const isLoading = useSelector(state => state.app.loading);

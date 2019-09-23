@@ -1,5 +1,5 @@
 import { takeLatest, takeEvery } from 'redux-saga/effects';
-import * as ACTION from '../constants/constants';
+import * as ACTION from 'constants/constants';
 import authSaga from './authSaga';
 import productSaga from './productSaga';
 import profileSaga from './profileSaga';

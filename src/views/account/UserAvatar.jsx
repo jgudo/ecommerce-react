@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom'; 
-import SignOut from '../../components/auth/SignOut';
-import CircularProgress from '../../components/ui/CircularProgress';
 
-import { ACCOUNT } from '../../constants/routes';
+import SignOut from 'components/auth/SignOut';
+import CircularProgress from 'components/ui/CircularProgress';
+import { ACCOUNT } from 'constants/routes';
 
 const UserNav = ({ profile, isAuthenticating }) => {
   useEffect(() => {

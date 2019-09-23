@@ -1,16 +1,16 @@
-import { SET_PROFILE, UPDATE_PROFILE_SUCCESS, CLEAR_PROFILE } from '../constants/constants';
-import profile from '../../static/profile.jpg';
-import banner from '../../static/banner.jpg';
+import { SET_PROFILE, UPDATE_PROFILE_SUCCESS, CLEAR_PROFILE } from 'constants/constants';
+// import profile from 'static/profile.jpg';
+// import banner from 'static/banner.jpg';
 
-const initState = {
-  fullname: 'Pedro Juan',
-  email: 'juanpedro@gmail.com',
-  address: '',
-  mobile: '09264546942',
-  avatar: profile,
-  banner,
-  dateJoined: 1954234787348
-};
+// const initState = {
+//   fullname: 'Pedro Juan',
+//   email: 'juanpedro@gmail.com',
+//   address: '',
+//   mobile: '09264546942',
+//   avatar: profile,
+//   banner,
+//   dateJoined: 1954234787348
+// };
 
 export default (state = {}, action) => {
   switch (action.type) {

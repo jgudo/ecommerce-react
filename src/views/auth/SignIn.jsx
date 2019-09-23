@@ -7,8 +7,8 @@ import {
   signInWithFacebook, 
   setAuthStatus, 
   isAuthenticating as authenticating
-} from '../../actions/authActions';
-import CircularProgress from '../../components/ui/CircularProgress';
+} from 'actions/authActions';
+import CircularProgress from 'components/ui/CircularProgress';
 
 const SignIn = (props) => {
   const [email, setEmail] = useState('');

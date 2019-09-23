@@ -1,4 +1,4 @@
-import { SET_CHECKOUT_SHIPPING_DETAILS, RESET_CHECKOUT_SHIPPING_DETAILS } from '../constants/constants';
+import { SET_CHECKOUT_SHIPPING_DETAILS, RESET_CHECKOUT_SHIPPING_DETAILS } from 'constants/constants';
 
 export default (state = {
   shipping: {}

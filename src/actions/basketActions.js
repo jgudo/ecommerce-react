@@ -4,7 +4,7 @@ import {
   CLEAR_BASKET,
   ADD_QTY_ITEM,
   MINUS_QTY_ITEM 
-} from '../constants/constants';
+} from 'constants/constants';
 
 export const addToBasket = product => ({
   type: ADD_TO_BASKET,

@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-import { SIGNIN, SIGNUP } from '../constants/routes';
+import { SIGNIN, SIGNUP } from 'constants/routes';
 
-import Basket from '../components/basket/basket';
-import Navigation from '../components/ui/Navigation';
-import Footer from '../components/ui/Footer';
+import Basket from 'components/basket/basket';
+import Navigation from 'components/ui/Navigation';
+import Footer from 'components/ui/Footer';
 
 const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) => (
   <Route 

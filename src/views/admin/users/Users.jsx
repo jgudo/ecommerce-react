@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteUser } from '../../../actions/userActions';
+import { deleteUser } from 'actions/userActions';
 import UserItem from './UserItem';
 
 const Users = (props) => {

@@ -1,9 +1,8 @@
 import React from 'react';
-import BasketItem from '../../../components/basket/BasketItem';
+import BasketItem from 'components/basket/BasketItem';
 import CheckOutHeader from '../header/CheckOutHeader';
 import withAuth from '../hoc/withAuth';
-import { removeFromBasket, clearBasket, addQtyItem, minusQtyItem } from '../../../actions/basketActions';
-import { displayMoney } from '../../../helpers/utils';
+import { displayMoney } from 'helpers/utils';
 
 const OrderSummary = ({ basket, subtotal, dispatch, history }) => {
   const onContinue = () => {

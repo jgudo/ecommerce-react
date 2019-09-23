@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'; 
-import { signUp, setAuthStatus, isAuthenticating as authenticating } from '../../actions/authActions';
+import { signUp, setAuthStatus, isAuthenticating as authenticating } from 'actions/authActions';
 
-import CircularProgress from '../../components/ui/CircularProgress';
+import CircularProgress from 'components/ui/CircularProgress';
 
 const SignUp = (props) => {
   const [error, setError] = useState({});

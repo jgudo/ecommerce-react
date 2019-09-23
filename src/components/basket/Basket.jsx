@@ -6,9 +6,9 @@ import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
 
-import { CHECKOUT_STEP_1 } from '../../constants/routes';
-import { clearBasket } from '../../actions/basketActions';
-import { displayMoney } from '../../helpers/utils';
+import { CHECKOUT_STEP_1 } from 'constants/routes';
+import { clearBasket } from 'actions/basketActions';
+import { displayMoney } from 'helpers/utils';
 
 const Basket = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as ROUTE from '../../constants/routes';
+import * as ROUTE from 'constants/routes';
 
 const Footer = ({ path }) => {
   const hiddenPaths = [

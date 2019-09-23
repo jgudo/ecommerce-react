@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactPhoneInput from 'react-phone-input-2';
-import Modal from '../../components/ui/Modal';
-import Boundary from '../../components/ui/Boundary';
-import CircularProgress from '../../components/ui/CircularProgress';
-import ImageLoader from '../../components/ui/ImageLoader';
 
-import { displayActionMessage } from '../../helpers/utils';
-import { isLoading as dispatchIsLoading } from '../../actions/appActions';
-import { updateProfile } from '../../actions/profileActions';
-import { ACCOUNT } from '../../constants/routes';
+import Modal from 'components/ui/Modal';
+import Boundary from 'components/ui/Boundary';
+import CircularProgress from 'components/ui/CircularProgress';
+import ImageLoader from 'components/ui/ImageLoader';
+
+import { displayActionMessage } from 'helpers/utils';
+import { isLoading as dispatchIsLoading } from 'actions/appActions';
+import { updateProfile } from 'actions/profileActions';
+import { ACCOUNT } from 'constants/routes';
 
 const EditProfile = (props) => {
   useEffect(() => {

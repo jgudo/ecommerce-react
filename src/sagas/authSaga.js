@@ -1,6 +1,7 @@
-import firebase from '../firebase/firebase';
 import { call, put } from 'redux-saga/effects';
-import { history } from '../routers/AppRouter';
+
+import firebase from 'firebase/firebase';
+import { history } from 'routers/AppRouter';
 
 import {
   SIGNIN,
@@ -12,22 +13,22 @@ import {
   SIGNOUT,
   ON_AUTHSTATE_SUCCESS,
   SET_AUTH_PERSISTENCE
-} from '../constants/constants';
+} from 'constants/constants';
 
 import { 
   setAuthStatus, 
   signInSuccess, 
   signOutSuccess,
   isAuthenticating 
-} from '../actions/authActions';
+} from 'actions/authActions';
 
-import { clearBasket } from '../actions/basketActions';
-import { setProfile, clearProfile } from '../actions/profileActions';
-import { resetFilter } from '../actions/filterActions';
-import { resetShippingDetails } from '../actions/checkoutActions';
+import { clearBasket } from 'actions/basketActions';
+import { setProfile, clearProfile } from 'actions/profileActions';
+import { resetFilter } from 'actions/filterActions';
+import { resetShippingDetails } from 'actions/checkoutActions';
 
-import defaultAvatar from '../images/defaultAvatar.jpg';
-import defaultBanner from '../images/defaultBanner.jpg';
+import defaultAvatar from 'images/defaultAvatar.jpg';
+import defaultBanner from 'images/defaultBanner.jpg';
 
 function* handleError(e) {
   yield put(isAuthenticating(false));

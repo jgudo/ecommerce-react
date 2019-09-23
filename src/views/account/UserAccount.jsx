@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import UserTab from './tab/UserTab';
-import CircularProgress from '../../components/ui/CircularProgress'
 
+import CircularProgress from 'components/ui/CircularProgress'
 const UserAccountTab = lazy(() => import('./tab/UserAccountTab'));
 const UserWishListTab = lazy(() => import('./tab/UserWishListTab'));
 const UserOrdersTab = lazy(() => import('./tab/UserOrdersTab'));

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { removeFromBasket, addToBasket } from '../../actions/basketActions';
-import { displayMoney, displayActionMessage } from '../../helpers/utils';
+import { removeFromBasket, addToBasket } from 'actions/basketActions';
+import { displayMoney, displayActionMessage } from 'helpers/utils';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import ImageLoader from '../ui/ImageLoader';
 

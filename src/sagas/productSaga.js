@@ -1,5 +1,5 @@
-import firebase from '../firebase/firebase';
 import { call, put, select } from 'redux-saga/effects';
+import firebase from 'firebase/firebase';
 
 import {
   LOADING,
@@ -10,17 +10,17 @@ import {
   EDIT_PRODUCT,
   REMOVE_PRODUCT,
   SET_LAST_REF_KEY
-} from '../constants/constants';
+} from 'constants/constants';
 
 import { 
   getProductsSuccess, 
   addProductSuccess, 
   editProductSuccess,
   removeProductSuccess 
-} from '../actions/productActions';
+} from 'actions/productActions';
 
-import { displayActionMessage } from '../helpers/utils';
-import { history } from '../routers/AppRouter';
+import { displayActionMessage } from 'helpers/utils';
+import { history } from 'routers/AppRouter';
 
 function* initRequest() {
   yield put({ type: LOADING, payload: true });

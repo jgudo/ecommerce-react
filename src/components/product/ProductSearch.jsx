@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearRecentSearch, removeSelectedRecent, setTextFilter } from '../../actions/filterActions';
+import { clearRecentSearch, removeSelectedRecent, setTextFilter } from 'actions/filterActions';
 
 import Filters from '../ui/Filters';
 

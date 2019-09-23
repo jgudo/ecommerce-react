@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { resetPassword, setAuthStatus, isAuthenticating as authenticating } from '../../actions/authActions';
+import { resetPassword, setAuthStatus, isAuthenticating as authenticating } from 'actions/authActions';
 
-import CircularProgress from '../../components/ui/CircularProgress';
+import CircularProgress from 'components/ui/CircularProgress';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');

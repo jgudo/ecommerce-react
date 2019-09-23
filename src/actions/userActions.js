@@ -4,7 +4,7 @@ import {
   ADD_USER, 
   EDIT_USER, 
   DELETE_USER 
-} from '../constants/constants';
+} from 'constants/constants';
 
 // insert in profile array
 export const registerUser = user => ({

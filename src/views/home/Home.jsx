@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter } from '../../selectors/selector';
+import { selectFilter } from 'selectors/selector';
 
-import ProductList from '../../components/product/ProductList';
-import ProductItem from '../../components/product/ProductItem';
-import ProductAppliedFilters from '../../components/product/ProductAppliedFilters';
+import ProductList from 'components/product/ProductList';
+import ProductItem from 'components/product/ProductItem';
+import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Header from './Header';
-import Modal from '../../components/ui/Modal';
-import Boundary from '../../components/ui/Boundary';
-import ProductModalDetails from '../../components/product/ProductModalDetails';
+import Modal from 'components/ui/Modal';
+import Boundary from 'components/ui/Boundary';
+import ProductModalDetails from 'components/product/ProductModalDetails';
 
 const Home = (props) => {
   const [isOpenModal, setModalOpen] = useState(false);
@@ -31,6 +31,8 @@ const Home = (props) => {
 
   useEffect(() => {
     onProductsLengthChanged();
+    console.log(store.filteredProducts);
+    console.log(store.filteredProducts.length);
   }, [store.filteredProducts]);
 
   const dispatch = useDispatch();

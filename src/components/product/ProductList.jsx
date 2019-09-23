@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '../ui/CircularProgress';
-import { getProducts } from '../../actions/productActions';
-import { isLoading as dispatchIsLoading } from '../../actions/appActions';
-import { debounce } from '../../decorator/decorator';
+import { getProducts } from 'actions/productActions';
+import { isLoading as dispatchIsLoading } from 'actions/appActions';
+import { debounce } from 'decorator/decorator';
 
 const ProductList = ({ 
   isLoading, 

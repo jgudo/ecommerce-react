@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Filters from '../../components/ui/Filters';
+import Filters from 'components/ui/Filters';
 
 import { 
   resetFilter, 
   setTextFilter, 
   removeSelectedRecent, 
   clearRecentSearch
-} from '../../actions/filterActions';  
+} from 'actions/filterActions';  
 
 const Header = ({ 
   dispatch, 

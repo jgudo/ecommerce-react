@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageLoader from '../ui/ImageLoader';
-import { addToBasket, removeFromBasket } from '../../actions/basketActions';
-import { displayMoney, displayActionMessage } from '../../helpers/utils'; 
+import { addToBasket, removeFromBasket } from 'actions/basketActions';
+import { displayMoney, displayActionMessage } from 'helpers/utils'; 
 
 const ProductModalDetails = ({ product, dispatch, foundOnBasket }) => {
   const onAddToBasket = () => {

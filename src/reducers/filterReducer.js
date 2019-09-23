@@ -7,7 +7,7 @@ import {
   APPLY_FILTER,
   CLEAR_RECENT_SEARCH,
   REMOVE_SELECTED_RECENT 
-} from '../constants/constants';
+} from 'constants/constants';
 
 const initState = {
   recent: [],

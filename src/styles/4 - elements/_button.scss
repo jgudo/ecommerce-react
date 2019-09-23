@@ -41,7 +41,7 @@
 .button-muted {
   @extend .button;
   background: $border-color;
-  color: $paragraph-color-00;
+  color: lighten($paragraph-color-00, 20%);
   border: 1px solid $border-color;
   &:hover {
     background: $border-color-focus;

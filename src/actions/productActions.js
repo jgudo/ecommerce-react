@@ -8,7 +8,7 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_SUCCESS,
   CANCEL_GET_PRODUCTS 
-} from '../constants/constants';
+} from 'constants/constants';
 
 export const getProducts = lastRef => ({
   type: GET_PRODUCTS,

@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Basket from '../components/basket/basket';
-import Navigation from '../components/ui/Navigation';
-import Footer from '../components/ui/Footer';
+import Basket from 'components/basket/basket';
+import Navigation from 'components/ui/Navigation';
+import Footer from 'components/ui/Footer';
 
-import { SIGNIN } from '../constants/routes';
+import { SIGNIN } from 'constants/routes';
 
 const PrivateRoute = ({ isAuth, userType, component: Component, path, ...rest }) => (
   <Route  

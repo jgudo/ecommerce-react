@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import withAuth from '../hoc/withAuth';
 import CheckOutHeader from '../header/CheckOutHeader';
 
-import { displayMoney, displayActionMessage } from '../../../helpers/utils';
+import { displayMoney, displayActionMessage } from 'helpers/utils';
 
 const Payment = (props) => {
   const [field, setField] = useState({

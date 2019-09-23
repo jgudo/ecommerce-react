@@ -4,7 +4,7 @@ import {
   UPDATE_EMAIL, 
   UPDATE_PROFILE,
   UPDATE_PROFILE_SUCCESS 
-} from '../constants/constants';
+} from 'constants/constants';
 
 export const clearProfile = () => ({
   type: CLEAR_PROFILE

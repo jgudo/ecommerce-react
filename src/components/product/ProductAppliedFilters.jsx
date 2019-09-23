@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { applyFilter } from '../../actions/filterActions';
+import { applyFilter } from 'actions/filterActions';
 
 const ProductAppliedFilters = ({ filter }) => {
   const dispatch = useDispatch();

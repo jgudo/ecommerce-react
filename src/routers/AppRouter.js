@@ -6,29 +6,29 @@ import ClientRoute from './ClientRoute';
 import PublicRoute from './PublicRoute';
 // import AdminRoute from './AdminRoute';
 
-import * as ROUTES from '../constants/routes';
+import * as ROUTES from 'constants/routes';
 
 // Admin components
 // to be added on next update
 
-// import Dashboard from '../views/admin/dashboard/Dashboard'; 
-// import DashboardProducts from '../views/admin/products/Products'; 
-// import DashboardUsers from '../views/admin/users/Users'; 
-// import EditProduct from '../views/admin/products/EditProduct';
-// import AddProduct from '../views/admin/products/AddProduct'; 
+// import Dashboard from 'views/admin/dashboard/Dashboard'; 
+// import DashboardProducts from 'views/admin/products/Products'; 
+// import DashboardUsers from 'views/admin/users/Users'; 
+// import EditProduct from 'views/admin/products/EditProduct';
+// import AddProduct from 'views/admin/products/AddProduct'; 
 
-import ProductSearch from '../components/product/ProductSearch'; 
-import SignUp from '../views/auth/SignUp';
-import SignIn from '../views/auth/SignIn';
-import ForgotPassword from '../views/auth/ForgotPassword';
-import UserAccount from '../views/account/UserAccount';
-import EditAccount from '../views/account/EditAccount';
-import Home from '../views/home/Home';
-import CheckOutStep1 from '../views/checkout/step1/OrderSummary';
-import CheckOutStep2 from '../views/checkout/step2/ShippingDetails';
-import CheckOutStep3 from '../views/checkout/step3/Payment';
-import PageNotFound from '../views/404/PageNotFound';
-import ScrollToTop from '../components/ui/ScrollToTop';
+import ProductSearch from 'components/product/ProductSearch'; 
+import SignUp from 'views/auth/SignUp';
+import SignIn from 'views/auth/SignIn';
+import ForgotPassword from 'views/auth/ForgotPassword';
+import UserAccount from 'views/account/UserAccount';
+import EditAccount from 'views/account/EditAccount';
+import Home from 'views/home/Home';
+import CheckOutStep1 from 'views/checkout/step1/OrderSummary';
+import CheckOutStep2 from 'views/checkout/step2/ShippingDetails';
+import CheckOutStep3 from 'views/checkout/step3/Payment';
+import PageNotFound from 'views/404/PageNotFound';
+import ScrollToTop from 'components/ui/ScrollToTop';
 
 export const history = createBrowserHistory();
 

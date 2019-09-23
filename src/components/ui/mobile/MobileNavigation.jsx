@@ -3,9 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import BasketToggle from '../../basket/BasketToggle';
 import Badge from '../Badge';
-import UserNav from '../../../views/account/UserAvatar';
+import UserNav from 'views/account/UserAvatar';
 
-import { HOME, SIGNIN, SIGNUP, SEARCH } from '../../../constants/routes';
+import { HOME, SIGNIN, SIGNUP, SEARCH } from 'constants/routes';
 
 const Navigation = ({ 
   path,  

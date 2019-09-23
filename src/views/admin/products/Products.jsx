@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter } from '../../../selectors/selector';
-import Header from '../../home/Header';
-import ProductList from '../../../components/product/ProductList';
-import Boundary from '../../../components/ui/Boundary';
+import { selectFilter } from 'selectors/selector';
+import Header from 'views/home/Header';
+import ProductList from 'components/product/ProductList';
+import Boundary from 'components/ui/Boundary';
 import ProductItem from './ProductItem';
-import ProductAppliedFilters from '../../../components/product/ProductAppliedFilters';
+import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 
 const Products = (props) => {
   const { productsLength, filter, isLoading, filteredProducts, requestStatus } = useSelector(state => ({

@@ -3,7 +3,7 @@ import {
   IS_AUTHENTICATING, 
   SET_AUTH_STATUS,
   SET_REQUEST_STATUS
-} from '../constants/constants';
+} from 'constants/constants';
 
 const initState = {
   loading: false,

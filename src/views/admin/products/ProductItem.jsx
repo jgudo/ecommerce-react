@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-import { removeProduct } from '../../../actions/productActions';
-import ImageLoader from '../../../components/ui/ImageLoader';
-import { displayMoney, displayDate, displayActionMessage } from '../../../helpers/utils';
+import { removeProduct } from 'actions/productActions';
+import ImageLoader from 'components/ui/ImageLoader';
+import { displayMoney, displayDate, displayActionMessage } from 'helpers/utils';
 
 const ProductItem = ({ product, dispatch, history }) => {
   const productRef = useRef(null);

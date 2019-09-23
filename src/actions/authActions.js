@@ -13,7 +13,7 @@ import {
   SET_AUTH_PERSISTENCE,
   RESET_PASSWORD,
   IS_AUTHENTICATING
-} from '../constants/constants';
+} from 'constants/constants';
 
 export const signIn = (email, password) => ({
   type: SIGNIN,
