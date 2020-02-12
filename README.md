@@ -38,7 +38,7 @@ $ npm run build
 
 ### How to perform CRUD operations for Admin
 1. Inside `src/routers/AppRouter.js` uncomment all code related to admin.
-2. Inside `src/reducers/authReducer.js`, change the initState type value from 'client' to 'admin'. Delete `initState` variable for client.
+2. Inside `src/reducers/authReducer.js`, change the initState type value from 'client' to 'admin'. Delete `initState` variable if you want to authenticate client.
 3. Delete persisting auth state in localStorage if one exists.
  
 
