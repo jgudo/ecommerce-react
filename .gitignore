@@ -1,6 +1,5 @@
 node_modules/
-.env
-.env.test
-.env.development
+.env.prod
+.env.dev
 dist/
 .firebase/

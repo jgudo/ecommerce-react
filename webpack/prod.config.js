@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
-DotEnv.config({ path: '.env'});
+DotEnv.config({ path: '.env.prod'});
 const baseConfig = require('./base.config.js');
 
 module.exports = merge(baseConfig, {
