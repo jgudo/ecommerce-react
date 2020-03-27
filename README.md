@@ -29,7 +29,7 @@ FIREBASE_APP_ID=
 ```
 
 After setting up necessary configuration,
-create a *Database* and choose *Real Time Database* and start in test mode
+create a **Database** and choose **Real Time Database** and start in test mode
 
 ### Run development server
 ```sh 
@@ -48,7 +48,7 @@ $ npm run build
 4. Create a *Storage* in your Firebase Console.
 5. Set Storage Rule to public, change `allow read, write: if request.auth != null;` to only `allow read, write;` 
 6. Delete persisting auth state in localStorage if one exists.
-*Revert on doing all these if you want to switch back to default user and when you are deploying the app* 
+**Revert on doing all these if you want to switch back to default user and when you are deploying the app**
 
 
 ### Features
