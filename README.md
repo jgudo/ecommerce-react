@@ -28,6 +28,9 @@ FIREBASE_APP_ID=
 
 ```
 
+After setting up necessary configuration,
+create a *Database* and choose *Real Time Database* and start in test mode
+
 ### Run development server
 ```sh 
 $ npm run dev-server
@@ -38,11 +41,15 @@ $ npm run dev-server
 $ npm run build
 ```
 
-### How to perform CRUD operations for Admin
+### How to add products or perform CRUD operations for Admin
 1. Inside `src/routers/AppRouter.js` uncomment all code related to admin.
-2. Inside `src/reducers/authReducer.js`, change the initState type value from 'client' to 'admin'. Delete `initState` variable if you want to authenticate client.
-3. Delete persisting auth state in localStorage if one exists.
- 
+2. Inside `src/reducers/authReducer.js`, uncomment initState and change the initState type value from 'client' to 'admin'. Delete `initState` variable if you want to authenticate client.
+3. Inside `src/sagas/authSaga.js`, on `case ON_AUTHSTATE_FAIL`, comment out `yield put(signOutSuccess())`.
+4. Create a *Storage* in your Firebase Console.
+5. Set Storage Rule to public, change `allow read, write: if request.auth != null;` to only `allow read, write;` 
+6. Delete persisting auth state in localStorage if one exists.
+*Revert on doing all these if you want to switch back to default user and when you are deploying the app* 
+
 
 ### Features
 

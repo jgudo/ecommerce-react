@@ -139,6 +139,7 @@ class Firebase {
             }
           } catch (e) {
             if (didTimeout) return;
+            console.log('Failed to fetch products: An error occured while trying to fetch products or there may be no product ', e);
             reject(':( Failed to fetch products.');
           }
         }

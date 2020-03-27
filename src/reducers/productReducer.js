@@ -24,7 +24,10 @@ export default (state = {
         items: [...state.items, action.payload]
       };
     case REMOVE_PRODUCT_SUCCESS:
-      return state.items.filter(product => product.id !== action.payload);
+      return {
+        ...state,
+        items: state.items.filter(product => product.id !== action.payload)
+      }
     case EDIT_PRODUCT_SUCCESS:
       return state.items.map((product) => {
         if (product.id === action.payload.id) {

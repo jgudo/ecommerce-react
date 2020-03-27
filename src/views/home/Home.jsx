@@ -31,8 +31,8 @@ const Home = (props) => {
 
   useEffect(() => {
     onProductsLengthChanged();
-    console.log(store.filteredProducts);
-    console.log(store.filteredProducts.length);
+    // console.log(store.filteredProducts);
+    // console.log(store.filteredProducts.length);
   }, [store.filteredProducts]);
 
   const dispatch = useDispatch();
