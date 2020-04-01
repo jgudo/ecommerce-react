@@ -18,13 +18,15 @@ Create a `.env.prod` file for production and `.env.dev`for development in the ro
 and add the following configuration details. It can be found on your firebase project.
 
 ```
-FIREBASE_API_KEY=
-FIREBASE_AUTH_DOMAIN=
-FIREBASE_DB_URL=
-FIREBASE_PROJECT_ID=
-FIREBASE_STORAGE_BUCKET=
-FIREBASE_MSG_SENDER_ID=
-FIREBASE_APP_ID=
+// SAMPLE FILE, you should put the actual config details found on your project settings
+
+FIREBASE_API_KEY=AIzaKJgkjhSdfSgkjhdkKJdkjowf
+FIREBASE_AUTH_DOMAIN=yourauthdomin.firebaseapp.com
+FIREBASE_DB_URL=https://yourdburl.firebaseio.com
+FIREBASE_PROJECT_ID=yourproject-id
+FIREBASE_STORAGE_BUCKET=yourstoragebucket.appspot.com
+FIREBASE_MSG_SENDER_ID=43597918523958
+FIREBASE_APP_ID=234598789798798fg3-034
 
 ```
 
