@@ -97,7 +97,7 @@ class Firebase {
       return new Promise(async (resolve, reject) => {
         if (lastRefKey) {
           try {
-            const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).startAfter(lastRefKey).limit(13);
+            const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).startAfter(lastRefKey).limit(12);
             const snapshot = await query.get();
             const products = [];
             snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
