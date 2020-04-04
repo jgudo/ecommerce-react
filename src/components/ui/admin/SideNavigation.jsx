@@ -15,13 +15,14 @@ const SideNavigation = () => {
           </NavLink>
         </div>
         <div className="sidenavigation-item">
-          <NavLink 
+          <a className="sidenavigation-menu">Users</a>
+          {/*<NavLink 
                 activeClassName="sidenavigation-menu-active"
                 className="sidenavigation-menu"
                 to="/dashboard/users"
             >
               Users
-            </NavLink>
+            </NavLink>*/}
         </div>
       </div>
     </aside>

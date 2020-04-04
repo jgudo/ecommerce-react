@@ -6,7 +6,7 @@ import {
 } from 'constants/constants';
 
 export default (state = {
-  lastRefKey: '',
+  lastRefKey: null,
   total: 0,
   items: []
 }, action) => {
@@ -29,15 +29,18 @@ export default (state = {
         items: state.items.filter(product => product.id !== action.payload)
       }
     case EDIT_PRODUCT_SUCCESS:
-      return state.items.map((product) => {
-        if (product.id === action.payload.id) {
-          return {
-            ...product,
-            ...action.payload.updates
-          };
-        }
-        return product;
-      });
+      return {
+        ...state,
+        items: state.items.map((product) => {
+          if (product.id === action.payload.id) {
+            return {
+              ...product,
+              ...action.payload.updates
+            };
+          }
+          return product;
+        }) 
+      };
     default:
       return state;
   }

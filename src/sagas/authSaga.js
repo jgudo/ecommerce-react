@@ -141,8 +141,9 @@ function* authSaga({ type, payload }) {
       yield put(setAuthStatus({ success: true, message: 'Successfully signed in.'}));
       const snapshot = yield call(firebase.getUser, payload.uid);
 
-      if (snapshot.val()) { // if user exists in database
-        yield put(setProfile(snapshot.val()));
+      if (snapshot.data()) { // if user exists in database
+
+        yield put(setProfile(snapshot.data()));
       } else if (payload.providerData[0].providerId !== 'password') { 
         // add the user if auth provider is not password
         const user = {

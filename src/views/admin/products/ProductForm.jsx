@@ -49,7 +49,7 @@ class ProductForm extends Component {
     e.preventDefault();
     const { name, brand, price, description, keywords, maxQuantity, image, imageUrl } = this.state;
     // Object.keys(this.state).every(key => this.state[key] === !!this.state[key])
-    if (name && price && maxQuantity && image) {
+    if (name && price && maxQuantity && (image || imageUrl)) {
       const product = {
         // id: this.props.product ? this.props.product.id : uuid(),
         name,
