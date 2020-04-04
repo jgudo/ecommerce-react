@@ -1,6 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ class Firebase {
     app.initializeApp(firebaseConfig);
 
     this.storage = app.storage();
-    this.database = app.database();
+    this.db = app.firestore();
     this.auth = app.auth();
   }
 
@@ -37,9 +37,9 @@ class Firebase {
 
   passwordReset = email => this.auth.sendPasswordResetEmail(email);
 
-  addUser = (id, user) => this.database.ref(`users/${id}`).set(user);
+  addUser = (id, user) => this.db.collection('users').doc(id).set(user);
 
-  getUser = id => this.database.ref(`users/${id}`).once('value');
+  getUser = id => this.db.collection('users').doc(id).get();
 
   passwordUpdate = password => this.auth.currentUser.updatePassword(password);
 
@@ -72,7 +72,7 @@ class Firebase {
     });
   }
 
-  updateProfile = (id, updates) => this.database.ref(`users/${id}`).update(updates);
+  updateProfile = (id, updates) => this.db.collection('users').doc(id).update(updates);
 
   onAuthStateChanged = () => {
     return new Promise((resolve, reject) => {
@@ -88,8 +88,8 @@ class Firebase {
 
   setAuthPersistence = () => this.auth.setPersistence(app.auth.Auth.Persistence.LOCAL);
  
-  // PRODUCT ACTIONS
-  // ---------
+  // // PRODUCT ACTIONS
+  // // ---------
 
   getProducts = (lastRefKey) => {
       let didTimeout = false;
@@ -97,21 +97,13 @@ class Firebase {
       return new Promise(async (resolve, reject) => {
         if (lastRefKey) {
           try {
-            const snapshot = await this.database.ref('products').orderByKey().endAt(lastRefKey).limitToLast(13).once('value');
-            const arrayOfKeys = Object.keys(snapshot.val()).sort().reverse().slice(1);
-            const products = arrayOfKeys.map(key => ({ id: key, ...snapshot.val()[key] }));
-            const lastKey = arrayOfKeys[arrayOfKeys.length - 1];
+            const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).startAfter(lastRefKey).limit(13);
+            const snapshot = await query.get();
+            const products = [];
+            snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
+            const lastKey = snapshot.docs[snapshot.docs.length - 1];
             
             resolve({ products, lastKey });
-            
-            // const products = [];
-            // snapshot.forEach((childSnapshot) => {
-            //     products.push({
-            //         id: childSnapshot.key,
-            //         ...childSnapshot.val()
-            //     });
-            // });
-            // resolve(products.sort((a, b) => a.id > b.id ? 1 : -1).reverse().slice(1));
           } catch (e) {
             reject(':( Failed to fetch products.');
           }
@@ -123,19 +115,23 @@ class Firebase {
 
           try {
             // getting the total count of data
+
             // adding shallow parameter for smaller response size
             // better than making a query from firebase
-            const request = await fetch(`${process.env.FIREBASE_DB_URL}/products.json?shallow=true`);
-            const total = await request.json();
-            const snapshot = await this.database.ref('products').orderByKey().limitToLast(12).once('value');
+            // NOT AVAILEBLE IN FIRESTORE const request = await fetch(`${process.env.FIREBASE_DB_URL}/products.json?shallow=true`);
             
+            const totalQuery = await this.db.collection('products').get();
+            const total = totalQuery.docs.length;
+            const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).limit(12);
+            const snapshot = await query.get();
+
             clearTimeout(timeout);
             if (!didTimeout) {
-              const arrayOfKeys = Object.keys(snapshot.val()).sort().reverse();
-              const products = arrayOfKeys.map(key => ({ id: key, ...snapshot.val()[key] }));
-              const lastKey = arrayOfKeys[arrayOfKeys.length - 1];
+              const products = [];
+              snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
+              const lastKey = snapshot.docs[snapshot.docs.length - 1];
               
-              resolve({ products, lastKey, total: Object.keys(total).length });
+              resolve({ products, lastKey, total});
             }
           } catch (e) {
             if (didTimeout) return;
@@ -147,9 +143,9 @@ class Firebase {
   }
     
 
-  addProduct = (id, product) => this.database.ref('products').child(id).set(product);
+  addProduct = (id, product) => this.db.collection('products').doc(id).set(product);
 
-  generateKey = () => this.database.ref('products').push().key;
+  generateKey = () => this.db.collection('products').doc().id;
 
   storeImage = async (id, folder, imageFile) => {
     const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
@@ -160,9 +156,9 @@ class Firebase {
 
   deleteImage = id => this.storage.ref('products').child(id).delete();
 
-  editProduct = (id, updates) => this.database.ref(`products/${id}`).update(updates);
+  editProduct = (id, updates) => this.db.collection('products').doc(id).update(updates);
 
-  removeProduct = id => this.database.ref(`products/${id}`).remove();
+  removeProduct = id => this.db.collection('products').doc(id).delete();
 }
 
 const firebase = new Firebase();

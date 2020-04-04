@@ -17,6 +17,7 @@ const ProductList = ({
 }) => {
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const [isFetching, setFetching] = useState(false);
+  const [scrollAtBottom, setScrollAtBottom] = useState(false);
 
   useEffect(() => {  
     productsLength === 0 && onGetProducts();
@@ -40,14 +41,17 @@ const ProductList = ({
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = winScroll / height;  
     
-    if (scrolled === 1 && lastRefKey !== '' && !isLoading && productsLength < totalItems ) {
+    if (scrolled === 1 && !!lastRefKey && !isLoading && productsLength < totalItems ) {
       setLastScrollPos(window.pageYOffset);
-      setFetching(true);
-
-      debounce(onGetProducts, 2000)();
+      setScrollAtBottom(true);
     }  
   };
-  
+
+  const onFetchMore = () => {
+    setFetching(true);
+    onGetProducts();
+  };
+   
   const onGetProducts = () => dispatch(getProducts(lastRefKey));
 
   return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
@@ -69,13 +73,18 @@ const ProductList = ({
   ) : (
     <>
     {children}
-    {(isFetching) && (
+    {(scrollAtBottom && productsLength < totalItems) && (
       <div className="d-flex-center padding-l">
-        <CircularProgress />
-        <span>&nbsp;Fetching more items...</span>
+        <button 
+            className="button button-small"
+            disabled={isFetching}
+            onClick={onFetchMore}
+        >
+          {isFetching ? 'Fetching Items...' : 'Fetch More Items'}
+        </button>
       </div>
     )}
-    {(!isFetching && productsLength === totalItems) && (
+    {(!isFetching && productsLength >= totalItems) && (
       <div className="d-flex-center padding-l">
         <span>End of result.</span>
       </div>
