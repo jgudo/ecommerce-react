@@ -20,7 +20,7 @@ Create an `env` file - Set filename`.env.prod` file for production and `.env.dev
 and add the following configuration details. You can either use the same configuration details for both development and production but it's best to make separate projects. It can be found on your firebase project settings.
 
 ```
-// SAMPLE CONFIG, you should put the actual config details found on your project settings
+// SAMPLE CONFIG .env.dev, you should put the actual config details found on your project settings
 
 FIREBASE_API_KEY=AIzaKJgkjhSdfSgkjhdkKJdkjowf
 FIREBASE_AUTH_DOMAIN=yourauthdomin.firebaseapp.com
