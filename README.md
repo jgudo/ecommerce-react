@@ -7,15 +7,17 @@ Simple ecommerce react js app with firebase.
 ![Salinaka screenshot](https://raw.githubusercontent.com/jgudo/ecommerce-react/master/static/screeny2.png)
 ![Salinaka screenshot](https://raw.githubusercontent.com/jgudo/ecommerce-react/master/static/screeny3.png)
 
-### Install Dependencies
+## Run Locally
+### 1. Install Dependencies
 ```sh
-$ npm install 
+$ npm install
 ```
-### Create a new firebase project
+
+### 2. Create a new firebase project
 Login into your google account and create a new firebase project [here](https://console.firebase.google.com/u/0/)
 
-Create a `.env.prod` file for production and `.env.dev`for development in the root of your project folder
-and add the following configuration details. It can be found on your firebase project.
+Create an `env` file - Set filename`.env.prod` file for production and `.env.dev`for development and save it in the root of your project folder
+and add the following configuration details. It can be found on your firebase project settings.
 
 ```
 // SAMPLE CONFIG, you should put the actual config details found on your project settings
@@ -33,17 +35,19 @@ FIREBASE_APP_ID=234598789798798fg3-034
 After setting up necessary configuration,
 create a **Database** and choose **Cloud Firestore** and start in test mode
 
-### Run development server
+### 3. Run development server
 ```sh 
 $ npm run dev-server
 ```
 
-### Build the project
+---
+
+## Build the project
 ```sh
 $ npm run build
 ```
 
-### How to add products or perform CRUD operations for Admin
+## How to add products or perform CRUD operations for Admin
 1. Inside `src/routers/AppRouter.js` uncomment all code related to admin.
 2. Inside `src/reducers/authReducer.js`, uncomment initState and change the initState type value from 'client' to 'admin'. Delete `initState` variable if you want to authenticate client.
 3. Inside `src/sagas/authSaga.js`, on `case ON_AUTHSTATE_FAIL`, comment out `yield put(signOutSuccess())`.
@@ -53,7 +57,7 @@ $ npm run build
 **Revert on doing all these if you want to switch back to default user and when you are deploying the app**
 
 
-### Features
+## Features
 
 * Admin CRUD operations
 * Firebase authentication
