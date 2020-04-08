@@ -17,7 +17,7 @@ $ npm install
 Login into your google account and create a new firebase project [here](https://console.firebase.google.com/u/0/)
 
 Create an `env` file - Set filename`.env.prod` file for production and `.env.dev`for development and save it in the root of your project folder
-and add the following configuration details. It can be found on your firebase project settings.
+and add the following configuration details. You can either use the same configuration details for both development and production but it's best to make separate projects. It can be found on your firebase project settings.
 
 ```
 // SAMPLE CONFIG, you should put the actual config details found on your project settings
