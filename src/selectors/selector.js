@@ -5,10 +5,10 @@ export const selectFilter = (products, filter) => {
 
   return products.filter((product) => {
     const isInRange = filter.maxPrice ? (product.price >= filter.minPrice && product.price <= filter.maxPrice) : true;
-    const matchKeyword = product.keywords.includes(keyword);
-    const matchName = product.name.toLowerCase().includes(keyword);
-    const matchDescription = product.description.toLowerCase().includes(keyword);
-    const matchBrand = product.brand.toLowerCase().includes(filter.brand);
+    const matchKeyword = products.keywords ? product.keywords.includes(keyword) : true;
+    const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
+    const matchDescription = products.description ? product.description.toLowerCase().includes(keyword) : true;
+    const matchBrand = product.brand ? product.brand.toLowerCase().includes(filter.brand) : true;
 
     return ((matchKeyword || matchName || matchDescription) && matchBrand && isInRange);
   }).sort((a,b) => {
