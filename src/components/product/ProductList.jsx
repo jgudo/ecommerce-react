@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import CircularProgress from '../ui/CircularProgress';
 import { getProducts } from 'actions/productActions';
 import { isLoading as dispatchIsLoading } from 'actions/appActions';
-import { debounce } from 'decorator/decorator';
 
 const ProductList = ({ 
   isLoading, 
@@ -17,42 +16,44 @@ const ProductList = ({
 }) => {
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const [isFetching, setFetching] = useState(false);
-  const [scrollAtBottom, setScrollAtBottom] = useState(false);
+  const [scrolledAtBottom, setScrolledAtBottom] = useState(false);
 
-  useEffect(() => {  
-    productsLength === 0 && onGetProducts();
+  useEffect(() => {
+    if (productsLength === 0)  {
+      fetchProducts();
+    }
   
     return () => dispatch(dispatchIsLoading(false));
   }, []);
 
   useEffect(() => {
-    debounce(() => window.scrollTo(0, lastScrollPos), 100)();
+    window.scrollTo(0, lastScrollPos);
     setFetching(false);
-  }, [lastRefKey]);
+  }, [lastRefKey]); // watch for changes on lastRefKey, if it changes that means new products have been fetched.
 
   useEffect(() => {
     window.addEventListener('scroll', watchForScroll);
 
     return () => window.removeEventListener('scroll', watchForScroll);
-  }, [lastRefKey, isLoading]);
+  }, [lastRefKey, isLoading]); // re-add event listener since the height of the window has increased for fetching new items.
 
   const watchForScroll = () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = winScroll / height;  
+    const scrolled = winScroll / height;  // value of 1 means it's at the bottom
     
     if (scrolled === 1 && !!lastRefKey && !isLoading && productsLength < totalItems ) {
       setLastScrollPos(window.pageYOffset);
-      setScrollAtBottom(true);
-    }  
+      setScrolledAtBottom(true);
+      window.removeEventListener('scroll', watchForScroll);
+    } 
   };
 
-  const onFetchMore = () => {
+  const fetchProducts = () => {
     setFetching(true);
-    onGetProducts();
+    dispatch(getProducts(lastRefKey));
   };
    
-  const onGetProducts = () => dispatch(getProducts(lastRefKey));
 
   return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
     <div className="loader">
@@ -65,7 +66,7 @@ const ProductList = ({
       <br/>
       <button 
           className="button button-small"
-          onClick={onGetProducts}
+          onClick={fetchProducts}
       >
         Try again
       </button>
@@ -73,12 +74,12 @@ const ProductList = ({
   ) : (
     <>
     {children}
-    {(scrollAtBottom && productsLength < totalItems) && (
+    {(scrolledAtBottom && productsLength < totalItems) && (
       <div className="d-flex-center padding-l">
         <button 
             className="button button-small"
             disabled={isFetching}
-            onClick={onFetchMore}
+            onClick={fetchProducts}
         >
           {isFetching ? 'Fetching Items...' : 'Fetch More Items'}
         </button>

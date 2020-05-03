@@ -29,13 +29,8 @@ const Basket = (props) => {
     return displayMoney(total);
   };
 
-  const onOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const onCloseModal = () => {
-    setModalOpen(false);
-  };
+  const onOpenModal = () => setModalOpen(true);
+  const onCloseModal = () => setModalOpen(false);
 
   const onCheckOut = () => {
     if ((basket.length !== 0 && isAuth)) {
