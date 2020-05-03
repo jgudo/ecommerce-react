@@ -10,6 +10,8 @@ import ImageLoader from 'components/ui/ImageLoader';
 import { displayActionMessage } from 'helpers/utils';
 import { isLoading as dispatchIsLoading } from 'actions/appActions';
 import { updateProfile } from 'actions/profileActions';
+import useFileHandler from 'hooks/useFileHandler';
+import useFieldHandler from 'hooks/useFieldHandler';
 import { ACCOUNT } from 'constants/routes';
 
 const EditProfile = (props) => {
@@ -24,8 +26,9 @@ const EditProfile = (props) => {
     auth: state.auth,
     isLoading: state.app.loading
   }));
+
   const dispatch = useDispatch();
-  const [user, setProfile] = useState({
+  const { field, setField, onFieldChange, errorField } = useFieldHandler({
     fullname: profile.fullname ? profile.fullname : '',
     email: profile.email ? profile.email : '',
     address: profile.address ? profile.address : '',
@@ -33,119 +36,70 @@ const EditProfile = (props) => {
     avatar: profile.avatar ? profile.avatar : '',
     banner: profile.banner ? profile.banner : '',
   });
+
+  useEffect(() => {
+    setField(profile);
+  }, [profile]);
+
   const [isOpenModal, setModalOpen] = useState(false);
-  const [error, setError] = useState({});
-  const [loading, setLoading] = useState({});
-  const [imageFile, setImageFile] = useState({});
   const [password, setPassword] = useState(null);
+  const { 
+    imageFile, 
+    setImageFile, 
+    isFileLoading, 
+    onFileChange 
+  } = useFileHandler({ avatar: {}, banner: {} });
 
-  const handleFile = (e, field) => {
-    const val = e.target.value;
-    const img = e.target.files[0];
-    const size = img.size / 1024 / 1024;
-    const regex = /(\.jpg|\.png)$/i;
+  const onEmailChange = (e) => onFieldChange(e, 'email', false);
 
-    setLoading({ ...loading, [field]: true });
+  const onFullNameChange = (e) => onFieldChange(e, 'fullname', false);
 
-    if (!regex.exec(val)) {
-      displayActionMessage('File type must be JPEG or PNG', 'error');
-      setLoading({ ...loading, [field]: false });
-    } else if (size > 1) {
-      displayActionMessage('File size exceeds 1MB', 'error');
-      setLoading({ ...loading, [field]: false });
-    } else {
-      const reader = new FileReader();
-      reader.addEventListener('load', (e) => {
-        setProfile({ ...user, [field]: e.target.result });
-        setImageFile({ ...imageFile, [field]: img });
-        setLoading({ ...loading, [field]: false });
-      });
-      reader.readAsDataURL(img);
-    }
-  }
+  const onAddressChange = (e) => onFieldChange(e, 'address', true);
 
-  const onEmailChange = (e) => {
-    const val = e.target.value.trim();
-    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    
-    setProfile({ ...user, email: val });
+  const onMobileChange = (mob, data) => onFieldChange(mob, 'mobile', true, data);
 
-    if (val === '') {
-      setError({ ...error, email: 'Email is required' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, email: 'Email is invalid' });
-    } else {
-      setError({ ...error, email: '' });
-    }
-  };
+  const onCloseModal = () => setModalOpen(false);
 
-  const onFullNameChange = (e) => {
-    const val = e.target.value.replace(/[^a-zA-Z\s]/g, '').trimStart();
-
-    setProfile({ ...user, fullname: val });
-
-    if (user.fullname === '') {
-      setError({ ...error, fullname: 'Full name is required' });
-    } else if (user.fullname.length < 5) {
-      setError({ ...error, fullname: 'Full name must be at least 5 letters' });
-    } else {
-      setError({ ...error, fullname: '' });
-    }
-  };
-
-  const onAddressChange = (e) => {
-    const val = e.target.value.trimStart();
-    setProfile({ ...user, address: val });
-  };
-
-  const onMobileChange = (mob, data) => {
-    const mobile = mob.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
-    const len = mobile.toString().length;
-    
-    setProfile({ ...user, mobile});
-
-    if (len >= 1 && len <= 9) {
-      setError({ ...error, mobile: 'Mobile number invalid' });
-    } else {
-      setError({ ...error, mobile: '' });
-    }
-  };
-
-  const onCloseModal = () => {
-    setModalOpen(false);
-  };
-
-  const onPassworInput = (e) => {
-    setPassword(e.target.value.trim());
-  };
+  const onPasswordInput = (e) => setPassword(e.target.value.trim());
 
   const onConfirmUpdate = () => {
     if (password) {
       dispatch(updateProfile({ 
-        updates: { ...user },
-        files: { bannerFile: imageFile.banner, avatarFile: imageFile.avatar },
-        credentials: { email: user.email, password }
+        updates: field,
+        files: { 
+          bannerFile: imageFile.banner.file, 
+          avatarFile: imageFile.avatar.file 
+        },
+        credentials: { email: field.email, password }
       }));
+
       setModalOpen(false);
     }
   };
 
   const onSubmitUpdate = () => {
-    if (Object.keys(error).every(key => error[key] === '')) {
-      if (user.email !== profile.email) {
+    const noError = Object.keys(errorField).every(key => errorField[key] === '');
+    const allFieldsFilled = Object.keys(field).some(key => profile[key] !== field[key]);
+    const filesUpdated = imageFile.banner.file || imageFile.avatar.file
+
+    if (noError) {
+      if (field.email !== profile.email) {
         setModalOpen(true);
-      } else if (Object.keys(user).some(key => profile[key] !== user[key])) {
+      } else if (allFieldsFilled || filesUpdated) {
         dispatch(updateProfile({ 
-          updates: { ...user },
-          files: { bannerFile: imageFile.banner, avatarFile: imageFile.avatar },
+          updates: field,
+          files: { 
+            bannerFile: imageFile.banner.file, 
+            avatarFile: imageFile.avatar.file 
+          },
           credentials: {}
         }));
       }
     }
   };
 
-  const errorClassName = (field) => {
-    return error[field] ? 'input-error' : '';
+  const errorClassName = (key) => {
+    return errorField[key] ? 'input-error' : '';
   };
 
   return (
@@ -157,17 +111,17 @@ const EditProfile = (props) => {
             <ImageLoader  
                 alt="Banner"
                 className="user-profile-banner-img"
-                src={user.banner} 
+                src={imageFile.banner.url || field.banner} 
             />
             <input 
                 accept="image/x-png,image/jpeg"
                 disabled={isLoading}
                 id="edit-banner"
                 hidden
-                onChange={(e) => handleFile(e, 'banner')}
+                onChange={(e) => onFileChange(e, 'banner')}
                 type="file" 
             />
-            {loading.banner ? (
+            {isFileLoading ? (
               <div className="loading-wrapper">
                 <CircularProgress visible={true} theme="light" />
               </div>
@@ -186,17 +140,17 @@ const EditProfile = (props) => {
             <ImageLoader 
                 alt="Avatar"
                 className="user-profile-img"
-                src={user.avatar} 
+                src={imageFile.avatar.url || field.avatar} 
             />
             <input 
                 accept="image/x-png,image/jpeg"
                 id="edit-avatar"
                 disabled={isLoading}
                 hidden
-                onChange={(e) => handleFile(e, 'avatar')}
+                onChange={(e) => onFileChange(e, 'avatar')}
                 type="file" 
             />
-            {loading.avatar ? (
+            {isFileLoading ? (
               <div className="loading-wrapper">
                 <CircularProgress visible={true} theme="light" />
               </div>
@@ -213,7 +167,7 @@ const EditProfile = (props) => {
           </div>
         </div>
         <div className="user-profile-details">
-          {error.fullname ? <span className="input-message">{error.fullname}</span> : (
+          {errorField.fullname ? <span className="input-message">{errorField.fullname}</span> : (
             <span className="d-block padding-s">Full Name</span>
           )}
           <input 
@@ -224,9 +178,9 @@ const EditProfile = (props) => {
               readOnly={isLoading}
               style={{ textTransform: 'capitalize' }}
               type="text"
-              value={user.fullname}
+              value={field.fullname}
           />
-          {error.email ? <span className="input-message">{error.email}</span> : (
+          {errorField.email ? <span className="input-message">{errorField.email}</span> : (
             <span className="d-block padding-s">Email</span>
           )}
           <input 
@@ -236,7 +190,7 @@ const EditProfile = (props) => {
               placeholder="test@example.com"
               readOnly={auth.provider !== 'password' || isLoading}
               type="email"
-              value={user.email}
+              value={field.email}
           />
           <span className="d-block padding-s">Shipping Address</span>
           <input 
@@ -246,9 +200,9 @@ const EditProfile = (props) => {
               onChange={onAddressChange}
               readOnly={isLoading}
               type="text"
-              value={user.address}
+              value={field.address}
           />
-          {error.mobile && <span className="input-message">{error.mobile}</span>}
+          {errorField.mobile && <span className="input-message">{errorField.mobile}</span>}
           <span className="d-block padding-s">Mobile</span>
           <ReactPhoneInput 
               defaultCountry={'ph'} 
@@ -258,7 +212,7 @@ const EditProfile = (props) => {
               masks={{'ph': '+.. .... ... ....'}}
               onChange={onMobileChange}
               placeholder="09264538861"
-              value={user.mobile} 
+              value={field.mobile} 
           />
           <br/>
           <div className="edit-user-action">
@@ -294,7 +248,7 @@ const EditProfile = (props) => {
           </p>
           <input 
               className="input-form d-block"
-              onChange={onPassworInput}
+              onChange={onPasswordInput}
               placeholder="Enter your password"
               type="password"
           />

@@ -19,7 +19,7 @@
   justify-content: center;
   flex-direction: column;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }
@@ -30,7 +30,7 @@
   padding-top: $m-size;
   border: 1px solid $border-color-focus;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     padding: $m-size;
   }
 }
@@ -41,7 +41,7 @@
 }
 
 .signup-button {
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }

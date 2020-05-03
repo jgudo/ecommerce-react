@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import withAuth from '../hoc/withAuth';
 import ReactPhoneInput from 'react-phone-input-2';
 import CheckOutHeader from '../header/CheckOutHeader';
+import useFieldHandler from 'hooks/useFieldHandler';
 
 import { displayMoney } from 'helpers/utils';
 import { setShippingDetails } from 'actions/checkoutActions';
 
-const ShippingDetails = (props) => {
-  const { profile, dispatch, shipping, subtotal } = props;
-  const [field, setField] = useState({
+const ShippingDetails = ({ profile, dispatch, shipping, subtotal, history }) => {
+  const { field, setField, onFieldChange, errorField } = useFieldHandler({
     fullname: profile.fullname ? profile.fullname : '',
     email: profile.email ? profile.email : '',
     address: profile.address ? profile.address : shipping.address ? shipping.address : '',
@@ -16,85 +16,28 @@ const ShippingDetails = (props) => {
     isInternational: !!shipping.isInternational ? shipping.isInternational : false,
     isDone: false
   });
-  const [error, setError] = useState({});
 
-  const onFullNameInput = (e) => {
-    const val = e.target.value.trimStart();
-    const regex = /[^a-zA-Z\s]/gi;
+  const onFullNameInput = (e) => onFieldChange(e, 'fullname', false);
 
-    setField({ ...field, fullname: val });
+  const onEmailInput = (e) => onFieldChange(e, 'email', false);
 
-    if (val === '') {
-      setError({ ...error, fullname: 'Full name is required' });
-    } else if (regex.test(val)) {
-      setError({ ...error, fullname: 'Full name contains invalid characters' });
-    } else if (val.length < 6) {
-      setError({ ...error, fullname: 'Full name must be at least 6 characters' });
-    } else {
-      setError({ ...error, fullname: '' });
-    }
-  };
+  const onAddressInput = (e) =>onFieldChange(e, 'address', false);
 
-  const onEmailInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  const onMobileInput = (e, data) => {
+    onFieldChange(e, 'mobile', false, data);
+  }
 
-    setField({ ...field, email: val });
+  const errorClassName = (key) =>  errorField[key] ? 'input-error' : '';
 
-    if (val === '') {
-      setError({ ...error, email: 'Email is required' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, email: 'Email is invalid' });
-    } else {
-      setError({ ...error, email: '' });
-    }
-  };
-
-  const onAddressInput = (e) => {
-    const val = e.target.value.trimStart();
-
-    setField({ ...field, address: val });
-
-    if (val === '') {
-      setError({ ...error, address: 'Shipping address is required' });
-    } else {
-      setError({ ...error, address: '' });
-    }
-  };
-
-  const onMobileInput = (mob, data) => {
-    const mobile = mob.replace(/[^0-9]+/g,'').slice(data.dialCode.length);
-    const len = mobile.toString().length;
-    setField({ ...field, mobile});
-
-    if (!field.mobile) {
-      setError({ ...error, mobile: 'Mobile number is required' });
-    } else if (len <= 9) {
-      setError({ ...error, mobile: 'Mobile number invalid' });
-    }else {
-      setError({ ...error, mobile: '' });
-    }
-  };
-
-  const errorClassName = (field) => {
-    return error[field] ? 'input-error' : '';
-  };
-
-  const onShippingOptionChange = (e) => {
-    if (e.target.checked) {
-      setField({ ...field, isInternational: true });
-    } else {
-      setField({ ...field, isInternational: false });
-    }
-  };
+  const onShippingOptionChange = (e) => setField({ ...field, isInternational: !field.isInternational });
 
   const onClickNext = () => {
-    const clear = Object.keys(error).every(key => error[key] === '') 
-      && Object.keys(field).every(key => field[key] !== '');
+    const noError = Object.keys(errorField).every(key => errorField[key] === '');
+    const allFieldsFilled = Object.keys(field).every(key => field[key] !== '');
 
-    if (clear) {
+    if (noError && allFieldsFilled) {
       dispatch(setShippingDetails({ ...field, isDone: true }));
-      props.history.push('/checkout/step3');
+      history.push('/checkout/step3');
     }
   };
 
@@ -109,7 +52,7 @@ const ShippingDetails = (props) => {
           <div className="checkout-shipping-form">
             <div className="checkout-fieldset">
               <div className="d-block checkout-field">
-                {error.fullname ? <span className="input-message">{error.fullname}</span> : (
+                {errorField.fullname ? <span className="input-message">{errorField.fullname}</span> : (
                   <span className="d-block padding-s">Full Name</span>
                 )}
                 <input 
@@ -122,7 +65,7 @@ const ShippingDetails = (props) => {
                 />
               </div>
               <div className="d-block checkout-field">
-                {error.email && <span className="input-message">{error.email}</span>}
+                {errorField.email && <span className="input-message">{errorField.email}</span>}
                 <span className="d-block padding-s">Email</span>
                 <input 
                     className={`input-form d-block ${errorClassName('email')}`}
@@ -135,7 +78,7 @@ const ShippingDetails = (props) => {
             </div>
             <div className="checkout-fieldset">
               <div className="d-block checkout-field">
-                {error.address ? <span className="input-message">{error.address}</span> : (
+                {errorField.address ? <span className="input-message">{errorField.address}</span> : (
                   <span className="d-block padding-s">Shipping Address</span>
                 )}
                 <input 
@@ -147,7 +90,7 @@ const ShippingDetails = (props) => {
                 />
               </div>
               <div className="d-block checkout-field">
-                {error.mobile ? <span className="input-message">{error.mobile}</span> : (
+                {errorField.mobile ? <span className="input-message">{errorField.mobile}</span> : (
                   <span className="d-block padding-s">Mobile Number</span>
                 )}
                 <ReactPhoneInput 
@@ -219,14 +162,14 @@ const ShippingDetails = (props) => {
             <div className="checkout-shipping-action">
               <button 
                   className="button button-muted checkout-shipping-back"
-                  onClick={() => props.history.push('/checkout/step1')}
+                  onClick={() => history.push('/checkout/step1')}
                   type="button"
               >
                 Back
               </button>
               <button 
                   className="button checkout-shipping-back"
-                  disabled={!(Object.keys(error).every(key => error[key] === '') 
+                  disabled={!(Object.keys(errorField).every(key => errorField[key] === '') 
                             && Object.keys(field).every(key => field[key] !== ''))}
                   onClick={onClickNext}
               >

@@ -17,7 +17,7 @@
 }
 
 .w-100-mobile {
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }

@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
     padding: 0;
   }
@@ -43,7 +43,7 @@
   align-items: center;
   justify-content: space-between;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     flex-direction: column;
 
     button:first-child {

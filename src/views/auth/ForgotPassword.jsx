@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import useFieldHandler from 'hooks/useFieldHandler';
 import { resetPassword, setAuthStatus, isAuthenticating as authenticating } from 'actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
   const dispatch = useDispatch();
+
+  const { field, setField, onFieldChange, errorField } = useFieldHandler({ email: '' });
 
   useEffect(() => {
     return () => {
@@ -21,22 +22,10 @@ const ForgotPassword = () => {
     authStatus: state.app.authStatus
   }));
 
-  const onEmailChange = (e) => {
-    const val = e.target.value.trim();
-    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-
-    if (val === '') {
-      setEmailError('Email is required');
-    } else if (!regex.test(val)) {
-      setEmailError('Email is invalid');
-    } else {
-      setEmail(val);
-      setEmailError('');
-    }
-  };
+  const onEmailChange = (e) => onFieldChange(e, 'email', false);
 
   const onSubmitEmail = () => {
-    (email && !emailError) && dispatch(resetPassword(email));
+    (field.email && !errorField.email) && dispatch(resetPassword(field.email));
   };
 
   return (
@@ -50,10 +39,10 @@ const ForgotPassword = () => {
       <p>Enter your email address and we will send you a password reset email.</p>
       <br/>
       <br/>
-      {emailError && <span className="input-message">{emailError}</span>}
+      {errorField.email && <span className="input-message">{errorField.email}</span>}
       <br/>
       <input 
-          className={`input-form d-block ${emailError ? 'input-error' : ''}`}
+          className={`input-form d-block ${errorField.email ? 'input-error' : ''}`}
           onChange={onEmailChange}
           placeholder="Enter your email"
           readOnly={isAuthenticating}

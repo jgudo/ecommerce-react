@@ -34,7 +34,7 @@
 .pill-wrapper {
     text-align: center;
 
-    @media (max-width: $mobile) {
+    @include mobile {
         display: inline-block;
     }
 }

@@ -10,7 +10,7 @@
   @include bezier-transition(transform);
   z-index: map-get($z-index, 'basket');
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }

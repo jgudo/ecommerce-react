@@ -15,7 +15,12 @@ const Navigation = ({ path }) => {
     return () => window.removeEventListener('scroll', scrollHandler);
   }, []);
   
-  const { basketLength, profile, isAuth, isAuthenticating } = useSelector(state => ({
+  const { 
+    basketLength, 
+    profile, 
+    isAuth, 
+    isAuthenticating 
+  } = useSelector(state => ({
     basketLength: state.basket.length,
     profile: state.profile,
     isAuth: !!state.auth.id && !!state.auth.type,
@@ -23,28 +28,12 @@ const Navigation = ({ path }) => {
   }));
   const navbar = useRef(null);
 
-  const getStyleProperty = (property) => {
-    return getComputedStyle(document.documentElement).getPropertyValue(property);
-  };
-
   const scrollHandler = () => {
     if (navbar.current && window.screen.width > 480) {
       if (window.pageYOffset >= 70) {
-        Object.assign(navbar.current.style, {
-          position: 'fixed',
-          animation: 'slide-down .3s ease 1',
-          animationFillMode: 'forwards',
-          top: 0,
-          background: getStyleProperty('--nav-bg-scrolled'),
-          boxShadow: getStyleProperty('--nav-bg-shadow')
-        });
+        navbar.current.classList.add('is-nav-scrolled');
       } else {
-        Object.assign(navbar.current.style, {
-          position: 'absolute',
-          animation: 'none',
-          background: getStyleProperty('--nav-bg'),
-          boxShadow: 'none'
-        });
+        navbar.current.classList.remove('is-nav-scrolled');
       }
     }
   };

@@ -4,7 +4,7 @@
   grid-gap: $s-size;
   justify-content: center;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: center;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     display: none;
   }
 }
@@ -55,7 +55,7 @@
     cursor: pointer;
   }
 
-  @media (max-width: $mobile) {
+  @include mobile {
     height: 200px;
   }
 }
@@ -94,7 +94,7 @@
   padding: $m-size;
   @include bezier-transition(transform);
 
-  // @media (max-width: $mobile) {
+  // @include mobile {
   //   transform: translateY(-25px);
   // }
 }
@@ -106,7 +106,7 @@
   position: relative;
   @include bezier-transition();
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 80%;
     height: 80px;
   }
@@ -129,7 +129,7 @@
   margin-top: 0;
   font-size: $font-small;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     margin-bottom: 0;
   }
 }
@@ -141,7 +141,7 @@
   font-size: $font-small;
   @include bezier-transition();
 
-  @media (max-width: $mobile) {
+  @include mobile {
     bottom: 0;
     display: none;
   }
@@ -163,7 +163,7 @@
   align-items: center;
   justify-content: center;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     display: block;
   }
 }
@@ -173,7 +173,7 @@
 .product-modal {
   display: flex;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     flex-direction: column;
   }
 }
@@ -183,7 +183,7 @@
   height: 200px;
   position: relative;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 70%;
     height: 140px;
     margin: auto;
@@ -200,7 +200,7 @@
   width: 300px;
   padding: 0 $l-size;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
     padding: 0 $m-size;
   }

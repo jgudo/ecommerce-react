@@ -2,17 +2,17 @@ import React, { useState, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import withAuth from '../hoc/withAuth';
 import CheckOutHeader from '../header/CheckOutHeader';
+import useFieldHandler from 'hooks/useFieldHandler';
 
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 
 const Payment = (props) => {
-  const [field, setField] = useState({
+  const { field, setField, onFieldChange, errorField, setErrorField } = useFieldHandler({
     name: '',
     cardnumber: '',
     expiry: '',
     ccv: ''
   });
-  const [error, setError] = useState({});
   const [paymentMode, setPaymentMode] = useState('paypal');
   const collapseCreditHeight = useRef(null);
   const cardInputRef = useRef(null);
@@ -32,60 +32,30 @@ const Payment = (props) => {
     collapseCreditHeight.current.parentElement.style.height = '97px';
   };
 
-  const onCardNameInput = (e) => {
-    const val = e.target.value.trimStart();
-
-    setField({ ...field, name: val });
-
-    if (val === '') {
-      setError({ ...error, name: 'Name on card is required' });
-    } else {
-      setError({ ...error, name: '' });
-    }
-  };
+  const onCardNameInput = (e) => onFieldChange(e, 'name', false);
 
   const onCardNumberInput = (e) => {
     const val = e.target.value.trim();
 
-    setField({ ...field, cardnumber: val });
+    onFieldChange(e, 'cardnumber', false);
 
-    if (val === '') {
-      setError({ ...error, cardnumber: 'Card number is required' });
-    } else if (!(val.length >= 13 && val.length <= 19)) {
-      setError({ ...error, cardnumber: 'Card number invalid' });
-    } else {
-      setError({ ...error, cardnumber: '' });
-    }
+   if (!(val.length >= 13 && val.length <= 19)) {
+      setErrorField({ ...errorField, cardnumber: 'Card number is invalid' });
+    } 
   };
 
-  const onExpiryInput = (e) => {
-    const val = e.target.value.trim();
-
-    setField({ ...field, expiry: val });
-
-    if (val === '') {
-      setError({ ...error, expiry: 'Expiry date is required' });
-    } else {
-      setError({ ...error, expiry: '' });
-    }
-  };
+  const onExpiryInput = (e) => onFieldChange(e, 'expiry', false);
 
   const onCcvInput = (e) => {
-    const val = e.target.value.trim();
+    onFieldChange(e, 'ccv', false);
 
-    setField({ ...field, ccv: val });
-
-    if (val === '') {
-      setError({ ...error, ccv: 'CCV is required' });
-    } else if (val.length < 3) {
-      setError({ ...error, ccv: 'CCV is invalid' });
-    } else {
-      setError({ ...error, ccv: '' });
+    if (e.target.value.trim().length < 3) {
+      setErrorField({ ...errorField, ccv: 'CCV is invalid' });
     }
   };
 
   const errorClassName = (field) => {
-    return error[field] ? 'input-error' : '';
+    return errorField[field] ? 'input-error' : '';
   };
 
   const onConfirm = (e) => {
@@ -94,7 +64,7 @@ const Payment = (props) => {
     if (!paymentMode) return;
     if (paymentMode === 'credit') {
       const ready = Object.keys(field).every(key => field[key] !== '') 
-        && Object.keys(error).every(key => error[key] === '');
+        && Object.keys(errorField).every(key => errorField[key] === '');
       
       if (ready) {
         displayActionMessage('Feature not ready yet :)', 'info');
@@ -153,7 +123,7 @@ const Payment = (props) => {
             <div className="checkout-field margin-0">
               <div className="checkout-fieldset">
                 <div className="checkout-field">
-                  {error.name ? <span className="input-message">{error.name}</span> : (
+                  {errorField.name ? <span className="input-message">{errorField.name}</span> : (
                     <span className="d-block padding-s">Name on Card</span>
                   )}
                   <input 
@@ -167,7 +137,7 @@ const Payment = (props) => {
                   />
                 </div>
                 <div className="checkout-field">
-                  {error.cardnumber ? <span className="input-message">{error.cardnumber}</span> : (
+                  {errorField.cardnumber ? <span className="input-message">{errorField.cardnumber}</span> : (
                     <span className="d-block padding-s">Card Number</span>
                   )}
                   <input 
@@ -182,7 +152,7 @@ const Payment = (props) => {
               </div>
               <div className="checkout-fieldset">
                 <div className="checkout-field">
-                  {error.expiry ? <span className="input-message">{error.expiry}</span> : (
+                  {errorField.expiry ? <span className="input-message">{errorField.expiry}</span> : (
                     <span className="d-block padding-s">Expiry Date</span>
                   )}
                   <input 
@@ -194,7 +164,7 @@ const Payment = (props) => {
                   />
                 </div>
                 <div className="checkout-field">
-                  {error.ccv ? <span className="input-message">{error.ccv}</span> : (
+                  {errorField.ccv ? <span className="input-message">{errorField.ccv}</span> : (
                     <span className="d-block padding-s">CCV Number</span>
                   )}
                   <input 

@@ -1,7 +1,7 @@
 .signin-content {
   margin: auto;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }
@@ -13,7 +13,7 @@
   padding: $l-size;
   padding-top: $m-size;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     flex-direction: column;
     padding: $m-size;
   }
@@ -23,7 +23,7 @@
   width: 350px;
   height: auto;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }
@@ -41,7 +41,7 @@
 }
 
 .signin-button {
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
   }
 }
@@ -91,7 +91,7 @@
     width: 1px;
     background: $border-color;
 
-    @media (max-width: $mobile) {
+    @include mobile {
       width: 50%;
       height: 1px;
     }
@@ -100,7 +100,7 @@
   &:before {
     top: 25%;
 
-    @media (max-width: $mobile) {
+    @include mobile {
       top: 50%;
       left: 0;
     }
@@ -109,7 +109,7 @@
   &:after {
     bottom: 25%;
 
-    @media (max-width: $mobile) {
+    @include mobile {
       right: 0;
       bottom: 50%;
     }
@@ -120,7 +120,7 @@
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     flex-direction: column;
 
     a {
@@ -156,7 +156,7 @@
   width: 50%;
   margin: auto;
   
-  @media (max-width: $mobile) {
+  @include mobile {
     width: 100%;
     padding: $s-size;
   } 

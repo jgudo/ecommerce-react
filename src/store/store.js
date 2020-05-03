@@ -7,15 +7,7 @@ import {
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import createSagaMiddleware from 'redux-saga';
-import productReducer from 'reducers/productReducer';
-import basketReducer from 'reducers/basketReducer';
-import authReducer from 'reducers/authReducer';
-import profileReducer from 'reducers/profileReducer';
-import filterReducer from 'reducers/filterReducer';
-import checkoutReducer from 'reducers/checkoutReducer';
-import userReducer from 'reducers/userReducer';
-import appReducer from 'reducers/appReducer';
-
+import rootReducer from 'reducers';
 import rootSaga from 'sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -27,16 +19,6 @@ const authPersistConfig = {
   whitelist: ['auth', 'profile', 'basket', 'checkout']
 }
 
-const rootReducer = {
-  products: productReducer,
-  basket: basketReducer,
-  auth: authReducer,
-  profile: profileReducer,
-  filter: filterReducer,
-  users: userReducer,
-  checkout: checkoutReducer,
-  app: appReducer,
-}
 
 export default () => {
   const store = createStore(

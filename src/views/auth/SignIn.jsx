@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useFieldHandler from 'hooks/useFieldHandler';
 import { 
   signIn, 
   signInWithGoogle, 
@@ -11,11 +12,13 @@ import {
 import CircularProgress from 'components/ui/CircularProgress';
 
 const SignIn = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorField, setErrorField] = useState({});
   const [buttonClicked, setClicked] = useState(undefined);
   const dispatch = useDispatch();
+
+  const { field, setField, onFieldChange, errorField } = useFieldHandler({
+    email: '',
+    password: ''
+  });
 
   useEffect(() => {
     return () => {
@@ -29,44 +32,21 @@ const SignIn = (props) => {
     isAuthenticating: state.app.isAuthenticating
   }));
 
-  const onEmailInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    
-    if (val === '') {
-      setErrorField({ ...errorField, email: 'Email is required' });
-    } else if (!regex.test(val)) {
-      setErrorField({ ...errorField, email: 'Email is invalid' });
-    } else {
-      setEmail(val);
-      setErrorField({ ...errorField, email: '' });
-    }
-  };
+  const onEmailInput = (e) => onFieldChange(e, 'email', false);
 
-  const onPasswordInput = (e) => {
-    const val = e.target.value.trim();
-
-    if (val === '') {
-      setErrorField({ ...errorField, password: 'Password is required' });
-    } else {
-      setPassword(val);
-      setErrorField({ ...errorField, password: '' });
-    }
-  };
+  const onPasswordInput = (e) => onFieldChange(e, 'password', false);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    const noError = (!!email && !!password) && !errorField.email && !errorField.password;
+    const noError = (!!field.email && !!field.password) && !errorField.email && !errorField.password;
 
     if (noError) {
-      dispatch(signIn(email, password));
+      dispatch(signIn(field.email, field.password));
       setClicked('signin');
     }
   };
 
-  const onSignUp = () => {
-    props.history.push('/signup');
-  };
+  const onSignUp = () => props.history.push('/signup');
   
   const onSignInWithGoogle = () => {
     dispatch(signInWithGoogle());

@@ -48,3 +48,12 @@
   display: flex;
   flex-direction: column;
 }
+
+.is-nav-scrolled {
+  position: fixed;
+  animation: slide-down .3s ease 1;
+  animation-fill-mode: forwards;
+  top: 0;
+  background: $nav-bg-scrolled;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .02);
+}

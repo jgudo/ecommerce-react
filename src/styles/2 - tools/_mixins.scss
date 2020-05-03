@@ -6,3 +6,29 @@
   -ms-transition: $prop $speed $func;
   transition: $prop $speed $func;
 }
+
+
+@mixin l-desktop {
+  @media (min-width: $l-desktop) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop) and (max-width: $l-desktop) {
+    @content;
+  }
+}
+
+
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}

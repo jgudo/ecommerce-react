@@ -7,7 +7,7 @@
   align-items: center;
   color: $white;
 
-  @media (max-width: $mobile) {
+  @include mobile {
     padding: $s-size;
     padding-bottom: $xl-size;
     flex-direction: column;
@@ -29,7 +29,7 @@
   flex-grow: 1;
 }
 
-@media (max-width: $mobile) {
+@include mobile {
   .footer-col-1,
   .footer-col-2,
   .footer-col-3 {

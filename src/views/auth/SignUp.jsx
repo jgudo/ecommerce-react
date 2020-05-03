@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'; 
+import useFieldHandler from 'hooks/useFieldHandler';
 import { signUp, setAuthStatus, isAuthenticating as authenticating } from 'actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
 
 const SignUp = (props) => {
-  const [error, setError] = useState({});
-  const [field, setField] = useState({});
   const [passwordHidden, setPasswordHidden] = useState(true);
   const { isAuthenticating, authStatus } = useSelector(state => ({
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus
   }));
+   const { field, setField, onFieldChange, errorField } = useFieldHandler({
+    email: '',
+    password: ''
+  });
   const dispatch = useDispatch();
   const passwordField = useRef(null);
 
@@ -22,51 +25,11 @@ const SignUp = (props) => {
     }
   }, []);
   
-  const onEmailInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  const onEmailInput = (e) => onFieldChange(e, 'email', false);
 
-    if (val === '') {
-      setError({ ...error, email: 'Email is required' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, email: 'Email is invalid' });
-    } else {
-      setField({ ...field, email: val });
-      setError({ ...error, email: '' });
-    }
-  };
+  const onFullnameInput = (e) => onFieldChange(e, 'fullname', false);
 
-  const onFullnameInput = (e) => {
-    const val = e.target.value;
-    const regex = /[^a-zA-Z\s]/g;
-
-    if (val === '') {
-      setError({ ...error, fullname: 'Full name is required.' });
-    } else if (regex.test(val)) {
-      setError({ ...error, fullname: 'Full name must not include special characters.' });
-    } else if (val.length < 5) {
-      setError({ ...error, fullname: 'Full name must be at least 5 letters.' });
-    } else {
-      setField({ ...field, fullname: val.trim() });
-      setError({ ...error, fullname: '' });
-    }
-  };
-
-  const onPasswordInput = (e) => {
-    const val = e.target.value.trim();
-    const regex = /[A-Z\W]/g;
-
-    if (val === '') {
-      setError({ ...error, password: 'Password is required.' });
-    } else if (val.length < 8) {
-      setError({ ...error, password: 'Password should be 8 characters long.' });
-    } else if (!regex.test(val)) {
-      setError({ ...error, password: 'Password should contain uppercase or special character.' });
-    } else {
-      setField({ ...field, password: val });
-      setError({ ...error, password: '' });
-    }
-  };
+  const onPasswordInput = (e) => onFieldChange(e, 'password', false);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -75,16 +38,12 @@ const SignUp = (props) => {
     } 
   };
 
-  const onTogglePasswordVisibility = () => {
-    setPasswordHidden(!passwordHidden);
-  };
+  const onTogglePasswordVisibility = () => setPasswordHidden(!passwordHidden);
 
-  const onClickSignIn = () => {
-    props.history.push('/signin');
-  };
+  const onClickSignIn = () => props.history.push('/signin');
 
   const errorClassName = (key) => {
-    return error[key] ? 'input-error' : '';
+    return errorField[key] ? 'input-error' : '';
   };
 
   return (
@@ -98,7 +57,7 @@ const SignUp = (props) => {
         <h3>Sign up to Salinaka</h3>
         <form onSubmit={onFormSubmit}>
           <div className="signup-field">
-            {error.fullname ? <span className="input-message">{error.fullname}</span> : (
+            {errorField.fullname ? <span className="input-message">{errorField.fullname}</span> : (
               <span className="d-block padding-s">Full Name</span>
             )}
             <input 
@@ -112,7 +71,7 @@ const SignUp = (props) => {
             />
           </div>
           <div className="signup-field">
-            {error.email ? <span className="input-message">{error.email}</span> : (
+            {errorField.email ? <span className="input-message">{errorField.email}</span> : (
               <span className="d-block padding-s">Email</span>
             )}
             <input 
@@ -125,7 +84,7 @@ const SignUp = (props) => {
             />
           </div>
           <div className="signup-field">
-            {error.password ? <span className="input-message">{error.password}</span> : (
+            {errorField.password ? <span className="input-message">{errorField.password}</span> : (
               <span className="d-block padding-s">Password</span>
             )}
             <div className="d-flex">
