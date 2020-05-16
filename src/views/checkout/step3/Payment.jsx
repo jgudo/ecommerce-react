@@ -6,7 +6,7 @@ import useFieldHandler from 'hooks/useFieldHandler';
 
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 
-const Payment = (props) => {
+const Payment = ({ shipping, subtotal, history }) => {
   const { field, setField, onFieldChange, errorField, setErrorField } = useFieldHandler({
     name: '',
     cardnumber: '',
@@ -16,7 +16,6 @@ const Payment = (props) => {
   const [paymentMode, setPaymentMode] = useState('paypal');
   const collapseCreditHeight = useRef(null);
   const cardInputRef = useRef(null);
-  const { shipping, subtotal } = props;
 
   const onCreditModeChange = (e) => {
     setPaymentMode('credit');
@@ -77,9 +76,9 @@ const Payment = (props) => {
 
   }
 
-  return (
+  return !shipping.isDone ? <Redirect to="/checkout/step1" />
+   : (
     <div className="checkout">
-      {!shipping.isDone && <Redirect to="/checkout/step1" />}
       <CheckOutHeader current={3}/>
       <form className="checkout-step-3" onSubmit={onConfirm}>
         <h3 className="text-center">Payment</h3>
@@ -213,7 +212,7 @@ const Payment = (props) => {
         <div className="checkout-shipping-action padding-0">
           <button 
               className="button button-muted checkout-shipping-back"
-              onClick={() => props.history.push('/checkout/step2')}
+              onClick={() => history.push('/checkout/step2')}
               type="button"
           >
             Back

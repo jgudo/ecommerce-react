@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import withAuth from '../hoc/withAuth';
-import ReactPhoneInput from 'react-phone-input-2';
+import PhoneInput from 'react-phone-input-2';
 import CheckOutHeader from '../header/CheckOutHeader';
 import useFieldHandler from 'hooks/useFieldHandler';
 
@@ -12,7 +12,7 @@ const ShippingDetails = ({ profile, dispatch, shipping, subtotal, history }) => 
     fullname: profile.fullname ? profile.fullname : '',
     email: profile.email ? profile.email : '',
     address: profile.address ? profile.address : shipping.address ? shipping.address : '',
-    mobile: profile.mobile ? profile.mobile : shipping.mobile ? shipping.mobile : '',
+    mobile: profile.mobile ? profile.mobile : shipping.mobile ? shipping.mobile : {},
     isInternational: !!shipping.isInternational ? shipping.isInternational : false,
     isDone: false
   });
@@ -23,9 +23,7 @@ const ShippingDetails = ({ profile, dispatch, shipping, subtotal, history }) => 
 
   const onAddressInput = (e) =>onFieldChange(e, 'address', false);
 
-  const onMobileInput = (e, data) => {
-    onFieldChange(e, 'mobile', false, data);
-  }
+  const onMobileInput = (value, data, e, formattedValue) => onFieldChange(value, 'mobile', false, { data, event: e, formattedValue });
 
   const errorClassName = (key) =>  errorField[key] ? 'input-error' : '';
 
@@ -65,8 +63,9 @@ const ShippingDetails = ({ profile, dispatch, shipping, subtotal, history }) => 
                 />
               </div>
               <div className="d-block checkout-field">
-                {errorField.email && <span className="input-message">{errorField.email}</span>}
-                <span className="d-block padding-s">Email</span>
+                {errorField.email ? <span className="input-message">{errorField.email}</span> : (
+                    <span className="d-block padding-s">Email</span>
+                  )}
                 <input 
                     className={`input-form d-block ${errorClassName('email')}`}
                     onChange={onEmailInput}
@@ -79,7 +78,7 @@ const ShippingDetails = ({ profile, dispatch, shipping, subtotal, history }) => 
             <div className="checkout-fieldset">
               <div className="d-block checkout-field">
                 {errorField.address ? <span className="input-message">{errorField.address}</span> : (
-                  <span className="d-block padding-s">Shipping Address</span>
+                  <span className="d-block padding-s">* Shipping Address</span>
                 )}
                 <input 
                     className={`input-form d-block ${errorClassName('address')}`}
@@ -91,16 +90,16 @@ const ShippingDetails = ({ profile, dispatch, shipping, subtotal, history }) => 
               </div>
               <div className="d-block checkout-field">
                 {errorField.mobile ? <span className="input-message">{errorField.mobile}</span> : (
-                  <span className="d-block padding-s">Mobile Number</span>
+                  <span className="d-block padding-s">* Mobile Number</span>
                 )}
-                <ReactPhoneInput 
-                    defaultCountry={'ph'} 
+                <PhoneInput 
+                    country={field.mobile.countryCode || 'ph'} 
                     inputExtraProps={{ required: true }}
                     inputClass={`input-form d-block ${errorClassName('mobile')}`}
                     masks={{'ph': '+.. .... ... ....'}}
                     onChange={onMobileInput}
                     placeholder="09264538861"
-                    value={field.mobile} 
+                    value={field.mobile.num} 
                 />
               </div>
             </div>
