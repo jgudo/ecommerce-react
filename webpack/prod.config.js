@@ -55,6 +55,18 @@ module.exports = merge(baseConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/404.html'),
+      template: '404.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
@@ -82,7 +94,7 @@ module.exports = merge(baseConfig, {
     // })
 
     new workboxPlugin.GenerateSW({
-      cacheId: 'salinaka-ecommerce_v2', // change this
+      cacheId: 'salinaka-ecommerce_v3', // change this
       swDest: 'sw.js',
       navigateFallback: '/index.html',
       navigateFallbackWhitelist: [ /^\/[^\_]+\/?/ ],
