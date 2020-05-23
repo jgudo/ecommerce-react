@@ -3,11 +3,12 @@ import BasketItem from 'components/basket/BasketItem';
 import StepTracker from '../components/StepTracker';
 import Pagination from '../components/Pagination';
 import withAuth from '../hoc/withAuth';
+import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
 
 const OrderSummary = ({ basket, subtotal, dispatch, history }) => {
   const onClickPrevious = () => history.push('/');
-  const onClickNext = () => history.push('/checkout/step2');
+  const onClickNext = () => history.push(CHECKOUT_STEP_2);
 
   return (
     <div className="checkout">

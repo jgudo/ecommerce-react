@@ -238,6 +238,8 @@ const EditProfile = (props) => {
               inputClass={`input-form d-block ${field.mobile.error ? 'input-error' : ''}`}
               masks={{'ph': '+.. .... ... ....'}}
               onChange={onMobileChange}
+              disabled={isLoading}
+              readOnly={isLoading}
               placeholder="Enter your mobile number"
               value={field.mobile.data.num} 
           />

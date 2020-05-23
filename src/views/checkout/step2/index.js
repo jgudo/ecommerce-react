@@ -6,6 +6,7 @@ import Pagination from '../components/Pagination';
 import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
 
+import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
 import { setShippingDetails } from 'actions/checkoutActions';
 
 const ShippingDetails = ({ profile, shipping, subtotal, history }) => {
@@ -18,7 +19,7 @@ const ShippingDetails = ({ profile, shipping, subtotal, history }) => {
       data: {}
     },
     isInternational: !!shipping.isInternational ? shipping.isInternational : false,
-    isDone: shipping.isDone ? shipping.isDone : false
+    isDone: false
   });
   const dispatch = useDispatch();
   const noError = Object.keys(field).every((key) => {
@@ -39,7 +40,7 @@ const ShippingDetails = ({ profile, shipping, subtotal, history }) => {
         address: field.address.value,
         mobile: field.mobile,
         isInternational: field.isInternational, 
-        isDone: field.isDone
+        isDone: true
       }));
     }     
   };
@@ -47,7 +48,7 @@ const ShippingDetails = ({ profile, shipping, subtotal, history }) => {
   const onClickNext = () => {
     if (noError) {
       saveShippingDetails();
-      history.push('/checkout/step3');
+      history.push(CHECKOUT_STEP_3);
     }
   };
 
@@ -71,7 +72,7 @@ const ShippingDetails = ({ profile, shipping, subtotal, history }) => {
         <br/>
         <Pagination 
             history={history}
-            onClickPrevious={() => history.push('/checkout/step1')}
+            onClickPrevious={() => history.push(CHECKOUT_STEP_1)}
             disabledNext={!noError}
             onClickNext={onClickNext}
 

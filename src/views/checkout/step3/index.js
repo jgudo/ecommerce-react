@@ -6,6 +6,7 @@ import CreditPayment from './CreditPayment';
 import PayPalPayment from './PayPalPayment';
 
 import withAuth from '../hoc/withAuth';
+import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { setPaymentDetails } from 'actions/checkoutActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 
@@ -72,7 +73,7 @@ const Payment = ({ shipping, payment, subtotal, dispatch, history }) => {
 
   const onClickBack = () => {
     savePaymentDetails();
-    history.push('/checkout/step2')
+    history.push(CHECKOUT_STEP_2)
   }
 
   return !shipping.isDone ? <Redirect to="/checkout/step1" />
