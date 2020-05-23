@@ -1,9 +1,10 @@
 .navigation {
   width: 100%;
+  height: $nav-height;
   background: $background-color;
   display: flex;
   align-items: center;
-  padding: 0 $xxl-size;
+  padding: .5rem 10rem;
   position: absolute;
   top: 0;
   transform: translateY(0);
@@ -11,16 +12,39 @@
   box-shadow: none;
   @include bezier-transition(transform, .3s, ease);
 
+  @include tablet {
+    padding: .5rem 2rem;
+  }
+
   @include mobile {
     padding: 0 $s-size;
     position: fixed;
+  }
+
+  .logo {
+    margin-right: 2rem;
+  }
+
+  .logo img {
+    width: 120px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .logo a {
+    display: block;
+    height: 100%;
+  }
+
+  .searchbar {
+    width: 300px;
   }
 }
 
 .navigation-admin {
   background: $white;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
-  padding-left: $l-size;
+  padding: .5rem $l-size;
 }
 
 .navigation-menu {

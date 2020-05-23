@@ -239,3 +239,17 @@ input[type=radio]:checked + label:after {
 .react-tel-input input[type=tel].input-error ~ .flag-dropdown {
   border: 1px solid $red !important;
 }
+
+.input-message {
+  display: block;
+  padding: $s-size;
+  color: $red;
+  font-weight: bold;
+}
+
+.input-form {
+  padding: 10px $m-size !important;
+  border: 1px solid $border-color-focus !important;
+  font-size: $font-medium !important;
+  margin-bottom: $s-size;
+}

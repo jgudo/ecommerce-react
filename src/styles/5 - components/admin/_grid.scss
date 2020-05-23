@@ -11,8 +11,13 @@
 .product-admin-header {
   display: flex;
   align-items: center;
-  padding: 0 $s-size;
+  padding: 0 $l-size;
   border-bottom: 1px solid $border-color;
+  background: $white;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }
 
 .product-admin-header-title {
@@ -23,6 +28,10 @@
   position: relative;
   z-index: map-get($z-index, 'filter');
   margin-right: $s-size;
+}
+
+.product-admin-items {
+  padding: 0 $l-size;
 }
 
 .product-admin-filter-wrapper {
@@ -40,3 +49,6 @@
   display: block;
 }
 
+.product-form-container {
+  padding: $l-size;
+}

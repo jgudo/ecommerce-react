@@ -2,7 +2,7 @@ import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from 'constants/constants';
 
 const initState = {
  // id: 'test-123',
- // type: 'admin',
+ // role: 'ADMIN',
  // provider: 'password'
 };
 
@@ -11,7 +11,7 @@ export default (state = initState, action) => {
     case SIGNIN_SUCCESS:
       return {
         id: action.payload.id,
-        type: action.payload.type,
+        role: action.payload.role,
         provider: action.payload.provider
       };
     case SIGNOUT_SUCCESS:

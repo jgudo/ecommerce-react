@@ -6,7 +6,7 @@
     border-radius: 50%;
     border-top: 2px solid $white;
     border-left: 2px solid $white;
-    animation: spin .2s ease infinite;
+    animation: spin 2s linear infinite;
 }
 
 .circular-progress-dark {

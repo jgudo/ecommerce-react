@@ -1,11 +1,11 @@
 export const HOME = '/';
 export const ACCOUNT = '/account';
 export const ACCOUNT_EDIT = '/account/edit';
-export const DASHBOARD = '/dashboard';
-export const DASHBOARD_PRODUCTS = '/dashboard/products';
-export const DASHBOARD_USERS = '/dashboard/users';
-export const ADD_PRODUCT = '/dashboard/add';
-export const EDIT_PRODUCT = '/dashboard/edit/:id';
+export const ADMIN_DASHBOARD = '/admin/dashboard';
+export const ADMIN_PRODUCTS = '/admin/products';
+export const ADMIN_USERS = '/admin/users';
+export const ADD_PRODUCT = '/admin/add';
+export const EDIT_PRODUCT = '/admin/edit';
 export const SEARCH = '/search'; 
 export const SIGNIN = '/signin';
 export const SIGNOUT = '/signout';

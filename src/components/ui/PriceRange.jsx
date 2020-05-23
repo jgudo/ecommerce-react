@@ -2,16 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { displayMoney } from 'helpers/utils';
 
-const PriceRange = ({ 
-  min, 
-  max,
-  initMin,
-  initMax,
-  onPriceChange,
-  productsLength 
-}) => {
-  const [minState, setMinState] = useState(initMin ? initMin : min);
-  const [maxState, setMaxState] = useState(initMax ? initMax : max);
+const PriceRange = (props) => {
+  const [minState, setMinState] = useState(props.initMin ? props.initMin : props.min);
+  const [maxState, setMaxState] = useState(props.initMax ? props.initMax : props.max);
   const slider = useRef(null);
   const inputMin = useRef(null);
   const inputMax = useRef(null);
@@ -19,9 +12,9 @@ const PriceRange = ({
   const rangeMax = useRef(null);
 
   useEffect(() => {
-    setMinState(initMin ? initMin : min);
-    setMaxState(initMax ? initMax : max);
-  }, [initMin, initMax]);
+    setMinState(props.initMin ? props.initMin : props.min);
+    setMaxState(props.initMax ? props.initMax : props.max);
+  }, [props.initMin, props.initMax]);
 
   const onRangeChange = () => {
     let slide1 = +rangeMin.current.value;
@@ -33,7 +26,7 @@ const PriceRange = ({
 
     setMinState(slide1);
     setMaxState(slide2);
-    onPriceChange(slide1, slide2);
+    props.onPriceChange(slide1, slide2);
   };
 
   const onInputChange = () => {
@@ -48,7 +41,7 @@ const PriceRange = ({
 
     setMinState(valMin);
     setMaxState(valMax);
-    onPriceChange(valMin, valMax);
+    props.onPriceChange(valMin, valMax);
   };
 
   return (
@@ -59,9 +52,9 @@ const PriceRange = ({
       <div className="price-range-control">
         <input 
             className="price-range-input"
-            disabled={productsLength === 0}
-            max={max}
-            min={min} 
+            disabled={props.productsLength === 0}
+            max={props.max}
+            min={props.min} 
             onChange={onInputChange}
             ref={inputMin}
             type="number" 
@@ -70,9 +63,9 @@ const PriceRange = ({
         — 
         <input 
             className="price-range-input"
-            disabled={productsLength === 0}
-            max={max}
-            min={min}
+            disabled={props.productsLength === 0}
+            max={props.max}
+            min={props.min}
             onChange={onInputChange}
             ref={inputMax}
             type="number" 
@@ -82,9 +75,9 @@ const PriceRange = ({
       <div className="price-range-control">
         <input 
             className="price-range-slider"
-            disabled={productsLength === 0}
-            max={max} 
-            min={min}
+            disabled={props.productsLength === 0}
+            max={props.max} 
+            min={props.min}
             onChange={onRangeChange}
             ref={rangeMin}
             step="50" 
@@ -93,9 +86,9 @@ const PriceRange = ({
         />
         <input 
             className="price-range-slider"
-            disabled={productsLength === 0}
-            max={max} 
-            min={min}
+            disabled={props.productsLength === 0}
+            max={props.max} 
+            min={props.min}
             onChange={onRangeChange}
             ref={rangeMax} 
             step="20"
@@ -104,8 +97,8 @@ const PriceRange = ({
         />
       </div>
       <div className="price-range-scale">
-        <span className="price-range-price">{displayMoney(min)}</span>
-        <span className="price-range-price">{displayMoney(max)}</span>
+        <span className="price-range-price">{displayMoney(props.min)}</span>
+        <span className="price-range-price">{displayMoney(props.max)}</span>
       </div>
     </div>
   );
@@ -114,8 +107,10 @@ const PriceRange = ({
 PriceRange.propType = {
   min: PropTypes.number,
   max: PropTypes.number,
-  onMaxPriceChange: PropTypes.func,
-  onMinPriceChange: PropTypes.func
+  initMin: PropTypes.number,
+  initMax: PropTypes.number,
+  productsLength: PropTypes.number,
+  onPriceChange: PropTypes.func
 };
 
 export default PriceRange;

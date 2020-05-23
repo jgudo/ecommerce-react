@@ -10,6 +10,11 @@
     width: 100%;
     padding: 0;
   }
+
+  .user-profile-banner-wrapper,
+  .user-profile-avatar-wrapper {
+    overflow: visible;
+  }
 }
 
 .edit-user-details {
@@ -20,22 +25,41 @@
   width: 40%;
 }
 
-.edit-wrapper {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, .5);
-  display: none;
-}
+// .edit-wrapper {
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   width: 3rem;
+//   height: 3rem;
+//   border-radius: 50%;
+//   background: $black;
+//   color: $white;
+// }
 
 .edit-button {
-  color: $white;
   padding: $s-size;
+  position: absolute;
+  bottom: -10px;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none !important;
+  background: $black !important;
+  color: $white;
+}
+
+.edit-avatar-button {
+  right: 0;
+}
+
+.edit-banner-button {
+  right: 2rem;
 }
 
 .edit-user-action {
@@ -44,45 +68,9 @@
   justify-content: space-between;
 
   @include mobile {
-    flex-direction: column;
-
-    button:first-child {
-      order: 2;
-    }
-    
-    button:last-child {
-      order: 1;
-      margin-bottom: $s-size;
-    }
+   button {
+    width: 50%;
+   }
   }
 }
 
-.edit-avatar-button {
-  border: none;
-  background: none;
-
-  &:hover {
-    border: none;
-    background: none;
-  }
-}
-
-.edit-banner-button {
-  background: none;
-
-  &:hover {
-    background: none;
-  }
-}
-
-.user-profile-banner-wrapper:hover > .edit-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.user-profile-avatar-wrapper:hover > .edit-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

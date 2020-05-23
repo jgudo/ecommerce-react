@@ -29,9 +29,9 @@ const ProductAppliedFilters = ({ filter }) => {
         <div className="pill-wrapper">
           <span className="d-block">Keyword</span>
           <div className="pill padding-right-l">
-            <h5 className="margin-0">{filter.keyword}</h5>
+            <h5 className="pill-content margin-0">{filter.keyword}</h5>
             <div className="pill-remove" onClick={onRemoveKeywordFilter}>
-              <h5 className="margin-0 text-subtle">x</h5>
+              <h5 className="margin-0 text-subtle"><i className="fa fa-times-circle" /></h5>
             </div>
           </div>
         </div>
@@ -40,9 +40,9 @@ const ProductAppliedFilters = ({ filter }) => {
         <div className="pill-wrapper">
           <span className="d-block">Brand</span>
           <div className="pill padding-right-l">
-            <h5 className="margin-0">{filter.brand}</h5>
+            <h5 className="pill-content margin-0">{filter.brand}</h5>
             <div className="pill-remove"onClick={onRemoveBrandFilter}>
-              <h5 className="margin-0 text-subtle">x</h5>
+              <h5 className="margin-0 text-subtle"><i className="fa fa-times-circle" /></h5>
             </div>
           </div>
         </div>
@@ -51,9 +51,9 @@ const ProductAppliedFilters = ({ filter }) => {
         <div className="pill-wrapper">
           <span className="d-block">Price Range</span>
           <div className="pill padding-right-l">
-            <h5 className="margin-0">${filter.minPrice} - ${filter.maxPrice}</h5>
+            <h5 className="pill-content margin-0">${filter.minPrice} - ${filter.maxPrice}</h5>
             <div className="pill-remove" onClick={onRemovePriceRangeFilter}>
-              <h5 className="margin-0 text-subtle">x</h5>
+              <h5 className="margin-0 text-subtle"><i className="fa fa-times-circle" /></h5>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ const ProductAppliedFilters = ({ filter }) => {
         <div className="pill-wrapper">
           <span className="d-block">Sort By</span>
           <div className="pill padding-right-l">
-            <h5 className="margin-0">
+            <h5 className="pill-content margin-0">
               {filter.sortBy === 'price-desc' 
                 ? 'Price High - Low' 
                 : filter.sortBy === 'price-asc' 
@@ -73,7 +73,7 @@ const ProductAppliedFilters = ({ filter }) => {
               }
             </h5>
             <div className="pill-remove" onClick={onRemoveSortFilter}>
-              <h5 className="margin-0 text-subtle">x</h5>
+              <h5 className="margin-0 text-subtle"><i className="fa fa-times-circle" /></h5>
             </div>
           </div>
         </div>

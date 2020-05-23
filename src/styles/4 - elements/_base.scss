@@ -14,6 +14,7 @@ body {
   font-family: 'Tajawal', Helvetica, Arial, sans-serif;
   font-size: $baseFontSize;
   background: $background-color;
+  font-weight: bold;
   overflow-x: hidden;
 }
 
@@ -26,7 +27,7 @@ button:focus {
 }   
 
 p {
-  color: $paragraph-color-00;
+  color: $paragraph-color;
   font-weight: 300;
   line-height: $line-height;
 }
@@ -36,7 +37,7 @@ strong {
 }
 
 span {
-  color: $paragraph-color-00;
+  color: $paragraph-color;
   font-size: $font-small;
   position: relative;
 }
@@ -70,14 +71,14 @@ h6 {
 
 .content {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   position: relative;
   padding: $top $xxl-size;
   display: flex;
   animation: fadeIn .5s ease;
 
   @media (max-width: $mobile) {
-    padding: $top $m-size;
+    padding: 5rem $m-size;
     flex-direction: column;
   }
 }
@@ -97,6 +98,7 @@ h6 {
 .content-admin-wrapper {
   overflow-y: scroll;
   flex-grow: 1;
-  padding: $m-size $l-size;
+  padding: $m-size 0;
   animation: fadeIn .5s ease;
+  position: relative;
 }

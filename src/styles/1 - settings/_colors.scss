@@ -15,10 +15,8 @@ $background-color: #f8f8f8;
 $background-color-01: #f2f2f2;
 
 // Paragraphs
-$paragraph-color-01: #3a3a3a;
-$paragraph-color-00: #4a4a4a; // base
-$paragraph-color-10: #818181;
-$paragraph-color-20: #b6b6b6;
+$paragraph-color: #4a4a4a; // base
+
 // Heading
 $heading-color: #1a1a1a;
 
@@ -30,16 +28,22 @@ $border-color-focus: #c5c5c5;
 $white: #fff;
 $black: #000;
 $off-black: #303030;
+$off-white: #f0f0f0;
 $red: rgba(247, 45, 45, 0.986);
 $green: rgb(59, 150, 32);
 $yellow: rgb(228, 165, 31);
+$gray-01: #3a3a3a;
+$gray-10: #818181;
+$gray-20: #b6b6b6;
 
 // Buttons
 $button-color: #101010;
 $button-hover: lighten($button-color, 10%);
 
 // Social
-$color-facebook: rgb(19, 84, 182);
-$color-facebook-hover: rgb(15, 70, 153);
+$color-facebook: #0078ff;
+$color-facebook-hover: darken($color-facebook, 5%);
+$color-github: #24292e;
+$color-github-hover: lighten($color-github, 5%);
 
 $color-success: #000;

@@ -1,5 +1,5 @@
 .ReactModal__Overlay {
-  z-index: 9999;
+  z-index: map-get($z-index, 'filter');
 }
 
 .ReactModal__Body--open {
@@ -8,8 +8,22 @@
 
 .modal-close-button {
   position: absolute;
-  top: $s-size;
-  right: $s-size;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  padding: 0;
+  border: none;
+  background: none;
+
+  i {
+		color: lighten($off-black, 10%);
+  }
+
+  &:hover {
+  	i {
+			color: $off-black;
+  	}
+  }
 }
 
 .ReactModal__Content {

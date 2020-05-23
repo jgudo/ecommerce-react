@@ -1,18 +1,31 @@
-import { SET_CHECKOUT_SHIPPING_DETAILS, RESET_CHECKOUT_SHIPPING_DETAILS } from 'constants/constants';
+import { 
+  SET_CHECKOUT_SHIPPING_DETAILS,
+  SET_CHECKOUT_PAYMENT_DETAILS, 
+  RESET_CHECKOUT
+} from 'constants/constants';
 
-export default (state = {
-  shipping: {}
-}, action) => {
+const defaultState = {
+  shipping: {},
+  payment: {
+    type: 'paypal',
+    data: {}
+  }
+};
+
+export default (state = defaultState, action) => {
   switch (action.type) {
     case SET_CHECKOUT_SHIPPING_DETAILS:
       return {
         ...state,
         shipping: action.payload
       };
-    case RESET_CHECKOUT_SHIPPING_DETAILS:
+    case SET_CHECKOUT_PAYMENT_DETAILS:
       return {
-        shipping: {}
+        ...state,
+        payment: action.payload
       };
+    case RESET_CHECKOUT:
+      return defaultState;
     default:
       return state;
   }

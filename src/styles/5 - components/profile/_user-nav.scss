@@ -14,7 +14,7 @@
 
   &:hover {
     cursor: pointer;
-    border-bottom: 2px solid $black;
+    // border-bottom: 2px solid $black;
   }
 }
 
@@ -46,11 +46,11 @@
 }
 
 .user-nav-sub {
-  width: 100%;
+  width: 150px;
   height: auto;
   background: $white;
   position: absolute;
-  top: 104%;
+  top: 100%;
   right: 0;
   box-shadow: 0 5px 12px rgba(0, 0, 0, .1);
   display: none;
@@ -59,7 +59,8 @@
 .user-nav-sub-link {
   font-size: $font-small;
   font-weight: bold;
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding: $s-size $m-size;
   text-align: left;
 

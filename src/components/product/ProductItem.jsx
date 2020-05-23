@@ -8,7 +8,7 @@ import ImageLoader from '../ui/ImageLoader';
 const ProductItem = ({ 
   product, 
   onOpenModal, 
-  onClickProduct,
+  displaySelected,
   dispatch,
   foundOnBasket
  }) => {
@@ -16,7 +16,7 @@ const ProductItem = ({
   const onClickItem = () => {
     if (product.id) {
       onOpenModal();
-      onClickProduct(product);
+      displaySelected(product);
     }
   };
 
@@ -39,6 +39,7 @@ const ProductItem = ({
             boxShadow: foundOnBasket(product.id) ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none' 
           }}
       >
+        {foundOnBasket(product.id) && <i className="fa fa-check product-card-check" />}
         <div 
             className="product-card-content"
             onClick={onClickItem}    

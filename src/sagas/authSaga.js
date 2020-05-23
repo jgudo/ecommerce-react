@@ -9,6 +9,7 @@ import {
   ON_AUTHSTATE_FAIL,
   SIGNIN_WITH_GOOGLE,
   SIGNIN_WITH_FACEBOOK,
+  SIGNIN_WITH_GITHUB,
   RESET_PASSWORD,
   SIGNOUT,
   ON_AUTHSTATE_SUCCESS,
@@ -25,39 +26,40 @@ import {
 import { clearBasket } from 'actions/basketActions';
 import { setProfile, clearProfile } from 'actions/profileActions';
 import { resetFilter } from 'actions/filterActions';
-import { resetShippingDetails } from 'actions/checkoutActions';
+import { resetCheckout } from 'actions/checkoutActions';
 
 import defaultAvatar from 'images/defaultAvatar.jpg';
 import defaultBanner from 'images/defaultBanner.jpg';
 
 function* handleError(e) {
+  const obj = { success: false, type: 'auth' };
   yield put(isAuthenticating(false));
   
   switch (e.code) {
     case 'auth/network-request-failed':
-      yield put(setAuthStatus({ success: false, message: 'Network error has occured. Please try again.'}));
+      yield put(setAuthStatus({ ...obj, message: 'Network error has occured. Please try again.' }));
       break;
     case 'auth/email-already-in-use':
-      yield put(setAuthStatus({ success: false, message: 'Email is already in use. Please use another email'}));
+      yield put(setAuthStatus({ ...obj, message: 'Email is already in use. Please use another email'}));
       break;
     case 'auth/wrong-password':
-      yield put(setAuthStatus({ success: false, message: 'Incorrect email or password'}));
+      yield put(setAuthStatus({ ...obj, message: 'Incorrect email or password'}));
       break;
     case 'auth/user-not-found':
-      yield put(setAuthStatus({ success: false, message: 'Incorrect email or password'}));
+      yield put(setAuthStatus({ ...obj, message: 'Incorrect email or password'}));
       break;
     case 'auth/reset-password-error':
-      yield put(setAuthStatus({ success: false, message: 'Failed to send password reset email. Did you type your email correctly?'}));
+      yield put(setAuthStatus({ ...obj, message: 'Failed to send password reset email. Did you type your email correctly?'}));
       break;
     default:
-      yield put(setAuthStatus({ success: false, message: e.message}));
+      yield put(setAuthStatus({ ...obj, message: e.message}));
       break;
   }
 }
 
 function* initRequest() {
   yield put(isAuthenticating());
-  yield put(setAuthStatus(null));
+  yield put(setAuthStatus({}));
 }
 
 function* authSaga({ type, payload }) {
@@ -86,6 +88,14 @@ function* authSaga({ type, payload }) {
         yield handleError(e);
       }
       break;
+    case SIGNIN_WITH_GITHUB:
+      try {
+        yield initRequest();
+        yield call(firebase.signInWithGithub);
+      } catch (e) {
+        yield handleError(e);
+      }
+      break;
     case SIGNUP:
       try {
         yield initRequest();
@@ -98,7 +108,7 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: '',
+          mobile: {},
           role: 'USER',
           dateJoined: ref.user.metadata.creationTime || new Date().getTime()
         };
@@ -117,7 +127,7 @@ function* authSaga({ type, payload }) {
         yield put(clearBasket());
         yield put(clearProfile());
         yield put(resetFilter());
-        yield put(resetShippingDetails());
+        yield put(resetCheckout());
         yield put(signOutSuccess());
         yield put(isAuthenticating(false));
         yield call(history.push, '/signin');
@@ -131,6 +141,7 @@ function* authSaga({ type, payload }) {
         yield call(firebase.passwordReset, payload);
         yield put(setAuthStatus({
           success: true, 
+          type: 'reset',
           message: 'Password reset email has been sent to your provided email.'
         }));
         yield put(isAuthenticating(false));
@@ -139,13 +150,25 @@ function* authSaga({ type, payload }) {
       }
       break;
     case ON_AUTHSTATE_SUCCESS:
-      yield put(setAuthStatus({ success: true, message: 'Successfully signed in.'}));
+      yield put(setAuthStatus({ 
+        success: true,
+        type: 'auth',
+        message: 'Successfully signed in. Redirecting...'
+       }));
+      // yield call(history.push, '/');
+
       const snapshot = yield call(firebase.getUser, payload.uid);
 
       if (snapshot.data()) { // if user exists in database
+        const user = snapshot.data();
 
-        yield put(setProfile(snapshot.data()));
-      } else if (payload.providerData[0].providerId !== 'password') { 
+        yield put(setProfile(user));
+        yield put(signInSuccess({ 
+          id: payload.uid, 
+          role: user.role, 
+          provider: payload.providerData[0].providerId 
+        }));
+      } else if (payload.providerData[0].providerId !== 'password' && !snapshot.data()) { 
         // add the user if auth provider is not password
         const user = {
           fullname: payload.displayName ? payload.displayName : 'User',
@@ -153,19 +176,18 @@ function* authSaga({ type, payload }) {
           banner: defaultBanner,
           email: payload.email,
           address: '',
-          mobile: '',
+          mobile: {},
           role: 'USER',
           dateJoined: payload.metadata.creationTime
         };
         yield call(firebase.addUser, payload.uid, user);
         yield put(setProfile(user));
+        yield put(signInSuccess({ 
+          id: payload.uid, 
+          role: user.role, 
+          provider: payload.providerData[0].providerId 
+        }));
       }
-      
-      yield put(signInSuccess({ 
-        id: payload.uid, 
-        type: 'client', 
-        provider: payload.providerData[0].providerId 
-      }));
       yield put(isAuthenticating(false));
       break;
     case ON_AUTHSTATE_FAIL:

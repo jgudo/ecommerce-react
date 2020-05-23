@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-import { SIGNIN, SIGNUP } from 'constants/routes';
+import { SIGNIN, SIGNUP, HOME, ADMIN_DASHBOARD } from 'constants/routes';
 
 import Basket from 'components/basket/basket';
 import Navigation from 'components/ui/Navigation';
@@ -15,18 +15,18 @@ const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) 
         const { from } = props.location.state || { from: { pathname: '/' } }; 
 
         return (
-          isAuth && userType === 'admin'
+          isAuth && userType === 'ADMIN'
           ? (
-            <Redirect to="/dashboard"/>
+            <Redirect to={ADMIN_DASHBOARD}/>
           ) 
-          : (isAuth && userType === 'client') && (path === SIGNIN || path === SIGNUP)
+          : (isAuth && userType === 'USER') && (path === SIGNIN || path === SIGNUP)
           ? (
             <Redirect to={from}/>
           ) 
           : (
             <>
-              <Navigation path={path} />
-              <Basket />
+              <Navigation path={path} isAuth={isAuth}/>
+              <Basket isAuth={isAuth}/>
               <main className="content">
                 <Component {...props} />
               </main>
@@ -39,8 +39,8 @@ const PublicRoute = ({ userType, isAuth, component: Component, path, ...rest }) 
 );
 
 const mapStateToProps = ({ auth }) => ({
-  isAuth: !!auth.id && !!auth.type,
-  userType: auth.type
+  isAuth: !!auth.id && !!auth.role,
+  userType: auth.role
 });
 
 export default connect(mapStateToProps)(PublicRoute);

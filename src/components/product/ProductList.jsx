@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '../ui/CircularProgress';
+import MessageDisplay from '../ui/MessageDisplay';
+
+import { ADMIN_PRODUCTS } from 'constants/routes';
 import { getProducts } from 'actions/productActions';
 import { isLoading as dispatchIsLoading } from 'actions/appActions';
 
@@ -12,11 +15,13 @@ const ProductList = ({
   lastRefKey,
   totalItems,
   dispatch,
+  location,
   children 
 }) => {
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const [isFetching, setFetching] = useState(false);
   const [scrolledAtBottom, setScrolledAtBottom] = useState(false);
+  const [columnCount, setColumnCount] = useState(6);
 
   useEffect(() => {
     if (productsLength === 0)  {
@@ -53,28 +58,22 @@ const ProductList = ({
     setFetching(true);
     dispatch(getProducts(lastRefKey));
   };
-   
-
+  
   return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
-    <div className="loader">
-      <h3 className="text-center">There are no items found</h3>
-      <span>Try using correct filters and keyword</span>
-    </div>
+    <MessageDisplay 
+        message="The are no items found."
+        desc="Try using correct filters or keyword."
+    />
   ) : requestStatus ? (
-    <div className="loader">
-      <h3 className="text-center">{requestStatus}</h3>
-      <br/>
-      <button 
-          className="button button-small"
-          onClick={fetchProducts}
-      >
-        Try again
-      </button>
-    </div>
+    <MessageDisplay 
+        message={requestStatus}
+        action={fetchProducts}
+        buttonLabel="Try Again"
+    />
   ) : (
     <>
     {children}
-    {(scrolledAtBottom && productsLength < totalItems) && (
+    {((scrolledAtBottom || location.pathname === ADMIN_PRODUCTS) && productsLength < totalItems) && (
       <div className="d-flex-center padding-l">
         <button 
             className="button button-small"
@@ -83,11 +82,6 @@ const ProductList = ({
         >
           {isFetching ? 'Fetching Items...' : 'Fetch More Items'}
         </button>
-      </div>
-    )}
-    {(!isFetching && productsLength >= totalItems) && (
-      <div className="d-flex-center padding-l">
-        <span>End of result.</span>
       </div>
     )}
     </>

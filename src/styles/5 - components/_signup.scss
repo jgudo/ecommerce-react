@@ -1,26 +1,17 @@
-.input-message {
-  display: block;
-  padding: $s-size;
-  color: $red;
-  font-weight: bold;
-}
-
-.input-form {
-  padding: 10px $m-size !important;
-  border: 1px solid $border-color-focus !important;
-  font-size: $font-medium !important;
-  margin-bottom: $s-size;
-}
-
 .signup {
-  width: 500px;
+  width: 50rem;
   margin: auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
 
-  @include mobile {
+   @include mobile {
     width: 100%;
+    margin-top: 2rem;
+  }
+
+  .loader {
+    background: $background-color;
   }
 }
 

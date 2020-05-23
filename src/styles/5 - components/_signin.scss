@@ -1,8 +1,15 @@
 .signin-content {
+  width: 80rem;
+  height: auto;
   margin: auto;
 
   @include mobile {
     width: 100%;
+    margin-top: 2rem;
+  }
+
+  .loader {
+    background: $background-color;
   }
 }
 
@@ -13,35 +20,66 @@
   padding: $l-size;
   padding-top: $m-size;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
+  }
+
+  @include mobile {
     padding: $m-size;
   }
 }
 
 .signin-main {
-  width: 350px;
-  height: auto;
+  width: 100%;
 
-  @include mobile {
-    width: 100%;
+  @include tablet {
+    text-align: center;
+
+    .input-form {
+      text-align: center;
+    }
   }
 }
 
 .signin-provider {
+  width: 51rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  @include tablet {
+    width: 100%;
+    flex-direction: row;
+  }
 }
 
 .signin-provider-button {
   width: 100%;
   margin: $s-size;
+  display: flex;
+
+  @include mobile {
+      margin: $s-size 0;
+    }
+
+  i {
+    flex-basis: 20%;
+  }
+
+  span {
+    flex-basis: 80%;
+    color: $white;
+    font-size: $m-size;
+
+    @include tablet {
+      display: none;
+    }
+  }
 }
 
 .signin-button {
-  @include mobile {
+  @include tablet {
     width: 100%;
   }
 }
@@ -58,15 +96,32 @@
   }
 }
 
+.provider-github {
+  @extend .button;
+  background: $color-github;
+  color: $white;
+  border: 1px solid $color-github;
+  
+  &:hover {
+    background: $color-github-hover;
+    border: 1px solid $color-github;
+  }
+}
+
 .provider-google {
   @extend .button;
   background: $white;
-  color: $paragraph-color-01;
+  color: $gray-01;
   border: 1px solid $border-color-focus;
 
   &:hover {
     background: $border-color;
     border: 1px solid $border-color;
+  }
+
+  span {
+    flex-basis: 80%;
+    color: $paragraph-color;
   }
 }
 
@@ -81,6 +136,10 @@
     background: $background-color;
     padding: $s-size;
     z-index: 1;
+
+    @include mobile {
+      margin: 1rem 0;
+    }
   }
 
   &:before,
@@ -91,7 +150,7 @@
     width: 1px;
     background: $border-color;
 
-    @include mobile {
+    @include tablet {
       width: 50%;
       height: 1px;
     }
@@ -109,7 +168,7 @@
   &:after {
     bottom: 25%;
 
-    @include mobile {
+    @include tablet {
       right: 0;
       bottom: 50%;
     }
@@ -120,7 +179,7 @@
   display: flex;
   justify-content: space-between;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
 
     a {
@@ -160,4 +219,12 @@
     width: 100%;
     padding: $s-size;
   } 
+}
+
+.signin-success {
+  @extend .toast-success;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

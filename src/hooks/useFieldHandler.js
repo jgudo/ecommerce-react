@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const useFieldHandler = (initState) => {
+const useFieldHandler = (initState, isErrorVisible = true) => {
 	const [field, setField] = useState(initState);
 	const [errorField, setErrorField] = useState({});
 
@@ -37,19 +37,22 @@ const useFieldHandler = (initState) => {
     		setErrorField({ ...errorField, [prop]: '' });
     	}
     } else if (prop === 'password') {
-    	if (val.length < 8) {
+    	if (val.length < 8 && isErrorVisible) {
 	      setErrorField({ ...errorField, [prop]: `${key} should be 8 characters long.` });
-	    } else if (!passwordRegex.test(val)) {
+	    } else if (!passwordRegex.test(val) && isErrorVisible) {
 	      setErrorField({ ...errorField, [prop]: `${key} should contain uppercase or special character.` });
-	    } else {
+	    } else if (val.length === 0 ) {
+            setErrorField({ ...errorField, [prop]: `${key} is required` });
+        } else {
 	      setErrorField({ ...errorField, [prop]: '' });
 	    }
+
     } else if (val.length === 0 && !optional) {
       setErrorField({ ...errorField, [prop]: `${key} is required` });
     } else {
       setErrorField({ ...errorField, [prop]: '' });
     }
-     
+
     setField({ ...field, [prop]: val });
 	};
 

@@ -6,7 +6,7 @@ import { SET_PROFILE, UPDATE_PROFILE_SUCCESS, CLEAR_PROFILE } from 'constants/co
 //   fullname: 'Pedro Juan',
 //   email: 'juanpedro@gmail.com',
 //   address: '',
-//   mobile: '09264546942',
+//   mobile: {},
 //   avatar: profile,
 //   banner,
 //   dateJoined: 1954234787348

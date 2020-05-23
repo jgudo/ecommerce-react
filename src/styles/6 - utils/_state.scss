@@ -19,22 +19,6 @@
   transform: translateX(0);
 }
 
-.is-open-filters {
-  overflow: hidden;
-
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    z-index: map-get($z-index, 'filter');
-    background: rgba(255, 255, 255, .6);
-  }
-}
-
 .is-img-loading {
   opacity: 0;
 }

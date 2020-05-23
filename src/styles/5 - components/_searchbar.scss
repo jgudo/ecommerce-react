@@ -2,7 +2,6 @@
   width: 400px;
   display: flex;
   position: relative;
-  z-index: 1;
 }
 
 .search-input {
@@ -72,16 +71,9 @@
 }
 
 .searchbar-icon {
-  @extend .icon-magnify;
   position: absolute;
   left: $m-size;
-  top: -3px;
-  bottom: 0;
-  margin: auto;
-  opacity: 1;
-  border: 2px solid lighten($off-black, 25%);
-
-  &:after {
-    background: lighten($off-black, 25%);
-  }
+  top: 1.3rem;
+  opacity: .2;
+  font-size: $font-small;
 }

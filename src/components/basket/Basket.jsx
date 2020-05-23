@@ -12,10 +12,7 @@ import { displayMoney } from 'helpers/utils';
 
 const Basket = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const { basket, isAuth } = useSelector(state => ({
-    basket: state.basket,
-    isAuth: !!state.auth.id && !!state.auth.type
-  }));
+  const basket = useSelector(state => state.basket);
   const dispatch = useDispatch();
 
   const calculateTotal = () => {
@@ -33,7 +30,7 @@ const Basket = (props) => {
   const onCloseModal = () => setModalOpen(false);
 
   const onCheckOut = () => {
-    if ((basket.length !== 0 && isAuth)) {
+    if ((basket.length !== 0 && props.isAuth)) {
       document.body.classList.remove('is-basket-open');
       props.history.push(CHECKOUT_STEP_1);
     } else {

@@ -1,8 +1,10 @@
 import React from 'react';
 
+import logo from '../../../static/logo_vertical_cropped.png';
 import * as ROUTE from 'constants/routes';
 
 const Footer = ({ path }) => {
+  // hide the footer to these routes
   const hiddenPaths = [
     ROUTE.SIGNIN,
     ROUTE.SIGNUP,
@@ -17,16 +19,17 @@ const Footer = ({ path }) => {
   return hiddenPaths.includes(path) ? null : (
     <footer className="footer">
       <div className="footer-col-1">
-        <h4>SALINAKA &nbsp;<span>{new Date().getFullYear()}</span></h4>
+        <strong><span>Developed by <a href="https://github.com/jgudo">JULIUS GUEVARRA</a></span></strong>
       </div>
       <div className="footer-col-2">
-        <strong><span>Developed by <a href="https://github.com/jgudo">Julius Guevarra</a></span></strong>
+        <img className="footer-logo" src={logo} />
+        <h5>&copy;&nbsp;{new Date().getFullYear()}</h5>
       </div>
       <div className="footer-col-3">
         <strong>
           <span>
             Fork this project &nbsp;
-            <a href="https://github.com/jgudo/ecommerce-react">here</a>
+            <a href="https://github.com/jgudo/ecommerce-react">HERE</a>
           </span>
         </strong>
       </div>

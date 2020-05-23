@@ -21,6 +21,7 @@ import {
 
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';
+import { ADMIN_PRODUCTS } from 'constants/routes';
 
 function* initRequest() {
   yield put({ type: LOADING, payload: true });
@@ -71,7 +72,7 @@ function* productSaga({ type, payload }) {
           ...payload,
           image: downloadURL
         }));
-        yield handleAction('/dashboard/products', 'Item succesfully added', 'success');
+        yield handleAction(ADMIN_PRODUCTS, 'Item succesfully added', 'success');
         yield put({ type: LOADING, payload: false });
       } catch (e) {
         yield handleError(e);
@@ -104,7 +105,7 @@ function* productSaga({ type, payload }) {
           
         }
 
-        yield handleAction('/dashboard/products', 'Item succesfully edited', 'success');
+        yield handleAction(ADMIN_PRODUCTS, 'Item succesfully edited', 'success');
         yield put({ type: LOADING, payload: false });
       } catch (e) {
         yield handleError(e);
@@ -117,7 +118,7 @@ function* productSaga({ type, payload }) {
         yield call(firebase.removeProduct, payload);
         yield put(removeProductSuccess(payload));
         yield put({ type: LOADING, payload: false });
-        yield handleAction('/dashboard/products', 'Item succesfully removed', 'success');
+        yield handleAction(ADMIN_PRODUCTS, 'Item succesfully removed', 'success');
       } catch (e) {
         yield handleError(e);
         yield handleAction(undefined, 'Item failed to remove: ' + e.message, 'error');

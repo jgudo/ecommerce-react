@@ -8,7 +8,7 @@ import {
 const initState = {
   loading: false,
   isAuthenticating: false,
-  authStatus: null,
+  authStatus: {},
   requestStatus: null,
   theme: 'default'
 };

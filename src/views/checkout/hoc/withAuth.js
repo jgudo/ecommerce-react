@@ -5,10 +5,11 @@ import { Redirect } from 'react-router-dom';
 
 const withAuth = (Component) => {
   return withRouter((props) => {
-    const { isAuth, basket, profile, shipping } = useSelector(state => ({
-      isAuth: !!state.auth.id && !!state.auth.type,
+    const { isAuth, basket, profile, shipping, payment } = useSelector(state => ({
+      isAuth: !!state.auth.id && !!state.auth.role,
       basket: state.basket,
       shipping: state.checkout.shipping,
+      payment: state.checkout.payment,
       profile: state.profile
     }));
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const withAuth = (Component) => {
             subtotal={calculateSubTotal()}
             dispatch={dispatch}
             profile={profile} 
+            payment={payment}
             shipping={shipping}
         />
       </>

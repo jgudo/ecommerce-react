@@ -6,24 +6,24 @@ import Basket from 'components/basket/basket';
 import Navigation from 'components/ui/Navigation';
 import Footer from 'components/ui/Footer';
 
-import { SIGNIN } from 'constants/routes';
+import { SIGNIN, ADMIN_DASHBOARD } from 'constants/routes';
 
 const PrivateRoute = ({ isAuth, userType, component: Component, path, ...rest }) => (
   <Route  
       {...rest} 
       component={props => (
-        isAuth && userType === 'client' 
+        isAuth && userType === 'USER' 
         ? (
           <>
-            <Navigation path={path} />
-            <Basket />
+            <Navigation path={path} isAuth={isAuth} />
+            <Basket isAuth={isAuth} />
             <main className="content">
               <Component {...props} />
             </main>
             <Footer path={path}/>
           </>
         ) 
-        : isAuth && userType === 'admin' ? <Redirect to="/dashboard" />
+        : isAuth && userType === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
         :  <Redirect to={{
                 pathname: SIGNIN,
                 state: { from: props.location }
@@ -34,8 +34,8 @@ const PrivateRoute = ({ isAuth, userType, component: Component, path, ...rest })
 );
 
 const mapStateToProps = ({ auth }) => ({
-  isAuth: !!auth.id && !!auth.type,
-  userType: auth.type
+  isAuth: !!auth.id && !!auth.role,
+  userType: auth.role
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

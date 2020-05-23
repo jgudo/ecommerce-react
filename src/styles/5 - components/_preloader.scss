@@ -7,17 +7,26 @@
     flex-direction: column;
     background: $background-color;
     animation: fadeIn .5s ease;
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
 }
 
 .loader {
     width: 100%;
-    min-height: 80vh;
+    height: 100%;
     background: $background-color-01;
     position: relative;
+    padding: $m-size;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: $top 0;
     animation: fadeIn .3s ease;
+
+    @include mobile {
+        min-height: 80vh;
+    }
 }

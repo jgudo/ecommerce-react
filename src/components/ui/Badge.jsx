@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Badge = ({ count }) => {
+const Badge = ({ count, children }) => {
   return (
     <div className="badge">
-      <span className="badge-count">{count}</span>
+    	{children}
+    	{count >= 1 && <span className="badge-count">{count}</span>}
     </div>
   );
 };

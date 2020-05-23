@@ -1,7 +1,12 @@
 import React from 'react';
 import AppModal from 'react-modal';
 
-const Modal = (props) => {
+const Modal = ({ 
+  isOpen, 
+  onRequestClose, 
+  afterOpenModal, 
+  children 
+}) => {
   const customStyles = {
     content: {
       top: '50%',
@@ -14,7 +19,9 @@ const Modal = (props) => {
       transition: 'all .5s ease',
       zIndex: 9999,
       marginRight: '-50%',
-      transform: 'translate(-50%, -50%)'
+      transform: 'translate(-50%, -50%)',
+      boxShadow: '0 5px 10px rgba(0, 0, 0, .1)',
+      animation: 'scale .3s ease'
     }
   };
 
@@ -22,14 +29,14 @@ const Modal = (props) => {
 
   return (
     <AppModal
-        isOpen={props.isOpen}
-        onAfterOpen={props.afterOpenModal}
-        onRequestClose={props.closeModal}
+        isOpen={isOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={onRequestClose}
         shouldCloseOnOverlayClick={true}
         style={customStyles}
         contentLabel="Product Modal"
     >
-      {props.children}
+      {children}
     </AppModal>
   );
 };

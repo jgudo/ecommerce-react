@@ -2,31 +2,61 @@
   position: relative;
   padding: 0 $xxl-size;
   margin-top: $xl-size;
-  background: $black;
+  background: $off-white;
   display: flex;
   align-items: center;
-  color: $white;
+  justify-content: space-between;
 
   @include mobile {
-    padding: $s-size;
-    padding-bottom: $xl-size;
+    padding: 0;
+    padding-top: 2.5rem;
     flex-direction: column;
     text-align: center;
   }
 
-  h4, 
-  a,
-  span {
-    color: $white;
+  a {
+    text-decoration: underline;
   }
 }
 
+.footer-logo {
+  width: 6rem;
+  height: 6rem;
+  object-fit: contain;
+}
+
 .footer-col-1 {
-  flex-grow: 1;
+  flex-basis: 40%; 
+
+  @include mobile {
+    flex-basis: none;
+    order: 1;
+    text-align: center;
+  }
 }
 
 .footer-col-2 {
-  flex-grow: 1;
+  padding: 3rem 0;
+  text-align: center;
+  flex-basis: 20%;
+
+  @include mobile {
+    flex-basis: none;
+    order: 3;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.footer-col-3 {
+  flex-basis: 40%;
+  text-align: right;
+
+  @include mobile {
+    flex-basis: none;
+    order: 2;
+    text-align: center;
+  }
 }
 
 @include mobile {

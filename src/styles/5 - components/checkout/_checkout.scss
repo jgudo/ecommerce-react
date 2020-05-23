@@ -1,11 +1,25 @@
 .checkout {
   width: 100%;
   animation: slide-up .5s ease;
+
+  @include mobile {
+    margin-top: 2rem;
+  }
 }
 
 .checkout-header {
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: $nav-height;
+  background: $background-color;
+  padding: 1rem 0;
+  margin-bottom: 3rem;
+  z-index: 1;
+
+  @include mobile {
+    top: 5rem;
+  }
 }
 
 .checkout-header-menu {
@@ -59,12 +73,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $paragraph-color-10;
+  color: $gray-10;
 }
 
 .checkout-header-subtitle {
-  color: $paragraph-color-20;
+  color: $gray-20;
   margin-top: $s-size;
+  margin-bottom: 0;
 }
 
 .is-active-step .checkout-header-step {
@@ -99,28 +114,28 @@
 }
 
 .checkout-step-1 {
-  width: 50%;
+  width: 50rem;
   margin: auto;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
   }
 }
 
 .checkout-step-2 {
-  width: 70%;
+  width: 70rem;
   margin: auto;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
   }
 }
 
 .checkout-step-3 {
-  width: 50%;
+  width: 70rem;
   margin: auto;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
   }
 }
@@ -132,11 +147,6 @@
 
 .checkout-shipping-form {
   width: 100%;
-  padding: $xxl-size;
-
-  @include mobile {
-    padding: 0;
-  }
 }
 
 .checkout-field {
@@ -184,24 +194,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $m-size;
 
   @include mobile {
-    flex-direction: column;
+    // flex-direction: column;
     padding: $m-size 0;
 
     button {
-      width: 100%;
+      width: 50%;
       display: block;
       margin: $s-size 0;
-    }
-
-    button:first-child {
-      order: 2;
-    }
-
-    button:last-child {
-      order: 1;
     }
   }
 }

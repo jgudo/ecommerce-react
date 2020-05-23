@@ -3,28 +3,31 @@ import { useSelector } from 'react-redux';
 import { withRouter, NavLink, Link} from 'react-router-dom';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import UserAvatar from 'views/account/UserAvatar';
-import MobileNavigation from './mobile/MobileNavigation';
+import UserAvatar from 'views/account/components/UserAvatar';
+import SearchBar from './SearchBar';
+import FiltersToggle from './FiltersToggle';
+import MobileNavigation from './MobileNavigation';
 
+import logo from '../../../static/logo_horizontal.png';
 import * as ROUTE from 'constants/routes';
 
-const Navigation = ({ path }) => {
+const Navigation = ({ isAuth, path, history }) => {
   useEffect(() => {
     window.addEventListener('scroll', scrollHandler);
 
     return () => window.removeEventListener('scroll', scrollHandler);
   }, []);
   
-  const { 
-    basketLength, 
-    profile, 
-    isAuth, 
-    isAuthenticating 
-  } = useSelector(state => ({
-    basketLength: state.basket.length,
-    profile: state.profile,
-    isAuth: !!state.auth.id && !!state.auth.type,
-    isAuthenticating: state.app.isAuthenticating
+  const { store } = useSelector(state => ({
+    store: {
+      filter: state.filter,
+      products: state.products.items,
+      basketLength: state.basket.length,
+      profile: state.profile,
+      isLoading: state.app.loading,
+      isAuthenticating: state.app.isAuthenticating,
+      productsLength: state.products.items.length
+    }
   }));
   const navbar = useRef(null);
 
@@ -36,6 +39,10 @@ const Navigation = ({ path }) => {
         navbar.current.classList.remove('is-nav-scrolled');
       }
     }
+  };
+
+  const onClickLink = (e) => {
+    if (store.isAuthenticating) e.preventDefault();
   };
 
   // disable the basket toggle to these paths
@@ -50,10 +57,10 @@ const Navigation = ({ path }) => {
 
   return window.screen.width <= 480 ? (
     <MobileNavigation 
-        basketLength={basketLength}
-        profile={profile}
+        basketLength={store.basketLength}
+        profile={store.profile}
         isAuth={isAuth}
-        isAuthenticating={isAuthenticating}
+        isAuthenticating={store.isAuthenticating}
         path={path} 
         disabledPaths={basketDisabledPaths} 
     />
@@ -63,21 +70,33 @@ const Navigation = ({ path }) => {
         ref={navbar}
     >
       <div className="logo">
-        <Link to="/">
-          <h3>SALINAKA</h3>
+        <Link onClick={onClickLink} to="/">
+          <img src={logo} />
         </Link>
       </div>
-      <ul className="navigation-menu">
-        <li className="navigation-menu-item">
-          <NavLink 
-              activeClassName="navigation-menu-active"
-              className="navigation-menu-link"
-              exact
-              to={ROUTE.HOME} 
+      {path === ROUTE.HOME && (
+        <>
+          <SearchBar 
+              isLoading={store.isLoading}
+              filter={store.filter}
+              history={history}
+              productsLength={store.productsLength}
+          />
+          &nbsp;
+          <FiltersToggle
+              filter={store.filter}
+              isLoading={store.isLoading}
+              products={store.products}
+              productsLength={store.productsLength}
+              history={history}
           >
-            Home
-          </NavLink>
-        </li>
+            <button className="button-muted button-small">
+              More Filters &nbsp;<i className="fa fa-chevron-right" />
+            </button>
+          </FiltersToggle>
+        </>
+      )}
+      <ul className="navigation-menu">
         <li className="navigation-menu-item">
           <BasketToggle>
             {({ onClickToggle }) => (
@@ -86,17 +105,17 @@ const Navigation = ({ path }) => {
                   disabled={basketDisabledPaths.includes(path)}
                   onClick={onClickToggle}
               >
-                <span>
-                  <Badge count={basketLength}/>
-                  My Basket 
-                </span>
+                
+                <Badge count={store.basketLength}>
+                  <i className="fa fa-shopping-basket" style={{  fontSize: '2rem'}}/>
+                </Badge>
               </button>
             )}
           </BasketToggle>
         </li>
         {isAuth ? (
           <li className="navigation-menu-item">
-            <UserAvatar isAuthenticating={isAuthenticating} profile={profile} />
+            <UserAvatar isAuthenticating={store.isAuthenticating} profile={store.profile} />
           </li>
         ) : (
           <li className="navigation-action">
@@ -105,6 +124,7 @@ const Navigation = ({ path }) => {
                   activeClassName="navigation-menu-active"
                   className="button button-small"
                   exact
+                  onClick={onClickLink}
                   to={ROUTE.SIGNUP} 
               >
                 Sign Up
@@ -115,6 +135,7 @@ const Navigation = ({ path }) => {
                     activeClassName="navigation-menu-active"
                     className="button button-small button-muted margin-left-s"
                     exact
+                    onClick={onClickLink}
                     to={ROUTE.SIGNIN} 
                 >
                   Sign In

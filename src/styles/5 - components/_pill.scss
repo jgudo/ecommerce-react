@@ -16,6 +16,12 @@
     margin: 0;
 }
 
+.pill-content {
+    max-width: 25rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .pill-remove {
     position: absolute;
     right: $s-size;

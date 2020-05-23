@@ -1,69 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { resetFilter, applyFilter } from 'actions/filterActions';
 import { selectMax, selectMin } from 'selectors/selector';
 
 import PriceRange from './PriceRange';
 
 const Filters = (props) => {
-  const { productsLength, products, filter, isLoading, dispatch } = props;
-  const max = selectMax(products);
-  const min = selectMin(products);
   const [isMounted, setMounted] = useState(false);
-  const [filterField, setFilter] = useState({
-    brand: filter.brand,
-    minPrice: filter.minPrice,
-    maxPrice: filter.maxPrice,
-    sortBy: filter.sortBy
-  })
+  const [field, setFilter] = useState({
+    brand: props.filter.brand,
+    minPrice: props.filter.minPrice,
+    maxPrice: props.filter.maxPrice,
+    sortBy: props.filter.sortBy
+  });
+  const dispatch = useDispatch();
+  const max = selectMax(props.products);
+  const min = selectMin(props.products);
 
   useEffect(() => {
-    // toggleRef && toggleRef.current.classList.remove('is-open-filters');
-    document.body.classList.remove('is-open-filters');
-    (isMounted && window.screen.width <= 480) && props.history.push('/');
+    if (isMounted && window.screen.width <= 480) {
+      props.history.push('/');
+    }
 
-    // update state upon prop filter change
-    setFilter({
-      brand: filter.brand,
-      minPrice: filter.minPrice,
-      maxPrice: filter.maxPrice,
-      sortBy: filter.sortBy
-    });
+    if (isMounted && props.closeModal) props.closeModal();
+    
+    setFilter(props.filter);
     setMounted(true);
     window.scrollTo(0, 0);
-  }, [filter.brand, filter.minPrice, filter.maxPrice, filter.sortBy]);
+  }, [props.filter]);
 
 
   const onPriceChange = (min, max) => {
-    setFilter({ ...filterField, minPrice: min, maxPrice: max });
+    setFilter({ ...field, minPrice: min, maxPrice: max });
   };
 
   const onBrandFilterChange = (e) => {
     const val = e.target.value;
 
-    setFilter({ ...filterField, brand: val });
+    setFilter({ ...field, brand: val });
   };
 
   const onSortFilterChange = (e) => {
-    setFilter({ ...filterField, sortBy: e.target.value });
+    setFilter({ ...field, sortBy: e.target.value });
   };
 
 
   const onApplyFilter = () => {
-    const newFilter = {
-      brand: filterField.brand,
-      minPrice: filterField.minPrice,
-      maxPrice: filterField.maxPrice,
-      sortBy: filterField.sortBy,
-    };
-
-    if (Object.keys(newFilter).some(key => filter[key] !== newFilter[key])) {
-      dispatch(applyFilter(newFilter));
+    const isChanged = Object.keys(field).some(key => field[key] !== props.filter[key]);
+    
+    if (isChanged) {
+     dispatch(applyFilter(field));
     }
   };
 
   const onResetFilter = () => {
-    if (['brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!filter[key])) {
+    if (Object.keys(field).some(key => !!props.filter[key])) {
       dispatch(resetFilter());
     }
   };
@@ -74,13 +66,13 @@ const Filters = (props) => {
         <span>Brand</span>
         <br/>
         <br/>
-        {productsLength === 0 && isLoading ? (
+        {props.productsLength === 0 && props.isLoading ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <select 
               className="filters-brand"
-              value={filterField.brand}
-              disabled={isLoading || productsLength === 0}
+              value={field.brand}
+              disabled={props.isLoading || props.productsLength === 0}
               onChange={onBrandFilterChange}
           >
             <option value="">All Brands</option>
@@ -97,8 +89,8 @@ const Filters = (props) => {
         <br/>
         <select 
               className="filters-sort-by d-block"
-              value={filterField.sortBy}
-              disabled={isLoading || productsLength === 0}
+              value={field.sortBy}
+              disabled={props.isLoading || props.productsLength === 0}
               onChange={onSortFilterChange}
           >
             <option value="">None</option>
@@ -112,30 +104,31 @@ const Filters = (props) => {
         <span>Price Range</span>
         <br/>
         <br/>
-        {productsLength === 0 && isLoading ? (
+        {props.productsLength === 0 && props.isLoading ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <PriceRange 
               min={min} 
               max={max} 
-              initMin={filterField.minPrice}
-              initMax={filterField.maxPrice}
+              initMin={field.minPrice}
+              initMax={field.maxPrice}
+              isLoading={props.isLoading}
               onPriceChange={onPriceChange}
-              productsLength={productsLength}
+              productsLength={props.productsLength}
           />
         )}
       </div>
       <div className="filters-action">
         <button
             className="filters-button button button-small"
-            disabled={isLoading || productsLength === 0}
+            disabled={props.isLoading || props.productsLength === 0}
             onClick={onApplyFilter}
         >
           Apply filters
         </button>
         <button
             className="filters-button button button-border button-small"
-            disabled={isLoading || productsLength === 0}
+            disabled={props.isLoading || props.productsLength === 0}
             onClick={onResetFilter}
         >
           Reset filters

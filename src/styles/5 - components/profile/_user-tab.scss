@@ -1,6 +1,7 @@
 .user-tab {
   width: 700px;
-  margin: auto;
+  height: 100%;
+  margin: 0 auto;
   background: $white;
   border: 1px solid $border-color;
 
@@ -11,6 +12,11 @@
 
 .user-tab-content {
   padding: $m-size;
+  height: 100%;
+
+  @include mobile {
+    padding: 0;
+  }
 }
 
 .user-tab-nav {
@@ -32,7 +38,7 @@
 
 .user-tab-item {
   list-style-type: none;
-  color: $paragraph-color-10;
+  color: $gray-10;
   padding: $m-size;
   font-size: $font-medium;
   border-bottom: 1px solid transparent;
@@ -46,7 +52,7 @@
 }
 
 .user-tab-active {
-  color: $paragraph-color-00;
+  color: $paragraph-color;
   font-weight: bold;
   border-bottom: 1px solid $white;
   background: $white;

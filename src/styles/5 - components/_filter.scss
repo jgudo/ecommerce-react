@@ -1,7 +1,8 @@
 .filters {
   display: flex;
-  flex-direction: column;
-  padding-right: $m-size;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: map-get($z-index, 'filter');
 }
 
 .filters-field {
@@ -9,6 +10,11 @@
   margin-bottom: $m-size;
   padding-bottom: $m-size;
   border-bottom: 1px solid $border-color;
+
+  &:nth-child(1),
+  &:nth-child(2) {
+    flex-basis: 50%;
+  }
 }
 
 .filters-brand {
@@ -17,6 +23,7 @@
 
 .filters-action {
   display: flex;
+  width: 100%;
 }
 
 .filters-button {
@@ -28,16 +35,11 @@
 }
 
 .filters-toggle-sub {
-  width: 300px;
+  width: 400px;
+  height: 360px;
   background: $white;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   padding: $m-size;
-  z-index: map-get($z-index, 'filter');
-  display: none;
 }
 
 .is-open-filters .filters-toggle-sub {
@@ -46,6 +48,11 @@
 
 .filters-toggle-caret {
   transform: rotate(-90deg);
+}
+
+.filters-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 // .is-open-filters .filters-toggle-caret {
