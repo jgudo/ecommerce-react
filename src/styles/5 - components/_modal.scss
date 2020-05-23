@@ -1,5 +1,5 @@
 .ReactModal__Overlay {
-  z-index: map-get($z-index, 'filter');
+  z-index: map-get($z-index, 'modal');
 }
 
 .ReactModal__Body--open {
@@ -28,6 +28,6 @@
 
 .ReactModal__Content {
   @include mobile {
-    width: 100%;
+    width: 90%;
   }
 }

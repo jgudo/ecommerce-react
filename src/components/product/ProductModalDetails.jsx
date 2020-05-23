@@ -26,9 +26,10 @@ const ProductModalDetails = ({ product, dispatch, foundOnBasket }) => {
       </div>
       <div className="product-modal-details">
         <h3>{product.name}</h3>
-        <span>Brand: <strong>{product.brand}</strong></span>
+        <span className="text-subtle">Brand: &nbsp;</span> 
+        <span><strong>{product.brand}</strong></span>
         <br/>
-        <span>Description:&nbsp;</span>
+        <br/>
         <span>{product.description}</span>
         <br/>
         <h1>{displayMoney(product.price)}</h1>

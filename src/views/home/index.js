@@ -78,7 +78,11 @@ const Home = (props) => {
               totalItems={store.totalItems}
               requestStatus={store.requestStatus}
           >
-            <Modal isOpen={isOpenModal} onRequestClose={onCloseModal}>
+            <Modal 
+                isOpen={isOpenModal} 
+                onRequestClose={onCloseModal}
+                overrideStyle={{ padding: 0 }}
+            >
               <ProductModalDetails 
                   product={productSelected}
                   dispatch={dispatch}

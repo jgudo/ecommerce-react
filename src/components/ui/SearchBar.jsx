@@ -40,11 +40,20 @@ const SearchBar = ({
 
   const onFocusInput = (e) => {
     e.target.select();
-    searchbarRef.current.classList.add('is-open-recent-search');
+
+    if (filter.recent.length !== 0) {
+      searchbarRef.current.classList.add('is-open-recent-search');
+      document.addEventListener('click', recentSearchClickHandler);
+    }
   }
 
-  const onBlurInput = () => {
-    searchbarRef.current.classList.remove('is-open-recent-search');
+  const recentSearchClickHandler = (e) => {
+    const searchBar = e.target.closest('.searchbar');
+
+    if (!searchBar) {
+      searchbarRef.current.classList.remove('is-open-recent-search');
+      document.removeEventListener('click', recentSearchClickHandler);
+    }
   }
 
   const onClickRecentSearch = (keyword) => {
@@ -64,7 +73,6 @@ const SearchBar = ({
             onChange={onSearchChange}
             onKeyUp={onKeyUp}
             onFocus={onFocusInput}
-            onBlur={onBlurInput}
             placeholder="Filter products by keyword"
             readOnly={isLoading}
             type="text" 
@@ -81,10 +89,10 @@ const SearchBar = ({
                 Clear
               </h5>
             </div>
-            {filter.recent.map(item => (
+            {filter.recent.map((item, index) => (
               <div 
                   className="searchbar-recent-wrapper"
-                  key={`search-${item}`}
+                  key={`search-${item}-${index}`}
               >
                 <h5 
                     className="searchbar-recent-keyword margin-0"
