@@ -48,14 +48,12 @@ $ npm run build
 ```
 
 ## How to add products or perform CRUD operations for Admin
-1. Inside `src/routers/AppRouter.js` uncomment all code related to admin.
-2. Inside `src/reducers/authReducer.js`, uncomment initState and change the initState type value from 'client' to 'admin'. Delete `initState` variable if you want to authenticate client.
-3. Inside `src/sagas/authSaga.js`, on `case ON_AUTHSTATE_FAIL`, comment out `yield put(signOutSuccess())`.
-4. Create a *Storage* in your Firebase Console.
-5. Set Storage and Database Rule to public, change `allow read, write: if request.auth != null;` to only `allow read, write;` 
-6. Delete persisting auth state in localStorage if one exists.
-**Revert on doing all these if you want to switch back to default user and when you are deploying the app**
+1. Navigate to your site to `/signup`
+2. Create an account for yourself
+3. Go to your firestore collection `users collection` and edit the account you've just created. Change the role from `USER` to `ADMIN`.
+4. Reload or sigin again to see the changes. 
 
+**Firebase Admin to be integrated soon**
 
 ## Features
 
