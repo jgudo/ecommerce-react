@@ -15,8 +15,6 @@ const InputField = React.forwardRef(({
 	const [value, setValue] = useState('');
 	const [errorField, setErrorField] = useState('');
 
-	const errorClassName = () =>  errorField ? 'input-error' : '';
-
 	const onFieldChange = (e) => {
     let val = e.target.value;
     let error = '';
@@ -82,14 +80,24 @@ const InputField = React.forwardRef(({
 			 : (
         <span className="d-block padding-s">{label}</span>
       )}
-      <input 
-					{...rest}
-	        className={`${className} ${errorClassName()}`}
-	        required={isRequired}
-	        onChange={onFieldChange}
-	        type={type}
-	        ref={ref}
-	    />
+      {type === 'textarea' ? (
+        <textarea
+            {...rest}
+            className={`${className} ${errorField ? 'input-error' : ''}`}
+            required={isRequired}
+            onChange={onFieldChange}
+            ref={ref} 
+        />
+      ) : (
+        <input 
+            {...rest}
+            className={`${className} ${errorField ? 'input-error' : ''}`}
+            required={isRequired}
+            onChange={onFieldChange}
+            type={type}
+            ref={ref}
+        />
+      )}       
 		</>
 	);
 });
