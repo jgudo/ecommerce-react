@@ -26,7 +26,7 @@ import Home from 'views/home';
 import CheckOutStep1 from 'views/checkout/step1';
 import CheckOutStep2 from 'views/checkout/step2';
 import CheckOutStep3 from 'views/checkout/step3';
-import PageNotFound from 'views/error/404';
+import PageNotFound from 'views/error/PageNotFound';
 import ScrollToTop from 'components/ui/ScrollToTop';
 
 export const history = createBrowserHistory();
