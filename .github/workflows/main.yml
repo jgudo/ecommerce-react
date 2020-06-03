@@ -19,4 +19,4 @@ jobs:
       - name: Deploy to Firebase
         uses: lowply/deploy-firebase@v0.0.2
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
