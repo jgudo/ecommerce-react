@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { SIGNIN, SIGNUP, HOME, ADMIN_DASHBOARD } from 'constants/routes';
 
-import Basket from 'components/basket/basket';
+import Basket from 'components/basket/Basket';
 import Navigation from 'components/ui/Navigation';
 import Footer from 'components/ui/Footer';
 
