@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createPortal } from 'react';
+import React, { useState } from 'react';
 import Filters from './Filters';
 import Modal from './Modal';
 import { useDispatch } from 'react-redux';
