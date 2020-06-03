@@ -20,3 +20,4 @@ jobs:
         uses: lowply/deploy-firebase@v0.0.2
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_PROJECT: salinaka-ecommerce
