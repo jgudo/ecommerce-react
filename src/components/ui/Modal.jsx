@@ -30,6 +30,7 @@ const Modal = ({
 
   return (
     <AppModal
+        closeTimeoutMS={300}
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={onRequestClose}

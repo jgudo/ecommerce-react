@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.ReactModal__Content--before-close {
+  transform: translate(-50%, -50%) scale(0) !important;
+}
+
 .modal-close-button {
   position: absolute;
   top: 1rem;
