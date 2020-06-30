@@ -94,7 +94,7 @@ module.exports = merge(baseConfig, {
     // })
 
     new workboxPlugin.GenerateSW({
-      cacheId: 'salinaka-ecommerce_v3', // change this
+      cacheId: 'salinaka-ecommerce_v4', // change this
       swDest: 'sw.js',
       navigateFallback: '/index.html',
       navigateFallbackWhitelist: [ /^\/[^\_]+\/?/ ],
