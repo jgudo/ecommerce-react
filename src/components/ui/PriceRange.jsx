@@ -5,9 +5,8 @@ import { displayMoney } from 'helpers/utils';
 const PriceRange = (props) => {
   const [minState, setMinState] = useState(props.initMin ? props.initMin : props.min);
   const [maxState, setMaxState] = useState(props.initMax ? props.initMax : props.max);
+  const [inputError, setInputError] = useState(false);
   const slider = useRef(null);
-  const inputMin = useRef(null);
-  const inputMax = useRef(null);
   const rangeMin = useRef(null);
   const rangeMax = useRef(null);
 
@@ -26,23 +25,37 @@ const PriceRange = (props) => {
 
     setMinState(slide1);
     setMaxState(slide2);
+    setInputError(false);
     props.onPriceChange(slide1, slide2);
   };
 
-  const onInputChange = () => {
-    const valMin = +inputMin.current.value;
-    const valMax = +inputMax.current.value;
-    
+  const onInputMinChange = e => setMinState(e.target.value);
+  const onInputMaxChange = e => setMaxState(e.target.value);
+
+  const onBlurInput = () => {
+    let valMin = +minState;
+    let valMax = +maxState;
+
+    if (valMin < props.min) {
+      valMin = props.min;
+    } else if (valMax > props.max) {
+      valMax = props.max;
+    }
+
     if (valMin > valMax) {
-      const tmp = valMin;
-      inputMin.current.value = valMax;
-      inputMax.current.value = tmp;
+      setInputError(true);
+    } else {
+      setInputError(false);
     }
 
     setMinState(valMin);
-    setMaxState(valMax);
+    setMaxState(valMax)
     props.onPriceChange(valMin, valMax);
-  };
+  }
+
+  const inputClassName = () => {
+    return inputError ? 'price-range-input price-input-error' : 'price-range-input';
+  }
 
   return (
     <div 
@@ -51,23 +64,23 @@ const PriceRange = (props) => {
     >
       <div className="price-range-control">
         <input 
-            className="price-range-input"
+            className={inputClassName()}
             disabled={props.productsLength === 0}
             max={props.max}
             min={props.min} 
-            onChange={onInputChange}
-            ref={inputMin}
+            onBlur={onBlurInput}
+            onChange={onInputMinChange}
             type="number" 
             value={minState}
           />
         — 
         <input 
-            className="price-range-input"
+            className={inputClassName()}
             disabled={props.productsLength === 0}
             max={props.max}
             min={props.min}
-            onChange={onInputChange}
-            ref={inputMax}
+            onBlur={onBlurInput}
+            onChange={onInputMaxChange}
             type="number" 
             value={maxState} 
         />
@@ -97,8 +110,8 @@ const PriceRange = (props) => {
         />
       </div>
       <div className="price-range-scale">
-        <span className="price-range-price">{displayMoney(props.min)}</span>
-        <span className="price-range-price">{displayMoney(props.max)}</span>
+        <span className="price-range-price">MIN: {displayMoney(props.min)}</span>
+        <span className="price-range-price">MAX: {displayMoney(props.max)}</span>
       </div>
     </div>
   );

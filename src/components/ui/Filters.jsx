@@ -49,8 +49,14 @@ const Filters = (props) => {
   const onApplyFilter = () => {
     const isChanged = Object.keys(field).some(key => field[key] !== props.filter[key]);
     
+    if (field.minPrice > field.maxPrice) {
+      return false;
+    }
+
     if (isChanged) {
-     dispatch(applyFilter(field));
+      dispatch(applyFilter(field));
+    } else {
+      props.closeModal();
     }
   };
 

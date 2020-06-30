@@ -22,7 +22,7 @@
   border: none !important;
   font-size: 4rem !important;
   border-bottom: 2px solid transparent !important;
-  padding: $l-size;
+  padding: 0;
   flex-grow: 1;
   text-align: center;
 
@@ -32,13 +32,19 @@
   }
 }
 
+.price-input-error {
+  color: red !important;
+  background: transparentize(red, .9);
+}
+
 .price-range-scale {
   display: flex;
   padding: $m-size 0;
 }
 
 .price-range-price {
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .price-range-price:nth-child(1) {
