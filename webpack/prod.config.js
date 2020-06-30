@@ -92,26 +92,30 @@ module.exports = merge(baseConfig, {
     //   swSrc: path.resolve(__dirname, '../src/sw-src.js'),
     //   swDest: 'sw.js'
     // })
-
-    new workboxPlugin.GenerateSW({
-      cacheId: 'salinaka-ecommerce_v4', // change this
-      swDest: 'sw.js',
-      navigateFallback: '/index.html',
-      navigateFallbackWhitelist: [ /^\/[^\_]+\/?/ ],
-      clientsClaim: true,
-      skipWaiting: true,
-      runtimeCaching: [{
-          urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
-          handler: 'cacheFirst'
-      },
-      {
-        urlPattern: new RegExp(process.env.FIREBASE_DB_URL),
-        handler: 'networkFirst'
-      },
-      {
-          urlPattern: /.*/,
-          handler: 'networkFirst'
-      }]
+    new workboxPlugin.InjectManifest({
+      swSrc: path.resolve(__dirname, '../src/sw-src.js'),
+      swDest: 'sw.js'
     })
+
+    // new workboxPlugin.GenerateSW({
+    //   cacheId: 'salinaka-ecommerce_v4', // change this
+    //   swDest: 'sw.js',
+    //   navigateFallback: '/index.html',
+    //   navigateFallbackWhitelist: [ /^\/[^\_]+\/?/ ],
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    //   runtimeCaching: [{
+    //       urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
+    //       handler: 'cacheFirst'
+    //   },
+    //   {
+    //     urlPattern: new RegExp(process.env.FIREBASE_DB_URL),
+    //     handler: 'networkFirst'
+    //   },
+    //   {
+    //       urlPattern: /.*/,
+    //       handler: 'networkFirst'
+    //   }]
+    // })
   ]
 });
