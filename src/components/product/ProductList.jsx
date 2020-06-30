@@ -15,50 +15,28 @@ const ProductList = ({
   lastRefKey,
   totalItems,
   dispatch,
-  location,
   children 
 }) => {
-  const [lastScrollPos, setLastScrollPos] = useState(0);
   const [isFetching, setFetching] = useState(false);
-  const [scrolledAtBottom, setScrolledAtBottom] = useState(false);
-  const [columnCount, setColumnCount] = useState(6);
 
   useEffect(() => {
     if (productsLength === 0)  {
       fetchProducts();
     }
-  
+    
+    window.scrollTo(0, 0);
     return () => dispatch(dispatchIsLoading(false));
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, lastScrollPos);
     setFetching(false);
-  }, [lastRefKey]); // watch for changes on lastRefKey, if it changes that means new products have been fetched.
-
-  useEffect(() => {
-    window.addEventListener('scroll', watchForScroll);
-
-    return () => window.removeEventListener('scroll', watchForScroll);
-  }, [lastRefKey, isLoading]); // re-add event listener since the height of the window has increased for fetching new items.
-
-  const watchForScroll = () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = winScroll / height;  // value of 1 means it's at the bottom
-    
-    if (scrolled === 1 && !!lastRefKey && !isLoading && productsLength < totalItems ) {
-      setLastScrollPos(window.pageYOffset);
-      setScrolledAtBottom(true);
-      window.removeEventListener('scroll', watchForScroll);
-    } 
-  };
+  }, [lastRefKey]);
 
   const fetchProducts = () => {
     setFetching(true);
     dispatch(getProducts(lastRefKey));
   };
-  
+
   return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
     <MessageDisplay 
         message="The are no items found."
@@ -73,7 +51,7 @@ const ProductList = ({
   ) : (
     <>
     {children}
-    {((scrolledAtBottom || location.pathname === ADMIN_PRODUCTS) && productsLength < totalItems) && (
+    {productsLength < totalItems && (
       <div className="d-flex-center padding-l">
         <button 
             className="button button-small"
