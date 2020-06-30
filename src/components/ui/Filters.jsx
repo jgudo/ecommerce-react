@@ -61,8 +61,12 @@ const Filters = (props) => {
   };
 
   const onResetFilter = () => {
-    if (Object.keys(field).some(key => !!props.filter[key])) {
+    const filterFields = ['brand', 'minPrice', 'maxPrice', 'sortBy'];
+
+    if (filterFields.some(key => !!props.filter[key])) {
       dispatch(resetFilter());
+    } else {
+      props.closeModal();
     }
   };
 
