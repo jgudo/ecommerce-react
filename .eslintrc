@@ -57,7 +57,9 @@
     ]}],
     "no-trailing-spaces": [1, { "skipBlankLines": true }],
     "no-underscore-dangle": 0,
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "no-tabs": 0,
+    "indent": [2, "tab"]
   },
   "extends": ["airbnb-base"],
   "parserOptions":{
