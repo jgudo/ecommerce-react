@@ -76,7 +76,7 @@ const ProductItem = ({ product, history }) => {
 						</button>
 						&nbsp;
 						<button
-							className="button button-border button-small"
+							className="button button-border button-small button-danger"
 							onClick={onDeleteProduct}
 						>
 							Delete
