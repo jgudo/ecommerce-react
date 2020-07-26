@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
 import { getProducts } from 'actions/productActions';
-import { isLoading as dispatchIsLoading } from 'actions/appActions';
+import dispatchIsLoading from 'actions/appActions';
 import MessageDisplay from '../ui/MessageDisplay';
 
 const ProductList = ({ children }) => {
