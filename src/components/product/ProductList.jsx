@@ -1,78 +1,81 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-sort-props */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import CircularProgress from '../ui/CircularProgress';
-import MessageDisplay from '../ui/MessageDisplay';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectFilter } from 'selectors/selector';
 
-import { ADMIN_PRODUCTS } from 'constants/routes';
 import { getProducts } from 'actions/productActions';
 import { isLoading as dispatchIsLoading } from 'actions/appActions';
+import MessageDisplay from '../ui/MessageDisplay';
 
-const ProductList = ({ 
-  isLoading, 
-  requestStatus, 
-  productsLength,
-  filteredProductsLength, 
-  lastRefKey,
-  totalItems,
-  dispatch,
-  children 
-}) => {
-  const [isFetching, setFetching] = useState(false);
+const ProductList = ({ children }) => {
+	const [isFetching, setFetching] = useState(false);
+	const { store } = useSelector(state => ({
+		store: {
+			productsLength: state.products.items.length,
+			products: state.products.items,
+			lastRefKey: state.products.lastRefKey,
+			totalItems: state.products.total,
+			isLoading: state.app.loading,
+			filteredProducts: selectFilter(state.products.items, state.filter),
+			requestStatus: state.app.requestStatus
+		}
+	}));
+	const dispatch = useDispatch();
+	const fetchProducts = () => {
+		setFetching(true);
+		dispatch(getProducts(store.lastRefKey));
+	};
 
-  useEffect(() => {
-    if (productsLength === 0)  {
-      fetchProducts();
-    }
-    
-    window.scrollTo(0, 0);
-    return () => dispatch(dispatchIsLoading(false));
-  }, []);
+	useEffect(() => {
+		if (store.productsLength === 0) {
+			fetchProducts();
+		}
 
-  useEffect(() => {
-    setFetching(false);
-  }, [lastRefKey]);
+		window.scrollTo(0, 0);
+		return () => dispatch(dispatchIsLoading(false));
+	}, []);
 
-  const fetchProducts = () => {
-    setFetching(true);
-    dispatch(getProducts(lastRefKey));
-  };
+	useEffect(() => {
+		setFetching(false);
+	}, [store.lastRefKey]);
 
-  return filteredProductsLength === 0 && !isLoading && !requestStatus ? (
-    <MessageDisplay 
-        message="The are no items found."
-        desc="Try using correct filters or keyword."
-    />
-  ) : requestStatus ? (
-    <MessageDisplay 
-        message={requestStatus}
-        action={fetchProducts}
-        buttonLabel="Try Again"
-    />
-  ) : (
-    <>
-    {children}
-    {productsLength < totalItems && (
-      <div className="d-flex-center padding-l">
-        <button 
-            className="button button-small"
-            disabled={isFetching}
-            onClick={fetchProducts}
-        >
-          {isFetching ? 'Fetching Items...' : 'Fetch More Items'}
-        </button>
-      </div>
-    )}
-    </>
-  )
+	return store.filteredProducts.length === 0 && !store.isLoading && !store.requestStatus ? (
+		<MessageDisplay
+			message="The are no items found."
+			desc="Try using correct filters or keyword."
+		/>
+	) : store.requestStatus ? (
+		<MessageDisplay
+			message={store.requestStatus}
+			action={fetchProducts}
+			buttonLabel="Try Again"
+		/>
+	) : (
+				<>
+					{children({ ...store })}
+					{store.productsLength < store.totalItems && (
+						<div className="d-flex-center padding-l">
+							<button
+								className="button button-small"
+								disabled={isFetching}
+								onClick={fetchProducts}
+							>
+								{isFetching ? 'Fetching Items...' : 'Fetch More Items'}
+							</button>
+						</div>
+					)}
+				</>
+			);
 };
 
 ProductList.propType = {
-  isLoading: PropTypes.bool.isRequired,
-  requestStatus: PropTypes.string.isRequired,
-  productsLength: PropTypes.number.isRequired,
-  filteredProductsLength: PropTypes.number.isRequired,
-  dispatch: PropTypes.func.isRequired
+	isLoading: PropTypes.bool.isRequired,
+	requestStatus: PropTypes.string.isRequired,
+	productsLength: PropTypes.number.isRequired,
+	filteredProductsLength: PropTypes.number.isRequired,
+	dispatch: PropTypes.func.isRequired
 };
 
 export default ProductList;
-

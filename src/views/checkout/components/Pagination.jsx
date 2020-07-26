@@ -1,34 +1,32 @@
 import React from 'react';
 
-const Pagination = ({ 
+const Pagination = ({
 	nextStepLabel,
 	previousLabel,
 	disabledNext,
-	previousPathName,
 	onClickNext,
 	onClickPrevious,
-	previousVisible,
-	history
+	previousVisible
 }) => {
 	return (
 		<div className="checkout-shipping-action">
 			{previousVisible && (
-				<button 
-		          className="button button-muted"
-		          onClick={onClickPrevious}
-		          type="button"
-		      >
-		        {previousLabel}
-		    </button>
+				<button
+					className="button button-muted"
+					onClick={onClickPrevious}
+					type="button"
+				>
+					{previousLabel}
+				</button>
 			)}
-      <button 
-          className="button"
-          disabled={disabledNext}
-          onClick={onClickNext}
-      >
-        {nextStepLabel}
-      </button>
-    </div>
+			<button
+				className="button"
+				disabled={disabledNext}
+				onClick={onClickNext}
+			>
+				{nextStepLabel}
+			</button>
+		</div>
 	);
 };
 

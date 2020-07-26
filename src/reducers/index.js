@@ -8,14 +8,14 @@ import userReducer from './userReducer';
 import appReducer from './appReducer';
 
 const rootReducer = {
-  products: productReducer,
-  basket: basketReducer,
-  auth: authReducer,
-  profile: profileReducer,
-  filter: filterReducer,
-  users: userReducer,
-  checkout: checkoutReducer,
-  app: appReducer,
+	products: productReducer,
+	basket: basketReducer,
+	auth: authReducer,
+	profile: profileReducer,
+	filter: filterReducer,
+	users: userReducer,
+	checkout: checkoutReducer,
+	app: appReducer
 };
 
 export default rootReducer;

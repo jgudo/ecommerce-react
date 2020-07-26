@@ -1,9 +1,24 @@
 {
   "parser": "babel-eslint",
-  "plugins": ["react", "react-hooks" ],
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
   "rules": {
-    "max-len": [1, 120, 2, {"ignoreComments": true}],
-    "no-unused-vars": ["error", { "caughtErrors": "none" }],
+    "max-len": [
+      1,
+      120,
+      2,
+      {
+        "ignoreComments": true
+      }
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "caughtErrors": "none"
+      }
+    ],
     "id-length": 0,
     "jsx-quotes": 1,
     "no-console": 0,
@@ -12,7 +27,7 @@
     "react/jsx-boolean-value": 1,
     "react/jsx-closing-bracket-location": 1,
     "react/jsx-curly-spacing": 1,
-    "react/jsx-indent-props": 1,
+    "react/jsx-indent-props": 0,
     "react/jsx-key": 1,
     "react/jsx-max-props-per-line": 1,
     "react/jsx-no-duplicate-props": 1,
@@ -35,34 +50,62 @@
     "react/sort-prop-types": 1,
     "strict": 0,
     "import/no-unresolved": "off",
-    "comma-dangle": ["error", {
-      "arrays": "never",
-      "objects": "never",
-      "imports": "never",
-      "exports": "never",
-      "functions": "ignore"
-    }],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "ignore"
+      }
+    ],
+    "import/extensions": [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx"
+    ],
     "linebreak-style": 0,
     "global-require": 0,
-    "eslint linebreak-style": [0, "error", "windows"],
-    "class-methods-use-this": [2, { "exceptMethods": [
-      "componentDidMount",
-      "componentDidUpdate",
-      "componentWillMount",
-      "componentWillReceiveProps",
-      "componentWillUnmount",
-      "componentWillUpdate",
-      "render",
-      "shouldComponentUpdate"
-    ]}],
-    "no-trailing-spaces": [1, { "skipBlankLines": true }],
+    "eslint linebreak-style": [
+      0,
+      "error",
+      "windows"
+    ],
+    "class-methods-use-this": [
+      2,
+      {
+        "exceptMethods": [
+          "componentDidMount",
+          "componentDidUpdate",
+          "componentWillMount",
+          "componentWillReceiveProps",
+          "componentWillUnmount",
+          "componentWillUpdate",
+          "render",
+          "shouldComponentUpdate"
+        ]
+      }
+    ],
+    "no-trailing-spaces": [
+      0,
+      {
+        "skipBlankLines": true
+      }
+    ],
     "no-underscore-dangle": 0,
     "arrow-body-style": 0,
     "no-tabs": 0,
-    "indent": [2, "tab"]
+    "indent": [
+      2,
+      "tab"
+    ]
   },
-  "extends": ["airbnb-base"],
-  "parserOptions":{
+  "extends": [
+    "airbnb-base"
+  ],
+  "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }
