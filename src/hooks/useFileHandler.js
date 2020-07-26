@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { v3 as uuidv3 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const useFileHandler = (initState) => {
 	const [imageFile, setImageFile] = useState(initState);
@@ -19,18 +19,18 @@ const useFileHandler = (initState) => {
 			alert('File size exceeded 500kb, consider optimizing your image', 'error');
 			setFileLoading(false);
 		} else if (type === 'multiple') {
-			const reader = new FileReader();
-
 			Array.from(event.target.files).forEach((file) => {
+				const reader = new FileReader();
 				reader.addEventListener('load', (e) => {
-					setImageFile({
-						...imageFile,
-						[name]: [...imageFile[name], { file, url: e.target.result, id: uuidv3() }] // id used for deleting the image from array
-					});
-					setFileLoading(false);
+					setImageFile(oldFiles => ({
+						...oldFiles,
+						[name]: [...oldFiles[name], { file, url: e.target.result, id: uuidv4() }]
+					}));
 				});
-				reader.readAsDataURL(img);
+				reader.readAsDataURL(file);
 			});
+
+			setFileLoading(false);
 		} else {
 			const reader = new FileReader();
 
