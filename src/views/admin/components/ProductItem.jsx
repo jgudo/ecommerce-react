@@ -91,7 +91,7 @@ const ProductItem = ({ product, history }) => {
 							</button>
 							&nbsp;
 							<button
-								className="button button-small"
+								className="button button-small button-danger"
 								onClick={onConfirmDelete}
 							>
 								Yes

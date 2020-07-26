@@ -65,6 +65,14 @@
   }
 }
 
+.button-danger {
+  background: red;
+
+  &:hover {
+    background: darken(red, 10%);
+  }
+}
+
 .button-border-gray {
   border: 1px solid $border-color;
   color: $paragraph-color;
