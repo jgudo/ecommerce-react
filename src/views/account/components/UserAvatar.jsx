@@ -16,9 +16,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 			if (!closest && userNav.current.classList.contains('user-sub-open')) {
 				userNav.current.classList.remove('user-sub-open');
 			}
-		} catch (err) {
-			console.log(err);
-		}
+		} catch (err) { }
 	};
 
 	useEffect(() => {

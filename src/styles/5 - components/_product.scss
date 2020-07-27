@@ -189,8 +189,8 @@
 }
 
 .product-modal-image-wrapper {
-  width: 30rem;
-  height: 32rem;
+  width: 40rem;
+  height: 40rem;
   position: relative;
   background: #f6f6f6;
 
@@ -199,6 +199,47 @@
     height: 20rem;
     margin: auto;
   }
+}
+
+.product-modal-image-collection {
+  width: 150px;
+  height: inherit;
+  background: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: scroll;
+  position: relative;
+
+  @include mobile {
+    width: 100%;
+    height: auto;
+    order: 2;
+    overflow-x: scroll;
+    overflow-y: unset;
+    flex-direction: row;
+  }
+}
+
+.product-modal-image-collection-wrapper {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #e1e1e1;
+  margin-bottom: 5px;
+  
+  &:hover {
+    cursor: pointer;
+    background: #fff;
+  }
+  @include mobile {
+    order: 1;
+  }
+}
+
+.product-modal-image-collection-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .product-modal-image {
@@ -215,6 +256,7 @@
     width: 100%;
     padding: $m-size;
     padding-bottom: $l-size;
+    order: 3;
   }
 }
 
@@ -253,10 +295,51 @@
   flex-direction: column;
 }
 
-.product-form-img-wrapper {
+.product-form-image-wrapper {
   width: 100%;
   height: 200px;
   position: relative;
+  background: #f4f4f4;
+  border: 1px solid #cacaca;
+}
+
+.product-form-collection {
+  width: 100%;
+  position: relative;
+}
+
+.product-form-delete-image {
+  color: red;
+  border: none;
+  background: none;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+
+  &:hover {
+    color: darken(red, 10%);
+  }
+
+  i {
+    background: #fff;
+    border-radius: 50%;
+  }
+}
+
+.product-form-collection-image {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  background: #f4f4f4;
+  border: 1px solid #cacaca;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 .product-form-image-preview {

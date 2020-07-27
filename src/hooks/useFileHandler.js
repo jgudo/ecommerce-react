@@ -5,6 +5,15 @@ const useFileHandler = (initState) => {
 	const [imageFile, setImageFile] = useState(initState);
 	const [isFileLoading, setFileLoading] = useState(false);
 
+	const removeImage = ({ id, name }) => {
+		const items = imageFile[name].filter(item => item.id !== id);
+
+		setImageFile({
+			...imageFile,
+			[name]: items
+		});
+	};
+
 	const onFileChange = (event, { name, type }) => {
 		const val = event.target.value;
 		const img = event.target.files[0];
@@ -49,7 +58,8 @@ const useFileHandler = (initState) => {
 		imageFile,
 		setImageFile,
 		isFileLoading,
-		onFileChange
+		onFileChange,
+		removeImage
 	};
 };
 

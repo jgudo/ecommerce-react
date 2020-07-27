@@ -8,21 +8,27 @@ import PropTypes from 'prop-types';
 // import uuid from 'uuid';
 
 const ProductForm = ({ product, onSubmit, isLoading }) => {
+	const defaultProduct = {
+		imageCollection: [],
+		...product
+	};
 	const [field, setField] = useState({
-		name: { value: product ? product.name : '' },
-		brand: { value: product ? product.brand : '' },
-		price: { value: product ? product.price : 0 },
-		maxQuantity: { value: product ? product.maxQuantity : 0 },
-		description: { value: product ? product.description : '' },
-		keywords: { value: product ? product.keywords : ['gago'] },
-		imageUrl: { value: product ? product.image : '' }
+		name: { value: product ? defaultProduct.name : '' },
+		brand: { value: product ? defaultProduct.brand : '' },
+		price: { value: product ? defaultProduct.price : 0 },
+		maxQuantity: { value: product ? defaultProduct.maxQuantity : 0 },
+		description: { value: product ? defaultProduct.description : '' },
+		keywords: { value: product ? defaultProduct.keywords : ['gago'] },
+		imageUrl: { value: product ? defaultProduct.image : '' },
+		imageCollection: { value: product ? defaultProduct.imageCollection : [] }
 	});
 
 	const {
 		imageFile,
 		isFileLoading,
-		onFileChange
-	} = useFileHandler({ image: {} });
+		onFileChange,
+		removeImage
+	} = useFileHandler({ image: {}, imageCollection: field.imageCollection.value });
 
 	const sanitizeNumber = (num) => {
 		return Number(num.toString().replace(/^0*/, ''));
@@ -69,7 +75,8 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 				...newProduct,
 				quantity: 1,
 				dateAdded: new Date().getTime(),
-				image: imageFile.image.file ? imageFile.image.file : field.imageUrl.value
+				image: imageFile.image.file ? imageFile.image.file : field.imageUrl.value,
+				imageCollection: imageFile.imageCollection
 			});
 		}
 	};
@@ -154,6 +161,48 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 							/>
 						</div>
 					</div>
+					<div className="product-form-field">
+						<span className="d-block padding-s">Image Collection</span>
+						<input
+							disabled={isLoading}
+							hidden
+							id="product-input-file-collection"
+							multiple
+							onChange={e => onFileChange(e, { name: 'imageCollection', type: 'multiple' })}
+							readOnly={isLoading}
+							type="file"
+						/>
+						{!isFileLoading && (
+							<label htmlFor="product-input-file-collection">
+								Choose Images
+							</label>
+						)}
+					</div>
+					<div className="product-form-collection">
+						<>
+							{imageFile.imageCollection.length >= 1 && (
+								imageFile.imageCollection.map(image => (
+									<div
+										className="product-form-collection-image"
+										key={image.id}
+									>
+										<ImageLoader
+											alt=""
+											src={image.url}
+										/>
+										<button
+											className="product-form-delete-image"
+											onClick={() => removeImage({ id: image.id, name: 'imageCollection' })}
+											title="Delete Image"
+											type="button"
+										>
+											<i className="fa fa-times-circle" />
+										</button>
+									</div>
+								))
+							)}
+						</>
+					</div>
 					<br />
 					<div className="product-form-field product-form-submit">
 						<button
@@ -186,15 +235,15 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 							</label>
 						)}
 					</div>
-					{(imageFile.image.url || field.imageUrl.value) && (
-						<div className="product-form-img-wrapper">
+					<div className="product-form-image-wrapper">
+						{(imageFile.image.url || field.imageUrl.value) && (
 							<ImageLoader
 								alt=""
 								className="product-form-image-preview"
 								src={imageFile.image.url || field.imageUrl.value}
 							/>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 			</form>
 		</div>
@@ -211,7 +260,8 @@ ProductForm.propTypes = {
 		maxQuantity: PropTypes.number,
 		description: PropTypes.string,
 		keywords: PropTypes.arrayOf(PropTypes.string),
-		image: PropTypes.string
+		image: PropTypes.string,
+		imageCollection: PropTypes.arrayOf(PropTypes.object)
 	})
 };
 

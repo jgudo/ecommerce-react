@@ -1,4 +1,5 @@
-import { call, put, select } from 'redux-saga/effects';
+/* eslint-disable indent */
+import { call, put, select, all } from 'redux-saga/effects';
 import firebase from 'firebase/firebase';
 
 import {
@@ -60,49 +61,78 @@ function* productSaga({ type, payload }) {
 			try {
 				yield initRequest();
 
+				const { imageCollection } = payload;
 				const key = yield call(firebase.generateKey);
 				const downloadURL = yield call(firebase.storeImage, key, 'products', payload.image);
+				const image = { id: key, url: downloadURL };
+				let images = [];
 
-				yield call(firebase.addProduct, key, { ...payload, image: downloadURL });
+				if (imageCollection.length !== 0) {
+					const imageKeys = yield all(imageCollection.map(() => firebase.generateKey));
+					const imageUrls = yield all(imageCollection.map((img, i) => firebase.storeImage('products', imageKeys[i](), img.file)));
+					images = imageUrls.map((url, i) => ({
+						id: imageKeys[i](),
+						url
+					}));
+				}
 
+				const product = {
+					...payload,
+					image: downloadURL,
+					imageCollection: [image, ...images]
+				};
+
+				yield call(firebase.addProduct, key, product);
 				yield put(addProductSuccess({
 					id: key,
-					...payload,
-					image: downloadURL
+					...product
 				}));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully added', 'success');
 				yield put({ type: LOADING, payload: false });
 			} catch (e) {
 				yield handleError(e);
-				yield handleAction(undefined, 'Item failed to add: ' + e.message_, 'error');
+				yield handleAction(undefined, `Item failed to add: ${e.message_}`, 'error');
 			}
 			break;
 		case EDIT_PRODUCT:
 			try {
 				yield initRequest();
 
-				const { image } = payload.updates;
+				const { image, imageCollection } = payload.updates;
+				let newUpdates = { ...payload.updates };
 
 				if (image.constructor === File && typeof image === 'object') {
 					yield call(firebase.deleteImage, payload.id);
-					const downloadURL = yield call(firebase.storeImage, 'products', payload.id, image);
-					const updates = { ...payload.updates, image: downloadURL };
-
-					yield call(firebase.editProduct, payload.id, updates);
-					yield put(editProductSuccess({
-						id: payload.id,
-						updates
-					}));
-
-				} else {
-					yield call(firebase.editProduct, payload.id, payload.updates);
-					yield put(editProductSuccess({
-						id: payload.id,
-						updates: payload.updates
-					}));
-
+					const url = yield call(firebase.storeImage, 'products', payload.id, image);
+					newUpdates = { ...newUpdates, image: url };
 				}
 
+				if (imageCollection.length !== 0) {
+					const existingUploads = [];
+					const newUploads = [];
+
+					imageCollection.forEach((img) => {
+						if (img.file) {
+							newUploads.push(img);
+						} else {
+							existingUploads.push(img);
+						}
+					});
+
+					const imageKeys = yield all(newUploads.map(() => firebase.generateKey));
+					const imageUrls = yield all(newUploads.map((img, i) => firebase.storeImage('products', imageKeys[i](), img.file)));
+					const images = imageUrls.map((url, i) => ({
+						id: imageKeys[i](),
+						url
+					}));
+					newUpdates = { ...newUpdates, imageCollection: [...existingUploads, ...images] };
+				}
+
+				yield call(firebase.editProduct, payload.id, newUpdates);
+				yield put(editProductSuccess({
+					id: payload.id,
+					updates: newUpdates
+				}));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully edited', 'success');
 				yield put({ type: LOADING, payload: false });
 			} catch (e) {
@@ -123,7 +153,7 @@ function* productSaga({ type, payload }) {
 			}
 			break;
 		default:
-			return;
+			throw new Error(`Unexpected action type ${type}`);
 	}
 }
 

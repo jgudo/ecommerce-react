@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
@@ -8,17 +8,23 @@ import Modal from 'components/ui/Modal';
 import ImageLoader from '../ui/ImageLoader';
 
 const ProductModalDetails = (props) => {
+	const [selectedImage, setSelectedImage] = useState(props.product.image);
 	const dispatch = useDispatch();
+	const product = { imageCollection: [], ...props.product }; // set default props for imageCollectio
 
 	const onAddToBasket = () => {
 		if (props.foundOnBasket) {
-			dispatch(removeFromBasket(props.product.id));
+			dispatch(removeFromBasket(product.id));
 			displayActionMessage('Item removed from basket', 'info');
 		} else {
-			dispatch(addToBasket(props.product));
+			dispatch(addToBasket(product));
 			displayActionMessage('Item added to basket', 'success');
 		}
 	};
+
+	useEffect(() => {
+		setSelectedImage(props.product.image);
+	}, [props.product.image]);
 
 	return !props.product ? null : (
 		<Modal
@@ -27,22 +33,37 @@ const ProductModalDetails = (props) => {
 			overrideStyle={{ padding: 0 }}
 		>
 			<div className="product-modal">
+				{product.imageCollection.length !== 0 && (
+					<div className="product-modal-image-collection">
+						{product.imageCollection.map(image => (
+							<div
+								className="product-modal-image-collection-wrapper"
+								key={image.id}
+								onClick={() => setSelectedImage(image.url)}
+							>
+								<ImageLoader
+									className="product-modal-image-collection-img"
+									src={image.url}
+								/>
+							</div>
+						))}
+					</div>
+				)}
 				<div className="product-modal-image-wrapper">
 					<ImageLoader
-						alt={props.product.name}
 						className="product-modal-image"
-						src={props.product.image}
+						src={selectedImage}
 					/>
 				</div>
 				<div className="product-modal-details">
-					<h3>{props.product.name}</h3>
+					<h3>{product.name}</h3>
 					<span className="text-subtle">Brand: &nbsp;</span>
-					<span><strong>{props.product.brand}</strong></span>
+					<span><strong>{product.brand}</strong></span>
 					<br />
 					<br />
-					<span>{props.product.description}</span>
+					<span>{product.description}</span>
 					<br />
-					<h1>{displayMoney(props.product.price)}</h1>
+					<h1>{displayMoney(product.price)}</h1>
 					<div className="product-modal-action">
 						<button
 							className={`button button-small ${props.foundOnBasket ? 'button-border button-border-gray' : ''}`}
