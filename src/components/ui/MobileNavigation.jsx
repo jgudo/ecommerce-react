@@ -31,7 +31,7 @@ const Navigation = (props) => {
 						>
 
 							<Badge count={props.basketLength}>
-								<i className="fa fa-shopping-basket" style={{ fontSize: '2rem' }} />
+								<i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
 							</Badge>
 						</button>
 					)}

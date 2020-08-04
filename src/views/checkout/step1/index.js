@@ -25,14 +25,16 @@ const OrderSummary = ({
 				<h3 className="text-center">Order Summary</h3>
 				<span className="d-block text-center">Review items in your basket.</span>
 				<br />
-				{basket.map(product => (
-					<BasketItem
-						basket={basket}
-						dispatch={dispatch}
-						key={product.id}
-						product={product}
-					/>
-				))}
+				<div className="checkout-items">
+					{basket.map(product => (
+						<BasketItem
+							basket={basket}
+							dispatch={dispatch}
+							key={product.id}
+							product={product}
+						/>
+					))}
+				</div>
 				<br />
 				<div className="basket-total text-right">
 					<p className="basket-total-title">Subtotal:</p>

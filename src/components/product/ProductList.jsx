@@ -62,7 +62,7 @@ const ProductList = ({ children }) => {
 								disabled={isFetching}
 								onClick={fetchProducts}
 							>
-								{isFetching ? 'Fetching Items...' : 'Fetch More Items'}
+								{isFetching ? 'Fetching Items...' : 'Show More Items'}
 							</button>
 						</div>
 					)}

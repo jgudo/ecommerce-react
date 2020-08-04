@@ -17,6 +17,9 @@ const BasketItem = ({ dispatch, product }) => {
 				product={product}
 			/>
 			<div className="basket-item-wrapper">
+				<div className="position-relative margin-right-m margin-left-s">
+					<Badge count={product.quantity} />
+				</div>
 				<div className="basket-item-img-wrapper">
 					<ImageLoader
 						className="basket-item-img"
@@ -32,14 +35,12 @@ const BasketItem = ({ dispatch, product }) => {
 						<span>{` (x ${product.quantity}) `}</span>
 					</h5>
 				</div>
-				<div className="position-relative margin-right-l">
-					<Badge count={product.quantity} />
-				</div>
+
 				<button
 					className="basket-item-remove button button-border button-border-gray button-small"
 					onClick={onRemoveFromBasket}
 				>
-					x
+					<i className="fa fa-trash" />
 				</button>
 			</div>
 		</div>

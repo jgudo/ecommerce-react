@@ -84,7 +84,7 @@ const Navigation = ({ isAuth, path, history }) => {
 							history={history}
 							productsLength={store.productsLength}
 						/>
-          &nbsp;
+						&nbsp;
 						<FiltersToggle
 							filter={store.filter}
 							isLoading={store.isLoading}
@@ -109,7 +109,7 @@ const Navigation = ({ isAuth, path, history }) => {
 								>
 
 									<Badge count={store.basketLength}>
-										<i className="fa fa-shopping-basket" style={{ fontSize: '2rem' }} />
+										<i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
 									</Badge>
 								</button>
 							)}

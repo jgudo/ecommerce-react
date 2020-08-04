@@ -22,6 +22,20 @@
   }
 }
 
+.checkout-items {
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: center;
+
+  .basket-item {
+    margin: .5rem 1rem;
+
+    @include mobile {
+      margin: 0;
+    }
+  }
+}
+
 .checkout-header-menu {
   width: 50%;
   display: flex;
@@ -114,7 +128,7 @@
 }
 
 .checkout-step-1 {
-  width: 50rem;
+  width: 80rem;
   margin: auto;
 
   @include tablet {
