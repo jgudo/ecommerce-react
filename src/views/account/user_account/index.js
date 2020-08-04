@@ -1,5 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, { lazy, Suspense } from 'react';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 import CircularProgress from 'components/ui/CircularProgress';
 import UserTab from '../tab/UserTab';
 
@@ -15,6 +16,7 @@ const Loader = () => (
 );
 
 const UserAccount = () => {
+	useDocumentTitle('My Account | Salinaka');
 	return (
 		<UserTab>
 			<div index={0} label="Account">

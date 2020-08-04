@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useDidMount from 'hooks/useDidMount';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 import Input from 'components/ui/Input';
 import { resetPassword } from 'actions/authActions';
 
@@ -17,6 +18,7 @@ const ForgotPassword = () => {
 	const [isSendingForgotPWRequest, setIsSending] = useState(false);
 	const [field, setField] = useState({});
 
+	useDocumentTitle('Forgot Password | Salinaka');
 	useEffect(() => {
 		if (didMount) {
 			setForgotPWStatus(authStatus);

@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import useDocumentTitle from 'hooks/useDocumentTitle';
 import { ADD_PRODUCT } from 'constants/routes';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import { selectFilter } from 'selectors/selector';
@@ -12,6 +13,8 @@ import FiltersToggle from 'components/ui/FiltersToggle';
 import ProductItem from '../components/ProductItem';
 
 const Products = ({ history }) => {
+	useDocumentTitle('Product List | Salinaka Admin');
+
 	const { store } = useSelector(state => ({
 		store: {
 			productsLength: state.products.items.length,

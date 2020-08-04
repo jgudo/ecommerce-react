@@ -1,5 +1,6 @@
 import React from 'react';
 
+import useDocumentTitle from 'hooks/useDocumentTitle';
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
 import BasketItem from 'components/basket/BasketItem';
@@ -13,6 +14,7 @@ const OrderSummary = ({
 	dispatch,
 	history
 }) => {
+	useDocumentTitle('Check Out Step 1 | Salinaka');
 	const onClickPrevious = () => history.push('/');
 	const onClickNext = () => history.push(CHECKOUT_STEP_2);
 

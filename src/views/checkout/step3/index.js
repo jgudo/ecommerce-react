@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { CHECKOUT_STEP_2 } from 'constants/routes';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 import { setPaymentDetails } from 'actions/checkoutActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import StepTracker from '../components/StepTracker';
@@ -17,6 +18,7 @@ const Payment = ({
 	dispatch,
 	history
 }) => {
+	useDocumentTitle('Check Out Final Step | Salinaka');
 	const [paymentMode, setPaymentMode] = useState(payment.type || 'paypal');
 	const collapseCreditHeight = useRef(null);
 	const cardInputRef = useRef(null);

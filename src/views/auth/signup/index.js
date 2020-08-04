@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from 'components/ui/Input';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 import useDidMount from 'hooks/useDidMount';
 import { signUp } from 'actions/authActions';
 
@@ -24,6 +25,7 @@ const SignUp = (props) => {
 	const dispatch = useDispatch();
 	const passwordField = useRef(null);
 
+	useDocumentTitle('Sign Up | Salinaka');
 	useEffect(() => {
 		if (didMount) {
 			setSignUpStatus(authStatus);

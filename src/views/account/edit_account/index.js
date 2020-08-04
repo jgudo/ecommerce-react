@@ -15,9 +15,11 @@ import dispatchIsLoading from 'actions/appActions';
 import { updateProfile } from 'actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
 import { ACCOUNT } from 'constants/routes';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const EditProfile = (props) => {
 	const dispatch = useDispatch();
+	useDocumentTitle('Edit Account | Salinaka');
 	useEffect(() => {
 		return () => {
 			dispatch(dispatchIsLoading(false));

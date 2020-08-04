@@ -8,8 +8,10 @@ import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
 import ProductModalDetails from 'components/product/ProductModalDetails';
 import useModal from 'hooks/useModal';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const Home = () => {
+	useDocumentTitle();
 	const [productSelected, setProductSelected] = useState({});
 	const [columnCount, setColumnCount] = useState(6);
 	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
