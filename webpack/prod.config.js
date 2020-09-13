@@ -90,7 +90,16 @@ module.exports = merge(baseConfig, {
     // generate service worker
     new workboxPlugin.InjectManifest({
       swSrc: path.resolve(__dirname, '../src/sw-src.js'),
-      swDest: 'sw.js'
+      swDest: 'sw.js',
+      include: [
+        /\.html$/,
+        /\.js$/,
+        /\.css$/,
+        /\.woff2$/,
+        /\.jpg$/,
+        /\.png$/
+      ],
+      maximumFileSizeToCacheInBytes: 100 * 1024 * 1024
     })
   ]
 });
