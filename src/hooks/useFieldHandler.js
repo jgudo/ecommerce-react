@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const useFieldHandler = (initState, isErrorVisible = true) => {
 	const [field, setField] = useState(initState);

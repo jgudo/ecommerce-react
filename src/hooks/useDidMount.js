@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const useDidMount = () => {
 	const [didMount, setDidMount] = useState(false);
