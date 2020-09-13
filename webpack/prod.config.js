@@ -1,14 +1,14 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const DotEnv = require('dotenv');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
-DotEnv.config({ path: '.env.prod'});
+DotEnv.config({ path: '.env.prod' });
 const baseConfig = require('./base.config.js');
 
 module.exports = merge(baseConfig, {
@@ -75,13 +75,13 @@ module.exports = merge(baseConfig, {
       }
     ]),
     new webpack.DefinePlugin({
-      'process.env.FIREBASE_API_KEY':JSON.stringify(process.env.FIREBASE_API_KEY),
-      'process.env.FIREBASE_AUTH_DOMAIN':JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
-      'process.env.FIREBASE_DB_URL':JSON.stringify(process.env.FIREBASE_DB_URL),
-      'process.env.FIREBASE_PROJECT_ID':JSON.stringify(process.env.FIREBASE_PROJECT_ID),
-      'process.env.FIREBASE_STORAGE_BUCKET':JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
-      'process.env.FIREBASE_MSG_SENDER_ID':JSON.stringify(process.env.FIREBASE_MSG_SENDER_ID),
-      'process.env.FIREBASE_APP_ID':JSON.stringify(process.env.FIREBASE_APP_ID)
+      'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
+      'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+      'process.env.FIREBASE_DB_URL': JSON.stringify(process.env.FIREBASE_DB_URL),
+      'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+      'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+      'process.env.FIREBASE_MSG_SENDER_ID': JSON.stringify(process.env.FIREBASE_MSG_SENDER_ID),
+      'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID)
     }),
     //  // keep module.id stable when vendor modules does not change
     // new webpack.HashedModuleIdsPlugin(),

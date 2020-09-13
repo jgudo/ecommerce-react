@@ -22,25 +22,27 @@ module.exports = {
         loader: 'babel-loader'
       }
     }, {
-      test: /\.s?css$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader
-      }, {
-        loader: 'css-loader',
-        options: {
-          sourceMap: true
+      test: /\.(sa|sc|c)ss$/,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          }
+        },
+        {
+          loader: "group-css-media-queries-loader",
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true
+          }
         }
-      }, {
-        loader: "group-css-media-queries-loader",
-        options: { 
-        	sourceMap: true
-        }
-      }, {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: true
-        }
-      }]
+      ]
     }, {
       test: /\.(png|svg|jpg|jpeg|gif)$/,
       use: [{
@@ -70,7 +72,7 @@ module.exports = {
         }
       }]
     }]
-  }, 
+  },
   resolve: {
     modules: [
       resolve('src'),
@@ -80,8 +82,8 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-      chunkFilename: 'css/[name].[contenthash]_[id].css'
+      filename: '[name].css',
+      chunkFilename: '[name].[contenthash]_[id].css'
     })
   ]
 };
