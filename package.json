@@ -63,7 +63,7 @@
   "dependencies": {
     "firebase": "^7.20.0",
     "formik": "^2.1.5",
-    "history": "^5.0.0",
+    "history": "^4.9.0",
     "moment": "^2.27.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",

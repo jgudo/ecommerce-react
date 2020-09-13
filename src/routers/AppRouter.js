@@ -47,6 +47,7 @@ const AppRouter = () => (
 			/>
 			<PublicRoute
 				component={ScrollToTop(SignIn)}
+				exact
 				path={ROUTES.SIGNIN}
 			/>
 			<PublicRoute
