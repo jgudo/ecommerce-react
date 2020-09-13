@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const DotEnv = require('dotenv');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -65,7 +65,7 @@ module.exports = merge(baseConfig, {
         removeAttributeQuotes: true
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'auto'
     }),
     new CopyWebpackPlugin([
       {
