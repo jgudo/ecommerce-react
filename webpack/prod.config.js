@@ -53,7 +53,7 @@ module.exports = merge(baseConfig, {
         removeAttributeQuotes: true
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'auto'
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/404.html'),
