@@ -1,5 +1,5 @@
 import React from 'react';
-
+// this is best logo ever
 import logo from '../../../static/logo_vertical_cropped.png';
 import * as ROUTE from 'constants/routes';
 
