@@ -107,7 +107,7 @@ function* productSaga({ type, payload }) {
 					newUpdates = { ...newUpdates, image: url };
 				}
 
-				if (imageCollection.length !== 0) {
+				if (imageCollection.length > 1) {
 					const existingUploads = [];
 					const newUploads = [];
 
@@ -126,6 +126,9 @@ function* productSaga({ type, payload }) {
 						url
 					}));
 					newUpdates = { ...newUpdates, imageCollection: [...existingUploads, ...images] };
+				} else {
+					newUpdates = { ...newUpdates, imageCollection: [{ id: new Date().getTime(), url: newUpdates.image }] };
+					// add image thumbnail to image collection from newUpdates to make sure you're adding the url not the file object.
 				}
 
 				yield call(firebase.editProduct, payload.id, newUpdates);
