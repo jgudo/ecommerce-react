@@ -7,7 +7,7 @@ const resolve = (dir) => {
 
 module.exports = {
   entry: [
-    '@babel/polyfill', resolve('src/index.js')
+    '@babel/polyfill', resolve('src/index.tsx')
   ],
   output: {
     path: resolve('dist'),
@@ -21,6 +21,12 @@ module.exports = {
       use: {
         loader: 'babel-loader'
       }
+    }, {
+      test: /\.(ts|tsx)$/,
+      use: {
+        loader: 'ts-loader'
+      },
+      exclude: /node_modules/
     }, {
       test: /\.(sa|sc|c)ss$/,
       use: [
@@ -78,7 +84,7 @@ module.exports = {
       resolve('src'),
       'node_modules'
     ],
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.ts', '.tsx', '.js', '.jsx']
   },
   plugins: [
     new MiniCssExtractPlugin({

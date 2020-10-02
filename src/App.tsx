@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import AppRouter from 'routers/AppRouter';
 import Preloader from 'components/ui/Preloader';
 
-const App = ({ store, persistor }) => (
+const App: React.FC = ({ store, persistor }) => (
 	<StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={<Preloader />} persistor={persistor}>
