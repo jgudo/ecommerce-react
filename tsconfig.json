@@ -37,6 +37,10 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "forceConsistentCasingInFileNames": true,
-        "importHelpers": true
+        "importHelpers": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "src/types"
+        ]
     }
 }

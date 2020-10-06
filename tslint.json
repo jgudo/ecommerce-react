@@ -122,8 +122,8 @@
             "check-whitespace"
         ],
         "quotemark": [
-            true,
-            "single",
+            false,
+            "double",
             "avoid-escape"
         ],
         "semicolon": [

@@ -89,7 +89,7 @@ module.exports = merge(baseConfig, {
     // new webpack.optimize.ModuleConcatenationPlugin(),
     // generate service worker
     new workboxPlugin.InjectManifest({
-      swSrc: path.resolve(__dirname, '../src/sw-src.js'),
+      swSrc: path.resolve(__dirname, '../src/sw-src.ts'),
       swDest: 'sw.js',
       include: [
         /\.html$/,
