@@ -10,7 +10,7 @@ import ProductModalDetails from 'components/product/ProductModalDetails';
 import useModal from 'hooks/useModal';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 
-const Home = () => {
+const Home = ({ history }) => {
 	useDocumentTitle();
 	const [productSelected, setProductSelected] = useState({});
 	const [columnCount, setColumnCount] = useState(6);
@@ -21,7 +21,8 @@ const Home = () => {
 			filter: state.filter,
 			basket: state.basket,
 			filteredProducts: selectFilter(state.products.items, state.filter),
-			requestStatus: state.app.requestStatus
+			requestStatus: state.app.requestStatus,
+			isLoading: state.app.loading
 		}
 	}));
 

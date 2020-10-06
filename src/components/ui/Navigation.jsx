@@ -57,7 +57,7 @@ const Navigation = ({ isAuth, path, history }) => {
 		ROUTE.FORGOT_PASSWORD
 	];
 
-	return window.screen.width <= 480 ? (
+	return window.screen.width <= 800 ? (
 		<MobileNavigation
 			basketLength={store.basketLength}
 			disabledPaths={basketDisabledPaths}

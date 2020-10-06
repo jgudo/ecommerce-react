@@ -21,7 +21,7 @@ const SearchBar = ({
 	}, [filter.keyword]);
 
 	const dispatch = useDispatch();
-	const isMobile = window.screen.width <= 480;
+	const isMobile = window.screen.width <= 800;
 
 	const onSearchChange = (e) => {
 		const val = e.target.value.trimStart();

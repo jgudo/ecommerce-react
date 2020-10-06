@@ -11,14 +11,22 @@ const ProductItem = ({
 	product,
 	onOpenModal,
 	displaySelected,
-	foundOnBasket
+	foundOnBasket,
 }) => {
 	const dispatch = useDispatch();
 
 	const onClickItem = () => {
+		if (store.isLoading) return;
+
 		if (product.id) {
 			onOpenModal();
-			displaySelected(product);
+
+			if (window.screen.width <= 800) {
+				history.push(`/product/${id}`);
+			} else {
+				displaySelected(product);
+			}
+			// onViewProduct(product.id);
 		}
 	};
 

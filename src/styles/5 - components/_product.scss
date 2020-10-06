@@ -183,7 +183,7 @@
 .product-modal {
   display: flex;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
   }
 }
@@ -204,14 +204,14 @@
 .product-modal-image-collection {
   width: 150px;
   height: inherit;
-  background: #f4f4f4;
+  background: #fff;
   display: flex;
   flex-direction: column;
   padding: 10px;
   overflow-y: scroll;
   position: relative;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
     height: auto;
     order: 2;
@@ -232,8 +232,9 @@
     cursor: pointer;
     background: #fff;
   }
-  @include mobile {
+  @include tablet {
     order: 1;
+    width: 100px;
   }
 }
 
@@ -253,7 +254,7 @@
   width: 300px;
   padding: $m-size $l-size;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
     padding: $m-size;
     padding-bottom: $l-size;
