@@ -1,5 +1,6 @@
 import { EBasketActionType } from 'constants/constants';
-import { BasketActionType, IProduct } from 'types/typings';
+import { IProduct } from 'types/typings';
+import { BasketActionType } from '../actions/basketActions';
 
 const initState: IProduct[] = [];
 

@@ -1,5 +1,6 @@
 import { EProductActionType } from 'constants/constants';
-import { ProductActionType, ProductState } from 'types/typings';
+import { ProductState } from 'types/typings';
+import { ProductActionType } from '../actions/productActions';
 
 const initState: ProductState = {
 	lastRefKey: null,

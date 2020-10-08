@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { IImageFile } from 'types/typings';
 import { v4 as uuidv4 } from 'uuid';
 
-const useFileHandler = (initState) => {
+function useFileHandler(initState: { [propName: string]: IImageFile }) {
 	const [imageFile, setImageFile] = useState(initState);
 	const [isFileLoading, setFileLoading] = useState(false);
 
 	const removeImage = ({ id, name }) => {
-		const items = imageFile[name].filter(item => item.id !== id);
+		const items = (imageFile[name] as any).filter((item: IImageFile) => item.id !== id);
 
 		setImageFile({
 			...imageFile,
@@ -14,7 +15,9 @@ const useFileHandler = (initState) => {
 		});
 	};
 
-	const onFileChange = (event, { name, type }) => {
+	const onFileChange = (event: React.ChangeEvent<HTMLInputElement>, { name, type }) => {
+		if (!event.target || !event.target.files) return;
+
 		const val = event.target.value;
 		const img = event.target.files[0];
 		const size = img.size / 1024 / 1024;
@@ -22,36 +25,43 @@ const useFileHandler = (initState) => {
 
 		setFileLoading(true);
 		if (!regex.exec(val)) {
-			alert('File type must be JPEG or PNG', 'error');
+			alert('File type must be JPEG or PNG');
 			setFileLoading(false);
 		} else if (size > 0.5) {
-			alert('File size exceeded 500kb, consider optimizing your image', 'error');
+			alert('File size exceeded 500kb, consider optimizing your image');
 			setFileLoading(false);
 		} else if (type === 'multiple') {
-			Array.from(event.target.files).forEach((file) => {
-				const reader = new FileReader();
-				reader.addEventListener('load', (e) => {
-					setImageFile(oldFiles => ({
-						...oldFiles,
-						[name]: [...oldFiles[name], { file, url: e.target.result, id: uuidv4() }]
-					}));
+			if (event.target.files) {
+				Array.from(event.target.files).forEach((file) => {
+					const reader = new FileReader();
+					reader.addEventListener('load', (e: Event) => {
+						if (e.target) {
+							setImageFile((oldFiles) => ({
+								...oldFiles,
+								[name]: [...oldFiles[name], { file, url: reader.result, id: uuidv4() }]
+							}));
+						}
+					});
+					reader.readAsDataURL(file);
 				});
-				reader.readAsDataURL(file);
-			});
+			}
 
 			setFileLoading(false);
 		} else { // type is single
 			const reader = new FileReader();
 
-			reader.addEventListener('load', (e) => {
-				setImageFile({
-					...imageFile,
-					[name]: { file: img, url: e.target.result }
-				});
-				setFileLoading(false);
+			reader.addEventListener('load', (e: Event) => {
+				if (e.target) {
+					setImageFile({
+						...imageFile,
+						[name]: { file: img, url: reader.result }
+					});
+					setFileLoading(false);
+				}
 			});
 			reader.readAsDataURL(img);
 		}
+
 	};
 
 	return {
@@ -60,7 +70,7 @@ const useFileHandler = (initState) => {
 		isFileLoading,
 		onFileChange,
 		removeImage
-	};
-};
+	} as const;
+}
 
 export default useFileHandler;

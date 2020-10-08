@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 
-const useDocumentTitle = (title: string) => {
+const useDocumentTitle = (title: string): void => {
 	useLayoutEffect(() => {
 		if (title) {
 			document.title = title;

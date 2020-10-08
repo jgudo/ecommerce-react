@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { NavLink, Link, useHistory, useLocation } from 'react-router-dom';
 
 import * as ROUTE from 'constants/routes';
 import UserAvatar from 'views/account/components/UserAvatar';
@@ -16,12 +16,12 @@ import { RootState } from 'types/typings';
 
 interface IProps {
 	isAuth: boolean;
-	path: string;
 	[propName: string]: any;
 }
 
-const Navigation: React.FC<IProps> = ({ isAuth, path }) => {
+const Navigation: React.FC<IProps> = ({ isAuth }) => {
 	const navbar = useRef<HTMLDivElement>(null);
+	const { pathname } = useLocation();
 	const scrollHandler = () => {
 		if (navbar.current && window.screen.width > 480) {
 			if (window.pageYOffset >= 70) {
@@ -68,7 +68,6 @@ const Navigation: React.FC<IProps> = ({ isAuth, path }) => {
 			disabledPaths={basketDisabledPaths}
 			isAuth={isAuth}
 			isAuthenticating={store.isAuthenticating}
-			path={path}
 			profile={store.profile}
 		/>
 	) : (
@@ -81,7 +80,7 @@ const Navigation: React.FC<IProps> = ({ isAuth, path }) => {
 						<img src={logo} />
 					</Link>
 				</div>
-				{path === ROUTE.HOME && (
+				{pathname === ROUTE.HOME && (
 					<>
 						<SearchBar
 							isLoading={store.isLoading}
@@ -107,7 +106,7 @@ const Navigation: React.FC<IProps> = ({ isAuth, path }) => {
 							{({ onClickToggle }) => (
 								<button
 									className="button-link navigation-menu-link basket-toggle"
-									disabled={basketDisabledPaths.includes(path)}
+									disabled={basketDisabledPaths.includes(pathname)}
 									onClick={onClickToggle}
 								>
 
@@ -124,7 +123,7 @@ const Navigation: React.FC<IProps> = ({ isAuth, path }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
-								{(path === ROUTE.SIGNIN || path === ROUTE.HOME) && (
+								{(pathname === ROUTE.SIGNIN || pathname === ROUTE.HOME) && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"
@@ -135,7 +134,7 @@ const Navigation: React.FC<IProps> = ({ isAuth, path }) => {
 										Sign Up
 									</NavLink>
 								)}
-								{(path === ROUTE.SIGNUP || path === ROUTE.FORGOT_PASSWORD || path === ROUTE.HOME) && (
+								{(pathname === ROUTE.SIGNUP || pathname === ROUTE.FORGOT_PASSWORD || pathname === ROUTE.HOME) && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small button-muted margin-left-s"

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-export const displayDate = (timestamp) => {
+export const displayDate = (timestamp: number | string) => {
 	const date = new Date(timestamp);
 
 	const monthNames = [
@@ -25,7 +25,7 @@ export const displayMoney = (n) => {
 	return format.format(n);
 };
 
-export const displayActionMessage = (msg, status = 'info') => {
+export const displayActionMessage = (msg: string, status: string = 'info') => {
 	const div = document.createElement('div');
 	const span = document.createElement('span');
 
@@ -39,9 +39,9 @@ export const displayActionMessage = (msg, status = 'info') => {
 	span.textContent = msg;
 	div.appendChild(span);
 
-
-	if (document.querySelector('.toast')) {
-		document.body.removeChild(document.querySelector('.toast'));
+	const toastElement = document.querySelector('.toast');
+	if (toastElement) {
+		document.body.removeChild(toastElement);
 		document.body.appendChild(div);
 	} else {
 		document.body.appendChild(div);

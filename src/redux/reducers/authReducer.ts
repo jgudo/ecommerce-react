@@ -1,5 +1,6 @@
 import { EAuthActionType } from 'constants/constants';
-import { AuthActionType, IAuthInfo } from 'types/typings';
+import { IAuthInfo } from 'types/typings';
+import { AuthActionType } from '../actions/authActions';
 
 const initState: IAuthInfo = {
 	id: null,

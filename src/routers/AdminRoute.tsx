@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { ReactComponentElement } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
 
 import AdminNavigation from 'components/ui/AdminNavigation';
 import AdminSidePanel from 'components/ui/AdminSidePanel';
+import { RootState } from 'types/typings';
+import { ROLE_ADMIN } from 'constants/constants';
 
-const AdminRoute = ({ component: Component, ...rest }) => {
-	const isAuth = useSelector(state => !!state.auth.id && state.auth.role === 'ADMIN');
+interface IProps extends RouteProps {
+	component:
+	| React.ComponentType<RouteComponentProps<any>>
+	| React.ComponentType<any>;
+}
+
+const AdminRoute: React.FC<IProps> = ({ component: Component, ...rest }) => {
+	const isAuth = useSelector((state: RootState) => !!state.auth.id && state.auth.role === ROLE_ADMIN);
 
 	return (
 		<Route

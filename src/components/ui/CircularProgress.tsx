@@ -1,3 +1,4 @@
+import { THEME_DARK, THEME_DEFAULT } from 'constants/constants';
 import React from 'react';
 
 interface IProps {
@@ -9,9 +10,9 @@ interface IProps {
 const CircularProgress: React.FC<IProps> = ({ style, visible, theme }) => {
 	const divClassName = (): string => {
 		switch (theme) {
-			case 'light':
+			case THEME_DEFAULT:
 				return 'circular-progress-light';
-			case 'dark':
+			case THEME_DARK:
 				return 'circular-progress-dark';
 			default:
 				return '';

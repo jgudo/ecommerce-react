@@ -1,10 +1,6 @@
-import { ECheckOutActionType, EPaymentMode } from 'constants/constants';
+import { ECheckOutActionType, PAYPAL } from 'constants/constants';
 import { IPaymentInfo, IShippingInfo } from 'types/typings';
-
-type TAction =
-	| { type: ECheckOutActionType.SET_CHECKOUT_SHIPPING_DETAILS, payload: IShippingInfo }
-	| { type: ECheckOutActionType.SET_CHECKOUT_PAYMENT_DETAILS, payload: IPaymentInfo }
-	| { type: ECheckOutActionType.RESET_CHECKOUT }
+import { CheckOutActionType } from '../actions/checkoutActions';
 
 type State = {
 	shipping: IShippingInfo | {};
@@ -14,12 +10,12 @@ type State = {
 const defaultState: State = {
 	shipping: {},
 	payment: {
-		type: EPaymentMode.PAYPAL,
+		type: PAYPAL,
 		data: {}
 	}
 };
 
-export default (state = defaultState, action: TAction): State => {
+export default (state = defaultState, action: CheckOutActionType): State => {
 	switch (action.type) {
 		case ECheckOutActionType.SET_CHECKOUT_SHIPPING_DETAILS:
 			return {

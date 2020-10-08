@@ -11,28 +11,43 @@ import Input from 'components/ui/Input';
 import CircularProgress from 'components/ui/CircularProgress';
 import ImageLoader from 'components/ui/ImageLoader';
 
-import dispatchIsLoading from 'actions/miscActions';
-import { updateProfile } from 'actions/profileActions';
+import { setLoading } from 'redux/actions/miscActions';
+import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
-import { ACCOUNT } from 'constants/routes';
+import { Route } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import { IImageFile, IMobileInfo, RootState } from 'types/typings';
+import { RouteComponentProps } from 'react-router-dom';
 
-const EditProfile = (props) => {
+interface IInputState {
+	value: string;
+	error?: string | {};
+	[propName: string]: any;
+}
+
+interface IState {
+	fullname: IInputState;
+	email: IInputState;
+	address: IInputState;
+	mobile: IInputState;
+}
+
+const EditProfile: React.FC<RouteComponentProps> = (props) => {
 	const dispatch = useDispatch();
 	useDocumentTitle('Edit Account | Salinaka');
 	useEffect(() => {
 		return () => {
-			dispatch(dispatchIsLoading(false));
+			dispatch(setLoading(false));
 		};
 	}, []);
 
-	const { profile, auth, isLoading } = useSelector(state => ({
+	const { profile, auth, isLoading } = useSelector((state: RootState) => ({
 		profile: state.profile,
 		auth: state.auth,
 		isLoading: state.app.loading
 	}));
 
-	const [field, setField] = useState({
+	const [field, setField] = useState<IState>({
 		fullname: { value: profile.fullname ? profile.fullname : '' },
 		email: { value: profile.email ? profile.email : '' },
 		address: { value: profile.address ? profile.address : '' },
@@ -40,12 +55,12 @@ const EditProfile = (props) => {
 			value: '',
 			data: {}
 		},
-		avatar: profile.avatar ? profile.avatar : '',
-		banner: profile.banner ? profile.banner : ''
+		avatar: profile?.avatar || '',
+		banner: profile?.banner || ''
 	});
 
 	const [isOpenModal, setModalOpen] = useState(false);
-	const [password, setPassword] = useState(null);
+	const [password, setPassword] = useState('');
 	const {
 		imageFile,
 		isFileLoading,
@@ -67,19 +82,19 @@ const EditProfile = (props) => {
 		return fieldsChanged || filesUpdated;
 	};
 
-	const onEmailChange = (e, value, error) => {
+	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>, value: string, error: {}) => {
 		setField({ ...field, email: { value, error } });
 	};
 
-	const onFullNameChange = (e, value, error) => {
+	const onFullNameChange = (e: React.ChangeEvent<HTMLInputElement>, value: string, error: {}) => {
 		setField({ ...field, fullname: { value, error } });
 	};
 
-	const onAddressChange = (e, value, error) => {
+	const onAddressChange = (e: React.ChangeEvent<HTMLInputElement>, value: string, error: {}) => {
 		setField({ ...field, address: { value, error } });
 	};
 
-	const onMobileChange = (value, data) => {
+	const onMobileChange = (value: string, data: IMobileInfo) => {
 		const obj = {
 			dialCode: data.dialCode,
 			countryCode: data.countryCode,
@@ -101,7 +116,7 @@ const EditProfile = (props) => {
 		setPassword(e.target.value.trim());
 	};
 
-	const update = (credentials = {}) => {
+	const update = (credentials?: { email: string; password: string; }) => {
 		dispatch(updateProfile({
 			updates: {
 				fullname: field.fullname.value,
@@ -119,14 +134,14 @@ const EditProfile = (props) => {
 		}));
 	};
 
-	const onConfirmUpdate = () => {
+	const onConfirmUpdate = (): void => {
 		if (password) {
 			update({ email: field.email.value, password });
 			setModalOpen(false);
 		}
 	};
 
-	const onSubmitUpdate = () => {
+	const onSubmitUpdate = (): void => {
 		const noError = Object.keys(field).every(key => !!!field[key].error);
 
 		if (noError) {
@@ -245,7 +260,7 @@ const EditProfile = (props) => {
 						// eslint-disable-next-line quote-props
 						masks={{ 'ph': '+.. .... ... ....' }}
 						onChange={onMobileChange}
-						placeholder="Enter your mobile number"
+						placeholder="Enter your mobile numberzz"
 						readOnly={isLoading}
 						value={field.mobile.data.num}
 					/>
@@ -254,10 +269,10 @@ const EditProfile = (props) => {
 						<button
 							className="button button-muted w-100-mobile"
 							disabled={isLoading}
-							onClick={() => props.history.push(ACCOUNT)}
+							onClick={() => props.history.push(Route.ACCOUNT)}
 						>
 							Back to Profile
-            </button>
+						</button>
 						<button
 							className="button w-100-mobile"
 							disabled={isLoading || !areFieldsChanged()}
@@ -277,10 +292,10 @@ const EditProfile = (props) => {
 					<h4>Confirm Update</h4>
 					<p>
 						To continue updating profile including your &nbsp;
-            <strong>email</strong>,
-            <br />
-            please confirm by entering your password
-          </p>
+						<strong>email</strong>,
+						<br />
+						please confirm by entering your password
+					</p>
 					<input
 						className="input-form d-block"
 						onChange={onPasswordInput}
@@ -295,14 +310,14 @@ const EditProfile = (props) => {
 						onClick={onConfirmUpdate}
 					>
 						Confirm
-        </button>
+					</button>
 				</div>
 				<button
 					className="modal-close-button button button-border button-border-gray button-small"
 					onClick={onCloseModal}
 				>
 					X
-        </button>
+				</button>
 			</Modal>
 		</Boundary>
 	);

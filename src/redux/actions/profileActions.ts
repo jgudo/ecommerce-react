@@ -1,16 +1,16 @@
 import { EProfileActionType } from 'constants/constants';
-import { IUser, ProfileActionType } from 'types/typings';
+import { IUser } from 'types/typings';
 
-export const clearProfile = (): ProfileActionType => ({
+export const clearProfile = () => (<const>{
 	type: EProfileActionType.CLEAR_PROFILE
 });
 
-export const setProfile = (user: IUser): ProfileActionType => ({
+export const setProfile = (user: IUser) => (<const>{
 	type: EProfileActionType.SET_PROFILE,
 	payload: user
 });
 
-export const updateEmail = (password: string, newEmail: string) => ({
+export const updateEmail = (password: string, newEmail: string) => (<const>{
 	type: EProfileActionType.UPDATE_EMAIL,
 	payload: {
 		password,
@@ -18,7 +18,16 @@ export const updateEmail = (password: string, newEmail: string) => ({
 	}
 });
 
-export const updateProfile = newProfile => ({
+interface IUpdateProfile {
+	updates: IUser;
+	files: Record<string, File>;
+	credentials?: {
+		email: string;
+		password: string;
+	};
+}
+
+export const updateProfile = (newProfile: IUpdateProfile) => (<const>{
 	type: EProfileActionType.UPDATE_PROFILE,
 	payload: {
 		updates: newProfile.updates,
@@ -27,7 +36,14 @@ export const updateProfile = newProfile => ({
 	}
 });
 
-export const updateProfileSuccess = (updates: Partial<IUser>): ProfileActionType => ({
+export const updateProfileSuccess = (updates: Partial<IUser>) => (<const>{
 	type: EProfileActionType.UPDATE_PROFILE_SUCCESS,
 	payload: updates
 });
+
+export type ProfileActionType =
+	| ReturnType<typeof clearProfile>
+	| ReturnType<typeof setProfile>
+	| ReturnType<typeof updateEmail>
+	| ReturnType<typeof updateProfile>
+	| ReturnType<typeof updateProfileSuccess>;

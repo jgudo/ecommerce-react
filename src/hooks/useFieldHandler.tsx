@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-const useFieldHandler = (initState, isErrorVisible = true) => {
+function useFieldHandler<T>(initState: T, isErrorVisible: boolean = true) {
 	const [field, setField] = useState(initState);
 	const [errorField, setErrorField] = useState({});
 
-	const onFieldChange = (e, prop, optional = true, options = {}) => {
-		let val = e.target ? e.target.value.trimStart() : '';
+	const onFieldChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+		prop: string,
+		optional: boolean = true
+	) => {
+
+		let val = e.target?.value.trimStart() || '';
 		const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 		const nameRegex = /[^a-zA-Z\s]/g;
 		const passwordRegex = /[A-Z\W]/g;
@@ -20,19 +25,6 @@ const useFieldHandler = (initState, isErrorVisible = true) => {
 				setErrorField({ ...errorField, [prop]: `${key} must be at least 5 letters` });
 			} else if (nameRegex.test(val)) {
 				setErrorField({ ...errorField, [prop]: `${key} must not include special characters` });
-			} else {
-				setErrorField({ ...errorField, [prop]: '' });
-			}
-		} else if (prop === 'mobile') {
-			val = {
-				dialCode: options.data.dialCode,
-				countryCode: options.data.countryCode,
-				num: e,
-				rawNum: e.replace(/[^0-9]+/g, '').slice(options.data.dialCode.length)
-			};
-
-			if (e.length === 0) {
-				setErrorField({ ...errorField, [prop]: `${key} is required.` });
 			} else {
 				setErrorField({ ...errorField, [prop]: '' });
 			}
@@ -61,7 +53,7 @@ const useFieldHandler = (initState, isErrorVisible = true) => {
 		onFieldChange,
 		errorField,
 		setErrorField
-	};
-};
+	} as const;
+}
 
 export default useFieldHandler;

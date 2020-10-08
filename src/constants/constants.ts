@@ -82,11 +82,11 @@ export enum EMiscActionType {
     SET_REQUEST_STATUS = 'SET_REQUEST_STATUS'
 }
 
-export const USER = 'USER';
-export const ADMIN = 'ADMIN';
+export const ROLE_USER = 'USER';
+export const ROLE_ADMIN = 'ADMIN';
 
-export const DEFAULT = 'LIGHT';
-export const DARK = 'DARK';
+export const THEME_DEFAULT = 'LIGHT';
+export const THEME_DARK = 'DARK';
 
 export const PAYPAL = 'PAYPAL';
 export const CREDIT = 'CREDIT';

@@ -1,5 +1,6 @@
 import { EProfileActionType } from 'constants/constants';
-import { IUser, ProfileActionType } from 'types/typings';
+import { IUser } from 'types/typings';
+import { ProfileActionType } from '../actions/profileActions';
 // import profile from 'static/profile.jpg';
 // import banner from 'static/banner.jpg';
 

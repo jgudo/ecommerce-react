@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import * as ROUTES from 'constants/routes';
+import { Route as ROUTES } from 'constants/routes';
 
 import Dashboard from 'views/admin/dashboard';
 import Products from 'views/admin/products';

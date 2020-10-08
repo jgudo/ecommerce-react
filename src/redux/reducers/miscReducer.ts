@@ -1,21 +1,16 @@
-import { EMiscActionType, EAuthActionType } from 'constants/constants';
-import { IAuthStatus, IMisc } from 'types/typings';
-
-type TAction =
-	| { type: EMiscActionType.LOADING, payload: boolean }
-	| { type: EMiscActionType.IS_AUTHENTICATING, payload: boolean }
-	| { type: EMiscActionType.SET_REQUEST_STATUS, payload: string | null }
-	| { type: EAuthActionType.SET_AUTH_STATUS, payload: IAuthStatus | {} };
+import { EMiscActionType, EAuthActionType, THEME_DEFAULT } from 'constants/constants';
+import { IMisc } from 'types/typings';
+import { MiscActionType } from '../actions/miscActions';
 
 const initState: IMisc = {
 	loading: false,
 	isAuthenticating: false,
 	authStatus: {},
 	requestStatus: null,
-	theme: 'LIGHT'
+	theme: THEME_DEFAULT
 };
 
-export default (state = initState, action: TAction): IMisc => {
+export default (state = initState, action: MiscActionType): IMisc => {
 	switch (action.type) {
 		case EMiscActionType.LOADING:
 			return {

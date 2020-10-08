@@ -1,16 +1,20 @@
 /* eslint-disable no-plusplus */
+
+import { IFilter, IProduct } from 'types/typings';
+
 /* eslint-disable no-else-return */
-export const selectFilter = (products, filter) => {
+export const selectFilter = (products: IProduct[], filter: IFilter) => {
 	if (!products || products.length === 0) return [];
 
 	const keyword = filter.keyword.toLowerCase();
 
+	// tslint:disable-next-line: no-array-mutation
 	return products.filter((product) => {
-		const isInRange = filter.maxPrice ? (product.price >= filter.minPrice && product.price <= filter.maxPrice) : true;
-		const matchKeyword = product.keywords ? product.keywords.includes(keyword) : true;
-		const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
-		const matchDescription = product.description ? product.description.toLowerCase().includes(keyword) : true;
-		const matchBrand = product.brand ? product.brand.toLowerCase().includes(filter.brand) : true;
+		const isInRange = product.price >= filter?.minPrice && product?.price <= filter?.maxPrice || true;
+		const matchKeyword = product.keywords?.includes(keyword) || true;
+		const matchName = product.name?.toLowerCase().includes(keyword) || true;
+		const matchDescription = product.description?.toLowerCase().includes(keyword) || true;
+		const matchBrand = product.brand?.toLowerCase().includes(filter.brand) || true;
 
 		return ((matchKeyword || matchName || matchDescription) && matchBrand && isInRange);
 	}).sort((a, b) => {
@@ -27,7 +31,7 @@ export const selectFilter = (products, filter) => {
 };
 
 // Select product with highest price
-export const selectMax = (products) => {
+export const selectMax = (products: IProduct[]) => {
 	if (!products || products.length === 0) return 0;
 
 	let high = products[0];
@@ -42,7 +46,7 @@ export const selectMax = (products) => {
 };
 
 // Select product with lowest price
-export const selectMin = (products) => {
+export const selectMin = (products: IProduct[]) => {
 	if (!products || products.length === 0) return 0;
 	let low = products[0];
 

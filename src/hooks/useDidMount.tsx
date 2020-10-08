@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useDidMount = () => {
+const useDidMount = (): boolean => {
 	const [didMount, setDidMount] = useState(false);
 
 	useEffect(() => {

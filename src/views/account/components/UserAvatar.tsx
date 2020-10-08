@@ -14,8 +14,8 @@ interface IProps extends RouteComponentProps {
 
 const UserAvatar: React.FC<IProps> = ({ profile, isAuthenticating }) => {
 	const userNav = useRef<HTMLDivElement>(null);
-	const toggleDropdown = (e) => {
-		const closest = e.target.closest('div.user-nav');
+	const toggleDropdown = (e: MouseEvent) => {
+		const closest = (e.target as HTMLDivElement).closest('div.user-nav');
 
 		try {
 			if (!closest && userNav.current && userNav.current.classList.contains('user-sub-open')) {

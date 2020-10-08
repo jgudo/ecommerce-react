@@ -1,15 +1,6 @@
 import { EFilterActionType } from 'constants/constants';
 import { IFilter } from 'types/typings';
-
-type TAction =
-	| { type: EFilterActionType.SET_TEXT_FILTER, payload: string }
-	| { type: EFilterActionType.SET_BRAND_FILTER, payload: string }
-	| { type: EFilterActionType.SET_MAX_PRICE_FILTER, payload: number }
-	| { type: EFilterActionType.SET_MIN_PRICE_FILTER, payload: number }
-	| { type: EFilterActionType.RESET_FILTER }
-	| { type: EFilterActionType.CLEAR_RECENT_SEARCH }
-	| { type: EFilterActionType.REMOVE_SELECTED_RECENT, payload: string }
-	| { type: EFilterActionType.APPLY_FILTER, payload: IFilter };
+import { FilterActionType } from '../actions/filterActions';
 
 const initState: IFilter = {
 	recent: [],
@@ -20,7 +11,7 @@ const initState: IFilter = {
 	sortBy: ''
 };
 
-export default (state = initState, action: TAction): IFilter => {
+export default (state = initState, action: FilterActionType): IFilter => {
 	switch (action.type) {
 		case EFilterActionType.SET_TEXT_FILTER:
 			return {

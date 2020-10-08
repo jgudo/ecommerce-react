@@ -1,38 +1,46 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Basket from 'components/basket/Basket';
 import Navigation from 'components/ui/Navigation';
 import Footer from 'components/ui/Footer';
 
-import { SIGNIN, ADMIN_DASHBOARD } from 'constants/routes';
+import { Route as ROUTES } from 'constants/routes';
+import { ROLE_ADMIN, ROLE_USER } from 'constants/constants';
 
-const PrivateRoute = ({
+interface IProps extends RouteProps {
+	component:
+	| React.ComponentType<RouteComponentProps<any>>
+	| React.ComponentType<any>;
+	isAuth: boolean;
+	userType: typeof ROLE_USER | typeof ROLE_ADMIN;
+}
+
+const PrivateRoute: React.FC<IProps> = ({
 	isAuth,
 	userType,
 	component: Component,
-	path,
 	...rest
 }) => (
 		<Route
 			{...rest}
 			component={props => (
-				isAuth && userType === 'USER'
+				isAuth && userType === ROLE_USER
 					? (
 						<>
-							<Navigation path={path} isAuth={isAuth} />
+							<Navigation isAuth={isAuth} />
 							<Basket isAuth={isAuth} />
 							<main className="content">
 								<Component {...props} />
 							</main>
-							<Footer path={path} />
+							<Footer />
 						</>
 					)
-					: isAuth && userType === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
+					: isAuth && userType === ROLE_ADMIN ? <Redirect to={ROUTES.ADMIN_DASHBOARD} />
 						: <Redirect to={{
-							pathname: SIGNIN,
+							pathname: ROUTES.SIGNIN,
 							state: { from: props.location }
 						}}
 						/>
