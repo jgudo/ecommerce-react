@@ -1,5 +1,5 @@
 import { EProfileActionType } from 'constants/constants';
-import { IUser } from 'types/typings';
+import { IUser, PartialBy } from 'types/typings';
 
 export const clearProfile = () => (<const>{
 	type: EProfileActionType.CLEAR_PROFILE
@@ -19,8 +19,8 @@ export const updateEmail = (password: string, newEmail: string) => (<const>{
 });
 
 interface IUpdateProfile {
-	updates: IUser;
-	files: Record<string, File>;
+	updates: Partial<IUser>;
+	files: Record<string, File | undefined | null>;
 	credentials?: {
 		email: string;
 		password: string;

@@ -1,14 +1,16 @@
 /* eslint-disable indent */
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { displayDate } from 'helpers/utils';
-import { ACCOUNT_EDIT } from 'constants/routes';
+import { Route } from 'constants/routes';
 import ImageLoader from 'components/ui/ImageLoader';
+import { RootState } from 'types/typings';
 
-const UserProfile = (props) => {
-	const profile = useSelector(state => state.profile);
+const UserProfile: React.FC<RouteComponentProps> = (props) => {
+	const history = useHistory();
+	const profile = useSelector((state: RootState) => state.profile);
 
 	return (
 		<div className="user-profile">
@@ -30,7 +32,7 @@ const UserProfile = (props) => {
 					</div>
 					<button
 						className="button button-small user-profile-edit"
-						onClick={() => props.history.push(ACCOUNT_EDIT)}
+						onClick={() => history.push(Route.ACCOUNT_EDIT)}
 					>
 						Edit Account
 					</button>
@@ -67,4 +69,4 @@ const UserProfile = (props) => {
 	);
 };
 
-export default withRouter(UserProfile);
+export default UserProfile;

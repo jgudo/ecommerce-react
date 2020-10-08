@@ -11,7 +11,7 @@ const SignUp = (props) => {
 	const [passwordHidden, setPasswordHidden] = useState(true);
 
 	/* separate states so that when user navigates to signin or forgot password,
-    the authStatus message won't display to other routes.
+	the authStatus message won't display to other routes.
   */
 	const [signUpStatus, setSignUpStatus] = useState({});
 	const [isSigningUp, setIsSigningUp] = useState(false);
@@ -33,15 +33,15 @@ const SignUp = (props) => {
 		}
 	}, [authStatus, isAuthenticating]);
 
-	const onEmailInput = (e, value, error) => {
+	const onEmailInput = (value, error) => {
 		setField({ ...field, email: { value, error } });
 	};
 
-	const onFullnameInput = (e, value, error) => {
+	const onFullnameInput = (value, error) => {
 		setField({ ...field, fullname: { value, error } });
 	};
 
-	const onPasswordInput = (e, value, error) => {
+	const onPasswordInput = (value, error) => {
 		setField({ ...field, password: { value, error } });
 	};
 

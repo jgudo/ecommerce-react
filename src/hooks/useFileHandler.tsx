@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { IImageFile } from 'types/typings';
 import { v4 as uuidv4 } from 'uuid';
 
-function useFileHandler(initState: { [propName: string]: IImageFile }) {
+function useFileHandler<T>(initState: T) {
 	const [imageFile, setImageFile] = useState(initState);
 	const [isFileLoading, setFileLoading] = useState(false);
 
-	const removeImage = ({ id, name }) => {
-		const items = (imageFile[name] as any).filter((item: IImageFile) => item.id !== id);
+	const removeImage = ({ id, propName }: { id: string | number; propName: string }) => {
+		const items = (imageFile[propName] as any).filter((item: IImageFile) => item.id !== id);
 
 		setImageFile({
 			...imageFile,
-			[name]: items
+			[propName]: items
 		});
 	};
 

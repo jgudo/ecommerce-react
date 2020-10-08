@@ -4,15 +4,33 @@ import ImageLoader from 'components/ui/ImageLoader';
 import Input from 'components/ui/Input';
 
 import useFileHandler from 'hooks/useFileHandler';
-import PropTypes from 'prop-types';
+import { IImageFile, IProduct } from 'types/typings';
 // import uuid from 'uuid';
 
-const ProductForm = ({ product, onSubmit, isLoading }) => {
+interface IProps {
+	product: IProduct;
+	onSubmit: (product: Partial<IProduct>) => void;
+	isLoading: boolean;
+}
+
+interface IInputState {
+	[propName: string]: {
+		value: any;
+		error?: string | null;
+	};
+}
+
+interface IImageState {
+	thumbnail: Partial<IImageFile>;
+	imageCollection: IImageFile[];
+}
+
+const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 	const defaultProduct = {
-		imageCollection: [],
+		imgCollection: [],
 		...product
 	};
-	const [field, setField] = useState({
+	const [field, setField] = useState<IInputState>({
 		name: { value: product ? defaultProduct.name : '' },
 		brand: { value: product ? defaultProduct.brand : '' },
 		price: { value: product ? defaultProduct.price : 0 },
@@ -20,7 +38,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		description: { value: product ? defaultProduct.description : '' },
 		keywords: { value: product ? defaultProduct.keywords : ['gago'] },
 		imageUrl: { value: product ? defaultProduct.image : '' },
-		imageCollection: { value: product ? defaultProduct.imageCollection : [] }
+		imageCollection: { value: product ? defaultProduct.imgCollection : [] }
 	});
 
 	const {
@@ -28,33 +46,33 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		isFileLoading,
 		onFileChange,
 		removeImage
-	} = useFileHandler({ image: {}, imageCollection: field.imageCollection.value });
+	} = useFileHandler<IImageState>({ thumbnail: {}, imageCollection: field.imageCollection.value });
 
-	const sanitizeNumber = (num) => {
+	const sanitizeNumber = (num: number) => {
 		return Number(num.toString().replace(/^0*/, ''));
 	};
 
-	const onProductNameInput = (e, value, error) => {
+	const onProductNameInput = (value, error) => {
 		setField({ ...field, name: { value, error } });
 	};
 
-	const onProductBrandInput = (e, value, error) => {
+	const onProductBrandInput = (value, error) => {
 		setField({ ...field, brand: { value, error } });
 	};
 
-	const onProductPriceInput = (e, value, error) => {
+	const onProductPriceInput = (value, error) => {
 		setField({ ...field, price: { value: sanitizeNumber(value), error } });
 	};
 
-	const onProductDescriptionInput = (e, value, error) => {
+	const onProductDescriptionInput = (value, error) => {
 		setField({ ...field, description: { value, error } });
 	};
 
-	const onProductMaxQuantityInput = (e, value, error) => {
+	const onProductMaxQuantityInput = (value, error) => {
 		setField({ ...field, maxQuantity: { value: sanitizeNumber(value), error } });
 	};
 
-	const onSubmitForm = (e) => {
+	const onSubmitForm = (e: React.FormEvent) => {
 		e.preventDefault();
 		// eslint-disable-next-line no-extra-boolean-cast
 		const noError = Object.keys(field).every(key => !!!field[key].error);
@@ -62,7 +80,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		if (field.name.value
 			&& field.price.value
 			&& field.maxQuantity.value
-			&& (imageFile.image.file || field.imageUrl.value)
+			&& (imageFile.thumbnail.file || field.imageUrl.value)
 			&& noError
 		) {
 			const newProduct = {};
@@ -75,7 +93,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 				...newProduct,
 				quantity: 1,
 				dateAdded: new Date().getTime(),
-				image: imageFile.image.file ? imageFile.image.file : field.imageUrl.value,
+				image: imageFile.thumbnail.file ? imageFile.thumbnail.file : field.imageUrl.value,
 				imageCollection: imageFile.imageCollection
 			});
 		}
@@ -192,7 +210,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 										/>
 										<button
 											className="product-form-delete-image"
-											onClick={() => removeImage({ id: image.id, name: 'imageCollection' })}
+											onClick={() => removeImage({ id: image.id, propName: 'imageCollection' })}
 											title="Delete Image"
 											type="button"
 										>
@@ -225,7 +243,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 							disabled={isLoading}
 							hidden
 							id="product-input-file"
-							onChange={e => onFileChange(e, { name: 'image', type: 'single' })}
+							onChange={e => onFileChange(e, { name: 'thumbnail', type: 'single' })}
 							readOnly={isLoading}
 							type="file"
 						/>
@@ -236,11 +254,11 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 						)}
 					</div>
 					<div className="product-form-image-wrapper">
-						{(imageFile.image.url || field.imageUrl.value) && (
+						{(imageFile.thumbnail.url || field.imageUrl.value) && (
 							<ImageLoader
 								alt=""
 								className="product-form-image-preview"
-								src={imageFile.image.url || field.imageUrl.value}
+								src={imageFile.thumbnail.url || field.imageUrl.value}
 							/>
 						)}
 					</div>
@@ -248,21 +266,6 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 			</form>
 		</div>
 	);
-};
-
-ProductForm.propTypes = {
-	isLoading: PropTypes.bool,
-	onSubmit: PropTypes.func,
-	product: PropTypes.shape({
-		name: PropTypes.string,
-		brand: PropTypes.string,
-		price: PropTypes.number,
-		maxQuantity: PropTypes.number,
-		description: PropTypes.string,
-		keywords: PropTypes.arrayOf(PropTypes.string),
-		image: PropTypes.string,
-		imageCollection: PropTypes.arrayOf(PropTypes.object)
-	})
 };
 
 export default ProductForm;

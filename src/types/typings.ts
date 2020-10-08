@@ -26,7 +26,7 @@ export interface RootState {
 }
 
 export interface IProduct {
-    id?: string;
+    id: string;
     name: string;
     description?: string;
     price: number;
@@ -36,13 +36,8 @@ export interface IProduct {
     maxQuantity: number;
     quantity: number;
     dateAdded: number;
-    imageCollection?: IProductImage[];
+    imageCollection: IImageFile[];
     keywords?: string[];
-}
-
-export interface IProductImage {
-    id: string;
-    url: string;
 }
 
 export interface IUser {
@@ -117,7 +112,7 @@ export interface IFilter {
 }
 
 export interface IImageFile {
-    file?: File;
+    file: File | null;
     url: string;
     id: string;
 }

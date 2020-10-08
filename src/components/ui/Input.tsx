@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 
-type IProps = {
+type TProps = {
 	className?: string;
 	type?: string;
 	field: string;
@@ -8,14 +8,14 @@ type IProps = {
 	showError?: boolean;
 	showLabel?: boolean;
 	isRequired: boolean;
-	onInputChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, val: any, error: any) => void;
+	onInputChange: (val: string | number, error: string, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null) => void;
 	validate: (val: string | number, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => string | number;
 	[propName: string]: any;
 };
 // type Ref = HTMLInputElement | HTMLTextAreaElement;
 type Ref = any; // help! above expression doesn't work
 
-const InputField = React.forwardRef<Ref, IProps>(({
+const InputField = React.forwardRef<Ref, TProps>(({
 	className,
 	type,
 	field,
@@ -85,7 +85,7 @@ const InputField = React.forwardRef<Ref, IProps>(({
 			error = `${key} is required`;
 		}
 
-		onInputChange(e, val, error);
+		onInputChange(val, error, e);
 		setValue(val);
 	};
 

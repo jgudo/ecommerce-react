@@ -3,7 +3,7 @@
 /* eslint-disable no-else-return */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PhoneInput from 'react-phone-input-2';
+import PhoneInput, { PhoneInputProps } from 'react-phone-input-2';
 
 import Modal from 'components/ui/Modal';
 import Boundary from 'components/ui/Boundary';
@@ -25,14 +25,21 @@ interface IInputState {
 	[propName: string]: any;
 }
 
+type IImageState = {
+	avatar: Partial<IImageFile>;
+	banner: Partial<IImageFile>;
+};
+
 interface IState {
 	fullname: IInputState;
 	email: IInputState;
 	address: IInputState;
-	mobile: IInputState;
+	mobile: Partial<IInputState>;
+	avatar: string;
+	banner: string;
 }
 
-const EditProfile: React.FC<RouteComponentProps> = (props) => {
+const EditProfile: React.FC<RouteComponentProps & PhoneInputProps> = (props) => {
 	const dispatch = useDispatch();
 	useDocumentTitle('Edit Account | Salinaka');
 	useEffect(() => {
@@ -51,7 +58,7 @@ const EditProfile: React.FC<RouteComponentProps> = (props) => {
 		fullname: { value: profile.fullname ? profile.fullname : '' },
 		email: { value: profile.email ? profile.email : '' },
 		address: { value: profile.address ? profile.address : '' },
-		mobile: profile.mobile.value ? profile.mobile : {
+		mobile: profile.mobile ? profile.mobile : {
 			value: '',
 			data: {}
 		},
@@ -65,7 +72,7 @@ const EditProfile: React.FC<RouteComponentProps> = (props) => {
 		imageFile,
 		isFileLoading,
 		onFileChange
-	} = useFileHandler({ avatar: {}, banner: {} });
+	} = useFileHandler<IImageState>({ avatar: {}, banner: {} });
 
 	const areFieldsChanged = () => {
 		const fieldsChanged = Object.keys(field).some((key) => {
@@ -82,15 +89,15 @@ const EditProfile: React.FC<RouteComponentProps> = (props) => {
 		return fieldsChanged || filesUpdated;
 	};
 
-	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>, value: string, error: {}) => {
+	const onEmailChange = (value, error) => {
 		setField({ ...field, email: { value, error } });
 	};
 
-	const onFullNameChange = (e: React.ChangeEvent<HTMLInputElement>, value: string, error: {}) => {
+	const onFullNameChange = (value, error) => {
 		setField({ ...field, fullname: { value, error } });
 	};
 
-	const onAddressChange = (e: React.ChangeEvent<HTMLInputElement>, value: string, error: {}) => {
+	const onAddressChange = (value, error) => {
 		setField({ ...field, address: { value, error } });
 	};
 
@@ -256,12 +263,13 @@ const EditProfile: React.FC<RouteComponentProps> = (props) => {
 						country={'ph'}
 						disabled={isLoading}
 						inputClass={`input-form d-block ${field.mobile.error ? 'input-error' : ''}`}
-						inputExtraProps={{ required: true }}
+						inputProps={{
+							required: true
+						}}
 						// eslint-disable-next-line quote-props
 						masks={{ 'ph': '+.. .... ... ....' }}
 						onChange={onMobileChange}
 						placeholder="Enter your mobile numberzz"
-						readOnly={isLoading}
 						value={field.mobile.data.num}
 					/>
 					<br />

@@ -5,15 +5,15 @@ import Input from 'components/ui/Input';
 const ShippingForm = ({ setField, field }) => {
 	const [errorMobile, setErrorMobile] = useState('');
 
-	const onFullNameInput = (e, value, error) => {
+	const onFullNameInput = (value, error) => {
 		setField({ ...field, fullname: { value, error } });
 	};
 
-	const onEmailInput = (e, value, error) => {
+	const onEmailInput = (value, error) => {
 		setField({ ...field, email: { value, error } });
 	};
 
-	const onAddressInput = (e, value, error) => {
+	const onAddressInput = (value, error) => {
 		setField({ ...field, address: { value, error } });
 	};
 

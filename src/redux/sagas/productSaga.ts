@@ -13,7 +13,7 @@ import {
 
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';
-import { ADMIN_PRODUCTS } from 'constants/routes';
+import { Route } from 'constants/routes';
 import { IImageFile } from 'types/typings';
 
 function* initRequest() {
@@ -81,7 +81,7 @@ function* productSaga({ type, payload }) {
 					id: key,
 					...product
 				}));
-				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully added', 'success');
+				yield handleAction(Route.ADMIN_PRODUCTS, 'Item succesfully added', 'success');
 				yield put({ type: EMiscActionType.LOADING, payload: false });
 			} catch (e) {
 				yield handleError(e);
@@ -92,13 +92,13 @@ function* productSaga({ type, payload }) {
 			try {
 				yield initRequest();
 
-				const { image, imageCollection } = payload.updates;
+				const { thumbnail, imageCollection } = payload.updates;
 				let newUpdates = { ...payload.updates };
 
-				if (image.constructor === File && typeof image === 'object') {
+				if (thumbnail.constructor === File && typeof thumbnail === 'object') {
 					yield call(firebase.deleteImage, payload.id);
-					const url = yield call(firebase.storeImage, 'products', payload.id, image);
-					newUpdates = { ...newUpdates, image: url };
+					const url = yield call(firebase.storeImage, 'products', payload.id, thumbnail);
+					newUpdates = { ...newUpdates, image: url }; // image == thumbnail
 				}
 
 				if (imageCollection.length > 1) {
@@ -130,7 +130,7 @@ function* productSaga({ type, payload }) {
 					id: payload.id,
 					updates: newUpdates
 				}));
-				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully edited', 'success');
+				yield handleAction(Route.ADMIN_PRODUCTS, 'Item succesfully edited', 'success');
 				yield put({ type: EMiscActionType.LOADING, payload: false });
 			} catch (e) {
 				yield handleError(e);
@@ -143,7 +143,7 @@ function* productSaga({ type, payload }) {
 				yield call(firebase.removeProduct, payload);
 				yield put(removeProductSuccess(payload));
 				yield put({ type: EMiscActionType.LOADING, payload: false });
-				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully removed', 'success');
+				yield handleAction(Route.ADMIN_PRODUCTS, 'Item succesfully removed', 'success');
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to remove: ${e.message}`, 'error');
