@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, Link, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 
 import * as ROUTE from 'constants/routes';
 import UserAvatar from 'views/account/components/UserAvatar';
@@ -123,7 +123,7 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
-								{(pathname === ROUTE.SIGNIN || pathname === ROUTE.HOME) && (
+								{pathname === ROUTE.SIGNUP && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"
@@ -134,7 +134,7 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 										Sign Up
 									</NavLink>
 								)}
-								{(pathname === ROUTE.SIGNUP || pathname === ROUTE.FORGOT_PASSWORD || pathname === ROUTE.HOME) && (
+								{pathname !== ROUTE.SIGNIN && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small button-muted margin-left-s"

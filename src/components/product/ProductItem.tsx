@@ -6,27 +6,23 @@ import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import ImageLoader from '../ui/ImageLoader';
 import { IProduct } from 'types/typings';
+import { useHistory } from 'react-router';
 
 interface IProps {
 	product: IProduct;
-	onOpenModal?: () => void;
-	displaySelected?: (product: IProduct) => void;
 	foundOnBasket: (id: string) => boolean;
 	children?: React.ReactNode;
 }
 
 const ProductItem: React.FC<IProps> = ({
 	product,
-	onOpenModal,
-	displaySelected,
 	foundOnBasket
 }) => {
 	const dispatch = useDispatch();
-
+	const history = useHistory();
 	const onClickItem = (): void => {
 		if (product.id) {
-			onOpenModal && onOpenModal();
-			displaySelected && displaySelected(product);
+			history.push(`/product/${product.id}`);
 		}
 	};
 

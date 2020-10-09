@@ -6,16 +6,12 @@ import ProductList from 'components/product/ProductList';
 import ProductItem from 'components/product/ProductItem';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
-import ProductModalDetails from 'components/product/ProductModalDetails';
-import useModal from 'hooks/useModal';
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { IProduct, RootState } from 'types/typings';
+import { RootState } from 'types/typings';
 
 const Home: React.FC = () => {
 	useDocumentTitle('Salinaka | React JS eCommerce Site');
-	const [productSelected, setProductSelected] = useState<IProduct | {}>({});
 	const [columnCount, setColumnCount] = useState(6);
-	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
 
 	const { store } = useSelector((state: RootState) => ({
 		store: {
@@ -39,11 +35,9 @@ const Home: React.FC = () => {
 		onProductsLengthChanged();
 	}, [store.filteredProducts]);
 
-	const dispatch = useDispatch();
 	const productListWrapper = useRef(null);
 
 	const isFiltered: boolean = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
-	const displaySelected = product => setProductSelected(product);
 	const foundOnBasket = id => !!store.basket.find(item => item.id === id);
 
 	return (
@@ -67,13 +61,6 @@ const Home: React.FC = () => {
 					<ProductList>
 						{({ filteredProducts }) => (
 							<>
-								<ProductModalDetails
-									foundOnBasket={foundOnBasket}
-									isOpenModal={isOpenModal}
-									onCloseModal={onCloseModal}
-									overrideStyle={{ padding: 0 }}
-									product={productSelected}
-								/>
 								<div
 									className="product-list"
 									ref={productListWrapper}
@@ -86,10 +73,8 @@ const Home: React.FC = () => {
 										/>
 									)) : filteredProducts.map(product => (
 										<ProductItem
-											displaySelected={displaySelected}
 											foundOnBasket={foundOnBasket}
 											key={product.id}
-											onOpenModal={onOpenModal}
 											product={product}
 										/>
 									))}
