@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { addProduct } from 'actions/productActions';
+import { addProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
+import { IProduct } from 'types/typings';
 
-const AddProduct = () => {
+const AddProduct: React.FC = () => {
 	useDocumentTitle('Add New Product | Salinaka');
 	const isLoading = useSelector(state => state.app.loading);
 	const dispatch = useDispatch();
 
-	const onSubmit = (product) => {
+	const onSubmit = (product: IProduct) => {
 		dispatch(addProduct(product));
 	};
 

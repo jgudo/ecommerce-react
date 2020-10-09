@@ -8,7 +8,7 @@ const UserAccountTab = lazy(() => import('../tab/UserAccountTab'));
 const UserWishListTab = lazy(() => import('../tab/UserWishListTab'));
 const UserOrdersTab = lazy(() => import('../tab/UserOrdersTab'));
 
-const Loader = () => (
+const Loader: React.FC = () => (
 	<div className="loader" style={{ minHeight: '80vh' }}>
 		<CircularProgress />
 		<h6>Loading ... </h6>

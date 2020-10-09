@@ -1,20 +1,20 @@
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
-
-import { removeProduct } from 'actions/productActions';
-import { EDIT_PRODUCT } from 'constants/routes';
+import { removeProduct } from 'redux/actions/productActions';
+import { Route } from 'constants/routes';
 import { displayMoney, displayDate, displayActionMessage } from 'helpers/utils';
+import { IProduct } from 'types/typings';
 
-const ProductItem = ({ product, history }) => {
+const ProductItem: React.FC<IProduct & RouteComponentProps> = ({ product ) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const productRef = useRef(null);
 
 	const onClickEdit = () => {
-		history.push(`${EDIT_PRODUCT}/${product.id}`);
+		history.push(`${Route.EDIT_PRODUCT}/${product.id}`);
 	};
 
 	const onDeleteProduct = () => {
@@ -102,20 +102,6 @@ const ProductItem = ({ product, history }) => {
 			</div>
 		</SkeletonTheme>
 	);
-};
-
-ProductItem.propTypes = {
-	product: PropTypes.shape({
-		id: PropTypes.string,
-		name: PropTypes.string,
-		brand: PropTypes.string,
-		price: PropTypes.number,
-		maxQuantity: PropTypes.number,
-		description: PropTypes.string,
-		keywords: PropTypes.arrayOf(PropTypes.string),
-		image: PropTypes.string,
-		dateAdded: PropTypes.number
-	})
 };
 
 export default withRouter(ProductItem);

@@ -8,7 +8,7 @@ import { Route } from 'constants/routes';
 import ImageLoader from 'components/ui/ImageLoader';
 import { RootState } from 'types/typings';
 
-const UserProfile: React.FC<RouteComponentProps> = (props) => {
+const UserProfile: React.FC<RouteComponentProps> = () => {
 	const history = useHistory();
 	const profile = useSelector((state: RootState) => state.profile);
 

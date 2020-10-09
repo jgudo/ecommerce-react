@@ -26,7 +26,7 @@
             "es2017.object",
             "dom"
         ],
-        "module": "es6",
+        "module": "es2020",
         "removeComments": true,
         "alwaysStrict": true,
         "allowUnreachableCode": false,
