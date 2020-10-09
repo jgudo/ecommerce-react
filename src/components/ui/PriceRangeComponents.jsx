@@ -8,7 +8,7 @@ const railStyle = {
     position: 'absolute',
     width: '100%',
     transform: 'translate(0%, -50%)',
-    height: 40,
+    height: 20,
     cursor: 'pointer',
     zIndex: 300,
     // border: '1px solid grey',
@@ -22,7 +22,7 @@ const railCenterStyle = {
     borderRadius: 7,
     cursor: 'pointer',
     pointerEvents: 'none',
-    backgroundColor: 'rgb(155,155,155)',
+    backgroundColor: '#d0d0d0',
 }
 
 export class TooltipRail extends Component {
@@ -113,7 +113,7 @@ const railInnerStyle = {
     transform: 'translate(0%, -50%)',
     borderRadius: 7,
     pointerEvents: 'none',
-    backgroundColor: 'rgb(155,155,155)',
+    backgroundColor: '#d0d0d0',
 }
 
 export function SliderRail({ getRailProps }) {
@@ -205,7 +205,7 @@ export class Handle extends Component {
                         border: 0,
                         borderRadius: '50%',
                         boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)',
-                        backgroundColor: disabled ? '#666' : '#8b6068',
+                        backgroundColor: disabled ? '#666' : '#1a1a1a',
                     }}
                 />
             </Fragment>
@@ -240,7 +240,7 @@ export function Track({ source, target, getTrackProps, disabled }) {
                 transform: 'translate(0%, -50%)',
                 height: 14,
                 zIndex: 1,
-                backgroundColor: disabled ? '#999' : '#8b6068',
+                backgroundColor: disabled ? '#ffd993' : '#ffa500',
                 borderRadius: 7,
                 cursor: 'pointer',
                 left: `${source.percent}%`,
