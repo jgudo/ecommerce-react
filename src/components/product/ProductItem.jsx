@@ -23,11 +23,12 @@ const ProductItem = ({
 		if (product.id) {
 			onOpenModal();
 
-			if (window.screen.width <= 800) {
-				history.push(`/product/${product.id}`);
-			} else {
-				displaySelected(product);
-			}
+			history.push(`/product/${product.id}`);
+			// if (window.screen.width <= 800) {
+			// 	history.push(`/product/${product.id}`);
+			// } else {
+			// 	displaySelected(product);
+			// }
 			// onViewProduct(product.id);
 		}
 	};

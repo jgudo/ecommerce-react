@@ -6,7 +6,6 @@ import ProductList from 'components/product/ProductList';
 import ProductItem from 'components/product/ProductItem';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
-import ProductModalDetails from 'components/product/ProductModalDetails';
 import useModal from 'hooks/useModal';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 
@@ -67,14 +66,6 @@ const Home = ({ history }) => {
 					<ProductList>
 						{({ filteredProducts }) => (
 							<>
-								<ProductModalDetails
-									dispatch={dispatch}
-									foundOnBasket={foundOnBasket(productSelected.id)}
-									isOpenModal={isOpenModal}
-									onCloseModal={onCloseModal}
-									overrideStyle={{ padding: 0 }}
-									product={productSelected}
-								/>
 								<div
 									className="product-list"
 									ref={productListWrapper}

@@ -181,16 +181,22 @@
 // PRODUCT MODAL -------------------------------------------------
 
 .product-modal {
+  width: 100%;
   display: flex;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  margin: 0 5rem;
 
   @include tablet {
     flex-direction: column;
+    margin: 0;
   }
 }
 
 .product-modal-image-wrapper {
   width: 40rem;
   height: 40rem;
+  flex-grow: 1;
   position: relative;
   background: #f6f6f6;
 
@@ -251,7 +257,7 @@
 }
 
 .product-modal-details {
-  width: 300px;
+  width: 500px;
   padding: $m-size $l-size;
 
   @include tablet {

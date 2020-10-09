@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
 import CircularProgress from 'components/ui/ImageLoader';
+import { HOME } from 'constants/routes';
 import { removeFromBasket, addToBasket } from 'actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import firebase from '../../firebase/firebase';
 
 const ViewProduct = () => {
     const { id } = useParams();
+    const history = useHistory();
     const dispatch = useDispatch();
     const store = useSelector(state => ({
         product: state.products.items.find(item => item.id === id),
@@ -37,53 +39,56 @@ const ViewProduct = () => {
 
                         setProduct(data);
                         setSelectedImage(data.image);
+                    } else {
+                        history.push(HOME);
                     }
+                })
+                .catch((e) => {
+                    history.push(HOME);
                 });
         }
     }, [])
 
     return product ? (
-        <div>
-            <div className="product-modal">
-                {product.imageCollection.length !== 0 && (
-                    <div className="product-modal-image-collection">
-                        {product.imageCollection.map(image => (
-                            <div
-                                className="product-modal-image-collection-wrapper"
-                                key={image.id}
-                                onClick={() => setSelectedImage(image.url)}
-                            >
-                                <ImageLoader
-                                    className="product-modal-image-collection-img"
-                                    src={image.url}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <div className="product-modal-image-wrapper">
-                    <ImageLoader
-                        className="product-modal-image"
-                        src={selectedImage}
-                    />
-                </div>
-                <div className="product-modal-details">
-                    <h3>{product.name}</h3>
-                    <span className="text-subtle">Brand: &nbsp;</span>
-                    <span><strong>{product.brand}</strong></span>
-                    <br />
-                    <br />
-                    <span>{product.description}</span>
-                    <br />
-                    <h1>{displayMoney(product.price)}</h1>
-                    <div className="product-modal-action">
-                        <button
-                            className={`button button-small ${foundOnBasket() ? 'button-border button-border-gray' : ''}`}
-                            onClick={onAddToBasket}
+        <div className="product-modal">
+            {product.imageCollection.length !== 0 && (
+                <div className="product-modal-image-collection">
+                    {product.imageCollection.map(image => (
+                        <div
+                            className="product-modal-image-collection-wrapper"
+                            key={image.id}
+                            onClick={() => setSelectedImage(image.url)}
                         >
-                            {foundOnBasket() ? 'Remove From Basket' : 'Add To Basket'}
-                        </button>
-                    </div>
+                            <ImageLoader
+                                className="product-modal-image-collection-img"
+                                src={image.url}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+            <div className="product-modal-image-wrapper">
+                <ImageLoader
+                    className="product-modal-image"
+                    src={selectedImage}
+                />
+            </div>
+            <div className="product-modal-details">
+                <h3>{product.name}</h3>
+                <span className="text-subtle">Brand: &nbsp;</span>
+                <span><strong>{product.brand}</strong></span>
+                <br />
+                <br />
+                <span>{product.description}</span>
+                <br />
+                <h1>{displayMoney(product.price)}</h1>
+                <div className="product-modal-action">
+                    <button
+                        className={`button button-small ${foundOnBasket() ? 'button-border button-border-gray' : ''}`}
+                        onClick={onAddToBasket}
+                    >
+                        {foundOnBasket() ? 'Remove From Basket' : 'Add To Basket'}
+                    </button>
                 </div>
             </div>
         </div>
