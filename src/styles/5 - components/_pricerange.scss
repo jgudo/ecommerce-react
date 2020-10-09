@@ -27,15 +27,9 @@
   width: 50%;
   border: none !important;
   font-size: 4rem !important;
-  border-bottom: 2px solid transparent !important;
   padding: 0 !important;
   flex-grow: 1;
   text-align: center;
-
-  &:hover,
-  &:focus {
-    border-bottom: 2px solid $off-black !important;
-  }
 }
 
 .price-input-error {
