@@ -9,8 +9,6 @@ import ImageLoader from '../ui/ImageLoader';
 
 const ProductItem = ({
 	product,
-	onOpenModal,
-	displaySelected,
 	foundOnBasket,
 	isLoading
 }) => {
@@ -21,15 +19,7 @@ const ProductItem = ({
 		if (isLoading) return;
 
 		if (product.id) {
-			onOpenModal();
-
 			history.push(`/product/${product.id}`);
-			// if (window.screen.width <= 800) {
-			// 	history.push(`/product/${product.id}`);
-			// } else {
-			// 	displaySelected(product);
-			// }
-			// onViewProduct(product.id);
 		}
 	};
 
@@ -86,10 +76,7 @@ const ProductItem = ({
 };
 
 ProductItem.propType = {
-	onClickItem: PropTypes.func,
-	dispatch: PropTypes.func.isRequired,
 	product: PropTypes.object.isRequired,
-	onOpenModal: PropTypes.func,
 	foundOnBasket: PropTypes.bool
 };
 

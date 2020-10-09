@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
 import ProductList from 'components/product/ProductList';
 import ProductItem from 'components/product/ProductItem';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
-import useModal from 'hooks/useModal';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 
-const Home = ({ history }) => {
+const Home = () => {
 	useDocumentTitle();
-	const [productSelected, setProductSelected] = useState({});
 	const [columnCount, setColumnCount] = useState(6);
-	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
 
 	const { store } = useSelector(state => ({
 		store: {
@@ -38,11 +35,9 @@ const Home = ({ history }) => {
 		onProductsLengthChanged();
 	}, [store.filteredProducts]);
 
-	const dispatch = useDispatch();
 	const productListWrapper = useRef(null);
 
 	const isFiltered = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
-	const displaySelected = product => setProductSelected(product);
 	const foundOnBasket = id => !!store.basket.find(item => item.id === id);
 
 	return (
@@ -79,11 +74,9 @@ const Home = ({ history }) => {
 										/>
 									)) : filteredProducts.map(product => (
 										<ProductItem
-											displaySelected={displaySelected}
 											foundOnBasket={foundOnBasket(product.id)}
 											key={product.id}
 											isLoading={store.isLoading}
-											onOpenModal={onOpenModal}
 											product={product}
 										/>
 									))}
