@@ -9,14 +9,15 @@ import Boundary from 'components/ui/Boundary';
 import ProductModalDetails from 'components/product/ProductModalDetails';
 import useModal from 'hooks/useModal';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import { IProduct, RootState } from 'types/typings';
 
 const Home: React.FC = () => {
 	useDocumentTitle('Salinaka | React JS eCommerce Site');
-	const [productSelected, setProductSelected] = useState({});
+	const [productSelected, setProductSelected] = useState<IProduct | {}>({});
 	const [columnCount, setColumnCount] = useState(6);
 	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
 
-	const { store } = useSelector(state => ({
+	const { store } = useSelector((state: RootState) => ({
 		store: {
 			filter: state.filter,
 			basket: state.basket,
@@ -67,8 +68,7 @@ const Home: React.FC = () => {
 						{({ filteredProducts }) => (
 							<>
 								<ProductModalDetails
-									dispatch={dispatch}
-									foundOnBasket={foundOnBasket(productSelected.id)}
+									foundOnBasket={foundOnBasket}
 									isOpenModal={isOpenModal}
 									onCloseModal={onCloseModal}
 									overrideStyle={{ padding: 0 }}
@@ -81,14 +81,13 @@ const Home: React.FC = () => {
 								>
 									{filteredProducts.length === 0 ? new Array(12).fill({}).map((product, index) => (
 										<ProductItem
-											foundOnBasket={false}
 											key={`product-skeleton ${index}`}
 											product={product}
 										/>
 									)) : filteredProducts.map(product => (
 										<ProductItem
 											displaySelected={displaySelected}
-											foundOnBasket={foundOnBasket(product.id)}
+											foundOnBasket={foundOnBasket}
 											key={product.id}
 											onOpenModal={onOpenModal}
 											product={product}

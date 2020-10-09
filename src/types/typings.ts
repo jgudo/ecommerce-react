@@ -78,9 +78,12 @@ export interface IMisc {
 }
 
 export interface IMobileInfo {
-    dialCode: string;
-    countryCode: string;
-    num: string;
+    value: string;
+    data: {
+        dialCode: string;
+        countryCode: string;
+        num: string;
+    }
 }
 
 export interface IShippingInfo {

@@ -15,7 +15,7 @@ const Loader: React.FC = () => (
 	</div>
 );
 
-const UserAccount = () => {
+const UserAccount: React.FC = () => {
 	useDocumentTitle('My Account | Salinaka');
 	return (
 		<UserTab>

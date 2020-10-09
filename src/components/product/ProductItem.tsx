@@ -2,16 +2,16 @@ import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 
-import { removeFromBasket, addToBasket } from 'actions/basketActions';
+import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import ImageLoader from '../ui/ImageLoader';
 import { IProduct } from 'types/typings';
 
 interface IProps {
 	product: IProduct;
-	onOpenModal: () => void;
-	displaySelected: (product: IProduct) => void;
-	foundOnBasket: boolean;
+	onOpenModal?: () => void;
+	displaySelected?: (product: IProduct) => void;
+	foundOnBasket: (id: string) => boolean;
 	children?: React.ReactNode;
 }
 
@@ -25,13 +25,13 @@ const ProductItem: React.FC<IProps> = ({
 
 	const onClickItem = (): void => {
 		if (product.id) {
-			onOpenModal();
-			displaySelected(product);
+			onOpenModal && onOpenModal();
+			displaySelected && displaySelected(product);
 		}
 	};
 
 	const onAddToBasket = (): void => {
-		if (foundOnBasket) {
+		if (foundOnBasket(product.id)) {
 			dispatch(removeFromBasket(product.id));
 			displayActionMessage('Item removed from basket', 'info');
 		} else {
@@ -45,11 +45,11 @@ const ProductItem: React.FC<IProps> = ({
 			<div
 				className={`product-card ${!product.id ? 'product-loading' : ''}`}
 				style={{
-					border: foundOnBasket ? '1px solid #cacaca' : '',
-					boxShadow: foundOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
+					border: foundOnBasket(product.id) ? '1px solid #cacaca' : '',
+					boxShadow: foundOnBasket(product.id) ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
 				}}
 			>
-				{foundOnBasket && <i className="fa fa-check product-card-check" />}
+				{foundOnBasket(product.id) && <i className="fa fa-check product-card-check" />}
 				<div
 					className="product-card-content"
 					onClick={onClickItem}
@@ -70,10 +70,10 @@ const ProductItem: React.FC<IProps> = ({
 				</div>
 				{product.id && (
 					<button
-						className={`product-card-button button-small button button-block ${foundOnBasket ? 'button-border button-border-gray' : ''}`}
+						className={`product-card-button button-small button button-block ${foundOnBasket(product.id) ? 'button-border button-border-gray' : ''}`}
 						onClick={onAddToBasket}
 					>
-						{foundOnBasket ? 'Remove from basket' : 'Add to basket'}
+						{foundOnBasket(product.id) ? 'Remove from basket' : 'Add to basket'}
 					</button>
 				)}
 

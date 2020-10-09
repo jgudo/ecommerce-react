@@ -101,7 +101,7 @@ const EditProfile: React.FC<RouteComponentProps & PhoneInputProps> = (props) => 
 		setField({ ...field, address: { value, error } });
 	};
 
-	const onMobileChange = (value: string, data: IMobileInfo) => {
+	const onMobileChange = (value: string, data: any) => {
 		const obj = {
 			dialCode: data.dialCode,
 			countryCode: data.countryCode,

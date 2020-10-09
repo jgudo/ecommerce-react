@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { addToBasket, removeFromBasket } from 'actions/basketActions';
+import { addToBasket, removeFromBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import Modal from 'components/ui/Modal';
 import ImageLoader from '../ui/ImageLoader';
+import { IImageFile, IProduct } from 'types/typings';
 
-const ProductModalDetails = (props) => {
+interface IProps {
+	product: IProduct;
+	basket: IProduct[];
+	isOpenModal: boolean;
+	onCloseModal: () => void;
+	foundOnBasket: (id: string) => boolean;
+	overrideStyle?: React.CSSProperties;
+}
+
+const ProductModalDetails: React.FC<IProps> = (props) => {
 	const [selectedImage, setSelectedImage] = useState(props.product.image);
 	const dispatch = useDispatch();
-	const product = { imageCollection: [], ...props.product }; // set default props for imageCollectio
+	const product = { imgCollection: [], ...props.product }; // set default props for imageCollectio
 
 	const onAddToBasket = () => {
-		if (props.foundOnBasket) {
+		if (props.foundOnBasket(product.id)) {
 			dispatch(removeFromBasket(product.id));
 			displayActionMessage('Item removed from basket', 'info');
 		} else {
@@ -33,9 +42,9 @@ const ProductModalDetails = (props) => {
 			overrideStyle={{ padding: 0 }}
 		>
 			<div className="product-modal">
-				{product.imageCollection.length !== 0 && (
+				{product.imgCollection.length !== 0 && (
 					<div className="product-modal-image-collection">
-						{product.imageCollection.map(image => (
+						{product.imgCollection.map((image: IImageFile) => (
 							<div
 								className="product-modal-image-collection-wrapper"
 								key={image.id}
@@ -66,10 +75,10 @@ const ProductModalDetails = (props) => {
 					<h1>{displayMoney(product.price)}</h1>
 					<div className="product-modal-action">
 						<button
-							className={`button button-small ${props.foundOnBasket ? 'button-border button-border-gray' : ''}`}
+							className={`button button-small ${props.foundOnBasket(product.id) ? 'button-border button-border-gray' : ''}`}
 							onClick={onAddToBasket}
 						>
-							{props.foundOnBasket ? 'Remove From Basket' : 'Add To Basket'}
+							{props.foundOnBasket(product.id) ? 'Remove From Basket' : 'Add To Basket'}
 						</button>
 					</div>
 				</div>
@@ -82,12 +91,6 @@ const ProductModalDetails = (props) => {
 			</button>
 		</Modal>
 	);
-};
-
-ProductModalDetails.propType = {
-	product: PropTypes.object.isRequired,
-	addToBasket: PropTypes.func.isRequired,
-	foundOnBasket: PropTypes.func.isRequired
 };
 
 export default ProductModalDetails;

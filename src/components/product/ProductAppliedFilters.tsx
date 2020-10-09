@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { applyFilter } from 'actions/filterActions';
+import { applyFilter } from 'redux/actions/filterActions';
 import { IFilter } from 'types/typings';
 
 interface IProps {

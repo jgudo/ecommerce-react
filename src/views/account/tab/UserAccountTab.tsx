@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React from 'react';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { displayDate } from 'helpers/utils';
@@ -8,7 +8,7 @@ import { Route } from 'constants/routes';
 import ImageLoader from 'components/ui/ImageLoader';
 import { RootState } from 'types/typings';
 
-const UserProfile: React.FC<RouteComponentProps> = () => {
+const UserProfile: React.FC = () => {
 	const history = useHistory();
 	const profile = useSelector((state: RootState) => state.profile);
 
@@ -51,11 +51,13 @@ const UserProfile: React.FC<RouteComponentProps> = () => {
 						)}
 					<span>Mobile</span>
 					<br />
-					{profile.mobile.data ? (
-						<h5>{profile.mobile.data.num ? profile.mobile.data.num : '+63'}</h5>
-					) : (
-							<h5 className="text-subtle text-italic">Mobile not set</h5>
-						)}
+					{profile.mobile ? && (
+						profile.mobile.data ? (
+							<h5>{profile.mobile.data.num ? profile.mobile.data.num : '+63'}</h5>
+						) : (
+								<h5 className="text-subtle text-italic">Mobile not set</h5>
+							)
+					)}
 					<span>Date Joined</span>
 					<br />
 					{profile.dateJoined ? (

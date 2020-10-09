@@ -44,36 +44,6 @@ const PriceRange: React.FC<IProps> = (props) => {
 		return state.inputError ? 'price-range-input price-input-error' : 'price-range-input';
 	};
 
-	const onBlurInput = () => {
-		let valMin = +state.inputMin;
-		let valMax = +state.inputMax;
-
-		if (valMin < props.min) {
-			valMin = props.min;
-		} else if (valMax > props.max) {
-			valMax = props.max;
-		}
-
-		if (valMin > valMax) {
-			setState({ ...state, inputError: true });
-		} else {
-			setState({ ...state, inputError: false });
-		}
-
-		setState({ ...state, inputMin: valMin, inputMax: valMax, values: [valMin, valMax] });
-		if (valMin < valMax) props.onPriceChange(valMin, valMax);
-	};
-
-	const onInputMinChange = (e) => {
-		const val = e.target.value;
-		setState({ ...state, inputMin: val, values: [val, state.values[1]] });
-	}
-
-	const onInputMaxChange = (e) => {
-		const val = e.target.value;
-		setState({ ...state, inputMax: val, values: [state.values[0], 1] });
-	}
-
 	return (
 		<div style={{ height: 120, width: '100%' }}>
 			<div className="price-range-control">
@@ -82,8 +52,7 @@ const PriceRange: React.FC<IProps> = (props) => {
 					disabled={props.productsLength === 0}
 					max={props.max}
 					min={props.min}
-					onBlur={onBlurInput}
-					onChange={onInputMinChange}
+					readOnly
 					type="number"
 					value={state.inputMin}
 				/>
@@ -93,8 +62,7 @@ const PriceRange: React.FC<IProps> = (props) => {
 					disabled={props.productsLength === 0}
 					max={props.max}
 					min={props.min}
-					onBlur={onBlurInput}
-					onChange={onInputMaxChange}
+					readOnly
 					type="number"
 					value={state.inputMax}
 				/>
