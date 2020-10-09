@@ -92,6 +92,7 @@ class Firebase {
 
 	// // PRODUCT ACTIONS
 	// // ---------
+	getProduct = (id) => this.db.collection('products').doc(id).get();
 
 	getProducts = (lastRefKey) => {
 		let didTimeout = false;

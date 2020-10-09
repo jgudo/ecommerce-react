@@ -66,7 +66,7 @@ const Basket = (props) => {
 					>
 						Continue shopping
 					</button>
-          &nbsp;
+					&nbsp;
 					<button
 						className="button button-small"
 						onClick={onSignInClick}
@@ -105,9 +105,9 @@ const Basket = (props) => {
 							<h5 className="basket-empty-msg">Your basket is empty</h5>
 						</div>
 					)}
-					{basket.map(product => (
+					{basket.map((product, i) => (
 						<BasketItem
-							key={product.id}
+							key={`${product.id}_${i}`}
 							product={product}
 							basket={basket}
 							dispatch={dispatch}

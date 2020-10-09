@@ -1,129 +1,157 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { displayMoney } from 'helpers/utils';
+import React, { Component } from 'react'
+import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider'
+import { SliderRail, Handle, Track, Tick } from './PriceRangeComponents' // example render components - source below
 
-const PriceRange = (props) => {
-	const [minState, setMinState] = useState(props.initMin ? props.initMin : props.min);
-	const [maxState, setMaxState] = useState(props.initMax ? props.initMax : props.max);
-	const [inputError, setInputError] = useState(false);
-	const slider = useRef(null);
-	const rangeMin = useRef(null);
-	const rangeMax = useRef(null);
+const sliderStyle = {
+	position: 'relative',
+	width: '100%',
+}
 
-	useEffect(() => {
-		setMinState(props.initMin ? props.initMin : props.min);
-		setMaxState(props.initMax ? props.initMax : props.max);
-	}, [props.initMin, props.initMax]);
+class PriceRange extends Component {
+	state = {
+		domain: [
+			this.props?.initMin || this.props.min,
+			this.props?.initMax || this.props.max
+		],
+		values: [this.props?.initMin || this.props.min, this.props?.initMax || this.props.max].slice(),
+		update: [this.props.min, this.props.max].slice(),
+		inputMin: this.props?.initMin || this.props.min,
+		inputMax: this.props?.initMax || this.props.max,
+		inputError: false,
+		reversed: false,
+	}
 
-	const onRangeChange = () => {
-		let slide1 = +rangeMin.current.value;
-		let slide2 = +rangeMax.current.value;
+	onUpdate = update => {
+		this.setState({ update, inputMin: update[0], inputMax: update[1] })
+	}
 
-		if (slide1 > slide2) {
-			[slide1, slide2] = [slide2, slide1];
-		}
+	onChange = values => {
+		this.setState({ values, inputMin: values[0], inputMax: values[1] });
+		this.props.onPriceChange(...values);
+	}
 
-		setMinState(slide1);
-		setMaxState(slide2);
-		setInputError(false);
-		props.onPriceChange(slide1, slide2);
+	setDomain = domain => {
+		this.setState({ domain })
+	}
+
+	inputClassName = () => {
+		return this.state.inputError ? 'price-range-input price-input-error' : 'price-range-input';
 	};
 
-	const onInputMinChange = e => setMinState(e.target.value);
-	const onInputMaxChange = e => setMaxState(e.target.value);
+	onBlurInput = () => {
+		let valMin = +this.state.inputMin;
+		let valMax = +this.state.inputMax;
 
-	const onBlurInput = () => {
-		let valMin = +minState;
-		let valMax = +maxState;
-
-		if (valMin < props.min) {
-			valMin = props.min;
-		} else if (valMax > props.max) {
-			valMax = props.max;
+		if (valMin < this.props.min) {
+			valMin = this.props.min;
+		} else if (valMax > this.props.max) {
+			valMax = this.props.max;
 		}
 
 		if (valMin > valMax) {
-			setInputError(true);
+			this.setState({ inputError: true });
 		} else {
-			setInputError(false);
+			this.setState({ inputError: false });
 		}
 
-		setMinState(valMin);
-		setMaxState(valMax);
-		props.onPriceChange(valMin, valMax);
+		this.setState({ inputMin: valMin, inputMax: valMax, values: [valMin, valMax] });
+		this.props.onPriceChange(valMin, valMax);
 	};
 
-	const inputClassName = () => {
-		return inputError ? 'price-range-input price-input-error' : 'price-range-input';
-	};
+	onInputMinChange = e => {
+		const val = e.target.value;
+		this.setState({ inputMin: val, values: [val, this.state.values[1]] });
+	}
 
-	return (
-		<div
-			className="price-range"
-			ref={slider}
-		>
-			<div className="price-range-control">
-				<input
-					className={inputClassName()}
-					disabled={props.productsLength === 0}
-					max={props.max}
-					min={props.min}
-					onBlur={onBlurInput}
-					onChange={onInputMinChange}
-					type="number"
-					value={minState}
-				/>
+	onInputMaxChange = e => {
+		const val = e.target.value;
+		this.setState({ inputMax: val, values: [this.state.values[0], 1] });
+	}
+
+	render() {
+		const {
+			state: { values, update, inputMin, inputMax },
+		} = this
+
+		return (
+			<div style={{ height: 120, width: '100%' }}>
+				<div className="price-range-control">
+					<input
+						className={this.inputClassName()}
+						disabled={this.props.productsLength === 0}
+						max={this.props.max}
+						min={this.props.min}
+						onBlur={this.onBlurInput}
+						onChange={this.onInputMinChange}
+						type="number"
+						value={inputMin}
+					/>
         —
 				<input
-					className={inputClassName()}
-					disabled={props.productsLength === 0}
-					max={props.max}
-					min={props.min}
-					onBlur={onBlurInput}
-					onChange={onInputMaxChange}
-					type="number"
-					value={maxState}
-				/>
+						className={this.inputClassName()}
+						disabled={this.props.productsLength === 0}
+						max={this.props.max}
+						min={this.props.min}
+						onBlur={this.onBlurInput}
+						onChange={this.onInputMaxChange}
+						type="number"
+						value={inputMax}
+					/>
+				</div>
+				<Slider
+					mode={1}
+					step={1}
+					domain={this.state.domain}
+					rootStyle={sliderStyle}
+					onUpdate={this.onUpdate}
+					onChange={this.onChange}
+					values={values}
+				>
+					<Rail>
+						{({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
+					</Rail>
+					<Handles>
+						{({ handles, activeHandleID, getHandleProps }) => (
+							<div className="slider-handles">
+								{handles.map(handle => (
+									<Handle
+										key={handle.id}
+										handle={handle}
+										domain={this.state.values}
+										isActive={handle.id === activeHandleID}
+										getHandleProps={getHandleProps}
+									/>
+								))}
+							</div>
+						)}
+					</Handles>
+					<Tracks left={false} right={false}>
+						{({ tracks, getTrackProps }) => (
+							<div className="slider-tracks">
+								{tracks.map(({ id, source, target }) => (
+									<Track
+										key={id}
+										source={source}
+										target={target}
+										getTrackProps={getTrackProps}
+									/>
+								))}
+							</div>
+						)}
+					</Tracks>
+					<Ticks count={5}>
+						{({ ticks }) => (
+							<div className="slider-ticks">
+								{ticks.map(tick => (
+									<Tick key={tick.id} tick={tick} count={ticks.length} />
+								))}
+							</div>
+						)}
+					</Ticks>
+				</Slider>
 			</div>
-			<div className="price-range-control">
-				<input
-					className="price-range-slider"
-					disabled={props.productsLength === 0}
-					max={props.max}
-					min={props.min}
-					onChange={onRangeChange}
-					ref={rangeMin}
-					step="50"
-					type="range"
-					value={minState}
-				/>
-				<input
-					className="price-range-slider"
-					disabled={props.productsLength === 0}
-					max={props.max}
-					min={props.min}
-					onChange={onRangeChange}
-					ref={rangeMax}
-					step="20"
-					type="range"
-					value={maxState}
-				/>
-			</div>
-			<div className="price-range-scale">
-				<span className="price-range-price">MIN: {displayMoney(props.min)}</span>
-				<span className="price-range-price">MAX: {displayMoney(props.max)}</span>
-			</div>
-		</div>
-	);
-};
-
-PriceRange.propType = {
-	min: PropTypes.number,
-	max: PropTypes.number,
-	initMin: PropTypes.number,
-	initMax: PropTypes.number,
-	productsLength: PropTypes.number,
-	onPriceChange: PropTypes.func
-};
+		)
+	}
+}
 
 export default PriceRange;

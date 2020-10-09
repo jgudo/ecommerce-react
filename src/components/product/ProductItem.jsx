@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
 import { removeFromBasket, addToBasket } from 'actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import ImageLoader from '../ui/ImageLoader';
@@ -12,17 +12,19 @@ const ProductItem = ({
 	onOpenModal,
 	displaySelected,
 	foundOnBasket,
+	isLoading
 }) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onClickItem = () => {
-		if (store.isLoading) return;
+		if (isLoading) return;
 
 		if (product.id) {
 			onOpenModal();
 
 			if (window.screen.width <= 800) {
-				history.push(`/product/${id}`);
+				history.push(`/product/${product.id}`);
 			} else {
 				displaySelected(product);
 			}

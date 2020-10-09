@@ -16,9 +16,15 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 1;
+
+  &:nth-child(1):hover {
+    background: red;
+  }
 }
 
 .price-range-input {
+  width: 50%;
   border: none !important;
   font-size: 4rem !important;
   border-bottom: 2px solid transparent !important;

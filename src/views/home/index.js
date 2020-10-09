@@ -91,6 +91,7 @@ const Home = ({ history }) => {
 											displaySelected={displaySelected}
 											foundOnBasket={foundOnBasket(product.id)}
 											key={product.id}
+											isLoading={store.isLoading}
 											onOpenModal={onOpenModal}
 											product={product}
 										/>
