@@ -121,7 +121,7 @@ const Navigation = ({ isAuth, path, history }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
-								{(path === ROUTE.SIGNIN || path === ROUTE.HOME) && (
+								{path !== ROUTE.SIGNUP && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"
@@ -132,7 +132,7 @@ const Navigation = ({ isAuth, path, history }) => {
 										Sign Up
 									</NavLink>
 								)}
-								{(path === ROUTE.SIGNUP || path === ROUTE.FORGOT_PASSWORD || path === ROUTE.HOME) && (
+								{path !== ROUTE.SIGNIN && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small button-muted margin-left-s"
