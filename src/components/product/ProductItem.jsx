@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { removeFromBasket, addToBasket } from 'actions/basketActions';
+import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import ImageLoader from '../ui/ImageLoader';
 

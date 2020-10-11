@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { editProduct } from 'actions/productActions';
+import { editProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
 
 const EditProduct = (props) => {

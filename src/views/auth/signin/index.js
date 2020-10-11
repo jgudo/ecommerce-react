@@ -8,7 +8,7 @@ import {
 	signInWithGoogle,
 	signInWithFacebook,
 	signInWithGithub
-} from 'actions/authActions';
+} from 'redux/actions/authActions';
 import Input from 'components/ui/Input';
 import { FORGOT_PASSWORD } from 'constants/routes';
 import CircularProgress from 'components/ui/CircularProgress';
@@ -21,7 +21,7 @@ const SignIn = (props) => {
 	const [providerSelected, setProviderSelected] = useState(undefined);
 
 	/* separate states so that when user navigates to signup or forgot password,
-    the authStatus message won't display to other routes.
+	the authStatus message won't display to other routes.
   */
 	const [signInStatus, setSignInStatus] = useState({});
 	const [isSigningIn, setIsSigningIn] = useState(false);

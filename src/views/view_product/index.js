@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
 import CircularProgress from 'components/ui/ImageLoader';
 import { HOME } from 'constants/routes';
-import { removeFromBasket, addToBasket } from 'actions/basketActions';
+import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import firebase from '../../firebase/firebase';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { removeFromBasket } from 'actions/basketActions';
+import { removeFromBasket } from 'redux/actions/basketActions';
 import { displayMoney } from 'helpers/utils';
 import BasketItemControl from './BasketItemControl';
 import Badge from '../ui/Badge';

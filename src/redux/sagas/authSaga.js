@@ -21,12 +21,12 @@ import {
 	signInSuccess,
 	signOutSuccess,
 	isAuthenticating
-} from 'actions/authActions';
+} from 'redux/actions/authActions';
 
-import { clearBasket } from 'actions/basketActions';
-import { setProfile, clearProfile } from 'actions/profileActions';
-import { resetFilter } from 'actions/filterActions';
-import { resetCheckout } from 'actions/checkoutActions';
+import { clearBasket } from 'redux/actions/basketActions';
+import { setProfile, clearProfile } from 'redux/actions/profileActions';
+import { resetFilter } from 'redux/actions/filterActions';
+import { resetCheckout } from 'redux/actions/checkoutActions';
 
 import defaultAvatar from 'images/defaultAvatar.jpg';
 import defaultBanner from 'images/defaultBanner.jpg';

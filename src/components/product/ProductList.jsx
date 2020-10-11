@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
-import { getProducts } from 'actions/productActions';
-import dispatchIsLoading from 'actions/appActions';
+import { getProducts } from 'redux/actions/productActions';
+import dispatchIsLoading from 'redux/actions/appActions';
 import MessageDisplay from '../ui/MessageDisplay';
 
 const ProductList = ({ children }) => {

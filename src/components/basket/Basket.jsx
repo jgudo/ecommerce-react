@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { CHECKOUT_STEP_1 } from 'constants/routes';
-import { clearBasket } from 'actions/basketActions';
+import { clearBasket } from 'redux/actions/basketActions';
 import { displayMoney } from 'helpers/utils';
 import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';

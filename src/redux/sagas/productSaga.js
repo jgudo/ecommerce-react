@@ -16,7 +16,7 @@ import {
 	addProductSuccess,
 	editProductSuccess,
 	removeProductSuccess
-} from 'actions/productActions';
+} from '../actions/productActions';
 
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';

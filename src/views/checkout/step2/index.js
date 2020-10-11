@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
-import { setShippingDetails } from 'actions/checkoutActions';
+import { setShippingDetails } from 'redux/actions/checkoutActions';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import withAuth from '../hoc/withAuth';
 import StepTracker from '../components/StepTracker';

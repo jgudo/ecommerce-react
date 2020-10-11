@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { addProduct } from 'actions/productActions';
+import { addProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
 
 const AddProduct = () => {

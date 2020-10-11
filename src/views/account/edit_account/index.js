@@ -11,8 +11,8 @@ import Input from 'components/ui/Input';
 import CircularProgress from 'components/ui/CircularProgress';
 import ImageLoader from 'components/ui/ImageLoader';
 
-import dispatchIsLoading from 'actions/appActions';
-import { updateProfile } from 'actions/profileActions';
+import dispatchIsLoading from 'redux/actions/appActions';
+import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
 import { ACCOUNT } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';

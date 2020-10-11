@@ -5,7 +5,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
 
-import { removeProduct } from 'actions/productActions';
+import { removeProduct } from 'redux/actions/productActions';
 import { EDIT_PRODUCT } from 'constants/routes';
 import { displayMoney, displayDate, displayActionMessage } from 'helpers/utils';
 

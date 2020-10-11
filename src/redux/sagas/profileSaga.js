@@ -2,8 +2,8 @@ import { call, put, select } from 'redux-saga/effects';
 import firebase from 'firebase/firebase';
 import { history } from 'routers/AppRouter';
 import { UPDATE_PROFILE, UPDATE_EMAIL } from 'constants/constants';
-import { updateProfileSuccess } from 'actions/profileActions';
-import isLoading from 'actions/appActions';
+import { updateProfileSuccess } from '../actions/profileActions';
+import isLoading from '../actions/appActions';
 import { displayActionMessage } from 'helpers/utils';
 import { ACCOUNT } from 'constants/routes';
 

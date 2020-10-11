@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { setPaymentDetails } from 'actions/checkoutActions';
+import { setPaymentDetails } from 'redux/actions/checkoutActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import StepTracker from '../components/StepTracker';
 import Pagination from '../components/Pagination';

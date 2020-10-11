@@ -7,8 +7,8 @@ import 'styles/style.scss';
 import WebFont from 'webfontloader';
 
 import Preloader from 'components/ui/Preloader';
-import { onAuthStateSuccess, onAuthStateFail } from 'actions/authActions';
-import configureStore from 'store/store';
+import { onAuthStateSuccess, onAuthStateFail } from 'redux/actions/authActions';
+import configureStore from 'redux/store/store';
 import firebase from './firebase/firebase';
 import App from './App';
 

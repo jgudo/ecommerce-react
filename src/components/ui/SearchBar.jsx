@@ -5,7 +5,7 @@ import {
 	setTextFilter,
 	removeSelectedRecent,
 	clearRecentSearch
-} from 'actions/filterActions';
+} from 'redux/actions/filterActions';
 
 const SearchBar = ({
 	filter,
