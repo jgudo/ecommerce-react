@@ -6,8 +6,11 @@ import {
 	removeSelectedRecent,
 	clearRecentSearch
 } from 'redux/actions/filterActions';
+<<<<<<< HEAD:src/components/ui/SearchBar.tsx
 import { IFilter } from 'types/types';
 import { useHistory } from 'react-router';
+=======
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/ui/SearchBar.jsx
 
 interface IProps {
 	filter: IFilter;
@@ -30,7 +33,7 @@ const SearchBar: React.FC<IProps> = ({
 	}, [filter.keyword]);
 
 	const dispatch = useDispatch();
-	const isMobile = window.screen.width <= 480;
+	const isMobile = window.screen.width <= 800;
 
 	const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const val = e.target.value.trimStart();

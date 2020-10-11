@@ -62,7 +62,7 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 		Route.FORGOT_PASSWORD
 	];
 
-	return window.screen.width <= 480 ? (
+	return window.screen.width <= 800 ? (
 		<MobileNavigation
 			basketLength={store.basketLength}
 			disabledPaths={basketDisabledPaths}
@@ -123,7 +123,11 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
+<<<<<<< HEAD:src/components/ui/Navigation.tsx
 								{pathname === Route.SIGNUP && (
+=======
+								{path !== ROUTE.SIGNUP && (
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/ui/Navigation.jsx
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"
@@ -134,7 +138,11 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 										Sign Up
 									</NavLink>
 								)}
+<<<<<<< HEAD:src/components/ui/Navigation.tsx
 								{pathname !== Route.SIGNIN && (
+=======
+								{path !== ROUTE.SIGNIN && (
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/ui/Navigation.jsx
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small button-muted margin-left-s"

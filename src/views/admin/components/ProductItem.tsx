@@ -3,8 +3,14 @@ import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
+<<<<<<< HEAD:src/views/admin/components/ProductItem.tsx
 import { removeProduct } from 'redux/actions/productActions';
 import { Route } from 'constants/routes';
+=======
+
+import { removeProduct } from 'redux/actions/productActions';
+import { EDIT_PRODUCT } from 'constants/routes';
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/admin/components/ProductItem.jsx
 import { displayMoney, displayDate, displayActionMessage } from 'helpers/utils';
 import { IProduct } from 'types/types';
 

@@ -4,9 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
+<<<<<<< HEAD:src/components/product/ProductList.tsx
 import { RootState } from 'types/types';
 import { getProducts } from 'redux/actions/productActions';
 import { setLoading } from 'redux/actions/miscActions';
+=======
+import { getProducts } from 'redux/actions/productActions';
+import dispatchIsLoading from 'redux/actions/appActions';
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/product/ProductList.jsx
 import MessageDisplay from '../ui/MessageDisplay';
 
 interface IProps {

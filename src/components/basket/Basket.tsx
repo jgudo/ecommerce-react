@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
+<<<<<<< HEAD:src/components/basket/Basket.tsx
 import { Route } from 'constants/routes';
+=======
+import { CHECKOUT_STEP_1 } from 'constants/routes';
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/basket/Basket.jsx
 import { clearBasket } from 'redux/actions/basketActions';
 import { displayMoney } from 'helpers/utils';
 import BasketItem from './BasketItem';
@@ -113,9 +117,9 @@ const Basket: React.FC<IProps> = (props) => {
 							<h5 className="basket-empty-msg">Your basket is empty</h5>
 						</div>
 					)}
-					{basket.map(product => (
+					{basket.map((product, i) => (
 						<BasketItem
-							key={product.id}
+							key={`${product.id}_${i}`}
 							product={product}
 						/>
 					))}

@@ -1,7 +1,11 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
+<<<<<<< HEAD:src/components/product/ProductItem.tsx
 
+=======
+import { useHistory } from 'react-router-dom';
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/product/ProductItem.jsx
 import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import ImageLoader from '../ui/ImageLoader';
@@ -16,11 +20,23 @@ interface IProps {
 
 const ProductItem: React.FC<IProps> = ({
 	product,
+<<<<<<< HEAD:src/components/product/ProductItem.tsx
 	foundOnBasket
 }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const onClickItem = (): void => {
+=======
+	foundOnBasket,
+	isLoading
+}) => {
+	const dispatch = useDispatch();
+	const history = useHistory();
+
+	const onClickItem = () => {
+		if (isLoading) return;
+
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/product/ProductItem.jsx
 		if (product.id) {
 			history.push(`/product/${product.id}`);
 		}
@@ -78,4 +94,12 @@ const ProductItem: React.FC<IProps> = ({
 	);
 };
 
+<<<<<<< HEAD:src/components/product/ProductItem.tsx
+=======
+ProductItem.propType = {
+	product: PropTypes.object.isRequired,
+	foundOnBasket: PropTypes.bool
+};
+
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/product/ProductItem.jsx
 export default ProductItem;

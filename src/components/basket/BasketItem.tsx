@@ -1,11 +1,11 @@
+import Badge from 'components/ui/Badge';
+import ImageLoader from 'components/ui/ImageLoader';
+import { displayMoney } from 'helpers/utils';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { removeFromBasket } from 'redux/actions/basketActions';
-import { displayMoney } from 'helpers/utils';
-import BasketItemControl from './BasketItemControl';
-import Badge from '../ui/Badge';
-import ImageLoader from '../ui/ImageLoader';
 import { IProduct } from 'types/types';
+import BasketItemControl from './BasketItemControl';
 
 interface IProps {
 	product: IProduct;

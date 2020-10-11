@@ -11,7 +11,11 @@ import Input from 'components/ui/Input';
 import CircularProgress from 'components/ui/CircularProgress';
 import ImageLoader from 'components/ui/ImageLoader';
 
+<<<<<<< HEAD:src/views/account/edit_account/index.tsx
 import { setLoading } from 'redux/actions/miscActions';
+=======
+import dispatchIsLoading from 'redux/actions/appActions';
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/account/edit_account/index.js
 import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
 import { Route } from 'constants/routes';

@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+<<<<<<< HEAD:src/views/checkout/step2/index.tsx
 import { Route } from 'constants/routes';
+=======
+import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/checkout/step2/index.js
 import { setShippingDetails } from 'redux/actions/checkoutActions';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import withAuth from '../hoc/withAuth';

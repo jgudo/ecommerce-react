@@ -39,6 +39,10 @@ const SignIn: React.FC<RouteComponentProps> = (props) => {
 		}
 	}, [authStatus, isAuthenticating]);
 
+<<<<<<< HEAD:src/views/auth/signin/index.tsx
+=======
+
+>>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/auth/signin/index.js
 	const onEmailInput = (value, error) => {
 		setField({ ...field, email: { value, error } });
 	};
