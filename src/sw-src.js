@@ -1,14 +1,17 @@
 import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
 
 precacheAndRoute(self.__WB_MANIFEST);
 let currentCacheNames = Object.assign({ precacheTemp: workbox.core.cacheNames.precache + "-temp" }, workbox.core.cacheNames);
 
 currentCacheNames.fonts = "googlefonts";
-workbox.routing.registerRoute(
+registerRoute(
 	/https:\/\/fonts.(?:googleapis|gstatic).com\/(.*)/,
-	workbox.strategies.cacheFirst({
+	new CacheFirst({
 		cacheName: currentCacheNames.fonts,
-		plugins: [new workbox.expiration.Plugin({ maxEntries: 30 })]
+		plugins: [new ExpirationPlugin({ maxEntries: 30 })]
 	}),
 	"GET"
 );
