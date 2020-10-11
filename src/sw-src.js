@@ -2,9 +2,10 @@ import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
+import { cacheNames } from 'workbox-core';
 
 precacheAndRoute(self.__WB_MANIFEST);
-let currentCacheNames = Object.assign({ precacheTemp: workbox.core.cacheNames.precache + "-temp" }, workbox.core.cacheNames);
+let currentCacheNames = Object.assign({ precacheTemp: cacheNames.precache + "-temp" }, cacheNames);
 
 currentCacheNames.fonts = "googlefonts";
 registerRoute(
