@@ -9,7 +9,6 @@ import {
 	signInSuccess,
 	signOutSuccess,
 	isAuthenticating
-<<<<<<< HEAD:src/redux/sagas/authSaga.ts
 } from '../actions/authActions';
 import { setAuthStatus } from '../actions/miscActions';
 
@@ -17,14 +16,6 @@ import { clearBasket } from '../actions/basketActions';
 import { setProfile, clearProfile } from '../actions/profileActions';
 import { resetFilter } from '../actions/filterActions';
 import { resetCheckout } from '../actions/checkoutActions';
-=======
-} from 'redux/actions/authActions';
-
-import { clearBasket } from 'redux/actions/basketActions';
-import { setProfile, clearProfile } from 'redux/actions/profileActions';
-import { resetFilter } from 'redux/actions/filterActions';
-import { resetCheckout } from 'redux/actions/checkoutActions';
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/redux/sagas/authSaga.js
 
 import defaultAvatar from 'images/defaultAvatar.jpg';
 import defaultBanner from 'images/defaultBanner.jpg';

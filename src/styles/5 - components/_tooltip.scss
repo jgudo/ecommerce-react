@@ -5,7 +5,6 @@
     margin-left: 22px;
   }
   
-<<<<<<< HEAD
 .tooltip .tooltiptext {
 	width: 100px;
 	background-color: #222;
@@ -31,31 +30,3 @@
 	border-style: solid;
 	border-color: #222 transparent transparent transparent;
 }
-=======
-  .tooltip .tooltiptext {
-    width: 100px;
-    background-color: #222;
-    color: #fff;
-    opacity: 0.8;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -60px;
-  }
-  
-  .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #222 transparent transparent transparent;
-  }
-  
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f

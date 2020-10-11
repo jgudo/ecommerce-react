@@ -1,6 +1,5 @@
 
 import { precacheAndRoute } from 'workbox-precaching';
-<<<<<<< HEAD:src/sw-src.ts
 import { CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { registerRoute } from 'workbox-routing';
@@ -10,15 +9,6 @@ declare const self: ServiceWorkerGlobalScope;
 
 precacheAndRoute(self.__WB_MANIFEST);
 let currentCacheNames: any = Object.assign({ precacheTemp: cacheNames.precache + "-temp" }, cacheNames);
-=======
-import { registerRoute } from 'workbox-routing';
-import { CacheFirst } from 'workbox-strategies';
-import { ExpirationPlugin } from 'workbox-expiration';
-import { cacheNames } from 'workbox-core';
-
-precacheAndRoute(self.__WB_MANIFEST);
-let currentCacheNames = Object.assign({ precacheTemp: cacheNames.precache + "-temp" }, cacheNames);
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/sw-src.js
 
 currentCacheNames.fonts = "googlefonts";
 registerRoute(

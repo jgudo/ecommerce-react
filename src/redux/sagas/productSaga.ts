@@ -102,13 +102,8 @@ function* productSaga({ type, payload }) {
 				}
 
 				if (imageCollection.length > 1) {
-<<<<<<< HEAD:src/redux/sagas/productSaga.ts
 					const existingUploads: IImageFile[] = [];
 					const newUploads: IImageFile[] = [];
-=======
-					const existingUploads = [];
-					const newUploads = [];
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/redux/sagas/productSaga.js
 
 					imageCollection.forEach((img: IImageFile) => {
 						if (img.file) {

@@ -10,13 +10,8 @@ import Boundary from 'components/ui/Boundary';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import { RootState } from 'types/types';
 
-<<<<<<< HEAD:src/views/home/index.tsx
 const Home: React.FC = () => {
 	useDocumentTitle('Salinaka | React JS eCommerce Site');
-=======
-const Home = () => {
-	useDocumentTitle();
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/home/index.js
 	const [columnCount, setColumnCount] = useState(6);
 
 	const { store } = useSelector((state: RootState) => ({
@@ -44,11 +39,7 @@ const Home = () => {
 
 	const productListWrapper = useRef(null);
 
-<<<<<<< HEAD:src/views/home/index.tsx
 	const isFiltered: boolean = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
-=======
-	const isFiltered = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/home/index.js
 	const foundOnBasket = id => !!store.basket.find(item => item.id === id);
 
 	return (
@@ -85,14 +76,8 @@ const Home = () => {
 										/>
 									)) : filteredProducts.map(product => (
 										<ProductItem
-<<<<<<< HEAD:src/views/home/index.tsx
 											foundOnBasket={foundOnBasket}
 											key={product.id}
-=======
-											foundOnBasket={foundOnBasket(product.id)}
-											key={product.id}
-											isLoading={store.isLoading}
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/views/home/index.js
 											product={product}
 										/>
 									))}

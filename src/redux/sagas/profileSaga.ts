@@ -1,15 +1,9 @@
 import { call, put, select } from 'redux-saga/effects';
 import firebase from 'firebase/firebase';
 import { history } from 'routers/AppRouter';
-<<<<<<< HEAD:src/redux/sagas/profileSaga.ts
 import { EProfileActionType } from 'constants/constants';
 import { updateProfileSuccess } from '../actions/profileActions';
 import { setLoading } from '../actions/miscActions';
-=======
-import { UPDATE_PROFILE, UPDATE_EMAIL } from 'constants/constants';
-import { updateProfileSuccess } from '../actions/profileActions';
-import isLoading from '../actions/appActions';
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/redux/sagas/profileSaga.js
 import { displayActionMessage } from 'helpers/utils';
 import { Route } from 'constants/routes';
 

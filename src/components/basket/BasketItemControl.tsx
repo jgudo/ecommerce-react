@@ -1,12 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD:src/components/basket/BasketItemControl.tsx
 import { addQtyItem, minusQtyItem } from 'redux/actions/basketActions';
 import { IProduct } from 'types/types';
 import { useDispatch } from 'react-redux';
-=======
-import PropTypes from 'prop-types';
-import { addQtyItem, minusQtyItem } from 'redux/actions/basketActions';
->>>>>>> 8577603228250acd4278f07b4a77199e7a391d5f:src/components/basket/BasketItemControl.jsx
 
 interface IProps {
 	product: IProduct;
