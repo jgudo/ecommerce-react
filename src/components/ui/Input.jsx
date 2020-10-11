@@ -70,7 +70,7 @@ const InputField = React.forwardRef(({
 			error = `${key} is required`;
 		}
 
-		onInputChange(e, val, error);
+		onInputChange(val, error, e);
 		setValue(val);
 	};
 

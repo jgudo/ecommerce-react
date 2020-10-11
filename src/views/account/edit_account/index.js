@@ -67,15 +67,15 @@ const EditProfile = (props) => {
 		return fieldsChanged || filesUpdated;
 	};
 
-	const onEmailChange = (e, value, error) => {
+	const onEmailChange = (value, error) => {
 		setField({ ...field, email: { value, error } });
 	};
 
-	const onFullNameChange = (e, value, error) => {
+	const onFullNameChange = (value, error) => {
 		setField({ ...field, fullname: { value, error } });
 	};
 
-	const onAddressChange = (e, value, error) => {
+	const onAddressChange = (value, error) => {
 		setField({ ...field, address: { value, error } });
 	};
 

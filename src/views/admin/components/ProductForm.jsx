@@ -34,23 +34,23 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		return Number(num.toString().replace(/^0*/, ''));
 	};
 
-	const onProductNameInput = (e, value, error) => {
+	const onProductNameInput = (value, error) => {
 		setField({ ...field, name: { value, error } });
 	};
 
-	const onProductBrandInput = (e, value, error) => {
+	const onProductBrandInput = (value, error) => {
 		setField({ ...field, brand: { value, error } });
 	};
 
-	const onProductPriceInput = (e, value, error) => {
+	const onProductPriceInput = (value, error) => {
 		setField({ ...field, price: { value: sanitizeNumber(value), error } });
 	};
 
-	const onProductDescriptionInput = (e, value, error) => {
+	const onProductDescriptionInput = (value, error) => {
 		setField({ ...field, description: { value, error } });
 	};
 
-	const onProductMaxQuantityInput = (e, value, error) => {
+	const onProductMaxQuantityInput = (value, error) => {
 		setField({ ...field, maxQuantity: { value: sanitizeNumber(value), error } });
 	};
 

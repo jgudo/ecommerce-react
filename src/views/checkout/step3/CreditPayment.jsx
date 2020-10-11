@@ -10,11 +10,11 @@ const CreditPayment = React.forwardRef(({
 }, ref) => {
 	const { cardInputRef, collapseCreditHeight } = ref;
 
-	const onCardNameInput = (e, value, error) => {
+	const onCardNameInput = (value, error) => {
 		setField({ ...field, name: { value, error } });
 	};
 
-	const onCardNumberInput = (e, value, error) => {
+	const onCardNumberInput = (value, error) => {
 		setField({ ...field, cardnumber: { value, error } });
 	};
 
@@ -26,11 +26,11 @@ const CreditPayment = React.forwardRef(({
 		}
 	};
 
-	const onExpiryInput = (e, value, error) => {
+	const onExpiryInput = (value, error) => {
 		setField({ ...field, expiry: { value, error } });
 	};
 
-	const onCcvInput = (e, value, error) => {
+	const onCcvInput = (value, error) => {
 		setField({ ...field, ccv: { value, error } });
 	};
 

@@ -26,7 +26,7 @@ const ForgotPassword = () => {
 		}
 	}, [authStatus, isAuthenticating]);
 
-	const onEmailChange = (e, value, error) => {
+	const onEmailChange = (value, error) => {
 		setField({ email: value, error });
 	};
 

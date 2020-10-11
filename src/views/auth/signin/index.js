@@ -39,11 +39,11 @@ const SignIn = (props) => {
 	}, [authStatus, isAuthenticating]);
 
 
-	const onEmailInput = (e, value, error) => {
+	const onEmailInput = (value, error) => {
 		setField({ ...field, email: { value, error } });
 	};
 
-	const onPasswordInput = (e, value, error) => {
+	const onPasswordInput = (value, error) => {
 		setField({ ...field, password: { value, error } });
 	};
 
