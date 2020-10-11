@@ -2,7 +2,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-import { IUser, IProduct } from 'types/typings';
+import { IUser, IProduct } from 'types/types';
 
 const firebaseConfig: Record<string, string | undefined> = {
 	apiKey: process.env.FIREBASE_API_KEY,

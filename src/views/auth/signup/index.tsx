@@ -7,7 +7,7 @@ import { signUp } from 'redux/actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
 import { RouteComponentProps } from 'react-router';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 const SignUp: React.FC<RouteComponentProps> = (props) => {
 	const [passwordHidden, setPasswordHidden] = useState(true);

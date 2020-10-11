@@ -5,7 +5,7 @@ import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import { editProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
-import { IProduct, RootState } from 'types/typings';
+import { IProduct, RootState } from 'types/types';
 
 const EditProduct: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
 	useDocumentTitle('Edit Product | Salinaka');

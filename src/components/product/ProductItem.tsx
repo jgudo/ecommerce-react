@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import ImageLoader from '../ui/ImageLoader';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 import { useHistory } from 'react-router';
 
 interface IProps {

@@ -1,5 +1,5 @@
 import { EAuthActionType, EMiscActionType } from 'constants/constants';
-import { IUserCred, IAuthInfo } from 'types/typings';
+import { IUserCred, IAuthInfo } from 'types/types';
 
 export const signIn = (auth: { email: string, password: string }) => (<const>{
 	type: EAuthActionType.SIGNIN,

@@ -1,5 +1,5 @@
 import { EProductActionType } from 'constants/constants';
-import { IProduct, ProductState } from 'types/typings';
+import { IProduct, ProductState } from 'types/types';
 
 export const getProducts = (lastRef: any) => (<const>{
 	type: EProductActionType.GET_PRODUCTS,

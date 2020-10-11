@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 
-import { IFilter, IProduct } from 'types/typings';
+import { IFilter, IProduct } from 'types/types';
 
 /* eslint-disable no-else-return */
 export const selectFilter = (products: IProduct[], filter: IFilter) => {

@@ -1,5 +1,5 @@
 import { ECheckOutActionType, PAYPAL } from 'constants/constants';
-import { IPaymentInfo, IShippingInfo } from 'types/typings';
+import { IPaymentInfo, IShippingInfo } from 'types/types';
 import { CheckOutActionType } from '../actions/checkoutActions';
 
 type State = {

@@ -5,7 +5,7 @@ import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
 import SignOut from 'components/auth/SignOut';
 import CircularProgress from 'components/ui/CircularProgress';
 import { Route } from 'constants/routes';
-import { IUser } from 'types/typings';
+import { IUser } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	profile: IUser;

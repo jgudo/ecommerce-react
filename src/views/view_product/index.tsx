@@ -7,7 +7,7 @@ import { Route } from 'constants/routes';
 import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import firebase from '../../firebase/firebase';
-import { IImageFile, RootState } from 'types/typings';
+import { IImageFile, RootState } from 'types/types';
 
 const ViewProduct: React.FC = () => {
 	const { id } = useParams<{ id: string }>();

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearRecentSearch, removeSelectedRecent, setTextFilter } from 'redux/actions/filterActions';
 
 import Filters from '../ui/Filters';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 

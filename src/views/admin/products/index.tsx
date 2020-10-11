@@ -11,7 +11,7 @@ import Boundary from 'components/ui/Boundary';
 import SearchBar from 'components/ui/SearchBar';
 import FiltersToggle from 'components/ui/FiltersToggle';
 import ProductItem from '../components/ProductItem';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 const Products: React.FC<RouteComponentProps> = ({ history }) => {
 	useDocumentTitle('Product List | Salinaka Admin');

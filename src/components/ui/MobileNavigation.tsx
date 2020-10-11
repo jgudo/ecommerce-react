@@ -6,7 +6,7 @@ import UserNav from 'views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import logo from '../../../static/logo_horizontal.png';
-import { IUser } from 'types/typings';
+import { IUser } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	isAuthenticating: boolean;

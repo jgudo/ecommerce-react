@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { displayDate } from 'helpers/utils';
 import { Route } from 'constants/routes';
 import ImageLoader from 'components/ui/ImageLoader';
-import { IMobileInfo, RootState } from 'types/typings';
+import { IMobileInfo, RootState } from 'types/types';
 
 const UserProfile: React.FC = () => {
 	const history = useHistory();

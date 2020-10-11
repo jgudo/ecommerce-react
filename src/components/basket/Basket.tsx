@@ -9,7 +9,7 @@ import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	isAuth: boolean;

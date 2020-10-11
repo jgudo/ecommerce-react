@@ -4,7 +4,7 @@ import ImageLoader from 'components/ui/ImageLoader';
 import Input from 'components/ui/Input';
 
 import useFileHandler from 'hooks/useFileHandler';
-import { IImageFile, IProduct } from 'types/typings';
+import { IImageFile, IProduct } from 'types/types';
 // import uuid from 'uuid';
 
 interface IProps {

@@ -11,7 +11,7 @@ import Pagination from '../components/Pagination';
 import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
 import { RouteComponentProps } from 'react-router';
-import { IShippingInfo, IUser } from 'types/typings';
+import { IShippingInfo, IUser } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	profile: IUser | any;

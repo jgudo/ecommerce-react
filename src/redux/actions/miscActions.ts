@@ -1,5 +1,5 @@
 import { EAuthActionType, EMiscActionType } from 'constants/constants';
-import { IAuthStatus } from 'types/typings';
+import { IAuthStatus } from 'types/types';
 
 // isLoading method
 export const setLoading = (bool: boolean = true) => (<const>{

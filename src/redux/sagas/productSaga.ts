@@ -14,7 +14,7 @@ import {
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';
 import { Route } from 'constants/routes';
-import { IImageFile } from 'types/typings';
+import { IImageFile } from 'types/types';
 
 function* initRequest() {
 	yield put({ type: EMiscActionType.LOADING, payload: true });

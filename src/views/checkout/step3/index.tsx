@@ -11,7 +11,7 @@ import CreditPayment from './CreditPayment';
 import PayPalPayment from './PayPalPayment';
 import withAuth from '../hoc/withAuth';
 import { CREDIT, PAYPAL } from 'constants/constants';
-import { IPaymentInfo, IShippingInfo } from 'types/typings';
+import { IPaymentInfo, IShippingInfo } from 'types/types';
 import { useDispatch } from 'react-redux';
 
 interface IProps extends RouteComponentProps {

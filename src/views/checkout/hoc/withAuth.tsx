@@ -2,7 +2,7 @@
 import React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { IPaymentInfo, IProduct, IShippingInfo, IUser, RootState } from 'types/typings';
+import { IPaymentInfo, IProduct, IShippingInfo, IUser, RootState } from 'types/types';
 
 interface IInjectedProps {
 	isAuth: boolean;

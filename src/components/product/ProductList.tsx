@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 import { getProducts } from 'redux/actions/productActions';
 import { setLoading } from 'redux/actions/miscActions';
 import MessageDisplay from '../ui/MessageDisplay';

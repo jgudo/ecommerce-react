@@ -2,7 +2,7 @@ import React from 'react';
 import useModal from 'hooks/useModal';
 import Filters from './Filters';
 import Modal from './Modal';
-import { IFilter, IProduct } from 'types/typings';
+import { IFilter, IProduct } from 'types/types';
 
 interface IProps {
 	filter: IFilter;

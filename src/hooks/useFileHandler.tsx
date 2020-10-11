@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IImageFile } from 'types/typings';
+import { IImageFile } from 'types/types';
 import { v4 as uuidv4 } from 'uuid';
 
 function useFileHandler<T>(initState: T) {

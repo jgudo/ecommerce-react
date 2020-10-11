@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Route } from 'constants/routes';
 import UserAvatar from 'views/account/components/UserAvatar';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 const AdminNavigation: React.FC = () => {
 	const state = useSelector((state: RootState) => ({

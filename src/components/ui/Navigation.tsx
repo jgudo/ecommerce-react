@@ -12,7 +12,7 @@ import FiltersToggle from './FiltersToggle';
 import MobileNavigation from './MobileNavigation';
 
 import logo from '../../../static/logo_horizontal.png';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 interface IProps {
 	isAuth: boolean;

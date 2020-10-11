@@ -1,5 +1,5 @@
 import { EFilterActionType } from 'constants/constants';
-import { IFilter } from 'types/typings';
+import { IFilter } from 'types/types';
 import { FilterActionType } from '../actions/filterActions';
 
 const initState: IFilter = {

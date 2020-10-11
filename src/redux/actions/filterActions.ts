@@ -1,5 +1,5 @@
 import { EFilterActionType } from 'constants/constants';
-import { IFilter } from 'types/typings';
+import { IFilter } from 'types/types';
 
 export const setTextFilter = (keyword: string) => (<const>{
 	type: EFilterActionType.SET_TEXT_FILTER,

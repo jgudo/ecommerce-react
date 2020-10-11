@@ -5,7 +5,7 @@ import { displayMoney } from 'helpers/utils';
 import BasketItemControl from './BasketItemControl';
 import Badge from '../ui/Badge';
 import ImageLoader from '../ui/ImageLoader';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 
 interface IProps {
 	product: IProduct;

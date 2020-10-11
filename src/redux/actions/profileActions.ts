@@ -1,5 +1,5 @@
 import { EProfileActionType } from 'constants/constants';
-import { IUser } from 'types/typings';
+import { IUser } from 'types/types';
 
 export const clearProfile = () => (<const>{
 	type: EProfileActionType.CLEAR_PROFILE

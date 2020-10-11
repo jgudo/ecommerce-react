@@ -1,5 +1,5 @@
 import { EBasketActionType } from 'constants/constants';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 
 export const addToBasket = (product: IProduct) => (<const>{
 	type: EBasketActionType.ADD_TO_BASKET,

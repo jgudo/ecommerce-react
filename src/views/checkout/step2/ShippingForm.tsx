@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PhoneInput, { PhoneInputProps } from 'react-phone-input-2';
 import Input from 'components/ui/Input';
-import { IUser } from 'types/typings';
+import { IUser } from 'types/types';
 
 interface IProps extends PhoneInputProps {
 	profile: IUser;

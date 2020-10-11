@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import { addProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
-import { IProduct, RootState } from 'types/typings';
+import { IProduct, RootState } from 'types/types';
 
 const AddProduct: React.FC = () => {
 	useDocumentTitle('Add New Product | Salinaka');

@@ -8,7 +8,7 @@ import ProductItem from 'components/product/ProductItem';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 const Home: React.FC = () => {
 	useDocumentTitle('Salinaka | React JS eCommerce Site');

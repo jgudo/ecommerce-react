@@ -6,7 +6,7 @@ import {
 	removeSelectedRecent,
 	clearRecentSearch
 } from 'redux/actions/filterActions';
-import { IFilter } from 'types/typings';
+import { IFilter } from 'types/types';
 import { useHistory } from 'react-router';
 
 interface IProps {

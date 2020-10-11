@@ -19,7 +19,7 @@ import { resetCheckout } from '../actions/checkoutActions';
 
 import defaultAvatar from 'images/defaultAvatar.jpg';
 import defaultBanner from 'images/defaultBanner.jpg';
-import { IUser } from 'types/typings';
+import { IUser } from 'types/types';
 
 function* handleError(e) {
 	const obj = { success: false, type: 'auth' };

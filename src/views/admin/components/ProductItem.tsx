@@ -6,7 +6,7 @@ import ImageLoader from 'components/ui/ImageLoader';
 import { removeProduct } from 'redux/actions/productActions';
 import { Route } from 'constants/routes';
 import { displayMoney, displayDate, displayActionMessage } from 'helpers/utils';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	product: IProduct;

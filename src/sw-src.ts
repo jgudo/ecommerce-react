@@ -3,10 +3,12 @@ import { precacheAndRoute } from 'workbox-precaching';
 import { CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { registerRoute } from 'workbox-routing';
+import { cacheNames } from 'workbox-core';
+
 declare const self: ServiceWorkerGlobalScope;
 
 precacheAndRoute(self.__WB_MANIFEST);
-let currentCacheNames: any = Object.assign({ precacheTemp: workbox.core.cacheNames.precache + "-temp" }, workbox.core.cacheNames);
+let currentCacheNames: any = Object.assign({ precacheTemp: cacheNames.precache + "-temp" }, cacheNames);
 
 currentCacheNames.fonts = "googlefonts";
 registerRoute(

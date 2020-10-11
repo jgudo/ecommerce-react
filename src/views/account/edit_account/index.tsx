@@ -16,7 +16,7 @@ import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
 import { Route } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { IImageFile, RootState } from 'types/typings';
+import { IImageFile, RootState } from 'types/types';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface IInputState {

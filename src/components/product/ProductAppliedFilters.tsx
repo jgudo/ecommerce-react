@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { applyFilter } from 'redux/actions/filterActions';
-import { IFilter } from 'types/typings';
+import { IFilter } from 'types/types';
 
 interface IProps {
 	filter: IFilter;

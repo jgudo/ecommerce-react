@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { resetFilter, applyFilter } from 'redux/actions/filterActions';
 import { selectMax, selectMin } from 'selectors/selector';
 import PriceRange from './PriceRange';
-import { IFilter, IProduct } from 'types/typings';
+import { IFilter, IProduct } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	filter: IFilter;

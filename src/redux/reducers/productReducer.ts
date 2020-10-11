@@ -1,5 +1,5 @@
 import { EProductActionType } from 'constants/constants';
-import { ProductState } from 'types/typings';
+import { ProductState } from 'types/types';
 import { ProductActionType } from '../actions/productActions';
 
 const initState: ProductState = {

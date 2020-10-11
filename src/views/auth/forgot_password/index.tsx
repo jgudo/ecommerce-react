@@ -6,7 +6,7 @@ import Input from 'components/ui/Input';
 import { resetPassword } from 'redux/actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 
 const ForgotPassword: React.FC = () => {
 	const { authStatus, isAuthenticating } = useSelector((state: RootState) => ({

@@ -1,5 +1,5 @@
 import { EMiscActionType, EAuthActionType, THEME_DEFAULT } from 'constants/constants';
-import { IMisc } from 'types/typings';
+import { IMisc } from 'types/types';
 import { MiscActionType } from '../actions/miscActions';
 
 const initState: IMisc = {

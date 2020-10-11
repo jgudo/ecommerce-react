@@ -4,7 +4,7 @@ import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-d
 
 import AdminNavigation from 'components/ui/AdminNavigation';
 import AdminSidePanel from 'components/ui/AdminSidePanel';
-import { RootState } from 'types/typings';
+import { RootState } from 'types/types';
 import { ROLE_ADMIN } from 'constants/constants';
 
 interface IProps extends RouteProps {

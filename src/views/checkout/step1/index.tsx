@@ -8,7 +8,7 @@ import StepTracker from '../components/StepTracker';
 import Pagination from '../components/Pagination';
 import withAuth from '../hoc/withAuth';
 import { RouteComponentProps } from 'react-router';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 
 interface IProps extends RouteComponentProps {
 	basket: IProduct[];

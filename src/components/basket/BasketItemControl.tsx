@@ -1,6 +1,6 @@
 import React from 'react';
 import { addQtyItem, minusQtyItem } from 'redux/actions/basketActions';
-import { IProduct } from 'types/typings';
+import { IProduct } from 'types/types';
 import { useDispatch } from 'react-redux';
 
 interface IProps {

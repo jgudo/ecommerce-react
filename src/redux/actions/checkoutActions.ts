@@ -1,5 +1,5 @@
 import { ECheckOutActionType } from 'constants/constants';
-import { IPaymentInfo, IShippingInfo } from 'types/typings';
+import { IPaymentInfo, IShippingInfo } from 'types/types';
 
 export const setShippingDetails = (details: IShippingInfo) => (<const>{
 	type: ECheckOutActionType.SET_CHECKOUT_SHIPPING_DETAILS,
