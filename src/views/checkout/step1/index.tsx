@@ -1,22 +1,28 @@
 import React from 'react';
 
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { CHECKOUT_STEP_2 } from 'constants/routes';
+import { Route } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
 import BasketItem from 'components/basket/BasketItem';
 import StepTracker from '../components/StepTracker';
 import Pagination from '../components/Pagination';
 import withAuth from '../hoc/withAuth';
+import { RouteComponentProps } from 'react-router';
+import { IProduct } from 'types/typings';
 
-const OrderSummary = ({
+interface IProps extends RouteComponentProps {
+	basket: IProduct[];
+	subtotal: number;
+}
+
+const OrderSummary: React.FC<IProps> = ({
 	basket,
 	subtotal,
-	dispatch,
 	history
 }) => {
 	useDocumentTitle('Check Out Step 1 | Salinaka');
-	const onClickPrevious = () => history.push('/');
-	const onClickNext = () => history.push(CHECKOUT_STEP_2);
+	const onClickPrevious = () => history.push(Route.HOME);
+	const onClickNext = () => history.push(Route.CHECKOUT_STEP_2);
 
 	return (
 		<div className="checkout">
@@ -28,8 +34,6 @@ const OrderSummary = ({
 				<div className="checkout-items">
 					{basket.map(product => (
 						<BasketItem
-							basket={basket}
-							dispatch={dispatch}
 							key={product.id}
 							product={product}
 						/>
@@ -43,7 +47,6 @@ const OrderSummary = ({
 				<br />
 				<Pagination
 					disabledNext={false}
-					history={history}
 					onClickNext={onClickNext}
 					onClickPrevious={onClickPrevious}
 					previousLabel="Continue Shopping"

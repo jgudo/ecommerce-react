@@ -1,7 +1,6 @@
 .price-range {
   width: 100%;
   position: relative;
-  // box-shadow: inset 0 2px 5px rgba(0, 0, 0, .2);
 }
 
 .price-range-control {
@@ -9,27 +8,27 @@
   width: 100%;
   height: 30px;
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .price-range-slider {
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 1;
+
+  &:nth-child(1):hover {
+    background: red;
+  }
 }
 
 .price-range-input {
+  width: 50%;
   border: none !important;
   font-size: 4rem !important;
-  border-bottom: 2px solid transparent !important;
   padding: 0 !important;
   flex-grow: 1;
   text-align: center;
-
-  &:hover,
-  &:focus {
-    border-bottom: 2px solid $off-black !important;
-  }
 }
 
 .price-input-error {
@@ -50,10 +49,3 @@
 .price-range-price:nth-child(1) {
   flex-grow: 1;
 }
-
-// .range-slider svg,
-// .range-slider input[type=range] {
-//   position: absolute;
-//   left: 0;
-//   bottom: 0;
-// }

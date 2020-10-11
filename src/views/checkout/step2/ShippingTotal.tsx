@@ -1,7 +1,12 @@
 import React from 'react';
 import { displayMoney } from 'helpers/utils';
 
-const ShippingTotal = ({ field, subtotal }) => (
+interface IProps {
+	field: any;
+	subtotal: number;
+}
+
+const ShippingTotal: React.FC<IProps> = ({ field, subtotal }) => (
 	<div className="checkout-total d-flex-end padding-right-m">
 		<table>
 			<tbody>

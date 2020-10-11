@@ -8,8 +8,8 @@ import { IImageFile, IProduct } from 'types/typings';
 // import uuid from 'uuid';
 
 interface IProps {
-	product: IProduct;
-	onSubmit: (product: Partial<IProduct>) => void;
+	product?: IProduct | undefined;
+	onSubmit: (product: IProduct) => void;
 	isLoading: boolean;
 }
 
@@ -26,9 +26,9 @@ interface IImageState {
 }
 
 const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
-	const defaultProduct = {
-		imgCollection: [],
-		...product
+	const defaultProduct: IProduct = {
+		...product as IProduct,
+		imageCollection: []
 	};
 	const [field, setField] = useState<IInputState>({
 		name: { value: product ? defaultProduct.name : '' },
@@ -38,7 +38,7 @@ const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 		description: { value: product ? defaultProduct.description : '' },
 		keywords: { value: product ? defaultProduct.keywords : ['gago'] },
 		imageUrl: { value: product ? defaultProduct.image : '' },
-		imageCollection: { value: product ? defaultProduct.imgCollection : [] }
+		imageCollection: { value: product ? defaultProduct.imageCollection : [] }
 	});
 
 	const {
@@ -90,7 +90,7 @@ const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 			});
 
 			onSubmit({
-				...newProduct,
+				...newProduct as IProduct,
 				quantity: 1,
 				dateAdded: new Date().getTime(),
 				image: imageFile.thumbnail.file ? imageFile.thumbnail.file : field.imageUrl.value,

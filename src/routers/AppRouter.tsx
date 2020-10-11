@@ -9,6 +9,8 @@ import Products from 'views/admin/products';
 import EditProduct from 'views/admin/edit_product';
 import AddProduct from 'views/admin/add_product';
 
+import ViewProduct from 'views/view_product';
+
 import ProductSearch from 'components/product/ProductSearch';
 import SignUp from 'views/auth/signup';
 import SignIn from 'views/auth/signin';
@@ -53,6 +55,10 @@ const AppRouter = () => (
 			<PublicRoute
 				component={ScrollToTop(ForgotPassword)}
 				path={ROUTES.FORGOT_PASSWORD}
+			/>
+			<PublicRoute
+				component={ScrollToTop(ViewProduct)}
+				path={ROUTES.VIEW_PRODUCT}
 			/>
 			<ClientRoute
 				component={ScrollToTop(UserAccount)}

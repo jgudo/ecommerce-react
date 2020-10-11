@@ -3,20 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import useDidMount from 'hooks/useDidMount';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import Input from 'components/ui/Input';
-import { resetPassword } from 'actions/authActions';
+import { resetPassword } from 'redux/actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
+import { RootState } from 'types/typings';
 
 const ForgotPassword: React.FC = () => {
-	const { authStatus, isAuthenticating } = useSelector(state => ({
+	const { authStatus, isAuthenticating } = useSelector((state: RootState) => ({
 		isAuthenticating: state.app.isAuthenticating,
 		authStatus: state.app.authStatus
 	}));
 	const dispatch = useDispatch();
 	const didMount = useDidMount();
-	const [forgotPWStatus, setForgotPWStatus] = useState({});
+	const [forgotPWStatus, setForgotPWStatus] = useState<any>({});
 	const [isSendingForgotPWRequest, setIsSending] = useState(false);
-	const [field, setField] = useState({});
+	const [field, setField] = useState<any>({});
 
 	useDocumentTitle('Forgot Password | Salinaka');
 	useEffect(() => {

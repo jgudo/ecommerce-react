@@ -1,11 +1,12 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 
 interface IProps {
-	children: ReactElement | ReactElement[];
+	children: any;
+	[prop: string]: any;
 }
 
 const UserTab: React.FC<IProps> = ({ children }) => {
-	const [activeTab, setActiveTab] = useState(children[0].props.index || 0);
+	const [activeTab, setActiveTab] = useState(children[0].props['data-index'] || 0);
 	const onClickTabItem = (index: number) => setActiveTab(index);
 
 	return (
@@ -14,20 +15,20 @@ const UserTab: React.FC<IProps> = ({ children }) => {
 				<ul className="user-tab-menu">
 					{children.map((child: any) => (
 						<li
-							className={`user-tab-item ${child.index === activeTab ? 'user-tab-active' : ''}`}
-							key={child.label}
-							onClick={() => onClickTabItem(child.index)}
+							className={`user-tab-item ${child.props['data-index'] === activeTab ? 'user-tab-active' : ''}`}
+							key={child.props['data-label']}
+							onClick={() => onClickTabItem(child.props['data-index'])}
 						>
-							{child.label}
+							{child.props['data-label']}
 						</li>
 					))}
 				</ul>
 			</div>
 			<div className="user-tab-content">
 				{children.map((child: any) => {
-					if (child.index !== activeTab) return undefined;
+					if (child.props['data-index'] !== activeTab) return undefined;
 
-					return child.children;
+					return child.props.children;
 				})}
 			</div>
 		</div>

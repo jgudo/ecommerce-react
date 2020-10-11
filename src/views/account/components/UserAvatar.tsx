@@ -4,7 +4,7 @@ import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
 
 import SignOut from 'components/auth/SignOut';
 import CircularProgress from 'components/ui/CircularProgress';
-import { ACCOUNT } from 'constants/routes';
+import { Route } from 'constants/routes';
 import { IUser } from 'types/typings';
 
 interface IProps extends RouteComponentProps {
@@ -59,7 +59,7 @@ const UserAvatar: React.FC<IProps> = ({ profile, isAuthenticating }) => {
 				<div className="user-nav-sub">
 					{profile.role !== 'ADMIN' && (
 						<Link
-							to={ACCOUNT}
+							to={Route.ACCOUNT}
 							className="user-nav-sub-link"
 						>
 							View Account

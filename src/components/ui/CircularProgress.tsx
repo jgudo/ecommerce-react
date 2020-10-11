@@ -29,7 +29,7 @@ const CircularProgress: React.FC<IProps> = ({ style, visible, theme }) => {
 
 CircularProgress.defaultProps = {
 	visible: true,
-	theme: 'dark',
+	theme: THEME_DARK,
 	style: {}
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import useDidMount from 'hooks/useDidMount';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import {
@@ -8,24 +8,25 @@ import {
 	signInWithGoogle,
 	signInWithFacebook,
 	signInWithGithub
-} from 'actions/authActions';
+} from 'redux/actions/authActions';
 import Input from 'components/ui/Input';
-import { FORGOT_PASSWORD } from 'constants/routes';
+import { Route } from 'constants/routes';
 import CircularProgress from 'components/ui/CircularProgress';
+import { RootState } from 'types/typings';
 
-const SignIn = (props) => {
-	const { authStatus, isAuthenticating } = useSelector(state => ({
+const SignIn: React.FC<RouteComponentProps> = (props) => {
+	const { authStatus, isAuthenticating } = useSelector((state: RootState) => ({
 		authStatus: state.app.authStatus,
 		isAuthenticating: state.app.isAuthenticating
 	}));
-	const [providerSelected, setProviderSelected] = useState(undefined);
+	const [providerSelected, setProviderSelected] = useState('');
 
 	/* separate states so that when user navigates to signup or forgot password,
 	the authStatus message won't display to other routes.
   */
-	const [signInStatus, setSignInStatus] = useState({});
+	const [signInStatus, setSignInStatus] = useState<any>({});
 	const [isSigningIn, setIsSigningIn] = useState(false);
-	const [field, setField] = useState({});
+	const [field, setField] = useState<any>({});
 	// --- 
 	const dispatch = useDispatch();
 	const didMount = useDidMount();
@@ -37,7 +38,6 @@ const SignIn = (props) => {
 			setIsSigningIn(isAuthenticating);
 		}
 	}, [authStatus, isAuthenticating]);
-
 
 	const onEmailInput = (value, error) => {
 		setField({ ...field, email: { value, error } });
@@ -131,7 +131,7 @@ const SignIn = (props) => {
 										<Link
 											onClick={onClickLink}
 											style={{ textDecoration: 'underline' }}
-											to={FORGOT_PASSWORD}
+											to={Route.FORGOT_PASSWORD}
 										>
 											<span>Forgot password?</span>
 										</Link>
@@ -202,7 +202,7 @@ const SignIn = (props) => {
 							onClick={onSignUp}
 						>
 							Sign Up
-            </button>
+						</button>
 					</div>
 				</>
 			)}

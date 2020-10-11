@@ -1,6 +1,15 @@
 import React from 'react';
 
-const Pagination = ({
+interface IProps {
+	nextStepLabel?: string;
+	previousLabel?: string;
+	disabledNext?: boolean;
+	onClickNext: (e: any) => void;
+	onClickPrevious?: () => void;
+	previousVisible?: boolean;
+}
+
+const Pagination: React.FC<IProps> = ({
 	nextStepLabel,
 	previousLabel,
 	disabledNext,

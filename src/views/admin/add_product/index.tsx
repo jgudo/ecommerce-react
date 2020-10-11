@@ -5,11 +5,11 @@ import { withRouter } from 'react-router-dom';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import { addProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
-import { IProduct } from 'types/typings';
+import { IProduct, RootState } from 'types/typings';
 
 const AddProduct: React.FC = () => {
 	useDocumentTitle('Add New Product | Salinaka');
-	const isLoading = useSelector(state => state.app.loading);
+	const isLoading = useSelector((state: RootState) => state.app.loading);
 	const dispatch = useDispatch();
 
 	const onSubmit = (product: IProduct) => {

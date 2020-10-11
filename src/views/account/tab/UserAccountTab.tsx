@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { displayDate } from 'helpers/utils';
 import { Route } from 'constants/routes';
 import ImageLoader from 'components/ui/ImageLoader';
-import { RootState } from 'types/typings';
+import { IMobileInfo, RootState } from 'types/typings';
 
 const UserProfile: React.FC = () => {
 	const history = useHistory();
@@ -51,9 +51,9 @@ const UserProfile: React.FC = () => {
 						)}
 					<span>Mobile</span>
 					<br />
-					{profile.mobile ? && (
-						profile.mobile.data ? (
-							<h5>{profile.mobile.data.num ? profile.mobile.data.num : '+63'}</h5>
+					{profile.mobile && (
+						(profile.mobile as IMobileInfo).data.num ? (
+							<h5>{(profile.mobile as IMobileInfo).data.num}</h5>
 						) : (
 								<h5 className="text-subtle text-italic">Mobile not set</h5>
 							)

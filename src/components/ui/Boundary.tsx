@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 
 class Boundary extends Component {
-	static getDerivedStateFromError(error) {
-		return { hasError: true };
-	}
-
 	state = {
 		hasError: false
 	};
 
+	static getDerivedStateFromError() {
+		return { hasError: true };
+	}
 
-	componentDidCatch(error, errorInfo) {
+	componentDidCatch(error) {
 		console.log(error);
 	}
 

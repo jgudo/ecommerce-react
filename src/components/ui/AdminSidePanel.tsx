@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { ADMIN_PRODUCTS } from 'constants/routes';
+import { Route } from 'constants/routes';
 
 const SideNavigation: React.FC = () => {
 	return (
@@ -10,7 +10,7 @@ const SideNavigation: React.FC = () => {
 					<NavLink
 						activeClassName="sidenavigation-menu-active"
 						className="sidenavigation-menu"
-						to={ADMIN_PRODUCTS}
+						to={Route.ADMIN_PRODUCTS}
 					>
 						Products
 					</NavLink>
@@ -19,12 +19,12 @@ const SideNavigation: React.FC = () => {
 					<a className="sidenavigation-menu">Users</a>
 					{/*
 						<NavLink 
-                activeClassName="sidenavigation-menu-active"
-                className="sidenavigation-menu"
-                to="/dashboard/users"
-            >
-              Users
-						</NavLink>
+							activeClassName="sidenavigation-menu-active"
+							className="sidenavigation-menu"
+							to="/dashboard/users"
+						>
+							Users
+									</NavLink>
 					*/}
 				</div>
 			</div>

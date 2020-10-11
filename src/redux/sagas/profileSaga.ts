@@ -5,7 +5,7 @@ import { EProfileActionType } from 'constants/constants';
 import { updateProfileSuccess } from '../actions/profileActions';
 import { setLoading } from '../actions/miscActions';
 import { displayActionMessage } from 'helpers/utils';
-import { ACCOUNT } from 'constants/routes';
+import { Route } from 'constants/routes';
 
 function* profileSaga({ type, payload }) {
 	switch (type) {
@@ -48,7 +48,7 @@ function* profileSaga({ type, payload }) {
 				}
 
 				yield put(setLoading(false));
-				yield call(history.push, ACCOUNT);
+				yield call(history.push, Route.ACCOUNT);
 				yield call(displayActionMessage, 'Profile Updated Successfully!', 'success');
 			} catch (e) {
 				console.log(e);

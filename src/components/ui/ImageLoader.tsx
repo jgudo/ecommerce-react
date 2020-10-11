@@ -7,7 +7,7 @@ interface IProps {
 	src: string;
 }
 
-const spinnerStyle = {
+const spinnerStyle: React.CSSProperties = {
 	position: 'absolute',
 	top: 0,
 	left: 0,

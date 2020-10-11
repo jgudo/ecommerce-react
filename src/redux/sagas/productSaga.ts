@@ -114,7 +114,10 @@ function* productSaga({ type, payload }) {
 					});
 
 					const imageKeys = yield all(newUploads.map(() => firebase.generateKey));
-					const imageUrls = yield all(newUploads.map((img: IImageFile, i: number) => firebase.storeImage('products', imageKeys[i](), img.file)));
+					const imageUrls = yield all(newUploads.map((img: IImageFile, i: number) => {
+						if (!img.file) throw new Error('No file supplied.');
+						firebase.storeImage('products', imageKeys[i](), img.file);
+					}));
 					const images = imageUrls.map((url: string, i: number) => ({
 						id: imageKeys[i](),
 						url

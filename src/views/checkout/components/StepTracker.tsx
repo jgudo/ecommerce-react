@@ -1,6 +1,10 @@
 import React from 'react';
 
-const StepTracker = ({ current }) => {
+interface IProps {
+	current: number;
+}
+
+const StepTracker: React.FC<IProps> = ({ current }) => {
 	const className = (step) => {
 		// eslint-disable-next-line no-nested-ternary
 		return current === step ? 'is-active-step' : step < current ? 'is-done-step' : '';

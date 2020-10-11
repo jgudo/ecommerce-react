@@ -19,7 +19,7 @@ export interface RootState {
     app: {
         loading: boolean;
         isAuthenticating: boolean;
-        authStatus: IAuthInfo;
+        authStatus: IAuthStatus;
         requestStatus: string | null;
         theme: string;
     };
@@ -47,7 +47,7 @@ export interface IUser {
     banner: string;
     address?: string;
     dateJoined: number;
-    mobile?: IMobileInfo | {};
+    mobile: IMobileInfo | {};
     role: string;
 }
 
@@ -100,8 +100,8 @@ export interface IPaymentInfo {
     data: {
         name?: string,
         cardnumber?: string,
-        expiry?: number,
-        ccv?: number
+        expiry?: string,
+        ccv?: string
     };
 }
 

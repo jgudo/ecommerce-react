@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeFromBasket } from 'actions/basketActions';
+import { removeFromBasket } from 'redux/actions/basketActions';
 import { displayMoney } from 'helpers/utils';
 import BasketItemControl from './BasketItemControl';
 import Badge from '../ui/Badge';
@@ -22,7 +22,6 @@ const BasketItem: React.FC<IProps> = ({ product }) => {
 	return (
 		<div className="basket-item">
 			<BasketItemControl
-				dispatch={dispatch}
 				product={product}
 			/>
 			<div className="basket-item-wrapper">

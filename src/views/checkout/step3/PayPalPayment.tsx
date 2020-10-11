@@ -1,12 +1,18 @@
+import { PAYPAL } from 'constants/constants';
 import React from 'react';
 
-const PayPalPayment = ({ paymentMode, onPayPalModeChange }) => {
+interface IProps {
+	paymentMode: string;
+	onPayPalModeChange: (e: any) => void;
+}
+
+const PayPalPayment: React.FC<IProps> = ({ paymentMode, onPayPalModeChange }) => {
 	return (
-		<div className={`checkout-fieldset-collapse ${paymentMode === 'paypal' ? 'is-selected-payment' : ''}`}>
+		<div className={`checkout-fieldset-collapse ${paymentMode === PAYPAL ? 'is-selected-payment' : ''}`}>
 			<div className="checkout-field margin-0">
 				<div className="checkout-checkbox-field">
 					<input
-						checked={paymentMode === 'paypal'}
+						checked={paymentMode === PAYPAL}
 						className=""
 						id="payment-paypal-checkbox"
 						name="checkout_payment"

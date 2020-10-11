@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { resetFilter, applyFilter } from 'actions/filterActions';
+import { resetFilter, applyFilter } from 'redux/actions/filterActions';
 import { selectMax, selectMin } from 'selectors/selector';
 import PriceRange from './PriceRange';
 import { IFilter, IProduct } from 'types/typings';
@@ -38,23 +38,21 @@ const Filters: React.FC<IProps> = (props) => {
 		window.scrollTo(0, 0);
 	}, [props.filter]);
 
-
-	const onPriceChange = (min, max) => {
+	const onPriceChange = (min: number, max: number) => {
 		setFilter({ ...field, minPrice: min, maxPrice: max });
 	};
 
-	const onBrandFilterChange = (e) => {
+	const onBrandFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const val = e.target.value;
 
 		setFilter({ ...field, brand: val });
 	};
 
-	const onSortFilterChange = (e) => {
+	const onSortFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setFilter({ ...field, sortBy: e.target.value });
 	};
 
-
-	const onApplyFilter = () => {
+	const onApplyFilter = (): any => {
 		const isChanged = Object.keys(field).some(key => field[key] !== props.filter[key]);
 
 		if (field.minPrice > field.maxPrice) {
@@ -64,7 +62,7 @@ const Filters: React.FC<IProps> = (props) => {
 		if (isChanged) {
 			dispatch(applyFilter(field));
 		} else {
-			props.closeModal();
+			props.closeModal && props.closeModal();
 		}
 	};
 
@@ -74,7 +72,7 @@ const Filters: React.FC<IProps> = (props) => {
 		if (filterFields.some(key => !!props.filter[key])) {
 			dispatch(resetFilter());
 		} else {
-			props.closeModal();
+			props.closeModal && props.closeModal();
 		}
 	};
 
@@ -130,7 +128,6 @@ const Filters: React.FC<IProps> = (props) => {
 							max={max}
 							initMin={field.minPrice}
 							initMax={field.maxPrice}
-							isLoading={props.isLoading}
 							onPriceChange={onPriceChange}
 							productsLength={props.productsLength}
 						/>

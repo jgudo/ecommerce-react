@@ -1,9 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { ADD_PRODUCT } from 'constants/routes';
+import { Route } from 'constants/routes';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import { selectFilter } from 'selectors/selector';
 import ProductList from 'components/product/ProductList';
@@ -11,11 +11,12 @@ import Boundary from 'components/ui/Boundary';
 import SearchBar from 'components/ui/SearchBar';
 import FiltersToggle from 'components/ui/FiltersToggle';
 import ProductItem from '../components/ProductItem';
+import { RootState } from 'types/typings';
 
-const Products = ({ history }) => {
+const Products: React.FC<RouteComponentProps> = ({ history }) => {
 	useDocumentTitle('Product List | Salinaka Admin');
 
-	const { store } = useSelector(state => ({
+	const { store } = useSelector((state: RootState) => ({
 		store: {
 			productsLength: state.products.items.length,
 			filter: state.filter,
@@ -29,7 +30,7 @@ const Products = ({ history }) => {
 	}));
 
 	const onClickAddProduct = () => {
-		history.push(ADD_PRODUCT);
+		history.push(Route.ADD_PRODUCT);
 	};
 
 	// TODO insufficient permission
@@ -50,7 +51,6 @@ const Products = ({ history }) => {
 				&nbsp;
 				<FiltersToggle
 					filter={store.filter}
-					history={history}
 					isLoading={store.isLoading}
 					products={store.products}
 					productsLength={store.productsLength}

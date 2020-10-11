@@ -6,11 +6,11 @@ import { history } from 'routers/AppRouter';
 import { EAuthActionType } from 'constants/constants';
 
 import {
-	setAuthStatus,
 	signInSuccess,
 	signOutSuccess,
 	isAuthenticating
 } from '../actions/authActions';
+import { setAuthStatus } from '../actions/miscActions';
 
 import { clearBasket } from '../actions/basketActions';
 import { setProfile, clearProfile } from '../actions/profileActions';

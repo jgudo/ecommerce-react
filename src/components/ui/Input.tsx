@@ -27,7 +27,7 @@ const InputField = React.forwardRef<Ref, TProps>(({
 	validate,
 	...rest
 }, inputRef) => {
-	const [value, setValue] = useState('');
+	const [, setValue] = useState('');
 	const [errorField, setErrorField] = useState('');
 
 	const onFieldChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

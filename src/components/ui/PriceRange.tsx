@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
 import { SliderRail, Handle, Track, Tick } from './PriceRangeComponents';
 
 const sliderStyle: React.CSSProperties = {
 	position: 'relative',
-	width: '100%',
-}
+	width: '100%'
+};
 
 interface IProps {
 	min: number;
@@ -19,26 +19,25 @@ interface IProps {
 const PriceRange: React.FC<IProps> = (props) => {
 	const [state, setState] = useState({
 		domain: [props.min, props.max],
-		values: [props?.initMin || props.min, props?.initMax || props.max],
+		values: [
+			props.initMin ? props.initMin : props.min,
+			props.initMax ? props.initMax : props.max
+		],
 		update: [props.min, props.max].slice(),
-		inputMin: props?.initMin || props.min,
-		inputMax: props?.initMax || props.max,
+		inputMin: props.initMin ? props.initMin : props.min,
+		inputMax: props.initMax ? props.initMax : props.max,
 		inputError: false,
-		reversed: false,
-	})
+		reversed: false
+	});
 
 	const onUpdate = (update) => {
 		setState(() => ({ ...state, update, inputMin: update[0], inputMax: update[1] }));
-	}
+	};
 
 	const onChange = (values) => {
 		setState(() => ({ ...state, values, inputMin: values[0], inputMax: values[1] }));
 		if (values[0] < values[1]) props.onPriceChange(...values);
-	}
-
-	const setDomain = domain => {
-		setState({ ...state, domain })
-	}
+	};
 
 	const inputClassName = () => {
 		return state.inputError ? 'price-range-input price-input-error' : 'price-range-input';
@@ -56,8 +55,8 @@ const PriceRange: React.FC<IProps> = (props) => {
 					type="number"
 					value={state.inputMin}
 				/>
-	—
-			<input
+				—
+				<input
 					className={inputClassName()}
 					disabled={props.productsLength === 0}
 					max={props.max}
@@ -120,6 +119,6 @@ const PriceRange: React.FC<IProps> = (props) => {
 			</Slider>
 		</div>
 	);
-}
+};
 
 export default PriceRange;

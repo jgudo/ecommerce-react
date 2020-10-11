@@ -10,23 +10,22 @@ export const selectFilter = (products: IProduct[], filter: IFilter) => {
 
 	// tslint:disable-next-line: no-array-mutation
 	return products.filter((product) => {
-		const isInRange = product.price >= filter?.minPrice && product?.price <= filter?.maxPrice || true;
-		const matchKeyword = product.keywords?.includes(keyword) || true;
-		const matchName = product.name?.toLowerCase().includes(keyword) || true;
-		const matchDescription = product.description?.toLowerCase().includes(keyword) || true;
-		const matchBrand = product.brand?.toLowerCase().includes(filter.brand) || true;
+		const isInRange = filter.maxPrice ? (product.price >= filter.minPrice && product.price <= filter.maxPrice) : true;
+		const matchKeyword = product.keywords ? product.keywords.includes(keyword) : true;
+		const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
+		const matchDescription = product.description ? product.description.toLowerCase().includes(keyword) : true;
+		const matchBrand = product.brand ? product.brand.toLowerCase().includes(filter.brand) : true;
 
 		return ((matchKeyword || matchName || matchDescription) && matchBrand && isInRange);
-	}).sort((a, b) => {
+	}).sort((a, b): number => {
 		if (filter.sortBy === 'name-desc') {
 			return a.name < b.name ? 1 : -1;
 		} else if (filter.sortBy === 'name-asc') {
 			return a.name > b.name ? 1 : -1;
 		} else if (filter.sortBy === 'price-desc') {
 			return a.price < b.price ? 1 : -1;
-		} else if (filter.sortBy === 'price-asc') {
-			return a.price > b.price ? 1 : -1;
 		}
+		return a.price > b.price ? 1 : -1;
 	});
 };
 

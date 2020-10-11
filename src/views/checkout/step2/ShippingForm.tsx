@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
+import PhoneInput, { PhoneInputProps } from 'react-phone-input-2';
 import Input from 'components/ui/Input';
+import { IUser } from 'types/typings';
 
-const ShippingForm = ({ setField, field }) => {
+interface IProps extends PhoneInputProps {
+	profile: IUser;
+	setField: (param: any) => void;
+	field: any;
+}
+
+const ShippingForm: React.FC<IProps> = ({ setField, field }) => {
 	const [errorMobile, setErrorMobile] = useState('');
 
 	const onFullNameInput = (value, error) => {
@@ -38,10 +45,6 @@ const ShippingForm = ({ setField, field }) => {
 				data: obj
 			}
 		});
-	};
-
-	const errorClassName = () => {
-		return errorMobile ? 'input-error' : '';
 	};
 
 	const onShippingOptionChange = () => setField({ ...field, isInternational: !field.isInternational });
@@ -95,8 +98,10 @@ const ShippingForm = ({ setField, field }) => {
 						)}
 						<PhoneInput
 							country={'ph'}
-							inputClass={`input-form d-block ${errorClassName('mobile')}`}
-							inputExtraProps={{ required: true }}
+							inputClass={`input-form d-block ${field.mobile.error ? 'input-error' : ''}`}
+							inputProps={{
+								required: true
+							}}
 							// eslint-disable-next-line quote-props
 							masks={{ 'ph': '+.. .... ... ....' }}
 							onChange={onMobileInput}

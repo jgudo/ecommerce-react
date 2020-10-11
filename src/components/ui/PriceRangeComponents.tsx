@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { GetHandleProps, HandlesProps, SliderItem } from 'react-compound-slider';
+import { SliderItem } from 'react-compound-slider';
 
 // *******************************************************
 // TOOLTIP RAIL

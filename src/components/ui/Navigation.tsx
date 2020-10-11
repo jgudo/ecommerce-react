@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 
-import * as ROUTE from 'constants/routes';
+import { Route } from 'constants/routes';
 import UserAvatar from 'views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
@@ -54,12 +54,12 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 
 	// disable the basket toggle to these paths
 	const basketDisabledPaths: string[] = [
-		ROUTE.CHECKOUT_STEP_1,
-		ROUTE.CHECKOUT_STEP_2,
-		ROUTE.CHECKOUT_STEP_3,
-		ROUTE.SIGNIN,
-		ROUTE.SIGNUP,
-		ROUTE.FORGOT_PASSWORD
+		Route.CHECKOUT_STEP_1,
+		Route.CHECKOUT_STEP_2,
+		Route.CHECKOUT_STEP_3,
+		Route.SIGNIN,
+		Route.SIGNUP,
+		Route.FORGOT_PASSWORD
 	];
 
 	return window.screen.width <= 480 ? (
@@ -80,7 +80,7 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						<img src={logo} />
 					</Link>
 				</div>
-				{pathname === ROUTE.HOME && (
+				{pathname === Route.HOME && (
 					<>
 						<SearchBar
 							isLoading={store.isLoading}
@@ -123,24 +123,24 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
-								{pathname === ROUTE.SIGNUP && (
+								{pathname === Route.SIGNUP && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"
 										exact
 										onClick={onClickLink}
-										to={ROUTE.SIGNUP}
+										to={Route.SIGNUP}
 									>
 										Sign Up
 									</NavLink>
 								)}
-								{pathname !== ROUTE.SIGNIN && (
+								{pathname !== Route.SIGNIN && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small button-muted margin-left-s"
 										exact
 										onClick={onClickLink}
-										to={ROUTE.SIGNIN}
+										to={Route.SIGNIN}
 									>
 										Sign In
 									</NavLink>

@@ -181,16 +181,22 @@
 // PRODUCT MODAL -------------------------------------------------
 
 .product-modal {
+  width: 100%;
   display: flex;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  margin: 0 5rem;
 
-  @include mobile {
+  @include tablet {
     flex-direction: column;
+    margin: 0;
   }
 }
 
 .product-modal-image-wrapper {
   width: 40rem;
   height: 40rem;
+  flex-grow: 1;
   position: relative;
   background: #f6f6f6;
 
@@ -204,14 +210,14 @@
 .product-modal-image-collection {
   width: 150px;
   height: inherit;
-  background: #f4f4f4;
+  background: #fff;
   display: flex;
   flex-direction: column;
   padding: 10px;
   overflow-y: scroll;
   position: relative;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
     height: auto;
     order: 2;
@@ -232,8 +238,9 @@
     cursor: pointer;
     background: #fff;
   }
-  @include mobile {
+  @include tablet {
     order: 1;
+    width: 100px;
   }
 }
 
@@ -250,10 +257,10 @@
 }
 
 .product-modal-details {
-  width: 300px;
+  width: 500px;
   padding: $m-size $l-size;
 
-  @include mobile {
+  @include tablet {
     width: 100%;
     padding: $m-size;
     padding-bottom: $l-size;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NoInternet = () => {
+const NoInternet: React.FC = () => {
 	return (
 		<div className="page-not-found">
 			<h1>:( No Internet Connection.</h1>

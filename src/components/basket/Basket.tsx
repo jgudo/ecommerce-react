@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { CHECKOUT_STEP_1 } from 'constants/routes';
-import { clearBasket } from 'actions/basketActions';
+import { Route } from 'constants/routes';
+import { clearBasket } from 'redux/actions/basketActions';
 import { displayMoney } from 'helpers/utils';
 import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
@@ -41,7 +41,7 @@ const Basket: React.FC<IProps> = (props) => {
 	const onCheckOut = (): void => {
 		if ((basket.length !== 0 && props.isAuth)) {
 			document.body.classList.remove('is-basket-open');
-			props.history.push(CHECKOUT_STEP_1);
+			props.history.push(Route.CHECKOUT_STEP_1);
 		} else {
 			onOpenModal();
 		}
@@ -50,7 +50,7 @@ const Basket: React.FC<IProps> = (props) => {
 	const onSignInClick = (): void => {
 		onCloseModal();
 		document.body.classList.remove('basket-open');
-		props.history.push(CHECKOUT_STEP_1);
+		props.history.push(Route.CHECKOUT_STEP_1);
 	};
 
 	const onClearBasket = (): void => {

@@ -2,17 +2,23 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
-import { setShippingDetails } from 'actions/checkoutActions';
+import { Route } from 'constants/routes';
+import { setShippingDetails } from 'redux/actions/checkoutActions';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import withAuth from '../hoc/withAuth';
 import StepTracker from '../components/StepTracker';
 import Pagination from '../components/Pagination';
 import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
+import { RouteComponentProps } from 'react-router';
+import { IShippingInfo, IUser } from 'types/typings';
 
-
-const ShippingDetails = ({
+interface IProps extends RouteComponentProps {
+	profile: IUser | any;
+	shipping: IShippingInfo;
+	subtotal: number;
+}
+const ShippingDetails: React.FC<IProps> = ({
 	profile,
 	shipping,
 	subtotal,
@@ -59,7 +65,7 @@ const ShippingDetails = ({
 	const onClickNext = () => {
 		if (noError) {
 			saveShippingDetails();
-			history.push(CHECKOUT_STEP_3);
+			history.push(Route.CHECKOUT_STEP_3);
 		}
 	};
 
@@ -72,20 +78,16 @@ const ShippingDetails = ({
 				</h3>
 				<ShippingForm
 					field={field}
-					history={history}
 					profile={profile}
 					setField={setField}
-					shipping={shipping}
-					subtotal={subtotal}
 				/>
 				<br />
 				<ShippingTotal subtotal={subtotal} field={field} />
 				<br />
 				<Pagination
 					disabledNext={!noError}
-					history={history}
 					onClickNext={onClickNext}
-					onClickPrevious={() => history.push(CHECKOUT_STEP_1)}
+					onClickPrevious={() => history.push(Route.CHECKOUT_STEP_1)}
 
 				/>
 			</div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { ADMIN_DASHBOARD } from 'constants/routes';
+import { Route } from 'constants/routes';
 import UserAvatar from 'views/account/components/UserAvatar';
 import { RootState } from 'types/typings';
 
@@ -15,7 +15,7 @@ const AdminNavigation: React.FC = () => {
 	return (
 		<nav className="navigation navigation-admin">
 			<div className="logo">
-				<Link to={ADMIN_DASHBOARD}>
+				<Link to={Route.ADMIN_DASHBOARD}>
 					<h2>ADMIN PANEL</h2>
 				</Link>
 			</div>

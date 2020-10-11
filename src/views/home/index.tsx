@@ -1,5 +1,6 @@
+// tslint:disable: no-array-mutation
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
 import ProductList from 'components/product/ProductList';
@@ -68,6 +69,7 @@ const Home: React.FC = () => {
 								>
 									{filteredProducts.length === 0 ? new Array(12).fill({}).map((product, index) => (
 										<ProductItem
+											foundOnBasket={foundOnBasket}
 											key={`product-skeleton ${index}`}
 											product={product}
 										/>

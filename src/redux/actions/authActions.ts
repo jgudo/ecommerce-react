@@ -1,5 +1,5 @@
 import { EAuthActionType, EMiscActionType } from 'constants/constants';
-import { IUser, IUserCred, IAuthStatus, IAuthInfo } from 'types/typings';
+import { IUserCred, IAuthInfo } from 'types/typings';
 
 export const signIn = (auth: { email: string, password: string }) => (<const>{
 	type: EAuthActionType.SIGNIN,
@@ -40,16 +40,11 @@ export const signOutSuccess = () => (<const>{
 	type: EAuthActionType.SIGNOUT_SUCCESS
 });
 
-export const setAuthStatus = (status: IAuthStatus) => (<const>{
-	type: EAuthActionType.SET_AUTH_STATUS,
-	payload: status
-});
-
 export const onAuthStateChanged = () => (<const>{
 	type: EAuthActionType.ON_AUTHSTATE_CHANGED
 });
 
-export const onAuthStateSuccess = (user: IUser) => (<const>{
+export const onAuthStateSuccess = (user: any) => (<const>{
 	type: EAuthActionType.ON_AUTHSTATE_SUCCESS,
 	payload: user
 });
@@ -79,7 +74,6 @@ export type AuthActionType =
 	| ReturnType<typeof setAuthPersistence>
 	| ReturnType<typeof signOut>
 	| ReturnType<typeof signOutSuccess>
-	| ReturnType<typeof setAuthStatus>
 	| ReturnType<typeof onAuthStateChanged>
 	| ReturnType<typeof onAuthStateSuccess>
 	| ReturnType<typeof onAuthStateFail>

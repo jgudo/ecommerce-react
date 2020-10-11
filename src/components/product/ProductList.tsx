@@ -1,17 +1,16 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-sort-props */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
 
 import { RootState } from 'types/typings';
-import { getProducts } from 'actions/productActions';
-import dispatchIsLoading from 'actions/miscActions';
+import { getProducts } from 'redux/actions/productActions';
+import { setLoading } from 'redux/actions/miscActions';
 import MessageDisplay from '../ui/MessageDisplay';
 
 interface IProps {
-	children: React.ReactNode;
+	children: (obj: any) => JSX.Element;
 }
 
 const ProductList: React.FC<IProps> = ({ children }) => {
@@ -37,7 +36,7 @@ const ProductList: React.FC<IProps> = ({ children }) => {
 		}
 
 		window.scrollTo(0, 0);
-		return () => dispatch(dispatchIsLoading(false));
+		return () => dispatch(setLoading(false));
 	}, []);
 
 	useEffect(() => {

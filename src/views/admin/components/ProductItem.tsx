@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
@@ -8,27 +8,34 @@ import { Route } from 'constants/routes';
 import { displayMoney, displayDate, displayActionMessage } from 'helpers/utils';
 import { IProduct } from 'types/typings';
 
-const ProductItem: React.FC<IProduct & RouteComponentProps> = ({ product ) => {
+interface IProps extends RouteComponentProps {
+	product: IProduct;
+}
+
+const ProductItem: React.FC<IProps> = ({ product }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const productRef = useRef(null);
+	const productRef = useRef<HTMLDivElement>(null);
 
 	const onClickEdit = () => {
 		history.push(`${Route.EDIT_PRODUCT}/${product.id}`);
 	};
 
 	const onDeleteProduct = () => {
-		productRef.current.classList.toggle('item-active');
+		if (productRef.current)
+			productRef.current.classList.toggle('item-active');
 	};
 
 	const onConfirmDelete = () => {
 		dispatch(removeProduct(product.id));
 		displayActionMessage('Item successfully deleted');
-		productRef.current.classList.remove('item-active');
+		if (productRef.current)
+			productRef.current.classList.remove('item-active');
 	};
 
 	const onCancelDelete = () => {
-		productRef.current.classList.remove('item-active');
+		if (productRef.current)
+			productRef.current.classList.remove('item-active');
 	};
 
 	return (

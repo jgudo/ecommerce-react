@@ -3,24 +3,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import Input from 'components/ui/Input';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import useDidMount from 'hooks/useDidMount';
-import { signUp } from 'actions/authActions';
+import { signUp } from 'redux/actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
+import { RouteComponentProps } from 'react-router';
+import { RootState } from 'types/typings';
 
-const SignUp = (props) => {
+const SignUp: React.FC<RouteComponentProps> = (props) => {
 	const [passwordHidden, setPasswordHidden] = useState(true);
 
 	/* separate states so that when user navigates to signin or forgot password,
 	the authStatus message won't display to other routes.
   */
-	const [signUpStatus, setSignUpStatus] = useState({});
+	const [signUpStatus, setSignUpStatus] = useState<any>({});
 	const [isSigningUp, setIsSigningUp] = useState(false);
 	// ---
-	const { isAuthenticating, authStatus } = useSelector(state => ({
+	const { isAuthenticating, authStatus } = useSelector((state: RootState) => ({
 		isAuthenticating: state.app.isAuthenticating,
 		authStatus: state.app.authStatus
 	}));
-	const [field, setField] = useState({});
+	const [field, setField] = useState<any>({});
 	const didMount = useDidMount();
 	const dispatch = useDispatch();
 	const passwordField = useRef(null);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { addQtyItem, minusQtyItem } from 'actions/basketActions';
+import { addQtyItem, minusQtyItem } from 'redux/actions/basketActions';
 import { IProduct } from 'types/typings';
 import { useDispatch } from 'react-redux';
 

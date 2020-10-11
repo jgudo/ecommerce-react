@@ -1,14 +1,24 @@
 /* eslint-disable no-else-return */
 import React from 'react';
 import Input from 'components/ui/Input';
+import { CREDIT } from 'constants/constants';
 
-const CreditPayment = React.forwardRef(({
+type TProps = {
+	onCreditModeChange: (e: any) => void;
+	paymentMode: string;
+	setField: (param: any) => void;
+	field: any;
+};
+
+// type Ref = { [prop: string]: HTMLInputElement | HTMLDivElement | null };
+
+const CreditPayment = React.forwardRef<any, TProps>(({
 	onCreditModeChange,
 	paymentMode,
 	setField,
 	field
 }, ref) => {
-	const { cardInputRef, collapseCreditHeight } = ref;
+	const { cardInputRef, collapseCreditHeight }: any = ref;
 
 	const onCardNameInput = (value, error) => {
 		setField({ ...field, name: { value, error } });
@@ -48,11 +58,11 @@ const CreditPayment = React.forwardRef(({
 			<h3 className="text-center">Payment</h3>
 			<br />
 			<span className="d-block padding-s">Payment Option</span>
-			<div className={`checkout-fieldset-collapse ${paymentMode === 'credit' ? 'is-selected-payment' : ''}`}>
+			<div className={`checkout-fieldset-collapse ${paymentMode === CREDIT ? 'is-selected-payment' : ''}`}>
 				<div className="checkout-field margin-0">
 					<div className="checkout-checkbox-field">
 						<input
-							checked={paymentMode === 'credit'}
+							checked={paymentMode === CREDIT}
 							className=""
 							id="payment-credit-checkbox"
 							name="checkout_payment"

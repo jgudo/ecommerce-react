@@ -16,7 +16,7 @@ import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
 import { Route } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
-import { IImageFile, IMobileInfo, RootState } from 'types/typings';
+import { IImageFile, RootState } from 'types/typings';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface IInputState {
@@ -34,7 +34,7 @@ interface IState {
 	fullname: IInputState;
 	email: IInputState;
 	address: IInputState;
-	mobile: Partial<IInputState>;
+	mobile: any;
 	avatar: string;
 	banner: string;
 }
@@ -62,8 +62,8 @@ const EditProfile: React.FC<RouteComponentProps & PhoneInputProps> = (props) => 
 			value: '',
 			data: {}
 		},
-		avatar: profile?.avatar || '',
-		banner: profile?.banner || ''
+		avatar: profile.avatar ? profile.avatar : '',
+		banner: profile.banner ? profile.banner : ''
 	});
 
 	const [isOpenModal, setModalOpen] = useState(false);
@@ -119,11 +119,11 @@ const EditProfile: React.FC<RouteComponentProps & PhoneInputProps> = (props) => 
 
 	const onCloseModal = () => setModalOpen(false);
 
-	const onPasswordInput = (e) => {
+	const onPasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value.trim());
 	};
 
-	const update = (credentials?: { email: string; password: string; }) => {
+	const update = (credentials: { email: string; password: string; } = { email: '', password: '' }) => {
 		dispatch(updateProfile({
 			updates: {
 				fullname: field.fullname.value,

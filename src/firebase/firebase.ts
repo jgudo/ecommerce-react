@@ -50,7 +50,7 @@ class Firebase {
 	public passwordReset = (email: string) =>
 		this.auth.sendPasswordResetEmail(email)
 
-	public addUser = (id: string, user) =>
+	public addUser = (id: string, user: IUser) =>
 		this.db.collection('users').doc(id).set(user)
 
 	public getUser = (id: string) => this.db.collection('users').doc(id).get();
@@ -77,7 +77,7 @@ class Firebase {
 	}
 
 	public reauthenticate = (currentPassword: string) => {
-		const user = this.auth.currentUser;
+		const user: any = this.auth.currentUser;
 
 		if (!user) {
 			throw new Error('User not authenticated.');
@@ -121,6 +121,7 @@ class Firebase {
 
 	// // PRODUCT ACTIONS
 	// // ---------
+	getProduct = (id: string) => this.db.collection('products').doc(id).get();
 
 	public getProducts = (lastRefKey: string) => {
 		let didTimeout = false;
