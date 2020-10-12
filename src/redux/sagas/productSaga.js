@@ -17,19 +17,19 @@ import {
 	editProductSuccess,
 	removeProductSuccess
 } from '../actions/productActions';
-import { setLoading, setRequestStatus } from 'redux/actions/miscActions';
+import { setLoading, setRequestStatus } from 'redux/actions/miscActions'
 
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';
 import { ADMIN_PRODUCTS } from 'constants/routes';
 
 function* initRequest() {
-	yield put({ type: LOADING, payload: true });
-	yield put({ type: SET_REQUEST_STATUS, payload: null });
+	yield put(setLoading(true));
+	yield put(setRequestStatus(null));
 }
 
 function* handleError(e) {
-	yield put(setLoading(false))
+	yield put(setLoading(false));
 	yield put(setRequestStatus(e));
 	console.log('ERROR: ', e);
 }
@@ -70,7 +70,7 @@ function* productSaga({ type, payload }) {
 
 				if (imageCollection.length !== 0) {
 					const imageKeys = yield all(imageCollection.map(() => firebase.generateKey));
-					const imageUrls = yield all(imageCollection.map((img, i) => firebase.storeImage('products', imageKeys[i](), img.file)));
+					const imageUrls = yield all(imageCollection.map((img, i) => firebase.storeImage(imageKeys[i](), 'products', img.file)));
 					images = imageUrls.map((url, i) => ({
 						id: imageKeys[i](),
 						url
@@ -89,7 +89,7 @@ function* productSaga({ type, payload }) {
 					...product
 				}));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully added', 'success');
-				yield put(setLoading(false))
+				yield put(setLoading(false));
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to add: ${e.message_}`, 'error');
@@ -103,8 +103,13 @@ function* productSaga({ type, payload }) {
 				let newUpdates = { ...payload.updates };
 
 				if (image.constructor === File && typeof image === 'object') {
-					yield call(firebase.deleteImage, payload.id);
-					const url = yield call(firebase.storeImage, 'products', payload.id, image);
+					try {
+						yield call(firebase.deleteImage, payload.id);
+					} catch (e) {
+						console.error('Failed to delete image ', e);
+					}
+
+					const url = yield call(firebase.storeImage, payload.id, 'products', image);
 					newUpdates = { ...newUpdates, image: url };
 				}
 
@@ -121,7 +126,7 @@ function* productSaga({ type, payload }) {
 					});
 
 					const imageKeys = yield all(newUploads.map(() => firebase.generateKey));
-					const imageUrls = yield all(newUploads.map((img, i) => firebase.storeImage('products', imageKeys[i](), img.file)));
+					const imageUrls = yield all(newUploads.map((img, i) => firebase.storeImage(imageKeys[i](), 'products', img.file)));
 					const images = imageUrls.map((url, i) => ({
 						id: imageKeys[i](),
 						url
@@ -138,7 +143,7 @@ function* productSaga({ type, payload }) {
 					updates: newUpdates
 				}));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully edited', 'success');
-				yield put(setLoading(false))
+				yield put(setLoading(false));
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to edit: ${e.message}`, 'error');
@@ -149,7 +154,7 @@ function* productSaga({ type, payload }) {
 				yield initRequest();
 				yield call(firebase.removeProduct, payload);
 				yield put(removeProductSuccess(payload));
-				yield put(setLoading(false))
+				yield put(setLoading(false));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully removed', 'success');
 			} catch (e) {
 				yield handleError(e);

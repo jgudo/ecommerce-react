@@ -114,7 +114,7 @@ const Filters = (props) => {
 				<span>Price Range</span>
 				<br />
 				<br />
-				{(props.productsCount === 0 && props.isLoading) || field.maxPrice === 0 ? (
+				{(props.productsCount === 0 && props.isLoading) || max === 0 ? (
 					<h5 className="text-subtle">Loading Filter</h5>
 				) : (
 						<PriceRange
