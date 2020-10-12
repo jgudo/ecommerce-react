@@ -33,12 +33,12 @@ const PublicRoute = ({
 							)
 							: (
 								<>
-									<Navigation path={path} isAuth={isAuth} />
+									<Navigation isAuth={isAuth} />
 									<Basket isAuth={isAuth} />
 									<main className="content">
 										<Component {...props} />
 									</main>
-									<Footer path={path} />
+									<Footer />
 								</>
 							)
 				);

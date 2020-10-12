@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { CHECKOUT_STEP_1 } from 'constants/routes';
 import { clearBasket } from 'redux/actions/basketActions';
@@ -10,10 +10,11 @@ import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
 
-
 const Basket = (props) => {
 	const [isModalOpen, setModalOpen] = useState(false);
 	const basket = useSelector(state => state.basket);
+	const history = useHistory();
+	const { pathname } = useLocation();
 	const dispatch = useDispatch();
 
 	const calculateTotal = () => {
@@ -33,7 +34,7 @@ const Basket = (props) => {
 	const onCheckOut = () => {
 		if ((basket.length !== 0 && props.isAuth)) {
 			document.body.classList.remove('is-basket-open');
-			props.history.push(CHECKOUT_STEP_1);
+			history.push(CHECKOUT_STEP_1);
 		} else {
 			onOpenModal();
 		}
@@ -42,7 +43,7 @@ const Basket = (props) => {
 	const onSignInClick = () => {
 		onCloseModal();
 		document.body.classList.remove('basket-open');
-		props.history.push(CHECKOUT_STEP_1);
+		history.push(CHECKOUT_STEP_1);
 	};
 
 	const onClearBasket = () => {
@@ -121,7 +122,7 @@ const Basket = (props) => {
 					</div>
 					<button
 						className="basket-checkout-button button"
-						disabled={basket.length === 0 || props.location.pathname === '/checkout'}
+						disabled={basket.length === 0 || pathname === '/checkout'}
 						onClick={onCheckOut}
 					>
 						Check Out
@@ -132,4 +133,4 @@ const Basket = (props) => {
 	);
 };
 
-export default withRouter(Basket);
+export default Basket;

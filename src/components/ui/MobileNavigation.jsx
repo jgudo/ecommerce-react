@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { HOME, SIGNIN, SEARCH } from 'constants/routes';
@@ -9,6 +9,9 @@ import Badge from './Badge';
 import logo from '../../../static/logo_horizontal.png';
 
 const Navigation = (props) => {
+	const history = useHistory();
+	const { pathname } = useLocation();
+
 	const onClickLink = (e) => {
 		if (props.isAuthenticating) e.preventDefault();
 	};
@@ -27,7 +30,7 @@ const Navigation = (props) => {
 						<button
 							className="button-link navigation-menu-link basket-toggle"
 							onClick={onClickToggle}
-							disabled={props.disabledPaths.includes(props.path)}
+							disabled={props.disabledPaths.includes(pathname)}
 						>
 
 							<Badge count={props.basketLength}>
@@ -43,7 +46,7 @@ const Navigation = (props) => {
 						</li>
 					) : (
 							<>
-								{props.path !== SIGNIN && (
+								{pathname !== SIGNIN && (
 									<li className="mobile-navigation-item">
 										<Link
 											className="navigation-menu-link"
@@ -59,7 +62,7 @@ const Navigation = (props) => {
 				</ul>
 				<button className="button-link" onClick={(e) => {
 					if (props.isAuthenticating) e.preventDefault();
-					props.history.push(SEARCH);
+					history.push(SEARCH);
 				}}>
 					<i className="fa fa-search" />
 				</button>
@@ -74,4 +77,4 @@ Navigation.propType = {
 	disabledPaths: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-export default withRouter(Navigation);
+export default Navigation;

@@ -1,6 +1,9 @@
 import React from 'react';
+import useScrollTop from 'hooks/useScrollTop';
 
 const NoInternet = () => {
+	useScrollTop();
+
 	return (
 		<div className="page-not-found">
 			<h1>:( No Internet Connection.</h1>

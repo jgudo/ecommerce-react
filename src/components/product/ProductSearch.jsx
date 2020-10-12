@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearRecentSearch, removeSelectedRecent, setTextFilter } from 'redux/actions/filterActions';
 
@@ -109,4 +108,4 @@ const ProductSearch = (props) => {
 	);
 };
 
-export default withRouter(ProductSearch);
+export default ProductSearch;

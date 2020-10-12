@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import useScrollTop from 'hooks/useScrollTop';
 import { setPaymentDetails } from 'redux/actions/checkoutActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import StepTracker from '../components/StepTracker';
@@ -19,6 +20,8 @@ const Payment = ({
 	history
 }) => {
 	useDocumentTitle('Check Out Final Step | Salinaka');
+	useScrollTop();
+
 	const [paymentMode, setPaymentMode] = useState(payment.type || 'paypal');
 	const collapseCreditHeight = useRef(null);
 	const cardInputRef = useRef(null);

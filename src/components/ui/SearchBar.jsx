@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import {
 	setTextFilter,
@@ -10,11 +11,11 @@ import {
 const SearchBar = ({
 	filter,
 	isLoading,
-	productsLength,
-	history
+	productsLength
 }) => {
 	const [searchInput, setSearchInput] = useState(filter.keyword);
 	const searchbarRef = useRef(null);
+	const history = useHistory();
 
 	useEffect(() => {
 		setSearchInput(filter.keyword);

@@ -17,6 +17,7 @@ import {
 	editProductSuccess,
 	removeProductSuccess
 } from '../actions/productActions';
+import { setLoading, setRequestStatus } from 'redux/actions/miscActions';
 
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';
@@ -28,8 +29,8 @@ function* initRequest() {
 }
 
 function* handleError(e) {
-	yield put({ type: LOADING, payload: false });
-	yield put({ type: SET_REQUEST_STATUS, payload: e });
+	yield put(setLoading(false))
+	yield put(setRequestStatus(e));
 	console.log('ERROR: ', e);
 }
 
@@ -52,7 +53,7 @@ function* productSaga({ type, payload }) {
 					total: result.total ? result.total : state.products.total
 				}));
 				// yield put({ type: SET_LAST_REF_KEY, payload: result.lastKey });
-				yield put({ type: LOADING, payload: false });
+				yield put(setLoading(false));
 			} catch (e) {
 				yield handleError(e);
 			}
@@ -88,7 +89,7 @@ function* productSaga({ type, payload }) {
 					...product
 				}));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully added', 'success');
-				yield put({ type: LOADING, payload: false });
+				yield put(setLoading(false))
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to add: ${e.message_}`, 'error');
@@ -137,7 +138,7 @@ function* productSaga({ type, payload }) {
 					updates: newUpdates
 				}));
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully edited', 'success');
-				yield put({ type: LOADING, payload: false });
+				yield put(setLoading(false))
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to edit: ${e.message}`, 'error');
@@ -148,7 +149,7 @@ function* productSaga({ type, payload }) {
 				yield initRequest();
 				yield call(firebase.removeProduct, payload);
 				yield put(removeProductSuccess(payload));
-				yield put({ type: LOADING, payload: false });
+				yield put(setLoading(false))
 				yield handleAction(ADMIN_PRODUCTS, 'Item succesfully removed', 'success');
 			} catch (e) {
 				yield handleError(e);

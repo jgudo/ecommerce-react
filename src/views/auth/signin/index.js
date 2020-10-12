@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useDidMount from 'hooks/useDidMount';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import useScrollTop from 'hooks/useScrollTop';
+
 import {
 	signIn,
 	signInWithGoogle,
@@ -30,6 +32,7 @@ const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const didMount = useDidMount();
 
+	useScrollTop();
 	useDocumentTitle('Sign In | Salinaka');
 	useEffect(() => {
 		if (didMount) {

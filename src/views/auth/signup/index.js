@@ -6,6 +6,7 @@ import useDidMount from 'hooks/useDidMount';
 import { signUp } from 'redux/actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
+import useScrollTop from 'hooks/useScrollTop';
 
 const SignUp = (props) => {
 	const [passwordHidden, setPasswordHidden] = useState(true);
@@ -25,6 +26,7 @@ const SignUp = (props) => {
 	const dispatch = useDispatch();
 	const passwordField = useRef(null);
 
+	useScrollTop();
 	useDocumentTitle('Sign Up | Salinaka');
 	useEffect(() => {
 		if (didMount) {

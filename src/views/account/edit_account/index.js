@@ -11,18 +11,21 @@ import Input from 'components/ui/Input';
 import CircularProgress from 'components/ui/CircularProgress';
 import ImageLoader from 'components/ui/ImageLoader';
 
-import dispatchIsLoading from 'redux/actions/appActions';
+import { setLoading } from 'redux/actions/miscActions';
 import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
 import { ACCOUNT } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import useScrollTop from 'hooks/useScrollTop';
 
 const EditProfile = (props) => {
 	const dispatch = useDispatch();
+
 	useDocumentTitle('Edit Account | Salinaka');
+	useScrollTop();
 	useEffect(() => {
 		return () => {
-			dispatch(dispatchIsLoading(false));
+			dispatch(setLoading(false));
 		};
 	}, []);
 

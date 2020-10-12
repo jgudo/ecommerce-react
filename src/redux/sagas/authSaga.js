@@ -16,12 +16,8 @@ import {
 	SET_AUTH_PERSISTENCE
 } from 'constants/constants';
 
-import {
-	setAuthStatus,
-	signInSuccess,
-	signOutSuccess,
-	isAuthenticating
-} from 'redux/actions/authActions';
+import { signInSuccess, signOutSuccess } from 'redux/actions/authActions';
+import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
 
 import { clearBasket } from 'redux/actions/basketActions';
 import { setProfile, clearProfile } from 'redux/actions/profileActions';
@@ -33,7 +29,7 @@ import defaultBanner from 'images/defaultBanner.jpg';
 
 function* handleError(e) {
 	const obj = { success: false, type: 'auth' };
-	yield put(isAuthenticating(false));
+	yield put(setAuthenticating(false));
 
 	switch (e.code) {
 		case 'auth/network-request-failed':
@@ -58,7 +54,7 @@ function* handleError(e) {
 }
 
 function* initRequest() {
-	yield put(isAuthenticating());
+	yield put(setAuthenticating());
 	yield put(setAuthStatus({}));
 }
 
@@ -115,7 +111,7 @@ function* authSaga({ type, payload }) {
 
 				yield call(firebase.addUser, ref.user.uid, user);
 				yield put(setProfile(user));
-				yield put(isAuthenticating(false));
+				yield put(setAuthenticating(false));
 			} catch (e) {
 				yield handleError(e);
 			}
@@ -129,7 +125,7 @@ function* authSaga({ type, payload }) {
 				yield put(resetFilter());
 				yield put(resetCheckout());
 				yield put(signOutSuccess());
-				yield put(isAuthenticating(false));
+				yield put(setAuthenticating(false));
 				yield call(history.push, '/signin');
 			} catch (e) {
 				console.log(e);
@@ -144,7 +140,7 @@ function* authSaga({ type, payload }) {
 					type: 'reset',
 					message: 'Password reset email has been sent to your provided email.'
 				}));
-				yield put(isAuthenticating(false));
+				yield put(setAuthenticating(false));
 			} catch (e) {
 				handleError({ code: 'auth/reset-password-error' });
 			}
@@ -188,7 +184,7 @@ function* authSaga({ type, payload }) {
 					provider: payload.providerData[0].providerId
 				}));
 			}
-			yield put(isAuthenticating(false));
+			yield put(setAuthenticating(false));
 			break;
 		case ON_AUTHSTATE_FAIL:
 			yield put(clearProfile());

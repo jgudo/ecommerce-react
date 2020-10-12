@@ -7,8 +7,12 @@ import { HOME } from 'constants/routes';
 import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import firebase from '../../firebase/firebase';
+import useScrollTop from 'hooks/useScrollTop';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const ViewProduct = () => {
+    useScrollTop();
+
     const { id } = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -16,6 +20,8 @@ const ViewProduct = () => {
         product: state.products.items.find(item => item.id === id),
         basket: state.basket
     }));
+    useDocumentTitle(`View ${store.product ? store.product.name : 'Item'}`);
+
     const [selectedImage, setSelectedImage] = useState(store.product ? store.product.image : '');
     const [product, setProduct] = useState(store.product || null);
     const foundOnBasket = () => store.basket.find(item => item.id === product.id);

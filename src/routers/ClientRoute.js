@@ -22,12 +22,12 @@ const PrivateRoute = ({
 				isAuth && userType === 'USER'
 					? (
 						<>
-							<Navigation path={path} isAuth={isAuth} />
+							<Navigation isAuth={isAuth} />
 							<Basket isAuth={isAuth} />
 							<main className="content">
 								<Component {...props} />
 							</main>
-							<Footer path={path} />
+							<Footer />
 						</>
 					)
 					: isAuth && userType === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />

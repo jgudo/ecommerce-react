@@ -1,22 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
+import { HOME } from 'constants/routes';
 import logo from '../../../static/logo_vertical_cropped.png';
-import * as ROUTE from 'constants/routes';
 
-const Footer = ({ path }) => {
-	// hide the footer to these routes
-	const hiddenPaths = [
-		ROUTE.SIGNIN,
-		ROUTE.SIGNUP,
-		ROUTE.FORGOT_PASSWORD,
-		ROUTE.ACCOUNT,
-		ROUTE.ACCOUNT_EDIT,
-		ROUTE.CHECKOUT_STEP_1,
-		ROUTE.CHECKOUT_STEP_2,
-		ROUTE.CHECKOUT_STEP_3
-	];
+const Footer = () => {
+	const { pathname } = useLocation();
 
-	return hiddenPaths.includes(path) ? null : (
+	return pathname !== HOME ? null : (
 		<footer className="footer">
 			<div className="footer-col-1">
 				<strong><span>Developed by <a href="https://github.com/jgudo">JULIUS GUEVARRA</a></span></strong>

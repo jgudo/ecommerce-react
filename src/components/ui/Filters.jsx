@@ -76,13 +76,13 @@ const Filters = (props) => {
 				<span>Brand</span>
 				<br />
 				<br />
-				{props.productsLength === 0 && props.isLoading ? (
+				{props.productsCount === 0 && props.isLoading ? (
 					<h5 className="text-subtle">Loading Filter</h5>
 				) : (
 						<select
 							className="filters-brand"
 							value={field.brand}
-							disabled={props.isLoading || props.productsLength === 0}
+							disabled={props.isLoading || props.productsCount === 0}
 							onChange={onBrandFilterChange}
 						>
 							<option value="">All Brands</option>
@@ -100,7 +100,7 @@ const Filters = (props) => {
 				<select
 					className="filters-sort-by d-block"
 					value={field.sortBy}
-					disabled={props.isLoading || props.productsLength === 0}
+					disabled={props.isLoading || props.productsCount === 0}
 					onChange={onSortFilterChange}
 				>
 					<option value="">None</option>
@@ -114,7 +114,7 @@ const Filters = (props) => {
 				<span>Price Range</span>
 				<br />
 				<br />
-				{props.productsLength === 0 && props.isLoading ? (
+				{(props.productsCount === 0 && props.isLoading) || field.maxPrice === 0 ? (
 					<h5 className="text-subtle">Loading Filter</h5>
 				) : (
 						<PriceRange
@@ -124,21 +124,21 @@ const Filters = (props) => {
 							initMax={field.maxPrice}
 							isLoading={props.isLoading}
 							onPriceChange={onPriceChange}
-							productsLength={props.productsLength}
+							productsLength={props.productsCount}
 						/>
 					)}
 			</div>
 			<div className="filters-action">
 				<button
 					className="filters-button button button-small"
-					disabled={props.isLoading || props.productsLength === 0}
+					disabled={props.isLoading || props.productsCount === 0}
 					onClick={onApplyFilter}
 				>
 					Apply filters
         </button>
 				<button
 					className="filters-button button button-border button-small"
-					disabled={props.isLoading || props.productsLength === 0}
+					disabled={props.isLoading || props.productsCount === 0}
 					onClick={onResetFilter}
 				>
 					Reset filters

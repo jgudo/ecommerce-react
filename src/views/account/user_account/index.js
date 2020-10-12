@@ -3,6 +3,7 @@ import React, { lazy, Suspense } from 'react';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import CircularProgress from 'components/ui/CircularProgress';
 import UserTab from '../tab/UserTab';
+import useScrollTop from 'hooks/useScrollTop';
 
 const UserAccountTab = lazy(() => import('../tab/UserAccountTab'));
 const UserWishListTab = lazy(() => import('../tab/UserWishListTab'));
@@ -16,6 +17,7 @@ const Loader = () => (
 );
 
 const UserAccount = () => {
+	useScrollTop();
 	useDocumentTitle('My Account | Salinaka');
 	return (
 		<UserTab>

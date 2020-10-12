@@ -8,7 +8,7 @@ const FiltersToggle = ({
 	filter,
 	isLoading,
 	products,
-	productsLength,
+	productsCount,
 	children
 }) => {
 	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
@@ -33,7 +33,7 @@ const FiltersToggle = ({
 						filter={filter}
 						isLoading={isLoading}
 						products={products}
-						productsLength={productsLength}
+						productsCount={productsCount}
 					/>
 				</div>
 				<button

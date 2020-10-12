@@ -5,7 +5,7 @@ import profileReducer from './profileReducer';
 import filterReducer from './filterReducer';
 import checkoutReducer from './checkoutReducer';
 import userReducer from './userReducer';
-import appReducer from './appReducer';
+import miscReducer from './miscReducer';
 
 const rootReducer = {
 	products: productReducer,
@@ -15,7 +15,7 @@ const rootReducer = {
 	filter: filterReducer,
 	users: userReducer,
 	checkout: checkoutReducer,
-	app: appReducer
+	app: miscReducer
 };
 
 export default rootReducer;

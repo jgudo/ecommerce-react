@@ -9,7 +9,7 @@ import ImageLoader from '../ui/ImageLoader';
 
 const ProductItem = ({
 	product,
-	foundOnBasket,
+	isItemOnBasket,
 	isLoading
 }) => {
 	const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const ProductItem = ({
 	};
 
 	const onAddToBasket = () => {
-		if (foundOnBasket) {
+		if (isItemOnBasket) {
 			dispatch(removeFromBasket(product.id));
 			displayActionMessage('Item removed from basket', 'info');
 		} else {
@@ -38,11 +38,11 @@ const ProductItem = ({
 			<div
 				className={`product-card ${!product.id ? 'product-loading' : ''}`}
 				style={{
-					border: foundOnBasket ? '1px solid #cacaca' : '',
-					boxShadow: foundOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
+					border: isItemOnBasket ? '1px solid #cacaca' : '',
+					boxShadow: isItemOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
 				}}
 			>
-				{foundOnBasket && <i className="fa fa-check product-card-check" />}
+				{isItemOnBasket && <i className="fa fa-check product-card-check" />}
 				<div
 					className="product-card-content"
 					onClick={onClickItem}
@@ -63,10 +63,10 @@ const ProductItem = ({
 				</div>
 				{product.id && (
 					<button
-						className={`product-card-button button-small button button-block ${foundOnBasket ? 'button-border button-border-gray' : ''}`}
+						className={`product-card-button button-small button button-block ${isItemOnBasket ? 'button-border button-border-gray' : ''}`}
 						onClick={onAddToBasket}
 					>
-						{foundOnBasket ? 'Remove from basket' : 'Add to basket'}
+						{isItemOnBasket ? 'Remove from basket' : 'Add to basket'}
 					</button>
 				)}
 
@@ -77,7 +77,7 @@ const ProductItem = ({
 
 ProductItem.propType = {
 	product: PropTypes.object.isRequired,
-	foundOnBasket: PropTypes.bool
+	isItemOnBasket: PropTypes.bool
 };
 
 export default ProductItem;

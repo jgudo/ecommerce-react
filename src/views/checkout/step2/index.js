@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
 import { setShippingDetails } from 'redux/actions/checkoutActions';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import useScrollTop from 'hooks/useScrollTop';
 import withAuth from '../hoc/withAuth';
 import StepTracker from '../components/StepTracker';
 import Pagination from '../components/Pagination';
@@ -19,6 +20,8 @@ const ShippingDetails = ({
 	history
 }) => {
 	useDocumentTitle('Check Out Step 2 | Salinaka');
+	useScrollTop();
+
 	const [field, setField] = useState({
 		fullname: { value: profile.fullname ? profile.fullname : '' },
 		email: { value: profile.email ? profile.email : '' },

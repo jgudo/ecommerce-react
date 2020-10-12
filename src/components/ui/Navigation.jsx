@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { withRouter, NavLink, Link } from 'react-router-dom';
+import { useHistory, useLocation, NavLink, Link } from 'react-router-dom';
 
 import * as ROUTE from 'constants/routes';
 import UserAvatar from 'views/account/components/UserAvatar';
@@ -13,8 +13,10 @@ import MobileNavigation from './MobileNavigation';
 
 import logo from '../../../static/logo_horizontal.png';
 
-const Navigation = ({ isAuth, path, history }) => {
+const Navigation = ({ isAuth }) => {
 	const navbar = useRef(null);
+	const history = useHistory();
+	const { pathname } = useLocation();
 	const scrollHandler = () => {
 		if (navbar.current && window.screen.width > 480) {
 			if (window.pageYOffset >= 70) {
@@ -31,24 +33,22 @@ const Navigation = ({ isAuth, path, history }) => {
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, []);
 
-	const { store } = useSelector(state => ({
-		store: {
-			filter: state.filter,
-			products: state.products.items,
-			basketLength: state.basket.length,
-			profile: state.profile,
-			isLoading: state.app.loading,
-			isAuthenticating: state.app.isAuthenticating,
-			productsLength: state.products.items.length
-		}
+	const store = useSelector(state => ({
+		filter: state.filter,
+		products: state.products.items,
+		basketLength: state.basket.length,
+		profile: state.profile,
+		isLoading: state.app.loading,
+		isAuthenticating: state.app.isAuthenticating,
+		productsLength: state.products.items.length
 	}));
 
 	const onClickLink = (e) => {
 		if (store.isAuthenticating) e.preventDefault();
 	};
 
-	// disable the basket toggle to these paths
-	const basketDisabledPaths = [
+	// disable the basket toggle to these pathnames
+	const basketDisabledpathnames = [
 		ROUTE.CHECKOUT_STEP_1,
 		ROUTE.CHECKOUT_STEP_2,
 		ROUTE.CHECKOUT_STEP_3,
@@ -60,10 +60,10 @@ const Navigation = ({ isAuth, path, history }) => {
 	return window.screen.width <= 800 ? (
 		<MobileNavigation
 			basketLength={store.basketLength}
-			disabledPaths={basketDisabledPaths}
+			disabledpathnames={basketDisabledpathnames}
 			isAuth={isAuth}
 			isAuthenticating={store.isAuthenticating}
-			path={path}
+			pathname={pathname}
 			profile={store.profile}
 		/>
 	) : (
@@ -76,7 +76,7 @@ const Navigation = ({ isAuth, path, history }) => {
 						<img src={logo} />
 					</Link>
 				</div>
-				{path === ROUTE.HOME && (
+				{pathname === ROUTE.HOME && (
 					<>
 						<SearchBar
 							isLoading={store.isLoading}
@@ -104,7 +104,7 @@ const Navigation = ({ isAuth, path, history }) => {
 							{({ onClickToggle }) => (
 								<button
 									className="button-link navigation-menu-link basket-toggle"
-									disabled={basketDisabledPaths.includes(path)}
+									disabled={basketDisabledpathnames.includes(pathname)}
 									onClick={onClickToggle}
 								>
 
@@ -121,7 +121,7 @@ const Navigation = ({ isAuth, path, history }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
-								{path !== ROUTE.SIGNUP && (
+								{pathname !== ROUTE.SIGNUP && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"
@@ -132,7 +132,7 @@ const Navigation = ({ isAuth, path, history }) => {
 										Sign Up
 									</NavLink>
 								)}
-								{path !== ROUTE.SIGNIN && (
+								{pathname !== ROUTE.SIGNIN && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small button-muted margin-left-s"
@@ -150,4 +150,4 @@ const Navigation = ({ isAuth, path, history }) => {
 		);
 };
 
-export default withRouter(Navigation);
+export default Navigation;

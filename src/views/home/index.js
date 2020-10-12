@@ -7,27 +7,33 @@ import ProductItem from 'components/product/ProductItem';
 import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import useScrollTop from 'hooks/useScrollTop';
 
 const Home = () => {
 	useDocumentTitle();
+	useScrollTop();
+
 	const [columnCount, setColumnCount] = useState(6);
 
-	const { store } = useSelector(state => ({
-		store: {
-			filter: state.filter,
-			basket: state.basket,
-			filteredProducts: selectFilter(state.products.items, state.filter),
-			requestStatus: state.app.requestStatus,
-			isLoading: state.app.loading
-		}
+	const store = useSelector(state => ({
+		filter: state.filter,
+		basket: state.basket,
+		filteredProducts: selectFilter(state.products.items, state.filter),
+		requestStatus: state.app.requestStatus,
+		isLoading: state.app.loading,
+		products: state.products.items,
+		lastRefKey: state.products.lastRefKey,
+		productsCount: state.products.items.length,
+		totalProductsCount: state.products.total,
 	}));
 
 	const onProductsLengthChanged = () => {
 		const width = window.screen.width - 250; // minus 250px padding
+		const pLen = store.filteredProducts.length;
 
 		setColumnCount(Math.floor(width / 160));
-		if ((columnCount >= store.filteredProducts.length) && store.filteredProducts.length !== 0) {
-			setColumnCount(store.filteredProducts.length);
+		if ((columnCount >= pLen) && pLen !== 0) {
+			setColumnCount(pLen);
 		}
 	};
 
@@ -38,7 +44,6 @@ const Home = () => {
 	const productListWrapper = useRef(null);
 
 	const isFiltered = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
-	const foundOnBasket = id => !!store.basket.find(item => item.id === id);
 
 	return (
 		<>
@@ -58,23 +63,23 @@ const Home = () => {
 				)}
 				<ProductAppliedFilters filter={store.filter} />
 				<Boundary>
-					<ProductList>
-						{({ filteredProducts }) => (
+					<ProductList {...store}>
+						{({ foundOnBasket }) => (
 							<>
 								<div
 									className="product-list"
 									ref={productListWrapper}
 									style={{ gridTemplateColumns: `repeat(${columnCount}, 160px)` }}
 								>
-									{filteredProducts.length === 0 ? new Array(12).fill({}).map((product, index) => (
+									{store.filteredProducts.length === 0 ? new Array(12).fill({}).map((product, index) => (
 										<ProductItem
-											foundOnBasket={false}
+											isItemOnBasket={false}
 											key={`product-skeleton ${index}`}
 											product={product}
 										/>
-									)) : filteredProducts.map(product => (
+									)) : store.filteredProducts.map(product => (
 										<ProductItem
-											foundOnBasket={foundOnBasket(product.id)}
+											isItemOnBasket={foundOnBasket(product.id)}
 											key={product.id}
 											isLoading={store.isLoading}
 											product={product}

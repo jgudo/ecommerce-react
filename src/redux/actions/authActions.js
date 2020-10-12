@@ -42,11 +42,6 @@ export const signOutSuccess = () => ({
 	type: type.SIGNOUT_SUCCESS
 });
 
-export const setAuthStatus = status => ({
-	type: type.SET_AUTH_STATUS,
-	payload: status
-});
-
 export const onAuthStateChanged = () => ({
 	type: type.ON_AUTHSTATE_CHANGED
 });
@@ -66,7 +61,3 @@ export const resetPassword = email => ({
 	payload: email
 });
 
-export const isAuthenticating = (bool = true) => ({
-	type: type.IS_AUTHENTICATING,
-	payload: bool
-});

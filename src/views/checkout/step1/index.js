@@ -1,6 +1,7 @@
 import React from 'react';
 
 import useDocumentTitle from 'hooks/useDocumentTitle';
+import useScrollTop from 'hooks/useScrollTop';
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
 import BasketItem from 'components/basket/BasketItem';
@@ -15,6 +16,8 @@ const OrderSummary = ({
 	history
 }) => {
 	useDocumentTitle('Check Out Step 1 | Salinaka');
+	useScrollTop();
+
 	const onClickPrevious = () => history.push('/');
 	const onClickNext = () => history.push(CHECKOUT_STEP_2);
 

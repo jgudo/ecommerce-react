@@ -10,7 +10,7 @@ const initState = {
 	isAuthenticating: false,
 	authStatus: {},
 	requestStatus: null,
-	theme: 'default'
+	theme: 'light'
 };
 
 export default (state = initState, action) => {

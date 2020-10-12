@@ -1,6 +1,9 @@
 import React from 'react';
+import useScrollTop from 'hooks/useScrollTop';
 
 const PageNotFound = ({ history }) => {
+	useScrollTop();
+
 	return (
 		<div className="page-not-found">
 			<h1>:( Page you are looking for doesn't exists.</h1>

@@ -1,61 +1,52 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-sort-props */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter } from 'selectors/selector';
+import PropTypes, { object } from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { getProducts } from 'redux/actions/productActions';
-import dispatchIsLoading from 'redux/actions/appActions';
+import { setLoading } from 'redux/actions/miscActions';
 import MessageDisplay from '../ui/MessageDisplay';
 
-const ProductList = ({ children }) => {
+const ProductList = (props) => {
 	const [isFetching, setFetching] = useState(false);
-	const { store } = useSelector(state => ({
-		store: {
-			productsLength: state.products.items.length,
-			products: state.products.items,
-			lastRefKey: state.products.lastRefKey,
-			totalItems: state.products.total,
-			isLoading: state.app.loading,
-			filteredProducts: selectFilter(state.products.items, state.filter),
-			requestStatus: state.app.requestStatus
-		}
-	}));
+
 	const dispatch = useDispatch();
 	const fetchProducts = () => {
 		setFetching(true);
-		dispatch(getProducts(store.lastRefKey));
+		dispatch(getProducts(props.lastRefKey));
 	};
 
 	useEffect(() => {
-		if (store.productsLength === 0) {
+		if (props.productsCount === 0) {
 			fetchProducts();
 		}
 
 		window.scrollTo(0, 0);
-		return () => dispatch(dispatchIsLoading(false));
+		return () => dispatch(setLoading(false));
 	}, []);
 
 	useEffect(() => {
 		setFetching(false);
-	}, [store.lastRefKey]);
+	}, [props.lastRefKey]);
 
-	return store.filteredProducts.length === 0 && !store.isLoading && !store.requestStatus ? (
+	const foundOnBasket = id => !!props.basket.find(item => item.id === id);
+
+	return props.filteredProducts.length === 0 && !props.isLoading && !props.requestStatus ? (
 		<MessageDisplay
 			message="The are no items found."
 			desc="Try using correct filters or keyword."
 		/>
-	) : store.requestStatus ? (
+	) : props.requestStatus ? (
 		<MessageDisplay
-			message={store.requestStatus}
+			message={props.requestStatus}
 			action={fetchProducts}
 			buttonLabel="Try Again"
 		/>
 	) : (
 				<>
-					{children({ ...store })}
-					{store.productsLength < store.totalItems && (
+					{props.children({ foundOnBasket })}
+					{props.productsCount < props.totalProductsCount && (
 						<div className="d-flex-center padding-l">
 							<button
 								className="button button-small"
@@ -71,11 +62,15 @@ const ProductList = ({ children }) => {
 };
 
 ProductList.propType = {
+	filter: PropTypes.object,
+	basket: PropTypes.arrayOf(object),
+	filteredProducts: PropTypes.arrayOf(PropTypes.object),
+	products: PropTypes.arrayOf(object),
 	isLoading: PropTypes.bool.isRequired,
 	requestStatus: PropTypes.string.isRequired,
-	productsLength: PropTypes.number.isRequired,
+	productsCount: PropTypes.number.isRequired,
+	totalProductsCount: PropTypes.number.isRequired,
 	filteredProductsLength: PropTypes.number.isRequired,
-	dispatch: PropTypes.func.isRequired
 };
 
 export default ProductList;
