@@ -8,8 +8,11 @@ import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import firebase from '../../firebase/firebase';
 import { IImageFile, RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const ViewProduct: React.FC = () => {
+	useScrollTop();
+
 	const { id } = useParams<{ id: string }>();
 	const history = useHistory();
 	const dispatch = useDispatch();

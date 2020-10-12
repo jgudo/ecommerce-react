@@ -6,9 +6,12 @@ import useDocumentTitle from 'hooks/useDocumentTitle';
 import { editProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
 import { IProduct, RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const EditProduct: React.FC<RouteComponentProps<{ id: string }>> = (props) => {
 	useDocumentTitle('Edit Product | Salinaka');
+	useScrollTop();
+
 	const { product, isLoading } = useSelector((state: RootState) => ({
 		product: state.products.items.find(item => item.id === props.match.params.id),
 		isLoading: state.app.loading

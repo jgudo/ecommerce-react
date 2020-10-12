@@ -3,6 +3,7 @@ import React, { lazy, Suspense } from 'react';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import CircularProgress from 'components/ui/CircularProgress';
 import UserTab from '../tab/UserTab';
+import useScrollTop from 'hooks/useScrollTop';
 
 const UserAccountTab = lazy(() => import('../tab/UserAccountTab'));
 const UserWishListTab = lazy(() => import('../tab/UserWishListTab'));
@@ -17,6 +18,8 @@ const Loader: React.FC = () => (
 
 const UserAccount: React.FC = () => {
 	useDocumentTitle('My Account | Salinaka');
+	useScrollTop();
+
 	return (
 		<UserTab>
 			<div data-index={0} data-label="Account">

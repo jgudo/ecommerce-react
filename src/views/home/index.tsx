@@ -9,19 +9,24 @@ import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
 import Boundary from 'components/ui/Boundary';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import { RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const Home: React.FC = () => {
 	useDocumentTitle('Salinaka | React JS eCommerce Site');
+	useScrollTop();
+
 	const [columnCount, setColumnCount] = useState(6);
 
-	const { store } = useSelector((state: RootState) => ({
-		store: {
-			filter: state.filter,
-			basket: state.basket,
-			filteredProducts: selectFilter(state.products.items, state.filter),
-			requestStatus: state.app.requestStatus,
-			isLoading: state.app.loading
-		}
+	const store = useSelector((state: RootState) => ({
+		productsCount: state.products.items.length,
+		products: state.products.items,
+		lastRefKey: state.products.lastRefKey,
+		totalProductsCount: state.products.total,
+		isLoading: state.app.loading,
+		filter: state.filter,
+		filteredProducts: selectFilter(state.products.items, state.filter),
+		requestStatus: state.app.requestStatus,
+		basket: state.basket
 	}));
 
 	const onProductsLengthChanged = (): void => {
@@ -40,7 +45,6 @@ const Home: React.FC = () => {
 	const productListWrapper = useRef(null);
 
 	const isFiltered: boolean = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
-	const foundOnBasket = id => !!store.basket.find(item => item.id === id);
 
 	return (
 		<>
@@ -60,23 +64,23 @@ const Home: React.FC = () => {
 				)}
 				<ProductAppliedFilters filter={store.filter} />
 				<Boundary>
-					<ProductList>
-						{({ filteredProducts }) => (
+					<ProductList {...store}>
+						{({ foundOnBasket }) => (
 							<>
 								<div
 									className="product-list"
 									ref={productListWrapper}
 									style={{ gridTemplateColumns: `repeat(${columnCount}, 160px)` }}
 								>
-									{filteredProducts.length === 0 ? new Array(12).fill({}).map((product, index) => (
+									{store.filteredProducts.length === 0 ? new Array(12).fill({}).map((product, index) => (
 										<ProductItem
-											foundOnBasket={foundOnBasket}
+											isItemOnBasket={foundOnBasket(product.id)}
 											key={`product-skeleton ${index}`}
 											product={product}
 										/>
-									)) : filteredProducts.map(product => (
+									)) : store.filteredProducts.map(product => (
 										<ProductItem
-											foundOnBasket={foundOnBasket}
+											isItemOnBasket={foundOnBasket}
 											key={product.id}
 											product={product}
 										/>

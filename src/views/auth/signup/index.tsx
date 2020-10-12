@@ -8,6 +8,7 @@ import { signUp } from 'redux/actions/authActions';
 import CircularProgress from 'components/ui/CircularProgress';
 import { RouteComponentProps } from 'react-router';
 import { RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const SignUp: React.FC<RouteComponentProps> = (props) => {
 	const [passwordHidden, setPasswordHidden] = useState(true);
@@ -28,6 +29,8 @@ const SignUp: React.FC<RouteComponentProps> = (props) => {
 	const passwordField = useRef(null);
 
 	useDocumentTitle('Sign Up | Salinaka');
+	useScrollTop();
+
 	useEffect(() => {
 		if (didMount) {
 			setSignUpStatus(authStatus);

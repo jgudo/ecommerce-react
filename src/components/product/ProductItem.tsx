@@ -9,14 +9,11 @@ import { useHistory } from 'react-router';
 
 interface IProps {
 	product: IProduct;
-	foundOnBasket: (id: string) => boolean;
+	isItemOnBasket: boolean;
 	children?: React.ReactNode;
 }
 
-const ProductItem: React.FC<IProps> = ({
-	product,
-	foundOnBasket
-}) => {
+const ProductItem: React.FC<IProps> = ({ product, isItemOnBasket }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const onClickItem = (): void => {
@@ -26,7 +23,7 @@ const ProductItem: React.FC<IProps> = ({
 	};
 
 	const onAddToBasket = (): void => {
-		if (foundOnBasket(product.id)) {
+		if (isItemOnBasket) {
 			dispatch(removeFromBasket(product.id));
 			displayActionMessage('Item removed from basket', 'info');
 		} else {
@@ -40,11 +37,11 @@ const ProductItem: React.FC<IProps> = ({
 			<div
 				className={`product-card ${!product.id ? 'product-loading' : ''}`}
 				style={{
-					border: foundOnBasket(product.id) ? '1px solid #cacaca' : '',
-					boxShadow: foundOnBasket(product.id) ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
+					border: isItemOnBasket ? '1px solid #cacaca' : '',
+					boxShadow: isItemOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
 				}}
 			>
-				{foundOnBasket(product.id) && <i className="fa fa-check product-card-check" />}
+				{isItemOnBasket && <i className="fa fa-check product-card-check" />}
 				<div
 					className="product-card-content"
 					onClick={onClickItem}
@@ -65,10 +62,10 @@ const ProductItem: React.FC<IProps> = ({
 				</div>
 				{product.id && (
 					<button
-						className={`product-card-button button-small button button-block ${foundOnBasket(product.id) ? 'button-border button-border-gray' : ''}`}
+						className={`product-card-button button-small button button-block ${isItemOnBasket ? 'button-border button-border-gray' : ''}`}
 						onClick={onAddToBasket}
 					>
-						{foundOnBasket(product.id) ? 'Remove from basket' : 'Add to basket'}
+						{isItemOnBasket ? 'Remove from basket' : 'Add to basket'}
 					</button>
 				)}
 

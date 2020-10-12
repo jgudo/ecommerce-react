@@ -7,6 +7,7 @@ import { resetPassword } from 'redux/actions/authActions';
 
 import CircularProgress from 'components/ui/CircularProgress';
 import { RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const ForgotPassword: React.FC = () => {
 	const { authStatus, isAuthenticating } = useSelector((state: RootState) => ({
@@ -20,6 +21,7 @@ const ForgotPassword: React.FC = () => {
 	const [field, setField] = useState<any>({});
 
 	useDocumentTitle('Forgot Password | Salinaka');
+	useScrollTop();
 	useEffect(() => {
 		if (didMount) {
 			setForgotPWStatus(authStatus);

@@ -13,6 +13,7 @@ import withAuth from '../hoc/withAuth';
 import { CREDIT, PAYPAL } from 'constants/constants';
 import { IPaymentInfo, IShippingInfo } from 'types/types';
 import { useDispatch } from 'react-redux';
+import useScrollTop from 'hooks/useScrollTop';
 
 interface IProps extends RouteComponentProps {
 	shipping: IShippingInfo;
@@ -27,6 +28,8 @@ const Payment: React.FC<IProps> = ({
 	history
 }) => {
 	useDocumentTitle('Check Out Final Step | Salinaka');
+	useScrollTop();
+
 	const [paymentMode, setPaymentMode] = useState(payment.type || PAYPAL);
 	const collapseCreditHeight = useRef<HTMLDivElement | null>(null);
 	const cardInputRef = useRef<HTMLInputElement | null>(null);

@@ -15,9 +15,9 @@ const firebaseConfig: Record<string, string | undefined> = {
 };
 
 class Firebase {
-	private storage: app.storage.Storage;
-	private db: app.firestore.Firestore;
-	private auth: app.auth.Auth;
+	public storage: app.storage.Storage;
+	public db: app.firestore.Firestore;
+	public auth: app.auth.Auth;
 
 	constructor() {
 		app.initializeApp(firebaseConfig);
@@ -28,7 +28,7 @@ class Firebase {
 	}
 
 	// AUTH ACTIONS
-	// --------
+	// -------
 
 	public createAccount = (email: string, password: string) =>
 		this.auth.createUserWithEmailAndPassword(email, password)

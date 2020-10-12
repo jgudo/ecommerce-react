@@ -22,7 +22,6 @@ import CheckOutStep1 from 'views/checkout/step1';
 import CheckOutStep2 from 'views/checkout/step2';
 import CheckOutStep3 from 'views/checkout/step3';
 import PageNotFound from 'views/error/PageNotFound';
-import ScrollToTop from 'components/ui/ScrollToTop';
 
 import ClientRoute from './ClientRoute';
 import PublicRoute from './PublicRoute';
@@ -34,7 +33,7 @@ const AppRouter = () => (
 	<Router history={history}>
 		<Switch>
 			<Route
-				component={ScrollToTop(ProductSearch)}
+				component={ProductSearch}
 				exact
 				path={ROUTES.SEARCH}
 			/>
@@ -44,62 +43,62 @@ const AppRouter = () => (
 				path={ROUTES.HOME}
 			/>
 			<PublicRoute
-				component={ScrollToTop(SignUp)}
+				component={SignUp}
 				path={ROUTES.SIGNUP}
 			/>
 			<PublicRoute
-				component={ScrollToTop(SignIn)}
+				component={SignIn}
 				exact
 				path={ROUTES.SIGNIN}
 			/>
 			<PublicRoute
-				component={ScrollToTop(ForgotPassword)}
+				component={ForgotPassword}
 				path={ROUTES.FORGOT_PASSWORD}
 			/>
 			<PublicRoute
-				component={ScrollToTop(ViewProduct)}
+				component={ViewProduct}
 				path={ROUTES.VIEW_PRODUCT}
 			/>
 			<ClientRoute
-				component={ScrollToTop(UserAccount)}
+				component={UserAccount}
 				exact
 				path={ROUTES.ACCOUNT}
 			/>
 			<ClientRoute
-				component={ScrollToTop(EditAccount)}
+				component={EditAccount}
 				exact
 				path={ROUTES.ACCOUNT_EDIT}
 			/>
 			<ClientRoute
-				component={ScrollToTop(CheckOutStep1)}
+				component={CheckOutStep1}
 				path={ROUTES.CHECKOUT_STEP_1}
 			/>
 			<ClientRoute
-				component={ScrollToTop(CheckOutStep2)}
+				component={CheckOutStep2}
 				path={ROUTES.CHECKOUT_STEP_2}
 			/>
 			<ClientRoute
-				component={ScrollToTop(CheckOutStep3)}
+				component={CheckOutStep3}
 				path={ROUTES.CHECKOUT_STEP_3}
 			/>
 			<AdminRoute
-				component={ScrollToTop(Dashboard)}
+				component={Dashboard}
 				exact
 				path={ROUTES.ADMIN_DASHBOARD}
 			/>
 			<AdminRoute
-				component={ScrollToTop(Products)}
+				component={Products}
 				path={ROUTES.ADMIN_PRODUCTS}
 			/>
 			<AdminRoute
-				component={ScrollToTop(AddProduct)}
+				component={AddProduct}
 				path={ROUTES.ADD_PRODUCT}
 			/>
 			<AdminRoute
-				component={ScrollToTop(EditProduct)}
+				component={EditProduct}
 				path={`${ROUTES.EDIT_PRODUCT}/:id`}
 			/>
-			<PublicRoute component={ScrollToTop(PageNotFound)} />
+			<PublicRoute component={PageNotFound} />
 		</Switch>
 	</Router>
 );

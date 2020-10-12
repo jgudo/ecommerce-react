@@ -12,6 +12,7 @@ import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
 import { RouteComponentProps } from 'react-router';
 import { IShippingInfo, IUser } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 interface IProps extends RouteComponentProps {
 	profile: IUser | any;
@@ -25,6 +26,7 @@ const ShippingDetails: React.FC<IProps> = ({
 	history
 }) => {
 	useDocumentTitle('Check Out Step 2 | Salinaka');
+	useScrollTop();
 	const [field, setField] = useState({
 		fullname: { value: profile.fullname ? profile.fullname : '' },
 		email: { value: profile.email ? profile.email : '' },

@@ -1,37 +1,35 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-sort-props */
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter } from 'selectors/selector';
+import { useDispatch } from 'react-redux';
 
-import { RootState } from 'types/types';
+import { IProduct } from 'types/types';
 import { getProducts } from 'redux/actions/productActions';
 import { setLoading } from 'redux/actions/miscActions';
 import MessageDisplay from '../ui/MessageDisplay';
 
 interface IProps {
+	productsCount: number;
+	products: IProduct[];
+	lastRefKey: any;
+	totalProductsCount: number;
+	isLoading: boolean;
+	filteredProducts: IProduct[];
+	requestStatus: string | null;
+	basket?: IProduct[];
 	children: (obj: any) => JSX.Element;
 }
 
-const ProductList: React.FC<IProps> = ({ children }) => {
+const ProductList: React.FC<IProps> = (props) => {
 	const [isFetching, setFetching] = useState(false);
-	const store = useSelector((state: RootState) => ({
-		productsLength: state.products.items.length,
-		products: state.products.items,
-		lastRefKey: state.products.lastRefKey,
-		totalItems: state.products.total,
-		isLoading: state.app.loading,
-		filteredProducts: selectFilter(state.products.items, state.filter),
-		requestStatus: state.app.requestStatus
-	}));
 	const dispatch = useDispatch();
 	const fetchProducts = (): void => {
 		setFetching(true);
-		dispatch(getProducts(store.lastRefKey));
+		dispatch(getProducts(props.lastRefKey));
 	};
 
 	useEffect((): () => void => {
-		if (store.productsLength === 0) {
+		if (props.productsCount === 0) {
 			fetchProducts();
 		}
 
@@ -41,23 +39,30 @@ const ProductList: React.FC<IProps> = ({ children }) => {
 
 	useEffect(() => {
 		setFetching(false);
-	}, [store.lastRefKey]);
+	}, [props.lastRefKey]);
 
-	return store.filteredProducts.length === 0 && !store.isLoading && !store.requestStatus ? (
+	const foundOnBasket = (id: string) => {
+		if (!props.basket) return false;
+
+		return props.basket.find(item => item.id === id);
+
+	};
+
+	return props.filteredProducts.length === 0 && !props.isLoading && !props.requestStatus ? (
 		<MessageDisplay
 			message="The are no items found."
 			desc="Try using correct filters or keyword."
 		/>
-	) : store.requestStatus ? (
+	) : props.requestStatus ? (
 		<MessageDisplay
-			message={store.requestStatus}
+			message={props.requestStatus}
 			action={fetchProducts}
 			buttonLabel="Try Again"
 		/>
 	) : (
 				<>
-					{children && children({ ...store })}
-					{store.productsLength < store.totalItems && (
+					{props.children && props.children({ foundOnBasket })}
+					{props.productsCount < props.totalProductsCount && (
 						<div className="d-flex-center padding-l">
 							<button
 								className="button button-small"

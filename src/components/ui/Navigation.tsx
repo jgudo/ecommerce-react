@@ -85,14 +85,14 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						<SearchBar
 							isLoading={store.isLoading}
 							filter={store.filter}
-							productsLength={store.productsLength}
+							productsCount={store.productsLength}
 						/>
 						&nbsp;
 						<FiltersToggle
 							filter={store.filter}
 							isLoading={store.isLoading}
 							products={store.products}
-							productsLength={store.productsLength}
+							productsCount={store.productsLength}
 						>
 							<button className="button-muted button-small">
 								More Filters &nbsp;<i className="fa fa-chevron-right" />
@@ -123,7 +123,7 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						</li>
 					) : (
 							<li className="navigation-action">
-								{pathname === Route.SIGNUP && (
+								{pathname !== Route.SIGNUP && (
 									<NavLink
 										activeClassName="navigation-menu-active"
 										className="button button-small"

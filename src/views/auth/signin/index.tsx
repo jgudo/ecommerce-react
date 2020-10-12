@@ -13,6 +13,7 @@ import Input from 'components/ui/Input';
 import { Route } from 'constants/routes';
 import CircularProgress from 'components/ui/CircularProgress';
 import { RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const SignIn: React.FC<RouteComponentProps> = (props) => {
 	const { authStatus, isAuthenticating } = useSelector((state: RootState) => ({
@@ -32,6 +33,7 @@ const SignIn: React.FC<RouteComponentProps> = (props) => {
 	const didMount = useDidMount();
 
 	useDocumentTitle('Sign In | Salinaka');
+	useScrollTop();
 	useEffect(() => {
 		if (didMount) {
 			setSignInStatus(authStatus);

@@ -14,6 +14,7 @@ import ImageLoader from 'components/ui/ImageLoader';
 import { setLoading } from 'redux/actions/miscActions';
 import { updateProfile } from 'redux/actions/profileActions';
 import useFileHandler from 'hooks/useFileHandler';
+import useScrollTop from 'hooks/useScrollTop';
 import { Route } from 'constants/routes';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import { IImageFile, RootState } from 'types/types';
@@ -42,6 +43,7 @@ interface IState {
 const EditProfile: React.FC<RouteComponentProps & PhoneInputProps> = (props) => {
 	const dispatch = useDispatch();
 	useDocumentTitle('Edit Account | Salinaka');
+	useScrollTop();
 	useEffect(() => {
 		return () => {
 			dispatch(setLoading(false));

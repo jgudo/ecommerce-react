@@ -8,7 +8,7 @@ interface IProps {
 	filter: IFilter;
 	isLoading: boolean;
 	products: IProduct[];
-	productsLength: number;
+	productsCount: number;
 	children: React.ReactNode;
 }
 
@@ -33,7 +33,7 @@ const FiltersToggle: React.FC<IProps> = (props) => {
 						filter={props.filter}
 						isLoading={props.isLoading}
 						products={props.products}
-						productsLength={props.productsLength}
+						productsCount={props.productsCount}
 					/>
 				</div>
 				<button

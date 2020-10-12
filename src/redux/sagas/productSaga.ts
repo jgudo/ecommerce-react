@@ -63,7 +63,7 @@ function* productSaga({ type, payload }) {
 
 				if (imageCollection.length !== 0) {
 					const imageKeys = yield all(imageCollection.map(() => firebase.generateKey));
-					const imageUrls = yield all(imageCollection.map((img, i) => firebase.storeImage('products', imageKeys[i](), img.file)));
+					const imageUrls = yield all(imageCollection.map((img, i) => firebase.storeImage(imageKeys[i](), 'products', img.file)));
 					images = imageUrls.map((url, i) => ({
 						id: imageKeys[i](),
 						url
@@ -92,12 +92,17 @@ function* productSaga({ type, payload }) {
 			try {
 				yield initRequest();
 
-				const { thumbnail, imageCollection } = payload.updates;
+				const { image, imageCollection } = payload.updates;
 				let newUpdates = { ...payload.updates };
 
-				if (thumbnail.constructor === File && typeof thumbnail === 'object') {
-					yield call(firebase.deleteImage, payload.id);
-					const url = yield call(firebase.storeImage, 'products', payload.id, thumbnail);
+				if (image.constructor === File && typeof image === 'object') {
+					try {
+						yield call(firebase.deleteImage, payload.id);
+					} catch (e) {
+						console.error('Cannot delete image. ', e);
+					}
+
+					const url = yield call(firebase.storeImage, payload.id, 'products', image);
 					newUpdates = { ...newUpdates, image: url }; // image == thumbnail
 				}
 

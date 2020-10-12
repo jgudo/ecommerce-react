@@ -12,14 +12,14 @@ import { useHistory } from 'react-router';
 interface IProps {
 	filter: IFilter;
 	isLoading: boolean;
-	productsLength: number;
+	productsCount: number;
 	[propName: string]: any;
 }
 
 const SearchBar: React.FC<IProps> = ({
 	filter,
 	isLoading,
-	productsLength
+	productsCount
 }) => {
 	const history = useHistory();
 	const [searchInput, setSearchInput] = useState(filter.keyword);
@@ -38,7 +38,7 @@ const SearchBar: React.FC<IProps> = ({
 	};
 
 	const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter' && productsLength !== 0) {
+		if (e.key === 'Enter' && productsCount !== 0) {
 			dispatch(setTextFilter(searchInput));
 			(e.target as HTMLInputElement).blur();
 

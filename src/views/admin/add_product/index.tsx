@@ -6,9 +6,12 @@ import useDocumentTitle from 'hooks/useDocumentTitle';
 import { addProduct } from 'redux/actions/productActions';
 import ProductForm from '../components/ProductForm';
 import { IProduct, RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const AddProduct: React.FC = () => {
 	useDocumentTitle('Add New Product | Salinaka');
+	useScrollTop();
+
 	const isLoading = useSelector((state: RootState) => state.app.loading);
 	const dispatch = useDispatch();
 

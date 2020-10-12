@@ -9,6 +9,7 @@ import Pagination from '../components/Pagination';
 import withAuth from '../hoc/withAuth';
 import { RouteComponentProps } from 'react-router';
 import { IProduct } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 interface IProps extends RouteComponentProps {
 	basket: IProduct[];
@@ -21,6 +22,7 @@ const OrderSummary: React.FC<IProps> = ({
 	history
 }) => {
 	useDocumentTitle('Check Out Step 1 | Salinaka');
+	useScrollTop();
 	const onClickPrevious = () => history.push(Route.HOME);
 	const onClickNext = () => history.push(Route.CHECKOUT_STEP_2);
 

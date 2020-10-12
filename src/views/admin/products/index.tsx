@@ -1,3 +1,4 @@
+// tslint:disable: no-array-mutation
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -12,21 +13,21 @@ import SearchBar from 'components/ui/SearchBar';
 import FiltersToggle from 'components/ui/FiltersToggle';
 import ProductItem from '../components/ProductItem';
 import { RootState } from 'types/types';
+import useScrollTop from 'hooks/useScrollTop';
 
 const Products: React.FC<RouteComponentProps> = ({ history }) => {
 	useDocumentTitle('Product List | Salinaka Admin');
+	useScrollTop();
 
-	const { store } = useSelector((state: RootState) => ({
-		store: {
-			productsLength: state.products.items.length,
-			filter: state.filter,
-			products: state.products.items,
-			isLoading: state.app.loading,
-			lastRefKey: state.products.lastRefKey,
-			totalItems: state.products.total,
-			filteredProducts: selectFilter(state.products.items, state.filter),
-			requestStatus: state.app.requestStatus
-		}
+	const store = useSelector((state: RootState) => ({
+		productsCount: state.products.items.length,
+		filter: state.filter,
+		products: state.products.items,
+		isLoading: state.app.loading,
+		lastRefKey: state.products.lastRefKey,
+		totalProductsCount: state.products.total,
+		filteredProducts: selectFilter(state.products.items, state.filter),
+		requestStatus: state.app.requestStatus
 	}));
 
 	const onClickAddProduct = () => {
@@ -40,20 +41,19 @@ const Products: React.FC<RouteComponentProps> = ({ history }) => {
 			<div className="product-admin-header">
 				<h3 className="product-admin-header-title">
 					Products &nbsp;
-					({`${store.productsLength} / ${store.totalItems}`})
+					({`${store.productsCount} / ${store.totalProductsCount}`})
 				</h3>
 				<SearchBar
 					filter={store.filter}
-					history={history}
 					isLoading={store.isLoading}
-					productsLength={store.productsLength}
+					productsCount={store.productsCount}
 				/>
 				&nbsp;
 				<FiltersToggle
 					filter={store.filter}
 					isLoading={store.isLoading}
 					products={store.products}
-					productsLength={store.productsLength}
+					productsCount={store.productsCount}
 				>
 					<button className="button-muted button-small">
 						More Filters &nbsp;<i className="fa fa-chevron-right" />
@@ -67,11 +67,11 @@ const Products: React.FC<RouteComponentProps> = ({ history }) => {
 				</button>
 			</div>
 			<div className="product-admin-items">
-				<ProductList>
-					{({ filteredProducts }) => (
+				<ProductList {...store}>
+					{() => (
 						<>
 							<ProductAppliedFilters filter={store.filter} />
-							{filteredProducts.length > 0 && (
+							{store.filteredProducts.length > 0 && (
 								<div className="grid grid-product grid-count-6">
 									<div className="grid-col" />
 									<div className="grid-col">
@@ -91,12 +91,12 @@ const Products: React.FC<RouteComponentProps> = ({ history }) => {
 									</div>
 								</div>
 							)}
-							{filteredProducts.length === 0 ? new Array(10).fill({}).map((product, index) => (
+							{store.filteredProducts.length === 0 ? new Array(10).fill({}).map((product, index) => (
 								<ProductItem
 									key={`product-skeleton ${index}`}
 									product={product}
 								/>
-							)) : filteredProducts.map(product => (
+							)) : store.filteredProducts.map(product => (
 								<ProductItem
 									key={product.id}
 									product={product}

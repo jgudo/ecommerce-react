@@ -24,19 +24,15 @@ const root = document.getElementById('app');
 // Render the preloader on initial load
 render(<Preloader />, root);
 
-firebase.onAuthStateChanged()
-	.then((user) => {
-		if (user) {
-			store.dispatch(onAuthStateSuccess(user));
-		} else {
-			store.dispatch(onAuthStateFail('Failed to authenticate'));
-		}
-		// then render the app after checking the auth state
-		render(<App store={store} persistor={persistor} />, root);
-	})
-	.catch(() => {
+firebase.auth.onAuthStateChanged((user) => {
+	if (user) {
+		store.dispatch(onAuthStateSuccess(user));
+	} else {
 		store.dispatch(onAuthStateFail('Failed to authenticate'));
-	});
+	}
+	// then render the app after checking the auth state
+	render(<App store={store} persistor={persistor} />, root);
+});
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 	window.addEventListener('load', () => {

@@ -13,7 +13,7 @@ interface IProps {
 	initMin: number;
 	initMax: number;
 	onPriceChange: (...val: number[]) => void;
-	productsLength: number;
+	productsCount: number;
 }
 
 const PriceRange: React.FC<IProps> = (props) => {
@@ -48,7 +48,7 @@ const PriceRange: React.FC<IProps> = (props) => {
 			<div className="price-range-control">
 				<input
 					className={inputClassName()}
-					disabled={props.productsLength === 0}
+					disabled={props.productsCount === 0}
 					max={props.max}
 					min={props.min}
 					readOnly
@@ -58,7 +58,7 @@ const PriceRange: React.FC<IProps> = (props) => {
 				—
 				<input
 					className={inputClassName()}
-					disabled={props.productsLength === 0}
+					disabled={props.productsCount === 0}
 					max={props.max}
 					min={props.min}
 					readOnly

@@ -102,7 +102,7 @@ const ProductSearch: React.FC<IProps> = (props) => {
 						filter={store.filter}
 						isLoading={store.isLoading}
 						products={store.products}
-						productsLength={store.productsLength}
+						productsCount={store.productsLength}
 					/>
 				</div>
 			</div>
