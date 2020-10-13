@@ -6,11 +6,7 @@ import { clearRecentSearch, removeSelectedRecent, setTextFilter } from 'redux/ac
 import Filters from '../ui/Filters';
 import { RootState } from 'types/types';
 
-interface IProps extends RouteComponentProps {
-
-}
-
-const ProductSearch: React.FC<IProps> = (props) => {
+const ProductSearch: React.FC<RouteComponentProps> = (props) => {
 	const store = useSelector((state: RootState) => ({
 		filter: state.filter,
 		products: state.products.items,

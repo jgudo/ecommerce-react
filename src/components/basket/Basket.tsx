@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { Route } from 'constants/routes';
 import { clearBasket } from 'redux/actions/basketActions';
@@ -9,20 +9,18 @@ import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
-import { IProduct } from 'types/types';
+import { RootState } from 'types/types';
 
-interface IProps extends RouteComponentProps {
+interface IProps {
 	isAuth: boolean;
-}
-
-interface IRootState {
-	basket: IProduct[];
 }
 
 const Basket: React.FC<IProps> = (props) => {
 	const [isModalOpen, setModalOpen] = useState(false);
-	const basket = useSelector((state: IRootState) => state.basket);
+	const basket = useSelector((state: RootState) => state.basket);
 	const dispatch = useDispatch();
+	const history = useHistory();
+	const { pathname } = useLocation();
 
 	const calculateTotal = (): string => {
 		let total: number | string = 0;
@@ -41,7 +39,7 @@ const Basket: React.FC<IProps> = (props) => {
 	const onCheckOut = (): void => {
 		if ((basket.length !== 0 && props.isAuth)) {
 			document.body.classList.remove('is-basket-open');
-			props.history.push(Route.CHECKOUT_STEP_1);
+			history.push(Route.CHECKOUT_STEP_1);
 		} else {
 			onOpenModal();
 		}
@@ -50,7 +48,7 @@ const Basket: React.FC<IProps> = (props) => {
 	const onSignInClick = (): void => {
 		onCloseModal();
 		document.body.classList.remove('basket-open');
-		props.history.push(Route.CHECKOUT_STEP_1);
+		history.push(Route.CHECKOUT_STEP_1);
 	};
 
 	const onClearBasket = (): void => {
@@ -127,7 +125,7 @@ const Basket: React.FC<IProps> = (props) => {
 					</div>
 					<button
 						className="basket-checkout-button button"
-						disabled={basket.length === 0 || props.location.pathname === '/checkout'}
+						disabled={basket.length === 0 || pathname === '/checkout'}
 						onClick={onCheckOut}
 					>
 						Check Out
@@ -138,4 +136,4 @@ const Basket: React.FC<IProps> = (props) => {
 	);
 };
 
-export default withRouter(Basket);
+export default Basket;
