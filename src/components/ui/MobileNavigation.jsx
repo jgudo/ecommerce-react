@@ -30,7 +30,7 @@ const Navigation = (props) => {
 						<button
 							className="button-link navigation-menu-link basket-toggle"
 							onClick={onClickToggle}
-							disabled={props.disabledPaths.includes(pathname)}
+							disabled={props.disabledpathnames.includes(pathname)}
 						>
 
 							<Badge count={props.basketLength}>
@@ -74,7 +74,7 @@ const Navigation = (props) => {
 
 Navigation.propType = {
 	path: PropTypes.string.isRequired,
-	disabledPaths: PropTypes.arrayOf(PropTypes.string).isRequired
+	disabledpathnames: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default Navigation;
