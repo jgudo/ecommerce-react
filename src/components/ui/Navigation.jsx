@@ -60,7 +60,7 @@ const Navigation = ({ isAuth }) => {
 	return window.screen.width <= 800 ? (
 		<MobileNavigation
 			basketLength={store.basketLength}
-			disabledpathnames={basketDisabledpathnames}
+			disabledPaths={basketDisabledpathnames}
 			isAuth={isAuth}
 			isAuthenticating={store.isAuthenticating}
 			pathname={pathname}

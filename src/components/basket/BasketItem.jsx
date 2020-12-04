@@ -28,11 +28,15 @@ const BasketItem = ({ dispatch, product }) => {
 				</div>
 				<div className="basket-item-details">
 					<h5 className="basket-item-name">
+						{product.selectedColor && <i className="fa fa-square" style={{ color: product.selectedColor }} />}
+						&nbsp;
 						{product.name}
 					</h5>
 					<h5 className="basket-item-price">
 						{displayMoney(product.price * product.quantity)}
-						<span>{` (x ${product.quantity}) `}</span>
+						<span>{` (x ${product.quantity})`}</span>
+						&nbsp;
+						{product.selectedSize && <span>| {product.selectedSize} mm</span>}
 					</h5>
 				</div>
 

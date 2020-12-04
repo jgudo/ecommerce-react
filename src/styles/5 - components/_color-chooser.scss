@@ -1,0 +1,47 @@
+.color-chooser {
+    width: 100%;
+    display: flex;
+
+}
+
+.color-item {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 10px;
+    position: relative;
+    z-index: 1;
+    transition: transform .2s ease;
+
+    &:hover {
+        cursor: pointer;
+        border: 2px solid #f1f1f1;
+    }
+}
+
+.color-item-selected,
+.color-item-deletable {
+    border: 2px solid #f1f1f1;
+    transform: scale(1.2);
+
+    &:after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: auto;
+        color: #fff;
+    }
+}
+
+.color-item-deletable {
+    &:after {
+        content: '✖';
+        display: none;
+    }
+
+    &:hover:after {
+        display: block;
+    }
+}

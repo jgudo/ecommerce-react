@@ -166,4 +166,22 @@ class Firebase {
 
 const firebase = new Firebase();
 
+// If you want to add a new field to every single document, run this
+// delete or comment after first run or it may override what you have edited on first run.
+
+// (async function () {
+// 	const col = await firebase.db.collection('products').get();
+// 	col.forEach((doc) => {
+// 		doc.ref.update({
+// 			frameSize: {
+// 				eye: 50,
+// 				bridge: 20,
+// 				temple: 142,
+// 				height: 36
+// 			},
+// 			availableColors: ['#000000', '#c500c5', '#840309', '#004d84', '#753600']
+// 		});
+// 	})
+// })()
+
 export default firebase;
