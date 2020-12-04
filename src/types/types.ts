@@ -36,6 +36,7 @@ export interface IProduct {
     maxQuantity: number;
     quantity: number;
     dateAdded: number;
+    availableColors: string[];
     imageCollection: IImageFile[];
     keywords?: string[];
 }

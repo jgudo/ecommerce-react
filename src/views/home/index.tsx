@@ -80,7 +80,7 @@ const Home: React.FC = () => {
 										/>
 									)) : store.filteredProducts.map(product => (
 										<ProductItem
-											isItemOnBasket={foundOnBasket}
+											isItemOnBasket={foundOnBasket(product.id)}
 											key={product.id}
 											product={product}
 										/>

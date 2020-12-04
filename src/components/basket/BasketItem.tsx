@@ -8,7 +8,7 @@ import { IProduct } from 'types/types';
 import BasketItemControl from './BasketItemControl';
 
 interface IProps {
-	product: IProduct;
+	product: IProduct & { selectedColor?: string; selectedSize?: number; };
 }
 
 const BasketItem: React.FC<IProps> = ({ product }) => {
@@ -36,11 +36,15 @@ const BasketItem: React.FC<IProps> = ({ product }) => {
 				</div>
 				<div className="basket-item-details">
 					<h5 className="basket-item-name">
+						{product.selectedColor && <i className="fa fa-square" style={{ color: product.selectedColor }} />}
+						&nbsp;
 						{product.name}
 					</h5>
 					<h5 className="basket-item-price">
 						{displayMoney(product.price * product.quantity)}
-						<span>{` (x ${product.quantity}) `}</span>
+						<span>{` (x ${product.quantity})`}</span>
+						&nbsp;
+						{product.selectedSize && <span>| {product.selectedSize} mm</span>}
 					</h5>
 				</div>
 

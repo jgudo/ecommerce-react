@@ -11,8 +11,9 @@ import { RouteComponentProps } from 'react-router';
 import { IProduct } from 'types/types';
 import useScrollTop from 'hooks/useScrollTop';
 
+type TProduct = IProduct & { selectedColor?: string; selectedSize?: number; };
 interface IProps extends RouteComponentProps {
-	basket: IProduct[];
+	basket: TProduct[];
 	subtotal: number;
 }
 

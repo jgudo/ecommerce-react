@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
+import CreatableSelect from 'react-select/creatable';
 import CircularProgress from 'components/ui/CircularProgress';
 import ImageLoader from 'components/ui/ImageLoader';
 import Input from 'components/ui/Input';
 
 import useFileHandler from 'hooks/useFileHandler';
 import { IImageFile, IProduct } from 'types/types';
+import InputColor from './InputColor';
 // import uuid from 'uuid';
+
+// Default brand names that I used. You can use what you want
+const brandOptions = [
+	{ value: 'Salt Maalat', label: 'Salt Maalat' },
+	{ value: 'Betsin Maalat', label: 'Betsin Maalat' },
+	{ value: 'Sexbomb', label: 'Sexbomb' },
+	{ value: 'Black Kibal', label: 'Black Kibal' }
+];
 
 interface IProps {
 	product?: IProduct | undefined;
@@ -26,19 +36,21 @@ interface IImageState {
 }
 
 const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
-	const defaultProduct: IProduct = {
-		...product as IProduct,
-		imageCollection: []
-	};
+	// const product: IProduct = {
+	// 	...product as IProduct,
+	// 	imageCollection: []
+	// };
+
 	const [field, setField] = useState<IInputState>({
-		name: { value: product ? defaultProduct.name : '' },
-		brand: { value: product ? defaultProduct.brand : '' },
-		price: { value: product ? defaultProduct.price : 0 },
-		maxQuantity: { value: product ? defaultProduct.maxQuantity : 0 },
-		description: { value: product ? defaultProduct.description : '' },
-		keywords: { value: product ? defaultProduct.keywords : ['gago'] },
-		imageUrl: { value: product ? defaultProduct.image : '' },
-		imageCollection: { value: product ? defaultProduct.imageCollection : [] }
+		name: { value: product ? product.name : '' },
+		brand: { value: product ? product.brand : '' },
+		price: { value: product ? product.price : 0 },
+		maxQuantity: { value: product ? product.maxQuantity : 0 },
+		description: { value: product ? product.description : '' },
+		keywords: { value: product ? product.keywords : ['gago'] },
+		imageUrl: { value: product ? product.image : '' },
+		availableColors: { value: product ? product.availableColors : [] },
+		imageCollection: { value: product ? product.imageCollection : [] }
 	});
 
 	const {
@@ -56,8 +68,8 @@ const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 		setField({ ...field, name: { value, error } });
 	};
 
-	const onProductBrandInput = (value, error) => {
-		setField({ ...field, brand: { value, error } });
+	const onBrandChange = (newValue) => {
+		setField({ ...field, brand: { value: newValue.value } });
 	};
 
 	const onProductPriceInput = (value, error) => {
@@ -72,7 +84,25 @@ const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 		setField({ ...field, maxQuantity: { value: sanitizeNumber(value), error } });
 	};
 
-	const onSubmitForm = (e: React.FormEvent) => {
+	const onAddSelectedColor = (color) => {
+		if (!field.availableColors.value.includes(color)) {
+			setField({ ...field, availableColors: { value: [...field.availableColors.value, color] } });
+		}
+	};
+
+	const onDeleteSelectedColor = (color) => {
+		const filteredColors = field.availableColors.value.filter(c => c !== color);
+
+		setField({ ...field, availableColors: { value: filteredColors } });
+	};
+
+	const onKeywordChange = (newValue) => {
+		const keywords = newValue.map(word => word.value);
+
+		setField({ ...field, keywords: { value: keywords } });
+	};
+
+	const onSubmitForm = (e) => {
 		e.preventDefault();
 		// eslint-disable-next-line no-extra-boolean-cast
 		const noError = Object.keys(field).every(key => !!!field[key].error);
@@ -123,17 +153,16 @@ const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 						</div>
 						&nbsp;
 						<div className="product-form-field">
-							<Input
-								field="brand"
-								isRequired
-								label="* Product Brand"
-								maxLength={40}
-								onInputChange={onProductBrandInput}
-								placeholder="Bulus"
-								readOnly={isLoading}
-								style={{ textTransform: 'capitalize' }}
-								type="text"
-								value={field.brand.value}
+							<span className="d-block padding-s">* Create/Select Brand</span>
+							<CreatableSelect
+								placeholder="Select/Create Brand"
+								defaultValue={{ label: field.brand.value, value: field.brand.value }}
+								onChange={onBrandChange}
+								options={brandOptions}
+								styles={{
+									menu: provided => ({ ...provided, zIndex: 10 }),
+									container: provided => ({ ...provided, marginBottom: '1.2rem' })
+								}}
 							/>
 						</div>
 					</div>
@@ -179,6 +208,26 @@ const ProductForm: React.FC<IProps> = ({ product, onSubmit, isLoading }) => {
 							/>
 						</div>
 					</div>
+					<div className="product-form-field">
+						<span className="d-block padding-s">Keyword(s)</span>
+						<CreatableSelect
+							isMulti
+							placeholder="Select/Create Keyword"
+							onChange={onKeywordChange}
+							defaultValue={field.keywords.value.map(word => ({ value: word, label: word }))}
+							// options={field.keywords.value.map(word => ({ value: word, label: word }))}
+							styles={{
+								menu: provided => ({ ...provided, zIndex: 10 })
+							}}
+						/>
+					</div>
+					<br />
+					<InputColor
+						availableColors={field.availableColors.value}
+						onDeleteSelectedColor={onDeleteSelectedColor}
+						onAddSelectedColor={onAddSelectedColor}
+					/>
+					<br />
 					<div className="product-form-field">
 						<span className="d-block padding-s">Image Collection</span>
 						<input
