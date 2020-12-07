@@ -138,6 +138,7 @@
 .product-card-brand {
   margin-top: 0;
   font-size: $font-small;
+  color: $gray-20;
 
   @include mobile {
     margin-bottom: 0;
