@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { HOME } from 'constants/routes';
-import logo from '../../../static/logo_vertical_cropped.png';
+import logo from '../../../static/logo-full.png';
 
 const Footer = () => {
 	const { pathname } = useLocation();

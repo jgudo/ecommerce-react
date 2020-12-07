@@ -6,7 +6,7 @@ import { HOME, SIGNIN, SEARCH } from 'constants/routes';
 import UserNav from 'views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import logo from '../../../static/logo_horizontal.png';
+import logo from '../../../static/logo-full.png';
 
 const Navigation = (props) => {
 	const history = useHistory();
@@ -21,7 +21,7 @@ const Navigation = (props) => {
 			<div className="mobile-navigation-main">
 				<div className="mobile-navigation-logo">
 					<Link onClick={onClickLink} to={HOME}>
-						<img src={logo} style={{ width: '100px', height: '30px', objectFit: 'contain' }} />
+						<img src={logo} style={{ width: '150px', height: 'inherit', objectFit: 'contain' }} />
 					</Link>
 				</div>
 

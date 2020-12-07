@@ -10,7 +10,8 @@
 
     img {
         width: 200px;
-        height: 200px;
+        height: 120px;
+        object-fit: contain;
     }
 }
 
@@ -30,3 +31,22 @@
         min-height: 80vh;
     }
 }
+
+.logo-symbol {
+    width: 70px;
+    height: 70px;
+    animation: rotate 1s ease infinite;
+
+    .fill-white {
+        fill: #fff;
+    }
+}
+
+@keyframes rotate {
+    90% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

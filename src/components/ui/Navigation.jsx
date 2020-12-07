@@ -11,7 +11,7 @@ import SearchBar from './SearchBar';
 import FiltersToggle from './FiltersToggle';
 import MobileNavigation from './MobileNavigation';
 
-import logo from '../../../static/logo_horizontal.png';
+import logo from '../../../static/logo-full.png';
 
 const Navigation = ({ isAuth }) => {
 	const navbar = useRef(null);
