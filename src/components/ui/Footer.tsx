@@ -1,6 +1,6 @@
 import React from 'react';
 
-import logo from '../../../static/logo_vertical_cropped.png';
+import logo from '../../../static/logo-full.png';
 import { useLocation } from 'react-router-dom';
 import { Route } from 'constants/routes';
 

@@ -11,7 +11,8 @@ const ColorChooser: React.FC<IProps> = ({ availableColors, onSelectedColorChange
 	const setColor = (color: string) => {
 		setSelectedColor(color);
 		onSelectedColorChange(color);
-	}
+	};
+
 	return (
 		<div className="color-chooser">
 			{availableColors.map(color =>

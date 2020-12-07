@@ -5,7 +5,7 @@ import { Route } from 'constants/routes';
 import UserNav from 'views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import logo from '../../../static/logo_horizontal.png';
+import logo from '../../../static/logo-full.png';
 import { IUser } from 'types/types';
 
 interface IProps extends RouteComponentProps {
@@ -27,7 +27,7 @@ const Navigation: React.FC<IProps> = (props) => {
 			<div className="mobile-navigation-main">
 				<div className="mobile-navigation-logo">
 					<Link onClick={onClickLink} to={Route.HOME}>
-						<img src={logo} style={{ width: '100px', height: '30px', objectFit: 'contain' }} />
+						<img src={logo} style={{ width: '150px', height: 'inherit', objectFit: 'contain' }} />
 					</Link>
 				</div>
 

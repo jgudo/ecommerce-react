@@ -22,12 +22,13 @@
   }
 
   .logo {
+    height: inherit;
     margin-right: 2rem;
   }
 
   .logo img {
-    width: 120px;
-    height: 40px;
+    width: 15rem;
+    height: inherit;
     object-fit: contain;
   }
 
