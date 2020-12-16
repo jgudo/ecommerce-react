@@ -19,7 +19,7 @@ import {
 import { signInSuccess, signOutSuccess } from 'redux/actions/authActions';
 import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
 
-import { clearBasket } from 'redux/actions/basketActions';
+import { clearBasket, setBasketItems } from 'redux/actions/basketActions';
 import { setProfile, clearProfile } from 'redux/actions/profileActions';
 import { resetFilter } from 'redux/actions/filterActions';
 import { resetCheckout } from 'redux/actions/checkoutActions';
@@ -159,6 +159,7 @@ function* authSaga({ type, payload }) {
 				const user = snapshot.data();
 
 				yield put(setProfile(user));
+				yield put(setBasketItems(user.basket));
 				yield put(signInSuccess({
 					id: payload.uid,
 					role: user.role,
@@ -172,6 +173,7 @@ function* authSaga({ type, payload }) {
 					banner: defaultBanner,
 					email: payload.email,
 					address: '',
+					basket: [],
 					mobile: {},
 					role: 'USER',
 					dateJoined: payload.metadata.creationTime

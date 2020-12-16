@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import firebase from '../../firebase/firebase';
 
 import { CHECKOUT_STEP_1 } from 'constants/routes';
 import { clearBasket } from 'redux/actions/basketActions';
@@ -9,6 +10,7 @@ import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
+import useDidMount from 'hooks/useDidMount';
 
 const Basket = (props) => {
 	const [isModalOpen, setModalOpen] = useState(false);
@@ -16,6 +18,19 @@ const Basket = (props) => {
 	const history = useHistory();
 	const { pathname } = useLocation();
 	const dispatch = useDispatch();
+	const didMount = useDidMount();
+
+	useEffect(() => {
+		if (didMount && firebase.auth.currentUser && basket.length !== 0) {
+			firebase.saveBasketItems(basket, firebase.auth.currentUser.uid)
+				.then(() => {
+					console.log('Item saved to basket');
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		}
+	}, [basket]);
 
 	const calculateTotal = () => {
 		let total = 0;

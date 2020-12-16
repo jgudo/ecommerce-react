@@ -88,6 +88,8 @@ class Firebase {
 		});
 	}
 
+	saveBasketItems = (items, userId) => this.db.collection('users').doc(userId).update({ basket: items });
+
 	setAuthPersistence = () => this.auth.setPersistence(app.auth.Auth.Persistence.LOCAL);
 
 	// // PRODUCT ACTIONS
@@ -170,16 +172,10 @@ const firebase = new Firebase();
 // delete or comment after first run or it may override what you have edited on first run.
 
 // (async function () {
-// 	const col = await firebase.db.collection('products').get();
+// 	const col = await firebase.db.collection('users').get();
 // 	col.forEach((doc) => {
 // 		doc.ref.update({
-// 			frameSize: {
-// 				eye: 50,
-// 				bridge: 20,
-// 				temple: 142,
-// 				height: 36
-// 			},
-// 			availableColors: ['#000000', '#c500c5', '#840309', '#004d84', '#753600']
+// 			basket: []
 // 		});
 // 	})
 // })()

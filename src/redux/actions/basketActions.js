@@ -3,8 +3,14 @@ import {
 	REMOVE_FROM_BASKET,
 	CLEAR_BASKET,
 	ADD_QTY_ITEM,
-	MINUS_QTY_ITEM
+	MINUS_QTY_ITEM,
+	SET_BASKET_ITEMS
 } from 'constants/constants';
+
+export const setBasketItems = (items) => ({
+	type: SET_BASKET_ITEMS,
+	payload: items
+});
 
 export const addToBasket = product => ({
 	type: ADD_TO_BASKET,
