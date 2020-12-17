@@ -153,7 +153,6 @@ function* authSaga({ type, payload }) {
 
 			if (snapshot.data()) { // if user exists in database
 				const user = snapshot.data();
-				console.log(user);
 				yield put(setProfile(user));
 				yield put(setBasketItems(user.basket));
 				yield put(signInSuccess({
