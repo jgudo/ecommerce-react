@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import firebase from '../../firebase/firebase';
 
 import { Route } from 'constants/routes';
 import { clearBasket } from 'redux/actions/basketActions';
@@ -9,6 +10,7 @@ import BasketItem from './BasketItem';
 import BasketToggle from './BasketToggle';
 import Modal from '../ui/Modal';
 import Boundary from '../ui/Boundary';
+import useDidMount from 'hooks/useDidMount';
 import { RootState } from 'types/types';
 
 interface IProps {
@@ -21,6 +23,21 @@ const Basket: React.FC<IProps> = (props) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { pathname } = useLocation();
+	const didMount = useDidMount();
+
+	useEffect(() => {
+		if (didMount && firebase.auth.currentUser && basket.length !== 0) {
+			firebase.saveBasketItems(basket, firebase.auth.currentUser.uid)
+				.then(() => {
+					console.log('Item saved to basket');
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		}
+	}, [basket]);
+
+
 
 	const calculateTotal = (): string => {
 		let total: number | string = 0;

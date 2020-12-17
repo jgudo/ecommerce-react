@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import firebase from 'firebase/firebase';
 import { history } from 'routers/AppRouter';
@@ -12,7 +12,7 @@ import {
 } from '../actions/authActions';
 import { setAuthStatus } from '../actions/miscActions';
 
-import { clearBasket } from '../actions/basketActions';
+import { clearBasket, setBasketItems } from '../actions/basketActions';
 import { setProfile, clearProfile } from '../actions/profileActions';
 import { resetFilter } from '../actions/filterActions';
 import { resetCheckout } from '../actions/checkoutActions';
@@ -97,13 +97,16 @@ function* authSaga({ type, payload }) {
 					avatar: defaultAvatar,
 					banner: defaultBanner,
 					email: payload.email,
+					basket: [],
 					address: '',
-					mobile: {},
+					mobile: { data: {} },
 					role: 'USER',
 					dateJoined: ref.user.metadata.creationTime || new Date().getTime()
 				};
+				const { basket } = yield select();
 
 				yield call(firebase.addUser, ref.user.uid, user);
+				yield put(setBasketItems(basket));
 				yield put(setProfile(user));
 				yield put(isAuthenticating(false));
 			} catch (e) {
@@ -146,13 +149,13 @@ function* authSaga({ type, payload }) {
 				message: 'Successfully signed in. Redirecting...'
 			}));
 			// yield call(history.push, '/');
-
 			const snapshot = yield call(firebase.getUser, payload.uid);
 
 			if (snapshot.data()) { // if user exists in database
 				const user = snapshot.data();
-
+				console.log(user);
 				yield put(setProfile(user));
+				yield put(setBasketItems(user.basket));
 				yield put(signInSuccess({
 					id: payload.uid,
 					role: user.role,
@@ -160,18 +163,21 @@ function* authSaga({ type, payload }) {
 				}));
 			} else if (payload.providerData[0].providerId !== 'password' && !snapshot.data()) {
 				// add the user if auth provider is not password
+				const { basket } = yield select();
 				const user: IUser = {
 					fullname: payload.displayName ? payload.displayName : 'User',
 					avatar: payload.photoURL ? payload.photoURL : defaultAvatar,
 					banner: defaultBanner,
 					email: payload.email,
 					address: '',
-					mobile: {},
+					basket,
+					mobile: { data: {} },
 					role: 'USER',
 					dateJoined: payload.metadata.creationTime
 				};
 				yield call(firebase.addUser, payload.uid, user);
 				yield put(setProfile(user));
+				yield put(setBasketItems(basket));
 				yield put(signInSuccess({
 					id: payload.uid,
 					role: user.role,

@@ -1,6 +1,11 @@
 import { EBasketActionType } from 'constants/constants';
 import { IProduct } from 'types/types';
 
+export const setBasketItems = (items: IProduct[]) => (<const>{
+	type: EBasketActionType.SET_BASKET_ITEMS,
+	payload: items
+});
+
 export const addToBasket = (product: IProduct) => (<const>{
 	type: EBasketActionType.ADD_TO_BASKET,
 	payload: product
@@ -27,6 +32,7 @@ export const minusQtyItem = (id: string) => (<const>{
 
 export type BasketActionType =
 	| ReturnType<typeof addToBasket>
+	| ReturnType<typeof setBasketItems>
 	| ReturnType<typeof removeFromBasket>
 	| ReturnType<typeof clearBasket>
 	| ReturnType<typeof addQtyItem>

@@ -48,6 +48,7 @@ export interface IUser {
     banner: string;
     address?: string;
     dateJoined: number;
+    basket: IProduct[];
     mobile: IMobileInfo | {};
     role: string;
 }

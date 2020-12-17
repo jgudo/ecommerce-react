@@ -12,6 +12,7 @@ export enum EProductActionType {
 }
 
 export enum EBasketActionType {
+    SET_BASKET_ITEMS = 'SET_BASKET_ITEMS',
     ADD_TO_BASKET = 'ADD_TO_BASKET',
     REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET',
     CLEAR_BASKET = 'CLEAR_BASKET',

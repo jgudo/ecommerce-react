@@ -2,10 +2,12 @@ import { EBasketActionType } from 'constants/constants';
 import { IProduct } from 'types/types';
 import { BasketActionType } from '../actions/basketActions';
 
-const initState: IProduct[] = [];
+const initState: IProduct[] | any = [];
 
-export default (state = initState, action: BasketActionType): IProduct[] => {
+export default (state = initState, action: BasketActionType) => {
 	switch (action.type) {
+		case EBasketActionType.SET_BASKET_ITEMS:
+			return action.payload;
 		case EBasketActionType.ADD_TO_BASKET:
 			return state.some(product => product.id === action.payload.id)
 				? state
