@@ -104,7 +104,8 @@ function* authSaga({ type, payload }) {
 					banner: defaultBanner,
 					email: payload.email,
 					address: '',
-					mobile: {},
+					basket: [],
+					mobile: { data: {} },
 					role: 'USER',
 					dateJoined: ref.user.metadata.creationTime || new Date().getTime()
 				};
@@ -160,6 +161,7 @@ function* authSaga({ type, payload }) {
 
 				yield put(setProfile(user));
 				yield put(setBasketItems(user.basket));
+				yield put(setBasketItems(user.basket));
 				yield put(signInSuccess({
 					id: payload.uid,
 					role: user.role,
@@ -174,7 +176,7 @@ function* authSaga({ type, payload }) {
 					email: payload.email,
 					address: '',
 					basket: [],
-					mobile: {},
+					mobile: { data: {} },
 					role: 'USER',
 					dateJoined: payload.metadata.creationTime
 				};
