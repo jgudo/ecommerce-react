@@ -20,15 +20,15 @@ const AdminNavigation: React.FC = () => {
 					<img src={logo} />
 					<h3>ADMIN PANEL</h3>
 				</Link>
-				<ul className="navigation-menu">
-					<li className="navigation-menu-item">
-						<UserAvatar
-							isAuthenticating={state.isAuthenticating}
-							profile={state.profile}
-						/>
-					</li>
-				</ul>
 			</div>
+			<ul className="navigation-menu">
+				<li className="navigation-menu-item">
+					<UserAvatar
+						isAuthenticating={state.isAuthenticating}
+						profile={state.profile}
+					/>
+				</li>
+			</ul>
 		</nav>
 	);
 };
