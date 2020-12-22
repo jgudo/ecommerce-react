@@ -30,6 +30,8 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		description: { value: product ? defaultProduct.description : '' },
 		keywords: { value: product ? defaultProduct.keywords : ['gago'] },
 		imageUrl: { value: product ? defaultProduct.image : '' },
+		isFeatured: { value: product ? defaultProduct.isFeatured : false },
+		isRecommended: { value: product ? defaultProduct.isRecommended : false },
 		availableColors: { value: product ? defaultProduct.availableColors : [] },
 		imageCollection: { value: product ? defaultProduct.imageCollection : [] }
 	});
@@ -83,6 +85,14 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		setField({ ...field, keywords: { value: keywords } });
 	};
 
+	const onFeaturedCheckChange = (e) => {
+		setField({ ...field, isFeatured: { value: e.target.checked } });
+	}
+
+	const onRecommendedCheckChange = (e) => {
+		setField({ ...field, isRecommended: { value: e.target.checked } });
+	}
+
 	const onSubmitForm = (e) => {
 		e.preventDefault();
 		// eslint-disable-next-line no-extra-boolean-cast
@@ -103,6 +113,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 			onSubmit({
 				...newProduct,
 				quantity: 1,
+				name_lower: newProduct.name.toLowerCase(), // due to firebase function billing policy, let's add lowercase version of name here instead in firebase functions
 				dateAdded: new Date().getTime(),
 				image: imageFile.image.file ? imageFile.image.file : field.imageUrl.value,
 				imageCollection: imageFile.imageCollection
@@ -251,6 +262,38 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 							)}
 						</>
 					</div>
+					<br />
+					<div className="d-flex">
+						<div className="product-form-field">
+							<input
+								checked={field.isFeatured.value}
+								className=""
+								id="featured"
+								onChange={onFeaturedCheckChange}
+								type="checkbox"
+							/>
+							<label htmlFor="featured">
+								<h5 className="d-flex-grow-1 margin-0">
+									&nbsp; Add to Featured &nbsp;
+							</h5>
+							</label>
+						</div>
+						<div className="product-form-field">
+							<input
+								checked={field.isRecommended.value}
+								className=""
+								id="recommended"
+								onChange={onRecommendedCheckChange}
+								type="checkbox"
+							/>
+							<label htmlFor="recommended">
+								<h5 className="d-flex-grow-1 margin-0">
+									&nbsp; Add to Recommended &nbsp;
+							</h5>
+							</label>
+						</div>
+					</div>
+					<br />
 					<br />
 					<div className="product-form-field product-form-submit">
 						<button

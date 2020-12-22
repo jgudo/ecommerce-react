@@ -1,25 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import {
-	setTextFilter,
 	removeSelectedRecent,
 	clearRecentSearch
 } from 'redux/actions/filterActions';
 
 const SearchBar = ({
 	filter,
-	isLoading,
-	productsLength
+	isLoading
 }) => {
-	const [searchInput, setSearchInput] = useState(filter.keyword);
+	const [searchInput, setSearchInput] = useState('');
 	const searchbarRef = useRef(null);
 	const history = useHistory();
-
-	useEffect(() => {
-		setSearchInput(filter.keyword);
-	}, [filter.keyword]);
 
 	const dispatch = useDispatch();
 	const isMobile = window.screen.width <= 800;
@@ -30,14 +24,16 @@ const SearchBar = ({
 	};
 
 	const onKeyUp = (e) => {
-		if (e.keyCode === 13 && productsLength !== 0) {
-			dispatch(setTextFilter(searchInput));
+		if (e.keyCode === 13) {
+			// dispatch(setTextFilter(searchInput));
 			e.target.blur();
 			searchbarRef.current.classList.remove('is-open-recent-search');
 
 			if (isMobile) {
 				history.push('/');
 			}
+
+			history.push(`/search/${searchInput.trim().toLowerCase()}`);
 		}
 	};
 
@@ -60,8 +56,9 @@ const SearchBar = ({
 	};
 
 	const onClickRecentSearch = (keyword) => {
-		dispatch(setTextFilter(keyword));
+		// dispatch(setTextFilter(keyword));
 		searchbarRef.current.classList.remove('is-open-recent-search');
+		history.push(`/search/${keyword.trim().toLowerCase()}`);
 	};
 
 	const onClearRecent = () => {
@@ -76,7 +73,7 @@ const SearchBar = ({
 					onChange={onSearchChange}
 					onKeyUp={onKeyUp}
 					onFocus={onFocusInput}
-					placeholder="Filter products by keyword"
+					placeholder="Search product..."
 					readOnly={isLoading}
 					type="text"
 					value={searchInput}
@@ -113,7 +110,7 @@ const SearchBar = ({
 						))}
 					</div>
 				)}
-				<i className="fa fa-filter searchbar-icon" />
+				<i className="fa fa-search searchbar-icon" />
 			</div>
 		</>
 	);

@@ -96,13 +96,21 @@ class Firebase {
 	// // ---------
 	getProduct = (id) => this.db.collection('products').doc(id).get();
 
-	getProducts = (lastRefKey) => {
+	getProducts = (lastRefKey, searchKey) => {
 		let didTimeout = false;
 
 		return new Promise(async (resolve, reject) => {
+			let productsRef = this.db.collection('products');
+			let queryRef = productsRef.orderBy(app.firestore.FieldPath.documentId());
+
 			if (lastRefKey) {
+				let query = queryRef.startAfter(lastRefKey).limit(12);
+
+				if (searchKey) {
+					query = productsRef.orderBy('name_lower').startAfter(lastRefKey).where('name_lower', '>=', searchKey).where('name_lower', '<=', searchKey + '\uf8ff').limit(12);
+				}
+
 				try {
-					const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).startAfter(lastRefKey).limit(12);
 					const snapshot = await query.get();
 					const products = [];
 					snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
@@ -110,12 +118,12 @@ class Firebase {
 
 					resolve({ products, lastKey });
 				} catch (e) {
-					reject(new Error(':( Failed to fetch products.'));
+					reject(':( Failed to fetch products.');
 				}
 			} else {
 				const timeout = setTimeout(() => {
 					didTimeout = true;
-					reject(new Error('Request timeout, please try again'));
+					reject('Request timeout, please try again');
 				}, 15000);
 
 				try {
@@ -124,11 +132,18 @@ class Firebase {
 					// adding shallow parameter for smaller response size
 					// better than making a query from firebase
 					// NOT AVAILEBLE IN FIRESTORE const request = await fetch(`${process.env.FIREBASE_DB_URL}/products.json?shallow=true`);
+					const totalQueryRef = this.db.collection('products');
+					let totalQuery = totalQueryRef;
 
-					const totalQuery = await this.db.collection('products').get();
-					const total = totalQuery.docs.length;
-					const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).limit(12);
-					const snapshot = await query.get();
+					if (searchKey) {
+						queryRef = productsRef.orderBy('name_lower');
+						totalQuery = totalQueryRef.where('name_lower', '>=', searchKey).where('name_lower', '<=', searchKey + '\uf8ff');
+						productsRef = queryRef.where('name_lower', '>=', searchKey).where('name_lower', '<=', searchKey + '\uf8ff').limit(12);
+					}
+
+					const totalResult = await totalQuery.get();
+					const total = totalResult.docs.length;
+					const snapshot = await productsRef.limit(12).get();
 
 					clearTimeout(timeout);
 					if (!didTimeout) {
@@ -141,12 +156,16 @@ class Firebase {
 				} catch (e) {
 					if (didTimeout) return;
 					console.log('Failed to fetch products: An error occured while trying to fetch products or there may be no product ', e);
-					reject(new Error(':( Failed to fetch products.'));
+					reject(':( Failed to fetch products.');
 				}
 			}
 		});
 	}
 
+	// searchProduct = (keyword) => this.db.collection('products').where('name_lower', '>=', keyword).where('name_lower', '<=', keyword + '\uf8ff').get();
+	getFeaturedProducts = (itemsCount = 12) => this.db.collection('products').where('isFeatured', '==', true).limit(itemsCount).get();
+
+	getRecommendedProducts = (itemsCount = 12) => this.db.collection('products').where('isRecommended', '==', true).limit(itemsCount).get();
 
 	addProduct = (id, product) => this.db.collection('products').doc(id).set(product);
 
@@ -172,10 +191,10 @@ const firebase = new Firebase();
 // delete or comment after first run or it may override what you have edited on first run.
 
 // (async function () {
-// 	const col = await firebase.db.collection('users').get();
+// 	const col = await firebase.db.collection('products').get();
 // 	col.forEach((doc) => {
 // 		doc.ref.update({
-// 			basket: []
+// 			isRecommended: false
 // 		});
 // 	})
 // })()

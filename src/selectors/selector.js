@@ -8,11 +8,11 @@ export const selectFilter = (products, filter) => {
 	return products.filter((product) => {
 		const isInRange = filter.maxPrice ? (product.price >= filter.minPrice && product.price <= filter.maxPrice) : true;
 		const matchKeyword = product.keywords ? product.keywords.includes(keyword) : true;
-		const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
+		// const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
 		const matchDescription = product.description ? product.description.toLowerCase().includes(keyword) : true;
 		const matchBrand = product.brand ? product.brand.toLowerCase().includes(filter.brand) : true;
 
-		return ((matchKeyword || matchName || matchDescription) && matchBrand && isInRange);
+		return ((matchKeyword || matchDescription) && matchBrand && isInRange);
 	}).sort((a, b) => {
 		if (filter.sortBy === 'name-desc') {
 			return a.name < b.name ? 1 : -1;

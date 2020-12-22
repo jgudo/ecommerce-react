@@ -18,7 +18,7 @@ const ProductList = (props) => {
 	};
 
 	useEffect(() => {
-		if (props.productsCount === 0) {
+		if (props.productsCount === 0 || !props.lastRefKey) {
 			fetchProducts();
 		}
 
@@ -32,10 +32,9 @@ const ProductList = (props) => {
 
 	const foundOnBasket = id => !!props.basket.find(item => item.id === id);
 
-	return props.filteredProducts.length === 0 && !props.isLoading && !props.requestStatus ? (
+	return props.filteredProducts.length === 0 && !props.isLoading && !props.lastRefKey ? (
 		<MessageDisplay
-			message="The are no items found."
-			desc="Try using correct filters or keyword."
+			message={props.requestStatus ? props.requestStatus : 'Failed to fetch items.'}
 		/>
 	) : props.requestStatus ? (
 		<MessageDisplay

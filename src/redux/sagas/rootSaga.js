@@ -20,6 +20,7 @@ function* rootSaga() {
 	], authSaga);
 	yield takeLatest([
 		ACTION.ADD_PRODUCT,
+		ACTION.SEARCH_PRODUCT,
 		ACTION.REMOVE_PRODUCT,
 		ACTION.EDIT_PRODUCT,
 		ACTION.GET_PRODUCTS

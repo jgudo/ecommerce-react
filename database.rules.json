@@ -56,9 +56,6 @@
         },
         "dateAdded": {
           ".validate": "newData.isNumber()"
-        },
-        "imageCollection": {
-          ".validate": "newData.isArray()"
         }
       }
     }

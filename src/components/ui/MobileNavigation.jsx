@@ -2,10 +2,12 @@ import React from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { HOME, SIGNIN, SEARCH } from 'constants/routes';
+import { HOME, SIGNIN } from 'constants/routes';
 import UserNav from 'views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
+import SearchBar from './SearchBar';
+import FiltersToggle from './FiltersToggle';
 import logo from '../../../static/logo-full.png';
 
 const Navigation = (props) => {
@@ -21,7 +23,8 @@ const Navigation = (props) => {
 			<div className="mobile-navigation-main">
 				<div className="mobile-navigation-logo">
 					<Link onClick={onClickLink} to={HOME}>
-						<img src={logo} style={{ width: '150px', height: 'inherit', objectFit: 'contain' }} />
+						{/* <img src={logo} style={{ width: '150px', height: 'inherit', objectFit: 'contain' }} /> */}
+						<h2>SALINAKA</h2>
 					</Link>
 				</div>
 
@@ -60,14 +63,24 @@ const Navigation = (props) => {
 							</>
 						)}
 				</ul>
-				<button className="button-link" onClick={(e) => {
-					if (props.isAuthenticating) e.preventDefault();
-					history.push(SEARCH);
-				}}>
-					<i className="fa fa-search" />
-				</button>
 			</div>
-
+			<div className="mobile-navigation-sec">
+				<SearchBar
+					isLoading={props.isLoading}
+					filter={props.filter}
+				/>
+				<FiltersToggle
+					filter={props.filter}
+					isLoading={props.isLoading}
+					products={props.products}
+					productsCount={props.productsLength}
+					history={history}
+				>
+					<button className="button-link button-small">
+						<i className="fa fa-filter" />
+					</button>
+				</FiltersToggle>
+			</div>
 		</nav>
 	);
 }

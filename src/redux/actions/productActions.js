@@ -7,7 +7,10 @@ import {
 	EDIT_PRODUCT_SUCCESS,
 	GET_PRODUCTS,
 	GET_PRODUCTS_SUCCESS,
-	CANCEL_GET_PRODUCTS
+	CANCEL_GET_PRODUCTS,
+	SEARCH_PRODUCT,
+	SEARCH_PRODUCT_SUCCESS,
+	CLEAR_SEARCH_STATE
 } from 'constants/constants';
 
 export const getProducts = lastRef => ({
@@ -27,6 +30,23 @@ export const cancelGetProducts = () => ({
 export const addProduct = product => ({
 	type: ADD_PRODUCT,
 	payload: product
+});
+
+export const searchProduct = (lastRefKey, searchKey) => ({
+	type: SEARCH_PRODUCT,
+	payload: {
+		lastRefKey,
+		searchKey
+	}
+});
+
+export const searchProductSuccess = (products) => ({
+	type: SEARCH_PRODUCT_SUCCESS,
+	payload: products
+});
+
+export const clearSearchState = () => ({
+	type: CLEAR_SEARCH_STATE
 });
 
 export const addProductSuccess = product => ({

@@ -233,6 +233,17 @@
   position: relative;
 }
 
+.text-subtle {
+  color: $gray-10;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-thin {
+  font-weight: 400;
+}
 // ICONS
 /// --------
 

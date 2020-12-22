@@ -3,7 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: $background-color;
+  // background: $background-color;
+  background: #fff;
   z-index: map-get($z-index, 'navigation');
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
 }
@@ -14,6 +15,14 @@
   padding: 0 $s-size;
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-navigation-sec {
+  display: flex;
+  align-items: center;
+  padding: 5px $s-size;
 }
 
 .mobile-navigation-menu {

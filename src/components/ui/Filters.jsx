@@ -116,17 +116,19 @@ const Filters = (props) => {
 				<br />
 				{(props.productsCount === 0 && props.isLoading) || max === 0 ? (
 					<h5 className="text-subtle">Loading Filter</h5>
+				) : props.productsCount === 1 ? (
+					<h5 className="text-subtle">No Price Range</h5>
 				) : (
-						<PriceRange
-							min={min}
-							max={max}
-							initMin={field.minPrice}
-							initMax={field.maxPrice}
-							isLoading={props.isLoading}
-							onPriceChange={onPriceChange}
-							productsLength={props.productsCount}
-						/>
-					)}
+							<PriceRange
+								min={min}
+								max={max}
+								initMin={field.minPrice}
+								initMax={field.maxPrice}
+								isLoading={props.isLoading}
+								onPriceChange={onPriceChange}
+								productsLength={props.productsCount}
+							/>
+						)}
 			</div>
 			<div className="filters-action">
 				<button

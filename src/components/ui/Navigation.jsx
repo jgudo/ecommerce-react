@@ -62,6 +62,10 @@ const Navigation = ({ isAuth }) => {
 			basketLength={store.basketLength}
 			disabledPaths={basketDisabledpathnames}
 			isAuth={isAuth}
+			products={store.products}
+			isLoading={store.isLoading}
+			productsCount={store.productsCount}
+			filter={store.filter}
 			isAuthenticating={store.isAuthenticating}
 			pathname={pathname}
 			profile={store.profile}
@@ -76,28 +80,31 @@ const Navigation = ({ isAuth }) => {
 						<img src={logo} />
 					</Link>
 				</div>
-				{pathname === ROUTE.HOME && (
-					<>
-						<SearchBar
-							isLoading={store.isLoading}
-							filter={store.filter}
-							history={history}
-							productsLength={store.productsLength}
-						/>
-						&nbsp;
-						<FiltersToggle
-							filter={store.filter}
-							isLoading={store.isLoading}
-							products={store.products}
-							productsLength={store.productsLength}
-							history={history}
-						>
-							<button className="button-muted button-small">
-								More Filters &nbsp;<i className="fa fa-chevron-right" />
-							</button>
-						</FiltersToggle>
-					</>
+				<ul className="navigation-menu-main">
+					<li>
+						<Link to={ROUTE.HOME}>HOME</Link>
+					</li>
+					<li>
+						<Link to={ROUTE.SHOP}>SHOP</Link>
+					</li>
+				</ul>
+				{(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
+					<FiltersToggle
+						filter={store.filter}
+						isLoading={store.isLoading}
+						products={store.products}
+						productsCount={store.productsLength}
+					>
+						<button className="button-muted button-small">
+							Filters &nbsp;<i className="fa fa-filter" />
+						</button>
+					</FiltersToggle>
 				)}
+				<SearchBar
+					isLoading={store.isLoading}
+					filter={store.filter}
+				/>
+
 				<ul className="navigation-menu">
 					<li className="navigation-menu-item">
 						<BasketToggle>

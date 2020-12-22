@@ -3,14 +3,16 @@ import Select from 'react-select';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageLoader from 'components/ui/ImageLoader';
+import ProductFeatured from 'components/product/ProductFeatured';
 import CircularProgress from 'components/ui/ImageLoader';
-import { HOME } from 'constants/routes';
+import { SHOP, RECOMMENDED_PRODUCTS } from 'constants/routes';
 import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
 import { displayMoney, displayActionMessage } from 'helpers/utils';
 import firebase from '../../firebase/firebase';
 import useScrollTop from 'hooks/useScrollTop';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import ColorChooser from 'components/ui/ColorChooser';
+import useRecommendedProducts from 'hooks/useRecommendedProducts';
 
 const ViewProduct = () => {
     useScrollTop();
@@ -28,6 +30,7 @@ const ViewProduct = () => {
     const [product, setProduct] = useState(store.product || null);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
+    const { recommendedProducts, fetchRecommendedProducts, isLoading, error } = useRecommendedProducts(6);
     const colorOverlay = useRef(null);
     const foundOnBasket = () => store.basket.find(item => item.id === product.id);
 
@@ -63,11 +66,11 @@ const ViewProduct = () => {
                         setProduct(data);
                         setSelectedImage(data.image);
                     } else {
-                        history.push(HOME);
+                        history.push(SHOP);
                     }
                 })
                 .catch((e) => {
-                    history.push(HOME);
+                    history.push(SHOP);
                 });
         }
     }, []);
@@ -79,7 +82,7 @@ const ViewProduct = () => {
 
     return product ? (
         <div className="product-view">
-            <Link to="/"><h3><i className="fa fa-chevron-left" /> Back to shop</h3> </Link>
+            <Link to={SHOP}><h3><i className="fa fa-chevron-left" /> Back to shop</h3> </Link>
             <div className="product-modal">
                 {product.imageCollection.length !== 0 && (
                     <div className="product-modal-image-collection">
@@ -144,6 +147,36 @@ const ViewProduct = () => {
                             {foundOnBasket() ? 'Remove From Basket' : 'Add To Basket'}
                         </button>
                     </div>
+                </div>
+            </div>
+            <div style={{ marginTop: '10rem' }}>
+                <div className="display-header">
+                    <h1>Recommended</h1>
+                    <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
+                </div>
+                <div className="product-display-grid">
+                    {error ? (
+                        <MessageDisplay
+                            message={error}
+                            action={fetchRecommendedProducts}
+                            buttonLabel="Try Again"
+                        />
+                    ) : (
+                            <>
+                                {recommendedProducts.length === 0 ? new Array(4).fill({}).map((product, index) => (
+                                    <ProductFeatured
+                                        key={`product-skeleton ${index}`}
+                                        product={product}
+                                    />
+                                )) : recommendedProducts.map(product => (
+                                    <ProductFeatured
+                                        key={product.id}
+                                        isLoading={isLoading}
+                                        product={product}
+                                    />
+                                ))}
+                            </>
+                        )}
                 </div>
             </div>
         </div>

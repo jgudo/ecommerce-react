@@ -10,6 +10,7 @@ import EditProduct from 'views/admin/edit_product';
 import AddProduct from 'views/admin/add_product';
 
 import ViewProduct from 'views/view_product';
+import Search from 'views/search';
 
 import ProductSearch from 'components/product/ProductSearch';
 import SignUp from 'views/auth/signup';
@@ -26,14 +27,17 @@ import PageNotFound from 'views/error/PageNotFound';
 import ClientRoute from './ClientRoute';
 import PublicRoute from './PublicRoute';
 import AdminRoute from './AdminRoute';
+import Shop from 'views/shop';
+import FeaturedProducts from 'views/featured';
+import RecommendedProducts from 'views/recommended';
 
 export const history = createBrowserHistory();
 
 const AppRouter = () => (
 	<Router history={history}>
 		<Switch>
-			<Route
-				component={ProductSearch}
+			<PublicRoute
+				component={Search}
 				exact
 				path={ROUTES.SEARCH}
 			/>
@@ -41,6 +45,21 @@ const AppRouter = () => (
 				component={Home}
 				exact
 				path={ROUTES.HOME}
+			/>
+			<PublicRoute
+				component={Shop}
+				exact
+				path={ROUTES.SHOP}
+			/>
+			<PublicRoute
+				component={FeaturedProducts}
+				exact
+				path={ROUTES.FEATURED_PRODUCTS}
+			/>
+			<PublicRoute
+				component={RecommendedProducts}
+				exact
+				path={ROUTES.RECOMMENDED_PRODUCTS}
 			/>
 			<PublicRoute
 				component={SignUp}

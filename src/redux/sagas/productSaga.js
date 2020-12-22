@@ -6,6 +6,7 @@ import {
 	LOADING,
 	SET_REQUEST_STATUS,
 	GET_PRODUCTS,
+	SEARCH_PRODUCT,
 	ADD_PRODUCT,
 	EDIT_PRODUCT,
 	REMOVE_PRODUCT
@@ -15,7 +16,9 @@ import {
 	getProductsSuccess,
 	addProductSuccess,
 	editProductSuccess,
-	removeProductSuccess
+	removeProductSuccess,
+	searchProductSuccess,
+	clearSearchState
 } from '../actions/productActions';
 import { setLoading, setRequestStatus } from 'redux/actions/miscActions'
 
@@ -47,14 +50,20 @@ function* productSaga({ type, payload }) {
 				const state = yield select();
 				const result = yield call(firebase.getProducts, payload);
 
-				yield put(getProductsSuccess({
-					products: result.products,
-					lastKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
-					total: result.total ? result.total : state.products.total
-				}));
+				if (result.products.length === 0) {
+					handleError('No items found.');
+				} else {
+					yield put(getProductsSuccess({
+						products: result.products,
+						lastKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
+						total: result.total ? result.total : state.products.total
+					}));
+					yield put(setRequestStatus(''));
+				}
 				// yield put({ type: SET_LAST_REF_KEY, payload: result.lastKey });
 				yield put(setLoading(false));
 			} catch (e) {
+				console.log(e);
 				yield handleError(e);
 			}
 			break;
@@ -159,6 +168,31 @@ function* productSaga({ type, payload }) {
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to remove: ${e.message}`, 'error');
+			}
+			break;
+		case SEARCH_PRODUCT:
+			try {
+				yield initRequest();
+				// clear search data
+				yield put(clearSearchState());
+
+				const state = yield select();
+				const result = yield call(firebase.getProducts, payload.lastRefKey, payload.searchKey);
+
+				if (result.products.length === 0) {
+					yield handleError('No product found.');
+					yield put(clearSearchState());
+				} else {
+					yield put(searchProductSuccess({
+						products: result.products,
+						lastKey: result.lastKey ? result.lastKey : state.products.searchedProducts.lastRefKey,
+						total: result.total ? result.total : state.products.searchedProducts.total
+					}));
+					yield put(setRequestStatus(''));
+				}
+				yield put(setLoading(false));
+			} catch (e) {
+				yield handleError(e);
 			}
 			break;
 		default:
