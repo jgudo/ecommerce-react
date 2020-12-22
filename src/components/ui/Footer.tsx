@@ -8,7 +8,14 @@ const Footer: React.FC = () => {
 	const { pathname } = useLocation();
 	// hide the footer to these routes
 
-	return pathname !== Route.HOME ? null : (
+	const hiddenFooterPaths: string[] = [
+		Route.ACCOUNT,
+		Route.SIGNIN,
+		Route.SIGNUP,
+		Route.FORGOT_PASSWORD
+	];
+
+	return hiddenFooterPaths.includes(pathname) ? null : (
 		<footer className="footer">
 			<div className="footer-col-1">
 				<strong><span>Developed by <a href="https://github.com/jgudo">JULIUS GUEVARRA</a></span></strong>

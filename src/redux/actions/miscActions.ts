@@ -12,7 +12,7 @@ export const setAuthenticating = (bool: boolean = true) => (<const>{
 	payload: bool
 });
 
-export const setRequestStatus = (status: IAuthStatus) => (<const>{
+export const setRequestStatus = (status: string) => (<const>{
 	type: EMiscActionType.SET_REQUEST_STATUS,
 	payload: status
 });

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-	setTextFilter,
 	removeSelectedRecent,
 	clearRecentSearch
 } from 'redux/actions/filterActions';
@@ -12,7 +11,7 @@ import { useHistory } from 'react-router';
 interface IProps {
 	filter: IFilter;
 	isLoading: boolean;
-	productsCount: number;
+	productsCount?: number;
 	[propName: string]: any;
 }
 
@@ -39,7 +38,6 @@ const SearchBar: React.FC<IProps> = ({
 
 	const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter' && productsCount !== 0) {
-			dispatch(setTextFilter(searchInput));
 			(e.target as HTMLInputElement).blur();
 
 			if (searchbarRef.current) {
@@ -49,6 +47,8 @@ const SearchBar: React.FC<IProps> = ({
 			if (isMobile) {
 				history.push('/');
 			}
+
+			history.push(`/search/${searchInput.trim().toLowerCase()}`);
 		}
 	};
 
@@ -71,9 +71,10 @@ const SearchBar: React.FC<IProps> = ({
 	};
 
 	const onClickRecentSearch = (keyword: string) => {
-		dispatch(setTextFilter(keyword));
+		// dispatch(setTextFilter(keyword));
 
 		searchbarRef.current && searchbarRef.current.classList.remove('is-open-recent-search');
+		history.push(`/search/${keyword.trim().toLowerCase()}`);
 	};
 
 	const onClearRecent = () => {
@@ -88,7 +89,7 @@ const SearchBar: React.FC<IProps> = ({
 					onChange={onSearchChange}
 					onKeyUp={onKeyUp}
 					onFocus={onFocusInput}
-					placeholder="Filter products by keyword"
+					placeholder="Search product..."
 					readOnly={isLoading}
 					type="text"
 					value={searchInput}
@@ -125,7 +126,7 @@ const SearchBar: React.FC<IProps> = ({
 						))}
 					</div>
 				)}
-				<i className="fa fa-filter searchbar-icon" />
+				<i className="fa fa-search searchbar-icon" />
 			</div>
 		</>
 	);

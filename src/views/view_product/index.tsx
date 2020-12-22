@@ -1,3 +1,4 @@
+// tslint:disable: no-array-mutation
 import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import { useParams, useHistory, Link } from 'react-router-dom';
@@ -11,6 +12,9 @@ import firebase from '../../firebase/firebase';
 import { RootState } from 'types/types';
 import useScrollTop from 'hooks/useScrollTop';
 import ColorChooser from 'components/ui/ColorChooser';
+import useRecommendedProducts from 'hooks/useRecommendedProducts';
+import ProductFeatured from 'components/product/ProductFeatured';
+import MessageDisplay from 'components/ui/MessageDisplay';
 
 const ViewProduct: React.FC = () => {
 	useScrollTop();
@@ -26,6 +30,7 @@ const ViewProduct: React.FC = () => {
 	const [product, setProduct] = useState<any>(store.product);
 	const [selectedSize, setSelectedSize] = useState('');
 	const [selectedColor, setSelectedColor] = useState('');
+	const { recommendedProducts, fetchRecommendedProducts, isLoading, error } = useRecommendedProducts(6);
 	const colorOverlay = useRef<HTMLInputElement | null>(null);
 	const foundOnBasket = () => store.basket.find(item => item.id === id);
 
@@ -81,7 +86,7 @@ const ViewProduct: React.FC = () => {
 
 	return product ? (
 		<div className="product-view">
-			<Link to="/"><h3><i className="fa fa-chevron-left" /> Back to shop</h3> </Link>
+			<Link to={Route.SHOP}><h3><i className="fa fa-chevron-left" /> Back to shop</h3> </Link>
 			<div className="product-modal">
 				{product.imageCollection.length !== 0 && (
 					<div className="product-modal-image-collection">
@@ -146,6 +151,37 @@ const ViewProduct: React.FC = () => {
 							{foundOnBasket() ? 'Remove From Basket' : 'Add To Basket'}
 						</button>
 					</div>
+				</div>
+			</div>
+			<div style={{ marginTop: '10rem' }}>
+				<div className="display-header">
+					<h1>Recommended</h1>
+					<Link to={Route.RECOMMENDED_PRODUCTS}>See All</Link>
+				</div>
+				<div className="product-display-grid">
+					{error ? (
+						<MessageDisplay
+							message={error}
+							action={fetchRecommendedProducts}
+							buttonLabel="Try Again"
+						/>
+					) : (
+							<>
+								{recommendedProducts.length === 0 ? new Array(4).fill({}).map((product, index) => (
+									<ProductFeatured
+										key={`product-skeleton ${index}`}
+										product={product}
+										isLoading={isLoading}
+									/>
+								)) : recommendedProducts.map(product => (
+									<ProductFeatured
+										key={product.id}
+										isLoading={isLoading}
+										product={product}
+									/>
+								))}
+							</>
+						)}
 				</div>
 			</div>
 		</div>

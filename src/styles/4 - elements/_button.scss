@@ -11,6 +11,7 @@
   @include bezier-transition(all, .3s, ease);
 
   &:hover {
+    cursor: pointer;
     background: $button-hover;
     border: 1px solid $button-hover;
     text-decoration: none;
@@ -40,11 +41,12 @@
 
 .button-muted {
   @extend .button;
-  background: $border-color;
+  background: $background-color-01;
   color: lighten($paragraph-color, 20%);
   border: 1px solid $border-color;
+
   &:hover {
-    background: $border-color-focus;
+    background: $background-color;
     border: 1px solid $border-color-focus;
   }
 }

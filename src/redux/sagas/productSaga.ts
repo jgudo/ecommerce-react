@@ -8,13 +8,16 @@ import {
 	getProductsSuccess,
 	addProductSuccess,
 	editProductSuccess,
-	removeProductSuccess
+	removeProductSuccess,
+	searchProductSuccess,
+	clearSearchState
 } from '../actions/productActions';
 
 import { displayActionMessage } from 'helpers/utils';
 import { history } from 'routers/AppRouter';
 import { Route } from 'constants/routes';
 import { IImageFile } from 'types/types';
+import { setLoading, setRequestStatus } from 'redux/actions/miscActions';
 
 function* initRequest() {
 	yield put({ type: EMiscActionType.LOADING, payload: true });
@@ -38,13 +41,19 @@ function* productSaga({ type, payload }) {
 			try {
 				yield initRequest();
 				const state = yield select();
-				const result = yield call(firebase.getProducts, payload);
+				const result = yield call(firebase.getProducts, payload.lastRefKey, payload.searchKey);
 
-				yield put(getProductsSuccess({
-					items: result.products,
-					lastRefKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
-					total: result.total ? result.total : state.products.total
-				}));
+				if (result.products.length === 0) {
+					handleError('No items found.');
+				} else {
+					yield put(getProductsSuccess({
+						items: result.products,
+						lastRefKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
+						total: result.total ? result.total : state.products.total
+					}));
+					yield put(setRequestStatus(''));
+				}
+
 				// yield put({ type: SET_LAST_REF_KEY, payload: result.lastKey });
 				yield put({ type: EMiscActionType.LOADING, payload: false });
 			} catch (e) {
@@ -155,6 +164,31 @@ function* productSaga({ type, payload }) {
 			} catch (e) {
 				yield handleError(e);
 				yield handleAction(undefined, `Item failed to remove: ${e.message}`, 'error');
+			}
+			break;
+		case EProductActionType.SEARCH_PRODUCT:
+			try {
+				yield initRequest();
+				// clear search data
+				yield put(clearSearchState());
+
+				const state = yield select();
+				const result = yield call(firebase.getProducts, payload.lastRefKey, payload.searchKey);
+
+				if (result.products.length === 0) {
+					yield handleError('No product found.');
+					yield put(clearSearchState());
+				} else {
+					yield put(searchProductSuccess({
+						items: result.products,
+						lastRefKey: result.lastKey ? result.lastKey : state.products.searchedProducts.lastRefKey,
+						total: result.total ? result.total : state.products.searchedProducts.total
+					}));
+					yield put(setRequestStatus(''));
+				}
+				yield put(setLoading(false));
+			} catch (e) {
+				yield handleError(e);
 			}
 			break;
 		default:

@@ -5,15 +5,20 @@ import { Route } from 'constants/routes';
 import UserNav from 'views/account/components/UserAvatar';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import logo from '../../../static/logo-full.png';
-import { IUser } from 'types/types';
+import { IFilter, IProduct, IUser } from 'types/types';
+import SearchBar from './SearchBar';
+import FiltersToggle from './FiltersToggle';
 
 interface IProps extends RouteComponentProps {
 	isAuthenticating: boolean;
 	disabledPaths: string[];
 	basketLength: number;
+	filter: IFilter;
+	isLoading: boolean;
 	isAuth: boolean;
+	products: IProduct[];
 	profile: IUser;
+	productsCount: number;
 }
 
 const Navigation: React.FC<IProps> = (props) => {
@@ -27,7 +32,8 @@ const Navigation: React.FC<IProps> = (props) => {
 			<div className="mobile-navigation-main">
 				<div className="mobile-navigation-logo">
 					<Link onClick={onClickLink} to={Route.HOME}>
-						<img src={logo} style={{ width: '150px', height: 'inherit', objectFit: 'contain' }} />
+						{/* <img src={logo} style={{ width: '150px', height: 'inherit', objectFit: 'contain' }} /> */}
+						<h2>SALINAKA</h2>
 					</Link>
 				</div>
 
@@ -66,14 +72,23 @@ const Navigation: React.FC<IProps> = (props) => {
 							</>
 						)}
 				</ul>
-				<button className="button-link" onClick={(e) => {
-					if (props.isAuthenticating) e.preventDefault();
-					props.history.push(Route.SEARCH);
-				}}>
-					<i className="fa fa-search" />
-				</button>
 			</div>
-
+			<div className="mobile-navigation-sec">
+				<SearchBar
+					isLoading={props.isLoading}
+					filter={props.filter}
+				/>
+				<FiltersToggle
+					filter={props.filter}
+					isLoading={props.isLoading}
+					products={props.products}
+					productsCount={props.productsCount}
+				>
+					<button className="button-link button-small">
+						<i className="fa fa-filter" />
+					</button>
+				</FiltersToggle>
+			</div>
 		</nav>
 	);
 }

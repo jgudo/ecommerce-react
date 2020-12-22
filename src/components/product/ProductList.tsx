@@ -29,7 +29,7 @@ const ProductList: React.FC<IProps> = (props) => {
 	};
 
 	useEffect((): () => void => {
-		if (props.productsCount === 0) {
+		if (props.productsCount === 0 || !props.lastRefKey) {
 			fetchProducts();
 		}
 
@@ -48,10 +48,9 @@ const ProductList: React.FC<IProps> = (props) => {
 
 	};
 
-	return props.filteredProducts.length === 0 && !props.isLoading && !props.requestStatus ? (
+	return props.filteredProducts.length === 0 && !props.isLoading && !props.lastRefKey ? (
 		<MessageDisplay
-			message="The are no items found."
-			desc="Try using correct filters or keyword."
+			message={props.requestStatus ? props.requestStatus : 'Failed to fetch items.'}
 		/>
 	) : props.requestStatus ? (
 		<MessageDisplay
@@ -61,7 +60,7 @@ const ProductList: React.FC<IProps> = (props) => {
 		/>
 	) : (
 				<>
-					{props.children && props.children({ foundOnBasket })}
+					{props.children({ foundOnBasket })}
 					{props.productsCount < props.totalProductsCount && (
 						<div className="d-flex-center padding-l">
 							<button

@@ -15,6 +15,10 @@
   &:nth-child(2) {
     flex-basis: 50%;
   }
+
+  @include mobile {
+    flex-basis: 100% !important;
+  }
 }
 
 .filters-brand {
@@ -40,6 +44,10 @@
   background: $white;
   position: relative;
   padding: $m-size;
+
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .is-open-filters .filters-toggle-sub {

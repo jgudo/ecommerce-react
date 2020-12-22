@@ -28,7 +28,7 @@ button:focus {
 
 p {
   color: $paragraph-color;
-  font-weight: 300;
+  font-weight: 600;
   line-height: $line-height;
 }
 
@@ -73,7 +73,7 @@ h6 {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  padding: $top $xxl-size;
+  padding: $top $pad-desktop;
   display: flex;
   animation: fadeIn .5s ease;
 

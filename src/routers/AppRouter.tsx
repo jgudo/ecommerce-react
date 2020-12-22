@@ -26,6 +26,9 @@ import PageNotFound from 'views/error/PageNotFound';
 import ClientRoute from './ClientRoute';
 import PublicRoute from './PublicRoute';
 import AdminRoute from './AdminRoute';
+import FeaturedProducts from 'views/featured';
+import Shop from 'views/shop';
+import RecommendedProducts from 'views/recommended';
 
 export const history = createBrowserHistory();
 
@@ -41,6 +44,21 @@ const AppRouter = () => (
 				component={Home}
 				exact
 				path={ROUTES.HOME}
+			/>
+			<PublicRoute
+				component={Shop}
+				exact
+				path={ROUTES.SHOP}
+			/>
+			<PublicRoute
+				component={FeaturedProducts}
+				exact
+				path={ROUTES.FEATURED_PRODUCTS}
+			/>
+			<PublicRoute
+				component={RecommendedProducts}
+				exact
+				path={ROUTES.RECOMMENDED_PRODUCTS}
 			/>
 			<PublicRoute
 				component={SignUp}

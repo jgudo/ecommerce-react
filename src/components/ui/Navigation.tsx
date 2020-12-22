@@ -45,7 +45,7 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 		profile: state.profile,
 		isLoading: state.app.loading,
 		isAuthenticating: state.app.isAuthenticating,
-		productsLength: state.products.items.length
+		productsCount: state.products.items.length
 	}));
 
 	const onClickLink = (e) => {
@@ -67,6 +67,10 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 			basketLength={store.basketLength}
 			disabledPaths={basketDisabledPaths}
 			isAuth={isAuth}
+			products={store.products}
+			isLoading={store.isLoading}
+			productsCount={store.productsCount}
+			filter={store.filter}
 			isAuthenticating={store.isAuthenticating}
 			profile={store.profile}
 		/>
@@ -80,26 +84,31 @@ const Navigation: React.FC<IProps> = ({ isAuth }) => {
 						<img src={logo} />
 					</Link>
 				</div>
-				{pathname === Route.HOME && (
-					<>
-						<SearchBar
-							isLoading={store.isLoading}
-							filter={store.filter}
-							productsCount={store.productsLength}
-						/>
-						&nbsp;
-						<FiltersToggle
-							filter={store.filter}
-							isLoading={store.isLoading}
-							products={store.products}
-							productsCount={store.productsLength}
-						>
-							<button className="button-muted button-small">
-								More Filters &nbsp;<i className="fa fa-chevron-right" />
-							</button>
-						</FiltersToggle>
-					</>
+				<ul className="navigation-menu-main">
+					<li>
+						<Link to={Route.HOME}>HOME</Link>
+					</li>
+					<li>
+						<Link to={Route.SHOP}>SHOP</Link>
+					</li>
+				</ul>
+				{(pathname === Route.SHOP || pathname === Route.SEARCH) && (
+					<FiltersToggle
+						filter={store.filter}
+						isLoading={store.isLoading}
+						products={store.products}
+						productsCount={store.productsCount}
+					>
+						<button className="button-muted button-small">
+							Filters &nbsp;<i className="fa fa-filter" />
+						</button>
+					</FiltersToggle>
 				)}
+				<SearchBar
+					isLoading={store.isLoading}
+					filter={store.filter}
+				/>
+
 				<ul className="navigation-menu">
 					<li className="navigation-menu-item">
 						<BasketToggle>
