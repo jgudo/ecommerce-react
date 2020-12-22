@@ -1,13 +1,20 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { HOME } from 'constants/routes';
+import * as Route from 'constants/routes';
 import logo from '../../../static/logo-full.png';
 
 const Footer = () => {
 	const { pathname } = useLocation();
 
-	return pathname !== HOME ? null : (
+	const hiddenFooterPaths = [
+		Route.SIGNIN,
+		Route.SIGNUP,
+		Route.FORGOT_PASSWORD,
+		Route.ACCOUNT
+	];
+
+	return hiddenFooterPaths.includes(pathname) ? null : (
 		<footer className="footer">
 			<div className="footer-col-1">
 				<strong><span>Developed by <a href="https://github.com/jgudo">JULIUS GUEVARRA</a></span></strong>
