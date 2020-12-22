@@ -8,7 +8,7 @@ import ReactGA from "react-ga";
 
 const App = ({ store, persistor }) => {
 	useEffect(()=>{
-		ReactGA.initialize('UA-128284894-4')
+		ReactGA.initialize('Your-GA-ID')
 	}, [])
 	return(
 	<StrictMode>
