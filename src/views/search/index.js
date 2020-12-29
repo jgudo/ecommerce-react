@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setRequestStatus } from 'redux/actions/miscActions';
 import { searchProduct } from 'redux/actions/productActions';
 
-
 const Search = (props) => {
     const searchKey = props.match.params.searchKey;
     const [columnCount, setColumnCount] = useState(6);
