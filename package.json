@@ -61,7 +61,7 @@
     "workbox-webpack-plugin": "^5.1.4"
   },
   "dependencies": {
-    "firebase": "^7.20.0",
+    "firebase": "^7.24.0",
     "formik": "^2.1.5",
     "history": "^4.9.0",
     "moment": "^2.27.0",

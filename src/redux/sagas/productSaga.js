@@ -1,30 +1,32 @@
 /* eslint-disable indent */
-import { call, put, select, all } from 'redux-saga/effects';
-import firebase from 'firebase/firebase';
-
 import {
-	LOADING,
-	SET_REQUEST_STATUS,
-	GET_PRODUCTS,
-	SEARCH_PRODUCT,
 	ADD_PRODUCT,
-	EDIT_PRODUCT,
-	REMOVE_PRODUCT
+	EDIT_PRODUCT, GET_PRODUCTS,
+
+
+
+	REMOVE_PRODUCT, SEARCH_PRODUCT
 } from 'constants/constants';
-
-import {
-	getProductsSuccess,
-	addProductSuccess,
-	editProductSuccess,
-	removeProductSuccess,
-	searchProductSuccess,
-	clearSearchState
-} from '../actions/productActions';
-import { setLoading, setRequestStatus } from 'redux/actions/miscActions'
-
-import { displayActionMessage } from 'helpers/utils';
-import { history } from 'routers/AppRouter';
 import { ADMIN_PRODUCTS } from 'constants/routes';
+import firebase from 'firebase/firebase';
+import { displayActionMessage } from 'helpers/utils';
+import { all, call, put, select } from 'redux-saga/effects';
+import { setLoading, setRequestStatus } from 'redux/actions/miscActions';
+import { history } from 'routers/AppRouter';
+import {
+	addProductSuccess,
+
+
+
+	clearSearchState, editProductSuccess, getProductsSuccess,
+
+
+	removeProductSuccess,
+	searchProductSuccess
+} from '../actions/productActions';
+
+
+
 
 function* initRequest() {
 	yield put(setLoading(true));
@@ -177,7 +179,7 @@ function* productSaga({ type, payload }) {
 				yield put(clearSearchState());
 
 				const state = yield select();
-				const result = yield call(firebase.getProducts, payload.lastRefKey, payload.searchKey);
+				const result = yield call(firebase.searchProducts, payload.searchKey);
 
 				if (result.products.length === 0) {
 					yield handleError('No product found.');

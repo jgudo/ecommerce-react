@@ -1,42 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import ProductItem from 'components/product/ProductItem';
+import Boundary from 'components/ui/Boundary';
 import CircularProgress from 'components/ui/CircularProgress';
 import MessageDisplay from 'components/ui/MessageDisplay';
-import Boundary from 'components/ui/Boundary';
-import { searchProduct } from 'redux/actions/productActions';
-import { setRequestStatus } from 'redux/actions/miscActions';
 import useDidMount from 'hooks/useDidMount';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRequestStatus } from 'redux/actions/miscActions';
+import { searchProduct } from 'redux/actions/productActions';
+
 
 const Search = (props) => {
     const searchKey = props.match.params.searchKey;
     const [columnCount, setColumnCount] = useState(6);
     const dispatch = useDispatch();
     const didMount = useDidMount();
-    const { isLoading, products, requestStatus, lastRefKey, basket } = useSelector(state => ({
+    const { isLoading, products, requestStatus, basket } = useSelector(state => ({
         isLoading: state.app.loading,
         products: state.products.searchedProducts.items,
         basket: state.basket,
-        lastRefKey: state.products.searchedProducts.lastRefKey,
         requestStatus: state.app.requestStatus,
     }));
 
     useEffect(() => {
         if (!didMount && !isLoading) {
-            dispatch(searchProduct(undefined, searchKey));
+            dispatch(searchProduct(searchKey));
         }
 
         return () => {
             dispatch(setRequestStatus(''));
         }
     }, []);
-
-    useEffect(() => {
-        if (didMount && !isLoading) {
-            dispatch(searchProduct(lastRefKey, searchKey));
-        }
-    }, [lastRefKey, searchKey]);
 
     const onProductsLengthChanged = () => {
         const width = window.screen.width - 250; // minus 250px padding

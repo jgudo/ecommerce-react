@@ -1,16 +1,27 @@
 import {
 	ADD_PRODUCT,
 	ADD_PRODUCT_SUCCESS,
-	REMOVE_PRODUCT,
-	REMOVE_PRODUCT_SUCCESS,
-	EDIT_PRODUCT,
+
+
+
+
+
+
+	CANCEL_GET_PRODUCTS,
+
+
+	CLEAR_SEARCH_STATE, EDIT_PRODUCT,
 	EDIT_PRODUCT_SUCCESS,
 	GET_PRODUCTS,
-	GET_PRODUCTS_SUCCESS,
-	CANCEL_GET_PRODUCTS,
+	GET_PRODUCTS_SUCCESS, REMOVE_PRODUCT,
+	REMOVE_PRODUCT_SUCCESS,
+
+
+
+
+
 	SEARCH_PRODUCT,
-	SEARCH_PRODUCT_SUCCESS,
-	CLEAR_SEARCH_STATE
+	SEARCH_PRODUCT_SUCCESS
 } from 'constants/constants';
 
 export const getProducts = lastRef => ({
@@ -32,10 +43,9 @@ export const addProduct = product => ({
 	payload: product
 });
 
-export const searchProduct = (lastRefKey, searchKey) => ({
+export const searchProduct = (searchKey) => ({
 	type: SEARCH_PRODUCT,
 	payload: {
-		lastRefKey,
 		searchKey
 	}
 });
