@@ -2,8 +2,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-import { Query } from '@firebase/firestore-types';
-import { IUser, IProduct } from 'types/types';
+import { IProduct, IUser } from 'types/types';
 
 const firebaseConfig: Record<string, string | undefined> = {
 	apiKey: process.env.FIREBASE_API_KEY,
@@ -126,57 +125,40 @@ class Firebase {
 	// // ---------
 	getProduct = (id: string) => this.db.collection('products').doc(id).get();
 
-	public getProducts = (lastRefKey: string, searchKey: string) => {
+	public getProducts = (lastRefKey) => {
 		let didTimeout = false;
 
 		return new Promise(async (resolve, reject) => {
-			let productsRef: Query = this.db.collection('products');
-			let queryRef = productsRef.orderBy(app.firestore.FieldPath.documentId());
-
 			if (lastRefKey) {
-				let query = queryRef.startAfter(lastRefKey).limit(12);
-
-				if (searchKey) {
-					query = productsRef.orderBy('name_lower').startAfter(lastRefKey).where('name_lower', '>=', searchKey).where('name_lower', '<=', searchKey + '\uf8ff').limit(12);
-				}
-
 				try {
+					const query = this.db
+						.collection('products')
+						.orderBy(app.firestore.FieldPath.documentId())
+						.startAfter(lastRefKey)
+						.limit(12);
+
 					const snapshot = await query.get();
 					let products: Partial<IProduct>[] = [];
 					snapshot.forEach((doc) => {
-						products.concat([{ id: doc.id, ...doc.data() }]);
+						products = products.concat([{ id: doc.id, ...doc.data() }]);
 					});
 					const lastKey = snapshot.docs[snapshot.docs.length - 1];
 
 					resolve({ products, lastKey });
 				} catch (e) {
-					reject(':( Failed to fetch products.');
+					reject(new Error(':( Failed to fetch products.'));
 				}
 			} else {
 				const timeout = setTimeout(() => {
 					didTimeout = true;
-					reject('Request timeout, please try again');
+					reject(new Error('Request timeout, please try again'));
 				}, 15000);
 
 				try {
-					// getting the total count of data
-
-					// adding shallow parameter for smaller response size
-					// better than making a query from firebase
-					// NOT AVAILEBLE IN FIRESTORE const request = await fetch(`${process.env.FIREBASE_DB_URL}/products.json?shallow=true`);
-
-					const totalQueryRef: Query = this.db.collection('products');
-					let totalQuery = totalQueryRef;
-
-					if (searchKey) {
-						queryRef = productsRef.orderBy('name_lower');
-						totalQuery = totalQueryRef.where('name_lower', '>=', searchKey).where('name_lower', '<=', searchKey + '\uf8ff');
-						productsRef = queryRef.where('name_lower', '>=', searchKey).where('name_lower', '<=', searchKey + '\uf8ff').limit(12);
-					}
-
-					const totalResult = await totalQuery.get();
-					const total = totalResult.docs.length;
-					const snapshot = await productsRef.limit(12).get();
+					const totalQuery = await this.db.collection('products').get();
+					const total = totalQuery.docs.length;
+					const query = this.db.collection('products').orderBy(app.firestore.FieldPath.documentId()).limit(12);
+					const snapshot = await query.get();
 
 					clearTimeout(timeout);
 					if (!didTimeout) {
@@ -191,9 +173,77 @@ class Firebase {
 				} catch (e) {
 					if (didTimeout) return;
 					console.log('Failed to fetch products: An error occured while trying to fetch products or there may be no product ', e);
-					reject(':( Failed to fetch products.');
+					reject(new Error(':( Failed to fetch products.'));
 				}
 			}
+		});
+	}
+
+	public searchProducts = (searchKey: string) => {
+		let didTimeout = false;
+
+		return new Promise(async (resolve, reject) => {
+			let productsRef = this.db.collection('products');
+
+			const timeout = setTimeout(() => {
+				didTimeout = true;
+				reject('Request timeout, please try again');
+			}, 15000);
+
+			try {
+				// const totalQueryRef = productsRef
+				// 	.where('name_lower', '>=', searchKey)
+				// 	.where('name_lower', '<=', searchKey + '\uf8ff');
+				const searchedNameRef = productsRef
+					.orderBy('name_lower')
+					.where('name_lower', '>=', searchKey)
+					.where('name_lower', '<=', searchKey + '\uf8ff')
+					.limit(12);
+				const searchedKeywordsRef = productsRef
+					.orderBy('dateAdded', 'desc')
+					.where('keywords', 'array-contains-any', searchKey.split(' '))
+					.limit(12);
+
+				// const totalResult = await totalQueryRef.get();
+				const nameSnaps = await searchedNameRef.get();
+				const keywordsSnaps = await searchedKeywordsRef.get();
+				// const total = totalResult.docs.length;
+
+				clearTimeout(timeout);
+				if (!didTimeout) {
+					let searchedKeywordsProducts: Partial<IProduct>[] = [];
+					let searchedNameProducts: Partial<IProduct>[] = [];
+					let lastKey: any = null;
+
+					if (!nameSnaps.empty) {
+						nameSnaps.forEach((doc) => {
+							searchedNameProducts = searchedNameProducts.concat([{ id: doc.id, ...doc.data() }]);
+						});
+						lastKey = nameSnaps.docs[nameSnaps.docs.length - 1];
+					}
+
+					if (!keywordsSnaps.empty) {
+						keywordsSnaps.forEach((doc) => {
+							searchedKeywordsProducts = searchedKeywordsProducts.concat([{ id: doc.id, ...doc.data() }]);
+						});
+					}
+
+					// MERGE PRODUCTS
+					const mergedProducts = [...searchedNameProducts, ...searchedKeywordsProducts];
+					const hash = {};
+
+					mergedProducts.forEach((product: IProduct) => {
+						hash[product.id] = product;
+					});
+
+					resolve({ products: Object.values(hash), lastKey });
+				}
+			} catch (e) {
+				if (didTimeout) return;
+				console.log('Failed to fetch products: An error occured while trying to fetch products or there may be no product ', e);
+				reject(':( Failed to fetch products.');
+			}
+
 		});
 	}
 

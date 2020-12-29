@@ -1,6 +1,6 @@
+import { DocumentData } from '@firebase/firestore-types';
 import { EProductActionType } from 'constants/constants';
 import { IProduct, ProductState } from 'types/types';
-import { DocumentData } from '@firebase/firestore-types';
 
 export const getProducts = (lastRefKey: DocumentData | undefined, searchKey?: string) => (<const>{
 	type: EProductActionType.GET_PRODUCTS,
@@ -29,10 +29,9 @@ export const addProductSuccess = (product: IProduct) => (<const>{
 	payload: product
 });
 
-export const searchProduct = (lastRefKey: DocumentData | undefined, searchKey?: string) => (<const>{
+export const searchProduct = (searchKey: string) => (<const>{
 	type: EProductActionType.SEARCH_PRODUCT,
 	payload: {
-		lastRefKey,
 		searchKey
 	}
 });

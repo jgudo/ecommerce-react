@@ -1,42 +1,37 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-
 import { Route as ROUTES } from 'constants/routes';
-
-import Dashboard from 'views/admin/dashboard';
-import Products from 'views/admin/products';
-import EditProduct from 'views/admin/edit_product';
-import AddProduct from 'views/admin/add_product';
-
-import ViewProduct from 'views/view_product';
-
-import ProductSearch from 'components/product/ProductSearch';
-import SignUp from 'views/auth/signup';
-import SignIn from 'views/auth/signin';
-import ForgotPassword from 'views/auth/forgot_password';
-import UserAccount from 'views/account/user_account';
+import { createBrowserHistory } from 'history';
+import React from 'react';
+import { Router, Switch } from 'react-router-dom';
 import EditAccount from 'views/account/edit_account';
-import Home from 'views/home';
+import UserAccount from 'views/account/user_account';
+import AddProduct from 'views/admin/add_product';
+import Dashboard from 'views/admin/dashboard';
+import EditProduct from 'views/admin/edit_product';
+import Products from 'views/admin/products';
+import ForgotPassword from 'views/auth/forgot_password';
+import SignIn from 'views/auth/signin';
+import SignUp from 'views/auth/signup';
 import CheckOutStep1 from 'views/checkout/step1';
 import CheckOutStep2 from 'views/checkout/step2';
 import CheckOutStep3 from 'views/checkout/step3';
 import PageNotFound from 'views/error/PageNotFound';
-
+import FeaturedProducts from 'views/featured';
+import Home from 'views/home';
+import RecommendedProducts from 'views/recommended';
+import Search from 'views/search';
+import Shop from 'views/shop';
+import ViewProduct from 'views/view_product';
+import AdminRoute from './AdminRoute';
 import ClientRoute from './ClientRoute';
 import PublicRoute from './PublicRoute';
-import AdminRoute from './AdminRoute';
-import FeaturedProducts from 'views/featured';
-import Shop from 'views/shop';
-import RecommendedProducts from 'views/recommended';
 
 export const history = createBrowserHistory();
 
 const AppRouter = () => (
 	<Router history={history}>
 		<Switch>
-			<Route
-				component={ProductSearch}
+			<PublicRoute
+				component={Search}
 				exact
 				path={ROUTES.SEARCH}
 			/>

@@ -1,23 +1,26 @@
 /* eslint-disable indent */
-import { call, put, select, all } from 'redux-saga/effects';
+import { EMiscActionType, EProductActionType } from 'constants/constants';
+import { Route } from 'constants/routes';
 import firebase from 'firebase/firebase';
-
-import { EProductActionType, EMiscActionType } from 'constants/constants';
-
+import { displayActionMessage } from 'helpers/utils';
+import { all, call, put, select } from 'redux-saga/effects';
+import { setLoading, setRequestStatus } from 'redux/actions/miscActions';
+import { history } from 'routers/AppRouter';
+import { IImageFile } from 'types/types';
 import {
-	getProductsSuccess,
 	addProductSuccess,
-	editProductSuccess,
+
+
+
+	clearSearchState, editProductSuccess, getProductsSuccess,
+
+
 	removeProductSuccess,
-	searchProductSuccess,
-	clearSearchState
+	searchProductSuccess
 } from '../actions/productActions';
 
-import { displayActionMessage } from 'helpers/utils';
-import { history } from 'routers/AppRouter';
-import { Route } from 'constants/routes';
-import { IImageFile } from 'types/types';
-import { setLoading, setRequestStatus } from 'redux/actions/miscActions';
+
+
 
 function* initRequest() {
 	yield put({ type: EMiscActionType.LOADING, payload: true });
@@ -41,7 +44,7 @@ function* productSaga({ type, payload }) {
 			try {
 				yield initRequest();
 				const state = yield select();
-				const result = yield call(firebase.getProducts, payload.lastRefKey, payload.searchKey);
+				const result = yield call(firebase.getProducts, payload.lastRefKey);
 
 				if (result.products.length === 0) {
 					handleError('No items found.');
@@ -173,7 +176,7 @@ function* productSaga({ type, payload }) {
 				yield put(clearSearchState());
 
 				const state = yield select();
-				const result = yield call(firebase.getProducts, payload.lastRefKey, payload.searchKey);
+				const result = yield call(firebase.searchProducts, payload.searchKey);
 
 				if (result.products.length === 0) {
 					yield handleError('No product found.');
