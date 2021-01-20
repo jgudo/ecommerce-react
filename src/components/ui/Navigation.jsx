@@ -1,17 +1,17 @@
 /* eslint-disable indent */
-import React, { useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory, useLocation, NavLink, Link } from 'react-router-dom';
-
 import * as ROUTE from 'constants/routes';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import UserAvatar from 'views/account/components/UserAvatar';
+import logo from '../../../static/logo-full.png';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import SearchBar from './SearchBar';
 import FiltersToggle from './FiltersToggle';
 import MobileNavigation from './MobileNavigation';
+import SearchBar from './SearchBar';
 
-import logo from '../../../static/logo-full.png';
+
 
 const Navigation = ({ isAuth }) => {
 	const navbar = useRef(null);

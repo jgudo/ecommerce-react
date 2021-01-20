@@ -1,13 +1,11 @@
 import {
-	ADD_TO_BASKET,
-	REMOVE_FROM_BASKET,
+	ADD_QTY_ITEM, ADD_TO_BASKET,
 	CLEAR_BASKET,
-	ADD_QTY_ITEM,
-	MINUS_QTY_ITEM,
+	MINUS_QTY_ITEM, REMOVE_FROM_BASKET,
 	SET_BASKET_ITEMS
 } from 'constants/constants';
 
-export const setBasketItems = (items) => ({
+export const setBasketItems = (items = []) => ({
 	type: SET_BASKET_ITEMS,
 	payload: items
 });
