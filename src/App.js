@@ -1,10 +1,16 @@
-import React, { StrictMode } from 'react';
+import React, { StrictMode, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import AppRouter from 'routers/AppRouter';
 import Preloader from 'components/ui/Preloader';
+import ReactGA from "react-ga";
 
-const App = ({ store, persistor }) => (
+
+const App = ({ store, persistor }) => {
+	useEffect(()=>{
+		ReactGA.initialize('Your-GA-ID')
+	}, [])
+	return(
 	<StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={<Preloader />} persistor={persistor}>
@@ -12,6 +18,6 @@ const App = ({ store, persistor }) => (
 			</PersistGate>
 		</Provider>
 	</StrictMode>
-);
+)};
 
 export default App;

@@ -30,8 +30,13 @@ import AdminRoute from './AdminRoute';
 import Shop from 'views/shop';
 import FeaturedProducts from 'views/featured';
 import RecommendedProducts from 'views/recommended';
+import ReactGA from "react-ga";
 
 export const history = createBrowserHistory();
+
+history.listen((location) => {
+	ReactGA.pageview(location.pathname);
+});
 
 const AppRouter = () => (
 	<Router history={history}>
