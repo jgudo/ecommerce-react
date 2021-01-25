@@ -239,18 +239,4 @@ class Firebase {
 
 const firebase = new Firebase();
 
-// If you want to add a new field to every single document, run this
-// delete or comment after first run or it may override what you have edited on first run.
-
-(async function () {
-	try {
-		const prod = await firebase.searchProducts('wala');
-
-		console.log(prod)
-
-	} catch (e) {
-		console.log(e);
-	}
-})()
-
 export default firebase;
