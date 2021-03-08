@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import useDidMount from 'hooks/useDidMount';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
-
-import {
-	signIn,
-	signInWithGoogle,
-	signInWithFacebook,
-	signInWithGithub
-} from 'redux/actions/authActions';
-import Input from 'components/ui/Input';
+import { CircularProgress, Input, SocialLogin } from 'components/common';
 import { FORGOT_PASSWORD } from 'constants/routes';
-import CircularProgress from 'components/ui/CircularProgress';
+import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { signIn } from 'redux/actions/authActions';
 
 const SignIn = (props) => {
 	const { authStatus, isAuthenticating } = useSelector(state => ({
 		authStatus: state.app.authStatus,
 		isAuthenticating: state.app.isAuthenticating
 	}));
-	const [providerSelected, setProviderSelected] = useState(undefined);
 
 	/* separate states so that when user navigates to signup or forgot password,
 	the authStatus message won't display to other routes.
@@ -52,28 +42,12 @@ const SignIn = (props) => {
 
 	const onSignUp = () => props.history.push('/signup');
 
-	const onSignInWithGoogle = () => {
-		dispatch(signInWithGoogle());
-		setProviderSelected('google');
-	};
-
-	const onSignInWithFacebook = () => {
-		dispatch(signInWithFacebook());
-		setProviderSelected('facebook');
-	};
-
-	const onSignInWithGithub = () => {
-		dispatch(signInWithGithub());
-		setProviderSelected('github');
-	};
-
 	const onSubmitForm = (e) => {
 		e.preventDefault();
 		const noError = Object.keys(field).every(key => !!field[key].value && !field[key].error);
 
 		if (noError) {
 			dispatch(signIn(field.email.value, field.password.value));
-			setProviderSelected('signin');
 		}
 	};
 
@@ -84,10 +58,10 @@ const SignIn = (props) => {
 	const isSuccess = !!authStatus.success && authStatus.type === 'auth';
 
 	return (
-		<div className="signin-content">
+		<div className="auth-content">
 			{isSuccess && (
 				<div className="loader">
-					<h3 className="toast-success signin-success">
+					<h3 className="toast-success auth-success">
 						{authStatus.message}
 						<CircularProgress />
 					</h3>
@@ -100,13 +74,13 @@ const SignIn = (props) => {
 			)}
 			{!isSuccess && (
 				<>
-					<div className={`signin ${signInStatus.message && (!authStatus.success && 'input-error')}`}>
-						<div className="signin-main">
+					<div className={`auth ${signInStatus.message && (!authStatus.success && 'input-error')}`}>
+						<div className="auth-main">
 							<h3>Sign in to Salinaka</h3>
 							<br />
-							<div className="signin-wrapper">
+							<div className="auth-wrapper">
 								<form onSubmit={onSubmitForm}>
-									<div className="signin-field">
+									<div className="auth-field">
 										<Input
 											label="Email"
 											readOnly={isSigningIn}
@@ -117,7 +91,7 @@ const SignIn = (props) => {
 											type="email"
 										/>
 									</div>
-									<div className="signin-field">
+									<div className="auth-field">
 										<Input
 											label="Password"
 											readOnly={isSigningIn}
@@ -130,7 +104,7 @@ const SignIn = (props) => {
 										/>
 									</div>
 									<br />
-									<div className="signin-field signin-action">
+									<div className="auth-field auth-action">
 										<Link
 											onClick={onClickLink}
 											style={{ textDecoration: 'underline' }}
@@ -139,64 +113,27 @@ const SignIn = (props) => {
 											<span>Forgot password?</span>
 										</Link>
 										<button
-											className="button signin-button"
+											className="button auth-button"
 											disabled={isSigningIn}
 											type="submit"
 										>
 											<CircularProgress
 												theme="light"
-												visible={isSigningIn && providerSelected === 'signin'}
+												visible={isSigningIn}
 											/>
-											{isSigningIn && providerSelected === 'signin' ? 'Signing In' : 'Sign In'}
+											{isSigningIn ? 'Signing In' : 'Sign In'}
 										</button>
 									</div>
 								</form>
 							</div>
 						</div>
-						<div className="signin-divider">
+						<div className="auth-divider">
 							<h6>OR</h6>
 						</div>
-						<div className="signin-provider">
-							<button
-								className="button signin-provider-button provider-facebook"
-								disabled={isSigningIn}
-								onClick={onSignInWithFacebook}
-							>
-								{isSigningIn && providerSelected === 'facebook' ? (
-									<CircularProgress theme="light" />
-								) : (
-										<i className="fab fa-facebook" />
-									)}
-								<span>Sign in with Facebook</span>
-							</button>
-							<button
-								className="button signin-provider-button provider-google"
-								disabled={isSigningIn}
-								onClick={onSignInWithGoogle}
-							>
-								{isSigningIn && providerSelected === 'google' ? (
-									<CircularProgress theme="dark" />
-								) : (
-										<i className="fab fa-google" />
-									)}
-								<span>Sign in with Google</span>
-							</button>
-							<button
-								className="button signin-provider-button provider-github"
-								disabled={isSigningIn}
-								onClick={onSignInWithGithub}
-							>
-								{isSigningIn && providerSelected === 'github' ? (
-									<CircularProgress theme="light" />
-								) : (
-										<i className="fab fa-github" />
-									)}
-								<span>Sign in with GitHub</span>
-							</button>
-						</div>
+						<SocialLogin isLoading={isSigningIn} />
 					</div>
-					<div className="signin-message">
-						<span className="signin-info">
+					<div className="auth-message">
+						<span className="auth-info">
 							<strong>Don't have an account?</strong>
 						</span>
 						<button
@@ -205,7 +142,7 @@ const SignIn = (props) => {
 							onClick={onSignUp}
 						>
 							Sign Up
-            </button>
+						</button>
 					</div>
 				</>
 			)}

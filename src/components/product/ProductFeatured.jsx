@@ -1,6 +1,6 @@
+import { ImageLoader } from 'components/common';
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import ImageLoader from 'components/ui/ImageLoader';
 import { useHistory } from 'react-router-dom';
 
 const ProductFeatured = ({ isLoading, product }) => {

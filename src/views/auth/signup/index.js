@@ -1,12 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Input from 'components/ui/Input';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useDidMount from 'hooks/useDidMount';
+import { CircularProgress, Input, SocialLogin } from 'components/common';
+import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'redux/actions/authActions';
-
-import CircularProgress from 'components/ui/CircularProgress';
-import useScrollTop from 'hooks/useScrollTop';
 
 const SignUp = (props) => {
 	const [passwordHidden, setPasswordHidden] = useState(true);
@@ -66,10 +62,10 @@ const SignUp = (props) => {
 	const isSuccess = !!authStatus.success && authStatus.type === 'auth';
 
 	return (
-		<div className="signup">
+		<div className="auth-content">
 			{isSuccess && (
 				<div className="loader">
-					<h3 className="toast-success signin-success">
+					<h3 className="toast-success auth-success">
 						{authStatus.message}
 						<CircularProgress />
 					</h3>
@@ -82,76 +78,82 @@ const SignUp = (props) => {
 			)}
 			{!isSuccess && (
 				<>
-					<div className={`signup-wrapper ${signUpStatus.message && (!authStatus.success && 'input-error')}`}>
-						<h3>Sign up to Salinaka</h3>
-						<form onSubmit={onFormSubmit}>
-							<div className="signup-field">
-								<Input
-									field="fullname"
-									isRequired
-									label="* Full Name"
-									maxLength={40}
-									onInputChange={onFullnameInput}
-									placeholder="John Doe"
-									readOnly={isSigningUp}
-									style={{ textTransform: 'capitalize' }}
-									type="text"
-								/>
-							</div>
-							<div className="signup-field">
-								<Input
-									field="email"
-									isRequired
-									label="* Email"
-									maxLength={40}
-									onInputChange={onEmailInput}
-									placeholder="test@example.com"
-									readOnly={isSigningUp}
-									type="email"
-								/>
-							</div>
-							<div className="signup-field">
-								<div style={{ display: 'flex', alignItems: 'flex-end' }} >
-									<div style={{ flexGrow: 1 }}>
-										<Input
-											field="password"
-											isRequired
-											label="* Password"
-											maxLength={40}
-											onInputChange={onPasswordInput}
-											placeholder="Password"
-											readOnly={isSigningUp}
-											ref={passwordField}
-											style={{ marginBottom: 0 }}
-											type={passwordHidden ? 'password' : 'text'}
-										/>
+					<div className={`auth ${signUpStatus.message && (!authStatus.success && 'input-error')}`}>
+						<div className="auth-main">
+							<h3>Sign up to Salinaka</h3>
+							<form onSubmit={onFormSubmit}>
+								<div className="auth-field">
+									<Input
+										field="fullname"
+										isRequired
+										label="* Full Name"
+										maxLength={40}
+										onInputChange={onFullnameInput}
+										placeholder="John Doe"
+										readOnly={isSigningUp}
+										style={{ textTransform: 'capitalize' }}
+										type="text"
+									/>
+								</div>
+								<div className="auth-field">
+									<Input
+										field="email"
+										isRequired
+										label="* Email"
+										maxLength={40}
+										onInputChange={onEmailInput}
+										placeholder="test@example.com"
+										readOnly={isSigningUp}
+										type="email"
+									/>
+								</div>
+								<div className="auth-field">
+									<div style={{ display: 'flex', alignItems: 'flex-end' }} >
+										<div style={{ flexGrow: 1 }}>
+											<Input
+												field="password"
+												isRequired
+												label="* Password"
+												maxLength={40}
+												onInputChange={onPasswordInput}
+												placeholder="Password"
+												readOnly={isSigningUp}
+												ref={passwordField}
+												style={{ marginBottom: 0 }}
+												type={passwordHidden ? 'password' : 'text'}
+											/>
+										</div>
+										<button
+											className="button button-small button-muted"
+											disabled={isSigningUp}
+											onClick={onTogglePasswordVisibility}
+											type="button"
+										>
+											{passwordHidden ? <i className="fa fa-eye" /> : <i className="fa fa-eye-slash" />}
+										</button>
 									</div>
+								</div>
+								<br />
+								<br />
+								<div className="auth-field auth-action auth-action-signup">
 									<button
-										className="button button-small button-muted"
+										className="button auth-button"
 										disabled={isSigningUp}
-										onClick={onTogglePasswordVisibility}
-										type="button"
+										type="submit"
 									>
-										{passwordHidden ? <i className="fa fa-eye" /> : <i className="fa fa-eye-slash" />}
+										<CircularProgress visible={isSigningUp} theme="light" />
+										{isSigningUp ? 'Signing Up' : 'Sign Up'}
 									</button>
 								</div>
-							</div>
-							<br />
-							<br />
-							<div className="signup-field signup-action">
-								<button
-									className="button signup-button"
-									disabled={isSigningUp}
-									type="submit"
-								>
-									<CircularProgress visible={isSigningUp} theme="light" />
-									{isSigningUp ? 'Signing Up' : 'Sign Up'}
-								</button>
-							</div>
-						</form>
+							</form>
+						</div>
+						<div className="auth-divider">
+							<h6>OR</h6>
+						</div>
+						<SocialLogin isLoading={isSigningUp} />
 					</div>
-					<div className="signin-message">
-						<span className="signin-info">
+					<div className="auth-message">
+						<span className="auth-info">
 							<strong>Already have an account?</strong>
 						</span>
 						<button

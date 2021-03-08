@@ -1,8 +1,7 @@
+import { Filters } from 'components/common';
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearRecentSearch, removeSelectedRecent, setTextFilter } from 'redux/actions/filterActions';
-
-import Filters from '../ui/Filters';
 
 const ProductSearch = (props) => {
 	const {

@@ -1,11 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
-import {
-	removeSelectedRecent,
-	clearRecentSearch
-} from 'redux/actions/filterActions';
+import { clearRecentSearch, removeSelectedRecent } from 'redux/actions/filterActions';
 
 const SearchBar = ({
 	filter,

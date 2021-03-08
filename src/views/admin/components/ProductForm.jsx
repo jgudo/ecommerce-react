@@ -1,13 +1,8 @@
-import React, { useState, useRef } from 'react';
+import { CircularProgress, ImageLoader, Input } from 'components/common';
+import { useFileHandler } from 'hooks';
+import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
-import CircularProgress from 'components/ui/CircularProgress';
-import ImageLoader from 'components/ui/ImageLoader';
-import Input from 'components/ui/Input';
-
-import useFileHandler from 'hooks/useFileHandler';
-import PropTypes from 'prop-types';
 import InputColor from './InputColor';
-// import uuid from 'uuid';
 
 // Default brand names that I used. You can use what you want
 const brandOptions = [
@@ -29,6 +24,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		maxQuantity: { value: product ? defaultProduct.maxQuantity : 0 },
 		description: { value: product ? defaultProduct.description : '' },
 		keywords: { value: product ? defaultProduct.keywords : ['gago'] },
+		sizes: { value: product ? defaultProduct.sizes : [] },
 		imageUrl: { value: product ? defaultProduct.image : '' },
 		isFeatured: { value: product ? defaultProduct.isFeatured : false },
 		isRecommended: { value: product ? defaultProduct.isRecommended : false },
@@ -83,6 +79,17 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 		const keywords = newValue.map(word => word.value);
 
 		setField({ ...field, keywords: { value: keywords } });
+	};
+
+	const onSizesChange = (newValue) => {
+		const sizes = newValue.map(size => Number(size.value));
+		setField({ ...field, sizes: { value: sizes } });
+	};
+
+	const handleNumberOnlyInput = (e) => {
+		if (/\D/.test(code) && code !== 'Backspace') {
+			e.preventDefault();
+		}
 	};
 
 	const onFeaturedCheckChange = (e) => {
@@ -200,18 +207,35 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 							/>
 						</div>
 					</div>
-					<div className="product-form-field">
-						<span className="d-block padding-s">Keyword(s)</span>
-						<CreatableSelect
-							isMulti
-							placeholder="Select/Create Keyword"
-							onChange={onKeywordChange}
-							defaultValue={field.keywords.value.map(word => ({ value: word, label: word }))}
-							// options={field.keywords.value.map(word => ({ value: word, label: word }))}
-							styles={{
-								menu: provided => ({ ...provided, zIndex: 10 })
-							}}
-						/>
+					<div className="d-flex">
+						<div className="product-form-field">
+							<span className="d-block padding-s">Keyword(s)</span>
+							<CreatableSelect
+								isMulti
+								placeholder="Select/Create Keyword"
+								onChange={onKeywordChange}
+								defaultValue={field.keywords.value.map(word => ({ value: word, label: word }))}
+								// options={field.keywords.value.map(word => ({ value: word, label: word }))}
+								styles={{
+									menu: provided => ({ ...provided, zIndex: 10 })
+								}}
+							/>
+						</div>
+						<div className="product-form-field">
+							<span className="d-block padding-s">Sizes (Millimeter)</span>
+							<CreatableSelect
+								isMulti
+								isClearable
+								placeholder="Select/Create Size"
+								onChange={onSizesChange}
+								onKeyDown={handleNumberOnlyInput}
+								defaultValue={field.sizes.value.map(size => ({ value: size, label: size }))}
+								// options={field.keywords.value.map(word => ({ value: word, label: word }))}
+								styles={{
+									menu: provided => ({ ...provided, zIndex: 10 })
+								}}
+							/>
+						</div>
 					</div>
 					<br />
 					<InputColor
@@ -341,20 +365,5 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 	);
 };
 
-ProductForm.propTypes = {
-	isLoading: PropTypes.bool,
-	onSubmit: PropTypes.func,
-	product: PropTypes.shape({
-		name: PropTypes.string,
-		brand: PropTypes.string,
-		price: PropTypes.number,
-		maxQuantity: PropTypes.number,
-		description: PropTypes.string,
-		keywords: PropTypes.arrayOf(PropTypes.string),
-		image: PropTypes.string,
-		availableColors: PropTypes.arrayOf(PropTypes.string),
-		imageCollection: PropTypes.arrayOf(PropTypes.object)
-	})
-};
 
 export default ProductForm;

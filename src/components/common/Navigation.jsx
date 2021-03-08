@@ -1,19 +1,17 @@
 /* eslint-disable indent */
 import * as ROUTE from 'constants/routes';
+import logo from 'images/logo-full.png';
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import UserAvatar from 'views/account/components/UserAvatar';
-import logo from '../../../static/logo-full.png';
 import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
 import FiltersToggle from './FiltersToggle';
 import MobileNavigation from './MobileNavigation';
 import SearchBar from './SearchBar';
 
-
-
-const Navigation = ({ isAuth }) => {
+const Navigation = () => {
 	const navbar = useRef(null);
 	const history = useHistory();
 	const { pathname } = useLocation();
@@ -38,6 +36,7 @@ const Navigation = ({ isAuth }) => {
 		products: state.products.items,
 		basketLength: state.basket.length,
 		profile: state.profile,
+		user: state.auth,
 		isLoading: state.app.loading,
 		isAuthenticating: state.app.isAuthenticating,
 		productsLength: state.products.items.length
@@ -57,24 +56,26 @@ const Navigation = ({ isAuth }) => {
 		ROUTE.FORGOT_PASSWORD
 	];
 
-	return window.screen.width <= 800 ? (
-		<MobileNavigation
-			basketLength={store.basketLength}
-			disabledPaths={basketDisabledpathnames}
-			isAuth={isAuth}
-			products={store.products}
-			isLoading={store.isLoading}
-			productsCount={store.productsCount}
-			filter={store.filter}
-			isAuthenticating={store.isAuthenticating}
-			pathname={pathname}
-			profile={store.profile}
-		/>
-	) : (
-			<nav
-				className="navigation"
-				ref={navbar}
-			>
+	if (store.user && store.user.role === 'ADMIN') {
+		return null;
+	} else if (window.screen.width <= 800) {
+		return (
+			<MobileNavigation
+				basketLength={store.basketLength}
+				disabledPaths={basketDisabledpathnames}
+				isAuth={store.user}
+				products={store.products}
+				isLoading={store.isLoading}
+				productsCount={store.productsCount}
+				filter={store.filter}
+				isAuthenticating={store.isAuthenticating}
+				pathname={pathname}
+				profile={store.profile}
+			/>
+		)
+	} else {
+		return (
+			<nav className="navigation" ref={navbar}>
 				<div className="logo">
 					<Link onClick={onClickLink} to="/">
 						<img src={logo} />
@@ -122,39 +123,40 @@ const Navigation = ({ isAuth }) => {
 							)}
 						</BasketToggle>
 					</li>
-					{isAuth ? (
+					{store.user ? (
 						<li className="navigation-menu-item">
 							<UserAvatar isAuthenticating={store.isAuthenticating} profile={store.profile} />
 						</li>
 					) : (
-							<li className="navigation-action">
-								{pathname !== ROUTE.SIGNUP && (
-									<NavLink
-										activeClassName="navigation-menu-active"
-										className="button button-small"
-										exact
-										onClick={onClickLink}
-										to={ROUTE.SIGNUP}
-									>
-										Sign Up
-									</NavLink>
-								)}
-								{pathname !== ROUTE.SIGNIN && (
-									<NavLink
-										activeClassName="navigation-menu-active"
-										className="button button-small button-muted margin-left-s"
-										exact
-										onClick={onClickLink}
-										to={ROUTE.SIGNIN}
-									>
-										Sign In
-									</NavLink>
-								)}
-							</li>
-						)}
+						<li className="navigation-action">
+							{pathname !== ROUTE.SIGNUP && (
+								<NavLink
+									activeClassName="navigation-menu-active"
+									className="button button-small"
+									exact
+									onClick={onClickLink}
+									to={ROUTE.SIGNUP}
+								>
+									Sign Up
+								</NavLink>
+							)}
+							{pathname !== ROUTE.SIGNIN && (
+								<NavLink
+									activeClassName="navigation-menu-active"
+									className="button button-small button-muted margin-left-s"
+									exact
+									onClick={onClickLink}
+									to={ROUTE.SIGNIN}
+								>
+									Sign In
+								</NavLink>
+							)}
+						</li>
+					)}
 				</ul>
 			</nav>
-		);
+		)
+	}
 };
 
 export default Navigation;

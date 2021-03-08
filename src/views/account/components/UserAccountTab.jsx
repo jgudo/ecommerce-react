@@ -1,11 +1,10 @@
 /* eslint-disable indent */
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-import { displayDate } from 'helpers/utils';
+import { ImageLoader } from 'components/common';
 import { ACCOUNT_EDIT } from 'constants/routes';
-import ImageLoader from 'components/ui/ImageLoader';
+import { displayDate } from 'helpers/utils';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const UserProfile = (props) => {
 	const profile = useSelector(state => state.profile);
@@ -45,22 +44,22 @@ const UserProfile = (props) => {
 					{profile.address ? (
 						<h5>{profile.address}</h5>
 					) : (
-							<h5 className="text-subtle text-italic">Address not set</h5>
-						)}
+						<h5 className="text-subtle text-italic">Address not set</h5>
+					)}
 					<span>Mobile</span>
 					<br />
 					{profile.mobile.data ? (
 						<h5>{profile.mobile.data.num ? profile.mobile.data.num : '+63'}</h5>
 					) : (
-							<h5 className="text-subtle text-italic">Mobile not set</h5>
-						)}
+						<h5 className="text-subtle text-italic">Mobile not set</h5>
+					)}
 					<span>Date Joined</span>
 					<br />
 					{profile.dateJoined ? (
 						<h5>{displayDate(profile.dateJoined)}</h5>
 					) : (
-							<h5 className="text-subtle text-italic">Not available</h5>
-						)}
+						<h5 className="text-subtle text-italic">Not available</h5>
+					)}
 				</div>
 			</div>
 		</div>

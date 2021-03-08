@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { Boundary } from 'components/common';
+import { AppliedFilters, ProductItem, ProductList } from 'components/product';
+import { useDocumentTitle, useScrollTop } from 'hooks';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFilter } from 'selectors/selector';
-
-import ProductList from 'components/product/ProductList';
-import ProductItem from 'components/product/ProductItem';
-import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
-import Boundary from 'components/ui/Boundary';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
 
 const Shop = () => {
     useDocumentTitle('Shop | Salinaka');
@@ -47,7 +43,7 @@ const Shop = () => {
     const isFiltered = ['keyword', 'brand', 'minPrice', 'maxPrice', 'sortBy'].some(key => !!store.filter[key]);
 
     return (
-        <>
+        <main className="content">
             <section className="product-list-wrapper">
                 {!store.requestStatus && (
                     <div className="product-list-header">
@@ -62,7 +58,7 @@ const Shop = () => {
                         </div>
                     </div>
                 )}
-                <ProductAppliedFilters filter={store.filter} />
+                <AppliedFilters filter={store.filter} />
                 <Boundary>
                     <ProductList {...store}>
                         {({ foundOnBasket }) => (
@@ -92,7 +88,7 @@ const Shop = () => {
                     </ProductList>
                 </Boundary>
             </section>
-        </>
+        </main>
     );
 };
 

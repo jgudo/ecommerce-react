@@ -1,6 +1,6 @@
+import { Input } from 'components/common';
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import Input from 'components/ui/Input';
 
 const ShippingForm = ({ setField, field }) => {
 	const [errorMobile, setErrorMobile] = useState('');

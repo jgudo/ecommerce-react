@@ -1,11 +1,9 @@
+import { useDocumentTitle, useScrollTop } from 'hooks';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
 import { addProduct } from 'redux/actions/productActions';
-import ProductForm from '../components/ProductForm';
+import { ProductForm } from '../components';
 
 const AddProduct = () => {
 	useScrollTop();

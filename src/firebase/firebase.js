@@ -145,69 +145,6 @@ class Firebase {
 			}
 		});
 	}
-	// searchProducts = (searchKey) => {
-	// 	let didTimeout = false;
-
-	// 	return new Promise(async (resolve, reject) => {
-	// 		let productsRef = this.db.collection('products');
-
-	// 		const timeout = setTimeout(() => {
-	// 			didTimeout = true;
-	// 			reject('Request timeout, please try again');
-	// 		}, 15000);
-
-	// 		try {
-	// 			// const totalQueryRef = productsRef
-	// 			// 	.where('name_lower', '>=', searchKey)
-	// 			// 	.where('name_lower', '<=', searchKey + '\uf8ff');
-	// 			const searchedNameRef = productsRef
-	// 				.orderBy('name_lower')
-	// 				.where('name_lower', '>=', searchKey)
-	// 				.where('name_lower', '<=', searchKey + '\uf8ff')
-	// 				.limit(12);
-	// 			const searchedKeywordsRef = productsRef
-	// 				.orderBy('dateAdded', 'desc')
-	// 				.where('keywords', 'array-contains-any', searchKey.split(' '))
-	// 				.limit(12)
-
-	// 			// const totalResult = await totalQueryRef.get();
-	// 			const nameSnaps = await searchedNameRef.get();
-	// 			const keywordsSnaps = await searchedKeywordsRef.get();
-	// 			// const total = totalResult.docs.length;
-
-	// 			clearTimeout(timeout);
-	// 			if (!didTimeout) {
-	// 				const searchedNameProducts = [];
-	// 				const searchedKeywordsProducts = [];
-	// 				let lastKey = null;
-
-	// 				if (!nameSnaps.empty) {
-	// 					nameSnaps.forEach(doc => searchedNameProducts.push({ id: doc.id, ...doc.data() }));
-	// 					lastKey = nameSnaps.docs[nameSnaps.docs.length - 1];
-	// 				}
-
-	// 				if (!keywordsSnaps.empty) {
-	// 					keywordsSnaps.forEach(doc => searchedKeywordsProducts.push({ id: doc.id, ...doc.data() }));
-	// 				}
-
-	// 				// MERGE PRODUCTS
-	// 				const mergedProducts = [...searchedNameProducts, ...searchedKeywordsProducts];
-	// 				const hash = {};
-
-	// 				mergedProducts.forEach(product => {
-	// 					hash[product.id] = product;
-	// 				});
-
-	// 				resolve({ products: Object.values(hash), lastKey });
-	// 			}
-	// 		} catch (e) {
-	// 			if (didTimeout) return;
-	// 			console.log('Failed to fetch products: An error occured while trying to fetch products or there may be no product ', e);
-	// 			reject(':( Failed to fetch products.');
-	// 		}
-
-	// 	});
-	// }
 
 	searchProducts = (searchKey) => {
 		let didTimeout = false;
@@ -221,9 +158,6 @@ class Firebase {
 			}, 15000);
 
 			try {
-				// const totalQueryRef = productsRef
-				//  .where('name_lower', '>=', searchKey)
-				//  .where('name_lower', '<=', searchKey + '\uf8ff');
 				const searchedNameRef = productsRef
 					.orderBy('name_lower')
 					.where('name_lower', '>=', searchKey)
@@ -231,8 +165,7 @@ class Firebase {
 					.limit(12);
 				const searchedKeywordsRef = productsRef
 					.orderBy('dateAdded', 'desc')
-					.where('keywords', 'array-contains-any', searchKey.split
-						(' '))
+					.where('keywords', 'array-contains-any', searchKey.split(' '))
 					.limit(12)
 
 				// const totalResult = await totalQueryRef.get();
@@ -277,7 +210,6 @@ class Firebase {
 		});
 	}
 
-	// searchProduct = (keyword) => this.db.collection('products').where('name_lower', '>=', keyword).where('name_lower', '<=', keyword + '\uf8ff').get();
 	getFeaturedProducts = (itemsCount = 12) => this.db.collection('products').where('isFeatured', '==', true).limit(itemsCount).get();
 
 	getRecommendedProducts = (itemsCount = 12) => this.db.collection('products').where('isRecommended', '==', true).limit(itemsCount).get();
@@ -302,18 +234,14 @@ class Firebase {
 
 const firebase = new Firebase();
 
-// If you want to add a new field to every single document, run this
-// delete or comment after first run or it may override what you have edited on first run.
-
 (async function () {
-	try {
-		const prod = await firebase.searchProducts('wala');
-
-		console.log(prod)
-
-	} catch (e) {
-		console.log(e);
-	}
+	const col = await firebase.db.collection('products').get();
+	col.forEach((doc) => {
+		doc.ref.update({
+			sizes: [28, 36, 42]
+		});
+	})
 })()
+
 
 export default firebase;

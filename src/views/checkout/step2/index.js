@@ -1,17 +1,13 @@
 /* eslint-disable no-nested-ternary */
+import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
+import { useDocumentTitle, useScrollTop } from 'hooks';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-
-import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
 import { setShippingDetails } from 'redux/actions/checkoutActions';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
+import { Pagination, StepTracker } from '../components';
 import withAuth from '../hoc/withAuth';
-import StepTracker from '../components/StepTracker';
-import Pagination from '../components/Pagination';
 import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
-
 
 const ShippingDetails = ({
 	profile,
@@ -21,6 +17,7 @@ const ShippingDetails = ({
 }) => {
 	useDocumentTitle('Check Out Step 2 | Salinaka');
 	useScrollTop();
+	const dispatch = useDispatch();
 
 	const [field, setField] = useState({
 		fullname: { value: profile.fullname ? profile.fullname : '' },
@@ -33,7 +30,6 @@ const ShippingDetails = ({
 		isInternational: !!shipping.isInternational ? shipping.isInternational : false,
 		isDone: false
 	});
-	const dispatch = useDispatch();
 	const noError = Object.keys(field).every((key) => {
 		if (typeof field[key] === 'object') {
 			// eslint-disable-next-line no-extra-boolean-cast

@@ -1,8 +1,6 @@
-import ProductItem from 'components/product/ProductItem';
-import Boundary from 'components/ui/Boundary';
-import CircularProgress from 'components/ui/CircularProgress';
-import MessageDisplay from 'components/ui/MessageDisplay';
-import useDidMount from 'hooks/useDidMount';
+import { Boundary, CircularProgress, MessageDisplay } from 'components/common';
+import { ProductItem } from 'components/product';
+import { useDidMount } from 'hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRequestStatus } from 'redux/actions/miscActions';
@@ -49,41 +47,47 @@ const Search = (props) => {
     const foundOnBasket = id => !!basket.find(item => item.id === id);
 
     return requestStatus && !isLoading ? (
-        <MessageDisplay
-            message={requestStatus}
-            desc="Try using correct filters or keyword."
-        />
+        <main className="content">
+            <MessageDisplay
+                message={requestStatus}
+                desc="Try using correct filters or keyword."
+            />
+        </main>
     ) : !requestStatus && !isLoading ? (
         <Boundary>
-            <section className="product-list-wrapper product-list-search">
-                {!requestStatus && (
-                    <div className="product-list-header">
-                        <div className="product-list-header-title">
-                            <h5>
-                                {`Found ${products.length} ${products.length > 1 ? 'products' : 'product'} with keyword ${searchKey}`}
-                            </h5>
+            <main className="content">
+                <section className="product-list-wrapper product-list-search">
+                    {!requestStatus && (
+                        <div className="product-list-header">
+                            <div className="product-list-header-title">
+                                <h5>
+                                    {`Found ${products.length} ${products.length > 1 ? 'products' : 'product'} with keyword ${searchKey}`}
+                                </h5>
+                            </div>
                         </div>
+                    )}
+                    <div
+                        className="product-list"
+                        ref={productListWrapper}
+                        style={{ gridTemplateColumns: `repeat(${columnCount}, 160px)` }}
+                    >
+                        {products.map(product => (
+                            <ProductItem
+                                isItemOnBasket={foundOnBasket(product.id)}
+                                key={product.id}
+                                isLoading={isLoading}
+                                product={product}
+                            />
+                        ))}
                     </div>
-                )}
-                <div
-                    className="product-list"
-                    ref={productListWrapper}
-                    style={{ gridTemplateColumns: `repeat(${columnCount}, 160px)` }}
-                >
-                    {products.map(product => (
-                        <ProductItem
-                            isItemOnBasket={foundOnBasket(product.id)}
-                            key={product.id}
-                            isLoading={isLoading}
-                            product={product}
-                        />
-                    ))}
-                </div>
-            </section>
+                </section>
+            </main>
         </Boundary>
     ) : (
-                <div className="loader"><CircularProgress /></div>
-            );
+        <main className="content">
+            <div className="loader"><CircularProgress /></div>
+        </main>
+    );
 };
 
 export default Search;

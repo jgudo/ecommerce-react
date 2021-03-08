@@ -1,18 +1,10 @@
-/* eslint-disable indent */
-/* eslint-disable no-nested-ternary */
-import Basket from 'components/basket/Basket';
-import Footer from 'components/ui/Footer';
-import Navigation from 'components/ui/Navigation';
 import { ADMIN_DASHBOARD, SIGNIN, SIGNUP } from 'constants/routes';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-
-
 const PublicRoute = ({
-	userType,
-	isAuth,
+	auth,
 	component: Component,
 	path,
 	...rest
@@ -23,32 +15,24 @@ const PublicRoute = ({
 			const { from } = props.location.state || { from: { pathname: '/' } };
 
 			return (
-				isAuth && userType === 'ADMIN'
+				auth && auth.role === 'ADMIN'
 					? (
 						<Redirect to={ADMIN_DASHBOARD} />
 					)
-					: (isAuth && userType === 'USER') && (path === SIGNIN || path === SIGNUP)
+					: (auth && auth.role === 'USER') && (path === SIGNIN || path === SIGNUP)
 						? (
 							<Redirect to={from} />
 						)
 						: (
-							<>
-								<Navigation isAuth={isAuth} />
-								<Basket isAuth={isAuth} />
-								<main className="content">
-									<Component {...props} />
-								</main>
-								<Footer />
-							</>
+							<main className="content">
+								<Component {...props} />
+							</main>
 						)
 			);
 		}}
 	/>
 );
 
-const mapStateToProps = ({ auth }) => ({
-	isAuth: !!auth.id && !!auth.role,
-	userType: auth.role
-});
+const mapStateToProps = ({ auth }) => ({ auth });
 
 export default connect(mapStateToProps)(PublicRoute);

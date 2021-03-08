@@ -1,13 +1,12 @@
 /* eslint-disable react/no-multi-comp */
+import { CircularProgress } from 'components/common';
+import { useDocumentTitle, useScrollTop } from 'hooks';
 import React, { lazy, Suspense } from 'react';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import CircularProgress from 'components/ui/CircularProgress';
-import UserTab from '../tab/UserTab';
-import useScrollTop from 'hooks/useScrollTop';
+import UserTab from '../components/UserTab';
 
-const UserAccountTab = lazy(() => import('../tab/UserAccountTab'));
-const UserWishListTab = lazy(() => import('../tab/UserWishListTab'));
-const UserOrdersTab = lazy(() => import('../tab/UserOrdersTab'));
+const UserAccountTab = lazy(() => import('../components/UserAccountTab'));
+const UserWishListTab = lazy(() => import('../components/UserWishListTab'));
+const UserOrdersTab = lazy(() => import('../components/UserOrdersTab'));
 
 const Loader = () => (
 	<div className="loader" style={{ minHeight: '80vh' }}>

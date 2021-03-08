@@ -1,11 +1,9 @@
+import { useDocumentTitle, useScrollTop } from 'hooks';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
-
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
 import { editProduct } from 'redux/actions/productActions';
-import ProductForm from '../components/ProductForm';
+import { ProductForm } from '../components';
 
 const EditProduct = (props) => {
 	useDocumentTitle('Edit Product | Salinaka');

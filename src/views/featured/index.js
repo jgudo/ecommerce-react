@@ -1,11 +1,8 @@
-import React from 'react';
-
-import MessageDisplay from 'components/ui/MessageDisplay';
-import ProductFeatured from 'components/product/ProductFeatured';
-import useFeaturedProducts from 'hooks/useFeaturedProducts';
+import { MessageDisplay } from 'components/common';
+import { FeaturedProduct } from 'components/product';
+import { useDocumentTitle, useFeaturedProducts, useScrollTop } from 'hooks';
 import bannerImg from 'images/banner-guy.png';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
+import React from 'react';
 
 const FeaturedProducts = () => {
     useDocumentTitle('Featured Products | Salinaka');
@@ -19,32 +16,33 @@ const FeaturedProducts = () => {
     } = useFeaturedProducts();
 
     return (
-        <div className="featured">
-            <div className="banner">
-                <div className="banner-desc">
-                    <h1>Featured Products</h1>
+        <main className="content">
+            <div className="featured">
+                <div className="banner">
+                    <div className="banner-desc">
+                        <h1>Featured Products</h1>
+                    </div>
+                    <div className="banner-img">
+                        <img src={bannerImg} alt="" />
+                    </div>
                 </div>
-                <div className="banner-img">
-                    <img src={bannerImg} alt="" />
-                </div>
-            </div>
-            <div className="display">
-                <div className="product-display-grid">
-                    {(error && !isLoading) ? (
-                        <MessageDisplay
-                            message={error}
-                            action={fetchFeaturedProducts}
-                            buttonLabel="Try Again"
-                        />
-                    ) : (
+                <div className="display">
+                    <div className="product-display-grid">
+                        {(error && !isLoading) ? (
+                            <MessageDisplay
+                                message={error}
+                                action={fetchFeaturedProducts}
+                                buttonLabel="Try Again"
+                            />
+                        ) : (
                             <>
                                 {featuredProducts.length === 0 ? new Array(4).fill({}).map((product, index) => (
-                                    <ProductFeatured
+                                    <FeaturedProduct
                                         key={`product-skeleton ${index}`}
                                         product={product}
                                     />
                                 )) : featuredProducts.map(product => (
-                                    <ProductFeatured
+                                    <FeaturedProduct
                                         key={product.id}
                                         isLoading={isLoading}
                                         product={product}
@@ -52,9 +50,10 @@ const FeaturedProducts = () => {
                                 ))}
                             </>
                         )}
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 

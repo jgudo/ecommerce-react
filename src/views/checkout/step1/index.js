@@ -1,12 +1,9 @@
-import React from 'react';
-
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
+import { BasketItem } from 'components/basket';
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
-import BasketItem from 'components/basket/BasketItem';
-import StepTracker from '../components/StepTracker';
-import Pagination from '../components/Pagination';
+import { useDocumentTitle, useScrollTop } from 'hooks';
+import React from 'react';
+import { Pagination, StepTracker } from '../components';
 import withAuth from '../hoc/withAuth';
 
 const OrderSummary = ({

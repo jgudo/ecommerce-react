@@ -1,22 +1,11 @@
-/* eslint-disable indent */
-/* eslint-disable no-extra-boolean-cast */
-/* eslint-disable no-else-return */
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Boundary, CircularProgress, ImageLoader, Input, Modal } from 'components/common';
+import { ACCOUNT } from 'constants/routes';
+import { useDocumentTitle, useFileHandler, useScrollTop } from 'hooks';
+import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-
-import Modal from 'components/ui/Modal';
-import Boundary from 'components/ui/Boundary';
-import Input from 'components/ui/Input';
-import CircularProgress from 'components/ui/CircularProgress';
-import ImageLoader from 'components/ui/ImageLoader';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from 'redux/actions/miscActions';
 import { updateProfile } from 'redux/actions/profileActions';
-import useFileHandler from 'hooks/useFileHandler';
-import { ACCOUNT } from 'constants/routes';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
 
 const EditProfile = (props) => {
 	const dispatch = useDispatch();
@@ -165,13 +154,13 @@ const EditProfile = (props) => {
 								<CircularProgress visible={true} theme="light" />
 							</div>
 						) : (
-								<label
-									className="edit-button edit-banner-button"
-									htmlFor="edit-banner"
-								>
-									<i className="fa fa-pen" />
-								</label>
-							)}
+							<label
+								className="edit-button edit-banner-button"
+								htmlFor="edit-banner"
+							>
+								<i className="fa fa-pen" />
+							</label>
+						)}
 					</div>
 					<div className="user-profile-avatar-wrapper">
 						<ImageLoader
@@ -192,13 +181,13 @@ const EditProfile = (props) => {
 								<CircularProgress visible={true} theme="light" />
 							</div>
 						) : (
-								<label
-									className="edit-button edit-avatar-button"
-									htmlFor="edit-avatar"
-								>
-									<i className="fa fa-pen" />
-								</label>
-							)}
+							<label
+								className="edit-button edit-avatar-button"
+								htmlFor="edit-avatar"
+							>
+								<i className="fa fa-pen" />
+							</label>
+						)}
 					</div>
 				</div>
 				<div className="user-profile-details">

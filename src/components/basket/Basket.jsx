@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import firebase from '../../firebase/firebase';
-
+import { BasketItem, BasketToggle } from 'components/basket';
+import { Boundary, Modal } from 'components/common';
 import { CHECKOUT_STEP_1 } from 'constants/routes';
+import firebase from 'firebase/firebase';
+import { calculateTotal, displayMoney } from 'helpers/utils';
+import { useDidMount, useModal } from 'hooks';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import { clearBasket } from 'redux/actions/basketActions';
-import { displayMoney } from 'helpers/utils';
-import BasketItem from './BasketItem';
-import BasketToggle from './BasketToggle';
-import Modal from '../ui/Modal';
-import Boundary from '../ui/Boundary';
-import useDidMount from 'hooks/useDidMount';
 
 const Basket = (props) => {
-	const [isModalOpen, setModalOpen] = useState(false);
-	const basket = useSelector(state => state.basket);
+	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
+	const { basket, user } = useSelector(state => ({
+		basket: state.basket,
+		user: state.auth
+	}));
 	const history = useHistory();
 	const { pathname } = useLocation();
 	const dispatch = useDispatch();
@@ -30,24 +30,10 @@ const Basket = (props) => {
 					console.log(e);
 				});
 		}
-	}, [basket]);
-
-	const calculateTotal = () => {
-		let total = 0;
-
-		if (basket.length !== 0) {
-			const result = basket.map(product => product.price * product.quantity).reduce((a, b) => a + b);
-			total = result.toFixed(2);
-		}
-
-		return displayMoney(total);
-	};
-
-	const onOpenModal = () => setModalOpen(true);
-	const onCloseModal = () => setModalOpen(false);
+	}, [basket.length]);
 
 	const onCheckOut = () => {
-		if ((basket.length !== 0 && props.isAuth)) {
+		if ((basket.length !== 0 && user)) {
 			document.body.classList.remove('is-basket-open');
 			history.push(CHECKOUT_STEP_1);
 		} else {
@@ -67,10 +53,10 @@ const Basket = (props) => {
 		}
 	};
 
-	return (
+	return user && user.role === 'ADMIN' ? null : (
 		<Boundary>
 			<Modal
-				isOpen={isModalOpen}
+				isOpen={isOpenModal}
 				onRequestClose={onCloseModal}
 			>
 				<p className="text-center">You must sign in to continue checking out</p>
@@ -133,7 +119,9 @@ const Basket = (props) => {
 				<div className="basket-checkout">
 					<div className="basket-total">
 						<p className="basket-total-title">Subtotal Amout:</p>
-						<h2 className="basket-total-amount">{calculateTotal()}</h2>
+						<h2 className="basket-total-amount">
+							{displayMoney(calculateTotal(basket.map(product => product.price * product.quantity)))}
+						</h2>
 					</div>
 					<button
 						className="basket-checkout-button button"

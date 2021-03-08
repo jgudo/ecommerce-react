@@ -1,11 +1,11 @@
-import React from 'react';
+import { ImageLoader } from 'components/common';
+import { displayActionMessage, displayMoney } from 'helpers/utils';
 import PropTypes from 'prop-types';
+import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { removeFromBasket, addToBasket } from 'redux/actions/basketActions';
-import { displayMoney, displayActionMessage } from 'helpers/utils';
-import ImageLoader from '../ui/ImageLoader';
+import { addToBasket, removeFromBasket } from 'redux/actions/basketActions';
 
 const ProductItem = ({
 	product,
@@ -28,7 +28,7 @@ const ProductItem = ({
 			dispatch(removeFromBasket(product.id));
 			displayActionMessage('Item removed from basket', 'info');
 		} else {
-			dispatch(addToBasket(product));
+			dispatch(addToBasket({ ...product, selectedSize: product.sizes[0] }));
 			displayActionMessage('Item added to basket', 'success');
 		}
 	};

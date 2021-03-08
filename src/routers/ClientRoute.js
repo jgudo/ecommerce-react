@@ -1,48 +1,35 @@
 /* eslint-disable no-nested-ternary */
+import { ADMIN_DASHBOARD, SIGNIN } from 'constants/routes';
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import Basket from 'components/basket/Basket';
-import Navigation from 'components/ui/Navigation';
-import Footer from 'components/ui/Footer';
-
-import { SIGNIN, ADMIN_DASHBOARD } from 'constants/routes';
+import { Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({
-	isAuth,
+	auth,
 	userType,
 	component: Component,
 	path,
 	...rest
 }) => (
-		<Route
-			{...rest}
-			component={props => (
-				isAuth && userType === 'USER'
-					? (
-						<>
-							<Navigation isAuth={isAuth} />
-							<Basket isAuth={isAuth} />
-							<main className="content">
-								<Component {...props} />
-							</main>
-							<Footer />
-						</>
-					)
-					: isAuth && userType === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
-						: <Redirect to={{
-							pathname: SIGNIN,
-							state: { from: props.location }
-						}}
-						/>
-			)}
-		/>
-	);
+	<Route
+		{...rest}
+		component={props => (
+			auth && auth.role === 'USER'
+				? (
+					<main className="content">
+						<Component {...props} />
+					</main>
+				)
+				: auth && auth.role === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
+					: <Redirect to={{
+						pathname: SIGNIN,
+						state: { from: props.location }
+					}}
+					/>
+		)}
+	/>
+);
 
-const mapStateToProps = ({ auth }) => ({
-	isAuth: !!auth.id && !!auth.role,
-	userType: auth.role
-});
+const mapStateToProps = ({ auth }) => ({ auth });
 
 export default connect(mapStateToProps)(PrivateRoute);

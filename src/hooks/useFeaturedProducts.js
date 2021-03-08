@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useDidMount } from 'hooks';
+import { useEffect, useState } from 'react';
 import firebase from '../firebase/firebase';
 
 const useFeaturedProducts = (itemsCount) => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const didMount = useDidMount(true);
 
     useEffect(() => {
-        if (featuredProducts.length === 0) {
+        if (featuredProducts.length === 0 && didMount) {
             fetchFeaturedProducts();
         }
     }, []);
@@ -20,7 +22,7 @@ const useFeaturedProducts = (itemsCount) => {
             const docs = await firebase.getFeaturedProducts(itemsCount);
 
             if (docs.empty) {
-                setError('No featured products found.');
+                didMount && setError('No featured products found.');
             } else {
                 const items = [];
 
@@ -29,12 +31,16 @@ const useFeaturedProducts = (itemsCount) => {
                     items.push({ id: snap.ref.id, ...data });
                 });
 
-                setFeaturedProducts(items);
-                setLoading(false);
+                if (didMount) {
+                    setFeaturedProducts(items);
+                    setLoading(false);
+                }
             }
         } catch (e) {
-            setError('Failed to fetch featured products');
-            setLoading(false);
+            if (didMount) {
+                setError('Failed to fetch featured products');
+                setLoading(false);
+            }
         }
     };
 

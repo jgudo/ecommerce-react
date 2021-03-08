@@ -1,25 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import { removeFromBasket } from 'redux/actions/basketActions';
+import { BasketItemControl } from 'components/basket';
+import { ImageLoader } from 'components/common';
 import { displayMoney } from 'helpers/utils';
-import BasketItemControl from './BasketItemControl';
-import Badge from '../ui/Badge';
-import ImageLoader from '../ui/ImageLoader';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { removeFromBasket } from 'redux/actions/basketActions';
 
 const BasketItem = ({ dispatch, product }) => {
 	const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
 
 	return (
 		<div className="basket-item">
-			<BasketItemControl
-				dispatch={dispatch}
-				product={product}
-			/>
+			<BasketItemControl product={product} />
 			<div className="basket-item-wrapper">
-				<div className="position-relative margin-right-m margin-left-s">
-					<Badge count={product.quantity} />
-				</div>
 				<div className="basket-item-img-wrapper">
 					<ImageLoader
 						className="basket-item-img"
@@ -27,19 +20,37 @@ const BasketItem = ({ dispatch, product }) => {
 					/>
 				</div>
 				<div className="basket-item-details">
-					<h5 className="basket-item-name">
-						{product.selectedColor && <i className="fa fa-square" style={{ color: product.selectedColor }} />}
-						&nbsp;
-						{product.name}
-					</h5>
-					<h5 className="basket-item-price">
-						{displayMoney(product.price * product.quantity)}
+					<Link to={`/product/${product.id}`} onClick={() => document.body.classList.remove('is-basket-open')}>
+						<h4 className="underline basket-item-name">
+							{product.name}
+						</h4>
+					</Link>
+					<div className="basket-item-specs">
+						<div>
+							<span className="spec-title">Quantity</span>
+							<h5 className="my-0">{product.quantity}</h5>
+						</div>
+						<div>
+							<span className="spec-title">Size</span>
+							<h5 className="my-0">{product.selectedSize} mm</h5>
+						</div>
+						<div>
+							<span className="spec-title">Color</span>
+							<i className="fa fa-square" style={{ color: product.selectedColor }} />
+						</div>
+					</div>
+					{/* {product.selectedSize && <span>{product.selectedSize} mm</span>}
+					<h5 className="my-0">
+						{displayMoney(product.price)}
 						<span>{` (x ${product.quantity})`}</span>
-						&nbsp;
-						{product.selectedSize && <span>| {product.selectedSize} mm</span>}
-					</h5>
+					</h5> */}
 				</div>
-
+				{/* <div className="basket-item-color">
+					{product.selectedColor && <i className="fa fa-square" style={{ color: product.selectedColor }} />}
+				</div> */}
+				<div className="basket-item-price">
+					<h4 className="my-0">{displayMoney(product.price * product.quantity)}</h4>
+				</div>
 				<button
 					className="basket-item-remove button button-border button-border-gray button-small"
 					onClick={onRemoveFromBasket}

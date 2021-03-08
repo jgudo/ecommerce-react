@@ -1,17 +1,13 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
+import { Boundary, FiltersToggle, SearchBar } from 'components/common';
+import { AppliedFilters, ProductList } from 'components/product';
 import { ADD_PRODUCT } from 'constants/routes';
-import ProductAppliedFilters from 'components/product/ProductAppliedFilters';
+import { useDocumentTitle, useScrollTop } from 'hooks';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { selectFilter } from 'selectors/selector';
-import ProductList from 'components/product/ProductList';
-import Boundary from 'components/ui/Boundary';
-import SearchBar from 'components/ui/SearchBar';
-import FiltersToggle from 'components/ui/FiltersToggle';
-import ProductItem from '../components/ProductItem';
+import { ProductItem } from '../components';
+
 
 const Products = ({ history }) => {
 	useDocumentTitle('Product List | Salinaka Admin');
@@ -68,7 +64,7 @@ const Products = ({ history }) => {
 				<ProductList {...store}>
 					{() => (
 						<>
-							<ProductAppliedFilters filter={store.filter} />
+							<AppliedFilters filter={store.filter} />
 							{store.filteredProducts.length > 0 && (
 								<div className="grid grid-product grid-count-6">
 									<div className="grid-col" />

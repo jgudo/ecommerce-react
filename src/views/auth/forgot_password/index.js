@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import useDidMount from 'hooks/useDidMount';
-import useDocumentTitle from 'hooks/useDocumentTitle';
-import useScrollTop from 'hooks/useScrollTop';
-import Input from 'components/ui/Input';
+import { CircularProgress, Input } from 'components/common';
+import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from 'redux/actions/authActions';
-
-import CircularProgress from 'components/ui/CircularProgress';
 
 const ForgotPassword = () => {
 	const { authStatus, isAuthenticating } = useSelector(state => ({

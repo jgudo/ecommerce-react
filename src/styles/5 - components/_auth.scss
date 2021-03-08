@@ -1,4 +1,20 @@
-.signin-content {
+.auth {
+  border: 1px solid $border-color-focus;
+  display: flex;
+  justify-content: center;
+  padding: $l-size;
+  padding-top: $m-size;
+  
+  @include tablet {
+    flex-direction: column;
+  }
+  
+  @include mobile {
+    padding: $m-size;
+  }
+}
+
+.auth-content {
   width: 80rem;
   height: auto;
   margin: auto;
@@ -13,23 +29,7 @@
   }
 }
 
-.signin {
-  border: 1px solid $border-color-focus;
-  display: flex;
-  justify-content: center;
-  padding: $l-size;
-  padding-top: $m-size;
-
-  @include tablet {
-    flex-direction: column;
-  }
-
-  @include mobile {
-    padding: $m-size;
-  }
-}
-
-.signin-main {
+.auth-main {
   width: 100%;
 
   @include tablet {
@@ -41,7 +41,7 @@
   }
 }
 
-.signin-provider {
+.auth-provider {
   width: 51rem;
   display: flex;
   justify-content: center;
@@ -54,7 +54,7 @@
   }
 }
 
-.signin-provider-button {
+.auth-provider-button {
   width: 100%;
   margin: $s-size;
   display: flex;
@@ -78,7 +78,7 @@
   }
 }
 
-.signin-button {
+.auth-button {
   @include tablet {
     width: 100%;
   }
@@ -125,7 +125,7 @@
   }
 }
 
-.signin-divider {
+.auth-divider {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -175,7 +175,7 @@
   }
 }
 
-.signin-action {
+.auth-action {
   display: flex;
   justify-content: space-between;
 
@@ -195,7 +195,11 @@
   }
 }
 
-.signin-message {
+.auth-action-signup {
+  justify-content: flex-end;
+}
+
+.auth-message {
   width: 100%;
   display: flex;
   align-items: center;
@@ -207,7 +211,7 @@
   border-top: none;
 }
 
-.signin-info {
+.auth-info {
   margin-right: $l-size;
 }
 
@@ -221,7 +225,7 @@
   } 
 }
 
-.signin-success {
+.auth-success {
   @extend .toast-success;
   width: 100%;
   display: flex;

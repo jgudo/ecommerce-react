@@ -1,9 +1,12 @@
 import {
-	ADD_TO_BASKET,
-	REMOVE_FROM_BASKET,
+	ADD_QTY_ITEM, ADD_TO_BASKET,
+
 	CLEAR_BASKET,
-	ADD_QTY_ITEM,
-	MINUS_QTY_ITEM,
+
+	MINUS_QTY_ITEM, REMOVE_FROM_BASKET,
+
+
+
 	SET_BASKET_ITEMS
 } from 'constants/constants';
 
@@ -14,7 +17,7 @@ export default (state = [], action) => {
 		case ADD_TO_BASKET:
 			return state.some(product => product.id === action.payload.id)
 				? state
-				: [...state, action.payload];
+				: [action.payload, ...state];
 		case REMOVE_FROM_BASKET:
 			return state.filter(product => product.id !== action.payload);
 		case CLEAR_BASKET:

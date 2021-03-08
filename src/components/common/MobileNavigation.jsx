@@ -1,14 +1,12 @@
+import { BasketToggle } from 'components/basket';
+import { HOME, SIGNIN } from 'constants/routes';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import { HOME, SIGNIN } from 'constants/routes';
 import UserNav from 'views/account/components/UserAvatar';
-import BasketToggle from '../basket/BasketToggle';
 import Badge from './Badge';
-import SearchBar from './SearchBar';
 import FiltersToggle from './FiltersToggle';
-import logo from '../../../static/logo-full.png';
+import SearchBar from './SearchBar';
 
 const Navigation = (props) => {
 	const history = useHistory();
@@ -48,20 +46,20 @@ const Navigation = (props) => {
 							<UserNav isAuthenticating={props.isAuthenticating} profile={props.profile} />
 						</li>
 					) : (
-							<>
-								{pathname !== SIGNIN && (
-									<li className="mobile-navigation-item">
-										<Link
-											className="navigation-menu-link"
-											onClick={onClickLink}
-											to={SIGNIN}
-										>
-											Sign In
+						<>
+							{pathname !== SIGNIN && (
+								<li className="mobile-navigation-item">
+									<Link
+										className="navigation-menu-link"
+										onClick={onClickLink}
+										to={SIGNIN}
+									>
+										Sign In
 										</Link>
-									</li>
-								)}
-							</>
-						)}
+								</li>
+							)}
+						</>
+					)}
 				</ul>
 			</div>
 			<div className="mobile-navigation-sec">

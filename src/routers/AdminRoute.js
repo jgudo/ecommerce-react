@@ -1,22 +1,20 @@
+import { AdminNavigation, AdminSideBar } from 'components/common';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
-
-import AdminNavigation from 'components/ui/AdminNavigation';
-import AdminSidePanel from 'components/ui/AdminSidePanel';
+import { Redirect, Route } from 'react-router-dom';
 
 const AdminRoute = ({ component: Component, ...rest }) => {
-	const isAuth = useSelector(state => !!state.auth.id && state.auth.role === 'ADMIN');
+	const user = useSelector(state => state.auth);
 
 	return (
 		<Route
 			{...rest}
 			component={props => (
-				isAuth ? (
+				user && user.role === 'ADMIN' ? (
 					<>
 						<AdminNavigation />
 						<main className="content-admin">
-							<AdminSidePanel />
+							<AdminSideBar />
 							<div className="content-admin-wrapper">
 								<Component {...props} />
 							</div>
