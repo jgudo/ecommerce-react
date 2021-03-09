@@ -20,13 +20,15 @@ const EditProduct = (props) => {
 
 	return (
 		<div className="product-form-container">
-			{!product && <Redirect to="/dashboard/products" />}
+			{(!product && !isLoading) && <Redirect to="/dashboard/products" />}
 			<h2>Edit Product</h2>
-			<ProductForm
-				isLoading={isLoading}
-				onSubmit={onSubmitForm}
-				product={product}
-			/>
+			{product && (
+				<ProductForm
+					isLoading={isLoading}
+					onSubmit={onSubmitForm}
+					product={product}
+				/>
+			)}
 		</div>
 	);
 };

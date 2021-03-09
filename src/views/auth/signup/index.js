@@ -1,12 +1,26 @@
-import { CircularProgress, Input, SocialLogin } from 'components/common';
+import { CircularProgress, SocialLogin } from 'components/common';
+import { CustomInput } from 'components/formik';
+import { Field, Form, Formik } from 'formik';
 import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'redux/actions/authActions';
+import * as Yup from 'yup';
+
+const SignInSchema = Yup.object().shape({
+	email: Yup.string()
+		.email('Email is not valid.')
+		.required('Email is required.'),
+	password: Yup.string()
+		.required('Password is required.')
+		.min(8, 'Password length should be at least 8 characters.')
+		.matches(/[A-Z\W]/g, 'Password should contain at least 1 uppercase letter.'),
+	fullname: Yup.string()
+		.required('Full name is required.')
+		.min(2, 'Name should be at least 2 characters.')
+});
 
 const SignUp = (props) => {
-	const [passwordHidden, setPasswordHidden] = useState(true);
-
 	/* separate states so that when user navigates to signin or forgot password,
 	the authStatus message won't display to other routes.
   */
@@ -17,7 +31,6 @@ const SignUp = (props) => {
 		isAuthenticating: state.app.isAuthenticating,
 		authStatus: state.app.authStatus
 	}));
-	const [field, setField] = useState({});
 	const didMount = useDidMount();
 	const dispatch = useDispatch();
 	const passwordField = useRef(null);
@@ -31,33 +44,14 @@ const SignUp = (props) => {
 		}
 	}, [authStatus, isAuthenticating]);
 
-	const onEmailInput = (value, error) => {
-		setField({ ...field, email: { value, error } });
-	};
-
-	const onFullnameInput = (value, error) => {
-		setField({ ...field, fullname: { value, error } });
-	};
-
-	const onPasswordInput = (value, error) => {
-		setField({ ...field, password: { value, error } });
-	};
-
-	const onTogglePasswordVisibility = () => setPasswordHidden(!passwordHidden);
-
 	const onClickSignIn = () => props.history.push('/signin');
 
-	const onFormSubmit = (e) => {
-		e.preventDefault();
-		const noError = Object.keys(field).every(key => !!field[key].value && !field[key].error);
-
-		if (noError) {
-			dispatch(signUp({
-				fullname: field.fullname.value.trim(),
-				email: field.email.value.trim().toLowerCase(),
-				password: field.password.value.trim()
-			}));
-		}
+	const onFormSubmit = (form) => {
+		dispatch(signUp({
+			fullname: form.fullname.trim(),
+			email: form.email.trim().toLowerCase(),
+			password: form.password.trim()
+		}));
 	};
 	const isSuccess = !!authStatus.success && authStatus.type === 'auth';
 
@@ -81,71 +75,63 @@ const SignUp = (props) => {
 					<div className={`auth ${signUpStatus.message && (!authStatus.success && 'input-error')}`}>
 						<div className="auth-main">
 							<h3>Sign up to Salinaka</h3>
-							<form onSubmit={onFormSubmit}>
-								<div className="auth-field">
-									<Input
-										field="fullname"
-										isRequired
-										label="* Full Name"
-										maxLength={40}
-										onInputChange={onFullnameInput}
-										placeholder="John Doe"
-										readOnly={isSigningUp}
-										style={{ textTransform: 'capitalize' }}
-										type="text"
-									/>
-								</div>
-								<div className="auth-field">
-									<Input
-										field="email"
-										isRequired
-										label="* Email"
-										maxLength={40}
-										onInputChange={onEmailInput}
-										placeholder="test@example.com"
-										readOnly={isSigningUp}
-										type="email"
-									/>
-								</div>
-								<div className="auth-field">
-									<div style={{ display: 'flex', alignItems: 'flex-end' }} >
-										<div style={{ flexGrow: 1 }}>
-											<Input
-												field="password"
-												isRequired
-												label="* Password"
-												maxLength={40}
-												onInputChange={onPasswordInput}
-												placeholder="Password"
-												readOnly={isSigningUp}
-												ref={passwordField}
-												style={{ marginBottom: 0 }}
-												type={passwordHidden ? 'password' : 'text'}
+							<Formik
+								initialValues={{
+									fullname: '',
+									email: '',
+									password: '',
+								}}
+								validateOnChange
+								validationSchema={SignInSchema}
+								onSubmit={onFormSubmit}
+							>
+								{() => (
+									<Form>
+										<div className="auth-field">
+											<Field
+												disabled={isSigningUp}
+												name="fullname"
+												type="text"
+												label="* Full Name"
+												placeholder="John Doe"
+												style={{ textTransform: 'capitalize' }}
+												component={CustomInput}
 											/>
 										</div>
-										<button
-											className="button button-small button-muted"
-											disabled={isSigningUp}
-											onClick={onTogglePasswordVisibility}
-											type="button"
-										>
-											{passwordHidden ? <i className="fa fa-eye" /> : <i className="fa fa-eye-slash" />}
-										</button>
-									</div>
-								</div>
-								<br />
-								<br />
-								<div className="auth-field auth-action auth-action-signup">
-									<button
-										className="button auth-button"
-										disabled={isSigningUp}
-										type="submit"
-									>
-										<CircularProgress visible={isSigningUp} theme="light" />
-										{isSigningUp ? 'Signing Up' : 'Sign Up'}
-									</button>
-								</div>
-							</form>
+										<div className="auth-field">
+											<Field
+												disabled={isSigningUp}
+												name="email"
+												type="email"
+												label="* Email"
+												placeholder="test@example.com"
+												component={CustomInput}
+											/>
+										</div>
+										<div className="auth-field">
+											<Field
+												disabled={isSigningUp}
+												name="password"
+												type="password"
+												label="* Password"
+												placeholder="Your Password"
+												component={CustomInput}
+											/>
+										</div>
+										<br />
+										<div className="auth-field auth-action auth-action-signup">
+											<button
+												className="button auth-button"
+												disabled={isSigningUp}
+												type="submit"
+											>
+												<CircularProgress visible={isSigningUp} theme="light" />
+												{isSigningUp ? 'Signing Up' : 'Sign Up'}
+											</button>
+										</div>
+									</Form>
+								)}
+							</Formik>
 						</div>
 						<div className="auth-divider">
 							<h6>OR</h6>

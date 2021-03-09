@@ -176,6 +176,10 @@
   display: flex;
   align-items: center;
 
+  & > div {
+    margin-bottom: $s-size;
+  }
+
   @include mobile {
     flex-direction: column;
   }

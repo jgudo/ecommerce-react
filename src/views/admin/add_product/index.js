@@ -21,6 +21,20 @@ const AddProduct = () => {
 			<ProductForm
 				isLoading={isLoading}
 				onSubmit={onSubmit}
+				product={{
+					name: '',
+					brand: '',
+					price: 0,
+					maxQuantity: 0,
+					description: '',
+					keywords: [],
+					sizes: [],
+					image: '',
+					isFeatured: false,
+					isRecommended: false,
+					availableColors: [],
+					imageCollection: []
+				}}
 			/>
 		</div>
 	);

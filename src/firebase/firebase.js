@@ -234,14 +234,14 @@ class Firebase {
 
 const firebase = new Firebase();
 
-(async function () {
-	const col = await firebase.db.collection('products').get();
-	col.forEach((doc) => {
-		doc.ref.update({
-			sizes: [28, 36, 42]
-		});
-	})
-})()
+// (async function () {
+// 	const col = await firebase.db.collection('products').get();
+// 	col.forEach((doc) => {
+// 		doc.ref.update({
+// 			sizes: [28, 36, 42]
+// 		});
+// 	})
+// })()
 
 
 export default firebase;

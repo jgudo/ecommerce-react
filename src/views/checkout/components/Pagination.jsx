@@ -23,6 +23,7 @@ const Pagination = ({
 				className="button"
 				disabled={disabledNext}
 				onClick={onClickNext}
+				type="submit"
 			>
 				{nextStepLabel}
 			</button>
