@@ -1,26 +1,40 @@
 import { CHECKOUT_STEP_2 } from 'constants/routes';
+import { Form, Formik } from 'formik';
 import { displayActionMessage, displayMoney } from 'helpers/utils';
 import { useDocumentTitle, useScrollTop } from 'hooks';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { setPaymentDetails } from 'redux/actions/checkoutActions';
-import { Pagination, StepTracker } from '../components';
+import * as Yup from 'yup';
+import { StepTracker } from '../components';
 import withAuth from '../hoc/withAuth';
 import CreditPayment from './CreditPayment';
 import PayPalPayment from './PayPalPayment';
 
-const Payment = ({
-	shipping,
-	payment,
-	subtotal,
-	history
-}) => {
+const FormSchema = Yup.object().shape({
+	name: Yup.string()
+		.min(4, 'Name should be at least 4 characters.')
+		.required('Name is required'),
+	cardnumber: Yup.number()
+		.positive('Card number is invalid.')
+		.integer('Card number should be an integer.')
+		.required('Card number is required.'),
+	expiry: Yup.date()
+		.required('Credit card expiry is required.'),
+	ccv: Yup.number()
+		.positive('CCV is invalid.')
+		.integer('CCV should be an integer.')
+		.required('CCV is required.'),
+	paymentMode: Yup.string().required('Please select paymend mode')
+});
+
+const Payment = ({ shipping, payment, subtotal }) => {
 	useDocumentTitle('Check Out Final Step | Salinaka');
 	useScrollTop();
 	const dispatch = useDispatch();
+	const history = useHistory();
 
-	const [paymentMode, setPaymentMode] = useState(payment.type || 'paypal');
 	const collapseCreditHeight = useRef(null);
 	const cardInputRef = useRef(null);
 	const [field, setField] = useState({
@@ -30,14 +44,13 @@ const Payment = ({
 		ccv: { value: payment.data.ccv ? payment.data.ccv : '' }
 	});
 
-	const onCreditModeChange = (e) => {
-		setPaymentMode('credit');
-		const parent = e.target.closest('.checkout-fieldset-collapse');
-		const checkBoxContainer = e.target.closest('.checkout-checkbox-field');
-
-		cardInputRef.current.focus();
-		parent.style.height = `${checkBoxContainer.offsetHeight + collapseCreditHeight.current.offsetHeight}px`;
-	};
+	const initFormikValues = {
+		name: payment.data.name || '',
+		cardnumber: payment.data.cardnumber || '',
+		expiry: payment.data.expiry || '',
+		ccv: payment.data.ccv || '',
+		paymentMode: payment.type || 'paypal'
+	}
 
 	const onPayPalModeChange = () => {
 		setPaymentMode('paypal');
@@ -90,37 +103,48 @@ const Payment = ({
 		: (
 			<div className="checkout">
 				<StepTracker current={3} />
-				<div className="checkout-step-3">
-					<CreditPayment
-						field={field}
-						onCreditModeChange={onCreditModeChange}
-						paymentMode={paymentMode}
-						ref={{
-							cardInputRef,
-							collapseCreditHeight
-						}}
-						setField={setField}
-					/>
-					<PayPalPayment
-						onPayPalModeChange={onPayPalModeChange}
-						paymentMode={paymentMode}
-					/>
-					<br />
-					<div className="basket-total text-right">
-						<p className="basket-total-title">Total:</p>
-						<h2 className="basket-total-amount">{displayMoney(subtotal + (shipping.isInternational ? 50 : 0))}</h2>
-					</div>
-					<br />
-					<Pagination
-						// eslint-disable-next-line no-extra-boolean-cast
-						disabledNext={!!!paymentMode}
-						history={history}
-						nextStepLabel="Confirm"
-						onClickNext={onConfirm}
-						onClickPrevious={onClickBack}
-
-					/>
-				</div>
+				<Formik
+					initialValues={initFormikValues}
+					validateOnChange
+					validationSchema={FormSchema}
+					onSubmit={onConfirm}
+				>
+					<Form className="checkout-step-3">
+						<CreditPayment
+							paymentMode={payment.type}
+							ref={{
+								cardInputRef,
+								collapseCreditHeight
+							}}
+						/>
+						<PayPalPayment
+							onPayPalModeChange={onPayPalModeChange}
+							paymentMode={payment.type}
+						/>
+						<br />
+						<div className="basket-total text-right">
+							<p className="basket-total-title">Total:</p>
+							<h2 className="basket-total-amount">{displayMoney(subtotal + (shipping.isInternational ? 50 : 0))}</h2>
+						</div>
+						<br />
+						<div className="checkout-shipping-action">
+							<button
+								className="button button-muted"
+								onClick={onClickBack}
+								type="button"
+							>
+								Go Back
+						</button>
+							<button
+								className="button"
+								disabled={true}
+								type="submit"
+							>
+								Confirm
+						</button>
+						</div>
+					</Form>
+				</Formik>
 			</div>
 		);
 };

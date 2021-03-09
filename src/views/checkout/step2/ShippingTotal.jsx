@@ -41,7 +41,7 @@ const ShippingTotal = ({ subtotal }) => {
 						</td>
 						<td>
 							<h2 className="basket-total-amount text-right">
-								{displayMoney(subtotal + (values.isInternational ? 50 : 0))}
+								{displayMoney(Number(subtotal) + (values.isInternational ? 50 : 0))}
 							</h2>
 						</td>
 					</tr>

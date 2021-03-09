@@ -1,70 +1,46 @@
 /* eslint-disable no-else-return */
-import { Input } from 'components/common';
+import { CustomInput } from 'components/formik';
+import { Field, useFormikContext } from 'formik';
 import React from 'react';
 
-const CreditPayment = React.forwardRef(({
-	onCreditModeChange,
-	paymentMode,
-	setField,
-	field
-}, ref) => {
+const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
 	const { cardInputRef, collapseCreditHeight } = ref;
+	const { values, setValues } = useFormikContext();
 
-	const onCardNameInput = (value, error) => {
-		setField({ ...field, name: { value, error } });
-	};
+	const onCreditModeChange = (e) => {
+		if (e.target.checked) {
+			setValues({ ...values, paymentMode: 'credit' });
 
-	const onCardNumberInput = (value, error) => {
-		setField({ ...field, cardnumber: { value, error } });
-	};
+			const parent = e.target.closest('.checkout-fieldset-collapse');
+			const checkBoxContainer = e.target.closest('.checkout-checkbox-field');
 
-	const validateCardNumber = (value) => {
-		if (!(value.length >= 13 && value.length <= 19)) {
-			return 'Card number is invalid';
-		} else {
-			return false;
-		}
-	};
-
-	const onExpiryInput = (value, error) => {
-		setField({ ...field, expiry: { value, error } });
-	};
-
-	const onCcvInput = (value, error) => {
-		setField({ ...field, ccv: { value, error } });
-	};
-
-	const validateCCV = (value) => {
-		// do some stuffs
-		if (value.trim().length < 3) {
-			return 'CCV is invalid';
-		} else {
-			return false;
+			cardInputRef.current.focus();
+			parent.style.height = `${checkBoxContainer.offsetHeight + collapseCreditHeight.current.offsetHeight}px`;
 		}
 	};
 
 	return (
-		<form>
+		<>
 			<h3 className="text-center">Payment</h3>
 			<br />
 			<span className="d-block padding-s">Payment Option</span>
 			<div className={`checkout-fieldset-collapse ${paymentMode === 'credit' ? 'is-selected-payment' : ''}`}>
+				{/* ---- CHECKBOX TOGGLER ------ */}
 				<div className="checkout-field margin-0">
 					<div className="checkout-checkbox-field">
 						<input
-							checked={paymentMode === 'credit'}
-							className=""
-							id="payment-credit-checkbox"
-							name="checkout_payment"
+							checked={values.paymentMode === 'credit'}
+							id="modeCredit"
+							name="paymentMode"
 							onChange={onCreditModeChange}
 							type="radio"
 						/>
-						<label className="d-flex w-100" htmlFor="payment-credit-checkbox">
+						<label className="d-flex w-100" htmlFor="modeCredit">
 							<div className="d-flex-grow-1 margin-left-s">
 								<h4 className="margin-0">Credit Card</h4>
 								<span className="text-subtle d-block margin-top-s">
 									Pay with Visa, Master Card and other debit or credit card
-								</span>
+											</span>
 							</div>
 							<div className="d-flex">
 								<div className="payment-img payment-img-visa" />
@@ -87,62 +63,50 @@ const CreditPayment = React.forwardRef(({
 					<div className="checkout-field margin-0">
 						<div className="checkout-fieldset">
 							<div className="checkout-field">
-								<Input
-									field="name"
-									isRequired
-									label="* Name on Card"
-									maxLength={40}
-									onInputChange={onCardNameInput}
-									placeholder="Jane Doe"
-									ref={cardInputRef}
-									style={{ textTransform: 'capitalize' }}
+								<Field
+									name="name"
 									type="text"
-									value={field.name.value}
+									label="* Name on Card"
+									placeholder="Jane Doe"
+									component={CustomInput}
+									style={{ textTransform: 'capitalize' }}
+									inputRef={cardInputRef}
 								/>
 							</div>
 							<div className="checkout-field">
-								<Input
-									field="cardnumber"
-									isRequired
-									label="* Card Number"
-									onInputChange={onCardNumberInput}
-									placeholder="Card Number"
+								<Field
+									name="cardnumber"
 									type="number"
-									validate={validateCardNumber}
-									value={field.cardnumber.value}
+									label="* Card Number"
+									placeholder="Enter your card number"
+									component={CustomInput}
 								/>
 							</div>
 						</div>
 						<div className="checkout-fieldset">
 							<div className="checkout-field">
-								<Input
-									label="* Expiry Date"
-									placeholder="Expiry Date"
-									onInputChange={onExpiryInput}
-									isRequired={true}
-									field="expiry"
+								<Field
+									name="expiry"
 									type="date"
-									value={field.expiry.value}
+									label="* Expiry Date"
+									placeholder="Enter your expiry date"
+									component={CustomInput}
 								/>
 							</div>
 							<div className="checkout-field">
-								<Input
-									field="ccv"
-									isRequired
-									label="* CCV Number"
-									maxLength={4}
-									onInputChange={onCcvInput}
-									placeholder="CCV Number"
+								<Field
+									name="ccv"
 									type="number"
-									validate={validateCCV}
-									value={field.ccv.value}
+									label="* CCV"
+									placeholder="****"
+									component={CustomInput}
 								/>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
+		</>
 	);
 });
 

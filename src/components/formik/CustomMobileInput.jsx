@@ -5,7 +5,7 @@ import PhoneInput from 'react-phone-input-2';
 
 const CustomMobileInput = (props) => {
     const [field, meta, helpers] = useField(props);
-    const { label, placeholder } = props;
+    const { label, placeholder, defaultValue } = props;
     const { touched, error, value } = meta;
     const { setValue } = helpers;
 
@@ -37,7 +37,7 @@ const CustomMobileInput = (props) => {
                 inputExtraProps={{ required: true }}
                 onChange={handleChange}
                 placeholder={placeholder}
-                value={value?.data?.num}
+                value={defaultValue.value}
             />
         </div>
     );

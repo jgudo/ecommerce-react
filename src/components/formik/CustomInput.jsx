@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 import React from 'react';
 
-const CustomInput = ({ field, form: { touched, errors }, label, ...props }) => (
+const CustomInput = ({ field, form: { touched, errors }, label, inputRef, ...props }) => (
     <div className="input-group">
         {touched[field.name] && errors[field.name] ? (
             <span className="label-input label-error">{errors[field.name]}</span>
@@ -12,6 +12,7 @@ const CustomInput = ({ field, form: { touched, errors }, label, ...props }) => (
             type="text"
             id={field.name}
             className={`input-form ${touched[field.name] && errors[field.name] && 'input-error'}`}
+            ref={inputRef}
             {...field}
             {...props}
         />

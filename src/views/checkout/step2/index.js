@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { Boundary } from 'components/common';
 import { CustomInput, CustomMobileInput } from 'components/formik';
-import { CHECKOUT_STEP_1 } from 'constants/routes';
+import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
 import { Field, Form, Formik } from 'formik';
 import { useDocumentTitle, useScrollTop } from 'hooks';
 import React from 'react';
@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { setShippingDetails } from 'redux/actions/checkoutActions';
 import * as Yup from 'yup';
-import { Pagination, StepTracker } from '../components';
+import { StepTracker } from '../components';
 import withAuth from '../hoc/withAuth';
 import ShippingTotal from './ShippingTotal';
 
@@ -41,40 +41,25 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const saveShippingDetails = () => {
-		const isChanged = true; // TODO save only if changed
-
-		if (isChanged) {
-			dispatch(setShippingDetails({
-				fullname: field.fullname.value,
-				email: field.email.value,
-				address: field.address.value,
-				mobile: field.mobile,
-				isInternational: field.isInternational,
-				isDone: true
-			}));
-		}
-	};
-
-	const onClickNext = (isValid) => {
-		if (isValid) {
-			// saveShippingDetails();
-			// history.push(CHECKOUT_STEP_3);
-		}
-	};
-
 	const initFormikValues = {
-		fullname: '',
-		email: '',
-		address: '',
-		mobile: {},
-		isInternational: false,
-		isDone: false
+		fullname: shipping.fullname || '',
+		email: shipping.email || '',
+		address: shipping.address || '',
+		mobile: shipping.mobile || {},
+		isInternational: shipping.isInternational || false,
+		isDone: shipping.isDone || false
 	}
 
-	const onSubmitForm = (values, action) => {
-		console.log(values);
-		console.log(action);
+	const onSubmitForm = (form, action) => {
+		dispatch(setShippingDetails({
+			fullname: form.fullname,
+			email: form.email,
+			address: form.address,
+			mobile: form.mobile,
+			isInternational: form.isInternational,
+			isDone: true
+		}));
+		history.push(CHECKOUT_STEP_3);
 	}
 
 	return (
@@ -127,9 +112,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 												/>
 											</div>
 											<div className="d-block checkout-field">
-												<CustomMobileInput
-													name="mobile"
-												/>
+												<CustomMobileInput name="mobile" defaultValue={values.mobile} />
 											</div>
 										</div>
 										<div className="checkout-fieldset">
@@ -143,7 +126,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 														)}
 														<div className="checkout-checkbox-field">
 															<input
-																// checked={field.value}
+																checked={field.value}
 																id={field.name}
 																onChange={(e) => {
 																	form.setValues({ ...form.values, [field.name]: e.target.checked });
@@ -170,13 +153,22 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 								<ShippingTotal subtotal={subtotal} />
 								<br />
 								{/*  ----- NEXT/PREV BUTTONS --------- */}
-								<Pagination
-									disabledNext={!isValid}
-									history={history}
-									onClickNext={() => onClickNext(isValid)}
-									onClickPrevious={() => history.push(CHECKOUT_STEP_1)}
-
-								/>
+								<div className="checkout-shipping-action">
+									<button
+										className="button button-muted"
+										onClick={() => history.push(CHECKOUT_STEP_1)}
+										type="button"
+									>
+										Go Back
+									</button>
+									<button
+										className="button"
+										disabled={!isValid}
+										type="submit"
+									>
+										Next Step
+									</button>
+								</div>
 							</Form>
 						)}
 					</Formik>
