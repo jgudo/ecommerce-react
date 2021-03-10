@@ -1,3 +1,4 @@
+import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons';
 import { CircularProgress, SocialLogin } from 'components/common';
 import { CustomInput } from 'components/formik';
 import { FORGOT_PASSWORD } from 'constants/routes';
@@ -120,11 +121,9 @@ const SignIn = (props) => {
 													disabled={isSigningIn}
 													type="submit"
 												>
-													<CircularProgress
-														theme="light"
-														visible={isSigningIn}
-													/>
 													{isSigningIn ? 'Signing In' : 'Sign In'}
+													&nbsp;
+													{isSigningIn ? <LoadingOutlined /> : <ArrowRightOutlined />}
 												</button>
 											</div>
 										</Form>
@@ -142,7 +141,7 @@ const SignIn = (props) => {
 							<strong>Don't have an account?</strong>
 						</span>
 						<button
-							className="button button-small button-border button-border-gray"
+							className="button button-small button-border button-border-gray button-icon"
 							disabled={isSigningIn}
 							onClick={onSignUp}
 						>

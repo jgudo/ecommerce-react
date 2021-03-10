@@ -1,48 +1,6 @@
-.icon-caret {
-  width: 10px;
-  height: 10px;
-  position: relative;
-  margin-left: $s-size;
-  transition: all .2s ease;
-
-  &:before, 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    width: 7px;
-    height: 2px;
-    background: $button-color;
-  }
-
-  &:before {
-    left: 0;
-    transform: rotate(45deg);
-  }
-
-  &:after {
-    transform: rotate(-45deg);
-    right: -1px;
-  }
-}
-
-.icon-magnify {
-  width: 12px;
-  height: 12px;
-  border: 2px solid $white;
-  border-radius: 50%;
-  position: relative;
-  margin-left: $s-size;
-  opacity: .5;
-  
-  &:after {
-    content: '';
-    position: absolute;
-    right: -6px;
-    bottom: -3px;
-    width: 7px;
-    height: 2px;
-    transform: rotate(45deg);
-    background: $white;
-  }
+.anticon {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

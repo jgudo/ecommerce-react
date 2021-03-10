@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { CircularProgress } from 'components/common';
+import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { ACCOUNT } from 'constants/routes';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
@@ -34,7 +34,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 	return isAuthenticating ? (
 		<div className="user-nav">
 			<span>Signing Out</span>
-			<CircularProgress />
+			<LoadingOutline />
 		</div>
 	) : (
 		<div
@@ -50,7 +50,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 					src={profile.avatar}
 				/>
 			</div>
-			<div className="icon-caret user-caret" />
+			<DownOutlined style={{ fontSize: '1.2rem', marginLeft: '1rem' }} />
 			<div className="user-nav-sub">
 				{profile.role !== 'ADMIN' && (
 					<Link
@@ -58,7 +58,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 						className="user-nav-sub-link"
 					>
 						View Account
-						<i className="fa fa-user" />
+						<UserOutlined />
 					</Link>
 				)}
 				<h6
@@ -66,7 +66,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 					onClick={() => dispatch(signOut())}
 				>
 					Sign Out
-						<i className="fa fa-sign-out-alt" />
+					<LogoutOutlined />
 				</h6>
 			</div>
 		</div>

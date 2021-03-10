@@ -90,3 +90,13 @@
   font-size: $font-small;
   padding: $s-size $m-size;
 }
+.button-icon {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  text-align: center;
+
+  & * {
+    font-size: inherit;
+  }
+}

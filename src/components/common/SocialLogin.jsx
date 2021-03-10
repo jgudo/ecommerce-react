@@ -1,3 +1,4 @@
+import { FacebookOutlined, GithubFilled, GoogleOutlined } from '@ant-design/icons';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { signInWithFacebook, signInWithGithub, signInWithGoogle } from 'redux/actions/authActions';
@@ -24,24 +25,25 @@ const SocialLogin = ({ isLoading, providerSelected }) => {
                 disabled={isLoading}
                 onClick={onSignInWithFacebook}
             >
-                <i className="fab fa-facebook" />
-                <span>Continue with Facebook</span>
+                {/* <i className="fab fa-facebook" /> */}
+                <FacebookOutlined />
+                Continue with Facebook
             </button>
             <button
                 className="button auth-provider-button provider-google"
                 disabled={isLoading}
                 onClick={onSignInWithGoogle}
             >
-                <i className="fab fa-google" />
-                <span>Continue with Google</span>
+                <GoogleOutlined />
+                Continue with Google
             </button>
             <button
                 className="button auth-provider-button provider-github"
                 disabled={isLoading}
                 onClick={onSignInWithGithub}
             >
-                <i className="fab fa-github" />
-                <span>Continue with GitHub</span>
+                <GithubFilled />
+                Continue with GitHub
             </button>
         </div>
     )
