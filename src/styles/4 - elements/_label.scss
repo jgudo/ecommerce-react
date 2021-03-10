@@ -12,3 +12,19 @@ label {
         background: $border-color-focus;
     }
 }
+
+.label-input {
+    border: none;
+    background: none;
+    padding: 1rem 1.2rem;
+    color: #696868;
+    border: none;
+
+    &:hover {
+        background: none;
+    }
+}
+
+.label-error {
+    color: rgb(235, 43, 43) !important;
+}

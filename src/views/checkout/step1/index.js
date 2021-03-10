@@ -3,8 +3,8 @@ import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
 import { useDocumentTitle, useScrollTop } from 'hooks';
 import React from 'react';
-import { Pagination, StepTracker } from '../components';
-import withAuth from '../hoc/withAuth';
+import { StepTracker } from '../components';
+import withCheckout from '../hoc/withCheckout';
 
 const OrderSummary = ({
 	basket,
@@ -41,17 +41,25 @@ const OrderSummary = ({
 					<h2 className="basket-total-amount">{displayMoney(subtotal)}</h2>
 				</div>
 				<br />
-				<Pagination
-					disabledNext={false}
-					history={history}
-					onClickNext={onClickNext}
-					onClickPrevious={onClickPrevious}
-					previousLabel="Continue Shopping"
-
-				/>
+				<div className="checkout-shipping-action">
+					<button
+						className="button button-muted"
+						onClick={onClickPrevious}
+						type="button"
+					>
+						Continue Shopping
+					</button>
+					<button
+						className="button"
+						onClick={onClickNext}
+						type="submit"
+					>
+						Next Step
+					</button>
+				</div>
 			</div>
 		</div>
 	);
 };
 
-export default withAuth(OrderSummary);
+export default withCheckout(OrderSummary);

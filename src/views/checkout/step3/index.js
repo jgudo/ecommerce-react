@@ -1,128 +1,80 @@
-import { CHECKOUT_STEP_2 } from 'constants/routes';
-import { displayActionMessage, displayMoney } from 'helpers/utils';
+import { CHECKOUT_STEP_1 } from 'constants/routes';
+import { Form, Formik } from 'formik';
+import { displayActionMessage } from 'helpers/utils';
 import { useDocumentTitle, useScrollTop } from 'hooks';
-import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { setPaymentDetails } from 'redux/actions/checkoutActions';
-import { Pagination, StepTracker } from '../components';
-import withAuth from '../hoc/withAuth';
+import * as Yup from 'yup';
+import { StepTracker } from '../components';
+import withCheckout from '../hoc/withCheckout';
 import CreditPayment from './CreditPayment';
 import PayPalPayment from './PayPalPayment';
+import Total from './Total';
 
-const Payment = ({
-	shipping,
-	payment,
-	subtotal,
-	history
-}) => {
+const FormSchema = Yup.object().shape({
+	name: Yup.string()
+		.min(4, 'Name should be at least 4 characters.')
+		.required('Name is required'),
+	cardnumber: Yup.string()
+		.min(13, 'Card number should be 13-19 digits long')
+		.max(19, 'Card number should only be 13-19 digits long')
+		.required('Card number is required.'),
+	expiry: Yup.date()
+		.required('Credit card expiry is required.'),
+	ccv: Yup.string()
+		.min(3, 'CCV length should be 3-4 digit')
+		.max(4, 'CCV length should only be 3-4 digit')
+		.required('CCV is required.'),
+	type: Yup.string().required('Please select paymend mode')
+});
+
+const Payment = ({ shipping, payment, subtotal }) => {
 	useDocumentTitle('Check Out Final Step | Salinaka');
 	useScrollTop();
-	const dispatch = useDispatch();
 
-	const [paymentMode, setPaymentMode] = useState(payment.type || 'paypal');
-	const collapseCreditHeight = useRef(null);
-	const cardInputRef = useRef(null);
-	const [field, setField] = useState({
-		name: { value: payment.data.name ? payment.data.name : '' },
-		cardnumber: { value: payment.data.cardnumber ? payment.data.cardnumber : '' },
-		expiry: { value: payment.data.expiry ? payment.data.expiry : '' },
-		ccv: { value: payment.data.ccv ? payment.data.ccv : '' }
-	});
+	const initFormikValues = {
+		name: payment.name || '',
+		cardnumber: payment.cardnumber || '',
+		expiry: payment.expiry || '',
+		ccv: payment.ccv || '',
+		type: payment.type || 'paypal'
+	}
 
-	const onCreditModeChange = (e) => {
-		setPaymentMode('credit');
-		const parent = e.target.closest('.checkout-fieldset-collapse');
-		const checkBoxContainer = e.target.closest('.checkout-checkbox-field');
-
-		cardInputRef.current.focus();
-		parent.style.height = `${checkBoxContainer.offsetHeight + collapseCreditHeight.current.offsetHeight}px`;
+	const onConfirm = () => {
+		displayActionMessage('Feature not ready yet :)', 'info');
 	};
 
-	const onPayPalModeChange = () => {
-		setPaymentMode('paypal');
-		collapseCreditHeight.current.parentElement.style.height = '97px';
-	};
-
-	const savePaymentDetails = () => {
-		const isChanged = Object.keys(field).some(key => field[key].value !== payment.data[key]) || paymentMode !== payment.type;
-
-		if (isChanged) {
-			dispatch(setPaymentDetails({
-				type: paymentMode,
-				data: {
-					type: paymentMode,
-					name: field.name.value,
-					cardnumber: field.cardnumber.value,
-					expiry: field.expiry.value,
-					ccv: field.ccv.value
-				}
-			}));
-		}
-	};
-
-	const onConfirm = (e) => {
-		e.preventDefault();
-		// eslint-disable-next-line no-extra-boolean-cast
-		const noError = Object.keys(field).every(key => !!field[key].value && !!!field[key].error);
-
-		if (!paymentMode) return;
-		if (paymentMode === 'credit') {
-			if (noError) {
-				displayActionMessage('Feature not ready yet :)', 'info');
-				// TODO: fire only if changed
-				savePaymentDetails();
-				// Do some action here. :)
-			} else {
-				displayActionMessage('All credentials for credit payment required!', 'error');
-			}
-		} else {
-			displayActionMessage('Feature not ready yet :)', 'info');
-		}
-	};
-
-	const onClickBack = () => {
-		savePaymentDetails();
-		history.push(CHECKOUT_STEP_2);
-	};
-
-	return !shipping.isDone ? <Redirect to="/checkout/step1" />
-		: (
+	if (!shipping || !shipping.isDone) {
+		return <Redirect to={CHECKOUT_STEP_1} />
+	} else {
+		return (
 			<div className="checkout">
 				<StepTracker current={3} />
-				<div className="checkout-step-3">
-					<CreditPayment
-						field={field}
-						onCreditModeChange={onCreditModeChange}
-						paymentMode={paymentMode}
-						ref={{
-							cardInputRef,
-							collapseCreditHeight
-						}}
-						setField={setField}
-					/>
-					<PayPalPayment
-						onPayPalModeChange={onPayPalModeChange}
-						paymentMode={paymentMode}
-					/>
-					<br />
-					<div className="basket-total text-right">
-						<p className="basket-total-title">Total:</p>
-						<h2 className="basket-total-amount">{displayMoney(subtotal + (shipping.isInternational ? 50 : 0))}</h2>
-					</div>
-					<br />
-					<Pagination
-						// eslint-disable-next-line no-extra-boolean-cast
-						disabledNext={!!!paymentMode}
-						history={history}
-						nextStepLabel="Confirm"
-						onClickNext={onConfirm}
-						onClickPrevious={onClickBack}
-
-					/>
-				</div>
+				<Formik
+					initialValues={initFormikValues}
+					validateOnChange
+					validationSchema={FormSchema}
+					validate={(form) => {
+						if (form.type === 'paypal') {
+							displayActionMessage('Feature not ready yet :)', 'info');
+						}
+					}}
+					onSubmit={onConfirm}
+				>
+					{({ values }) => (
+						<Form className="checkout-step-3">
+							<CreditPayment />
+							<PayPalPayment />
+							<Total
+								isInternational={shipping.isInternational}
+								subtotal={subtotal}
+							/>
+						</Form>
+					)}
+				</Formik>
 			</div>
-		);
+		)
+	}
 };
 
-export default withAuth(Payment);
+export default withCheckout(Payment);

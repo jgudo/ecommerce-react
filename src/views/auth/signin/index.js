@@ -1,10 +1,21 @@
-import { CircularProgress, Input, SocialLogin } from 'components/common';
+import { CircularProgress, SocialLogin } from 'components/common';
+import { CustomInput } from 'components/formik';
 import { FORGOT_PASSWORD } from 'constants/routes';
+import { Field, Form, Formik } from "formik";
 import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signIn } from 'redux/actions/authActions';
+import * as Yup from 'yup';
+
+const SignInSchema = Yup.object().shape({
+	email: Yup.string()
+		.email('Email is not valid.')
+		.required('Email is required.'),
+	password: Yup.string()
+		.required('Password is required.')
+});
 
 const SignIn = (props) => {
 	const { authStatus, isAuthenticating } = useSelector(state => ({
@@ -17,7 +28,6 @@ const SignIn = (props) => {
   */
 	const [signInStatus, setSignInStatus] = useState({});
 	const [isSigningIn, setIsSigningIn] = useState(false);
-	const [field, setField] = useState({});
 	// --- 
 	const dispatch = useDispatch();
 	const didMount = useDidMount();
@@ -31,24 +41,10 @@ const SignIn = (props) => {
 		}
 	}, [authStatus, isAuthenticating]);
 
-
-	const onEmailInput = (value, error) => {
-		setField({ ...field, email: { value, error } });
-	};
-
-	const onPasswordInput = (value, error) => {
-		setField({ ...field, password: { value, error } });
-	};
-
 	const onSignUp = () => props.history.push('/signup');
 
-	const onSubmitForm = (e) => {
-		e.preventDefault();
-		const noError = Object.keys(field).every(key => !!field[key].value && !field[key].error);
-
-		if (noError) {
-			dispatch(signIn(field.email.value, field.password.value));
-		}
+	const onSubmitForm = (form) => {
+		dispatch(signIn(form.email, form.password));
 	};
 
 	const onClickLink = (e) => {
@@ -79,52 +75,61 @@ const SignIn = (props) => {
 							<h3>Sign in to Salinaka</h3>
 							<br />
 							<div className="auth-wrapper">
-								<form onSubmit={onSubmitForm}>
-									<div className="auth-field">
-										<Input
-											label="Email"
-											readOnly={isSigningIn}
-											placeholder="text@example.com"
-											onInputChange={onEmailInput}
-											isRequired={true}
-											field="email"
-											type="email"
-										/>
-									</div>
-									<div className="auth-field">
-										<Input
-											label="Password"
-											readOnly={isSigningIn}
-											placeholder="Your Password"
-											onInputChange={onPasswordInput}
-											isRequired={true}
-											showError={false}
-											field="password"
-											type="password"
-										/>
-									</div>
-									<br />
-									<div className="auth-field auth-action">
-										<Link
-											onClick={onClickLink}
-											style={{ textDecoration: 'underline' }}
-											to={FORGOT_PASSWORD}
-										>
-											<span>Forgot password?</span>
-										</Link>
-										<button
-											className="button auth-button"
-											disabled={isSigningIn}
-											type="submit"
-										>
-											<CircularProgress
-												theme="light"
-												visible={isSigningIn}
-											/>
-											{isSigningIn ? 'Signing In' : 'Sign In'}
-										</button>
-									</div>
-								</form>
+								<Formik
+									initialValues={{
+										email: '',
+										password: '',
+									}}
+									validateOnChange
+									validationSchema={SignInSchema}
+									onSubmit={onSubmitForm}
+								>
+									{() => (
+										<Form>
+											<div className="auth-field">
+												<Field
+													disabled={isSigningIn}
+													name="email"
+													type="email"
+													label="Email"
+													placeholder="test@example.com"
+													component={CustomInput}
+												/>
+											</div>
+											<div className="auth-field">
+												<Field
+													disabled={isSigningIn}
+													name="password"
+													type="password"
+													label="Password"
+													placeholder="Your Password"
+													component={CustomInput}
+												/>
+											</div>
+											<br />
+											<div className="auth-field auth-action">
+												<Link
+													onClick={onClickLink}
+													style={{ textDecoration: 'underline' }}
+													to={FORGOT_PASSWORD}
+												>
+													<span>Forgot password?</span>
+												</Link>
+												<button
+													className="button auth-button"
+													disabled={isSigningIn}
+													type="submit"
+												>
+													<CircularProgress
+														theme="light"
+														visible={isSigningIn}
+													/>
+													{isSigningIn ? 'Signing In' : 'Sign In'}
+												</button>
+											</div>
+										</Form>
+									)}
+								</Formik>
 							</div>
 						</div>
 						<div className="auth-divider">

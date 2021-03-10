@@ -18,6 +18,7 @@ const Loader = () => (
 const UserAccount = () => {
 	useScrollTop();
 	useDocumentTitle('My Account | Salinaka');
+
 	return (
 		<UserTab>
 			<div index={0} label="Account">

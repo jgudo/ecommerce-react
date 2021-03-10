@@ -121,13 +121,17 @@ input[type=radio]:checked + label:after {
   border-width: 0 2px 2px 0;
 }
 
+input[type=color] {
+  padding: 0;
+}
+
 
 // override react-phone-input-2
 .react-tel-input input[type=tel] {
   @extend input;
   width: 100% !important;
   font-family: 'Tajawal' !important;
-  margin-bottom: 1.2rem !important;
+  // margin-bottom: 1.2rem !important;
   font-size: $font-medium !important;
   border: 1px solid $border-color-focus !important;
 }
@@ -151,5 +155,10 @@ input[type=radio]:checked + label:after {
   padding: 10px $m-size !important;
   border: 1px solid $border-color-focus !important;
   font-size: $font-medium !important;
-  margin-bottom: $s-size;
+  // margin-bottom: $s-size;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
 }

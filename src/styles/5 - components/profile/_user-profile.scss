@@ -79,6 +79,10 @@
 
 .user-profile-details {
   padding: 9.5rem $m-size $l-size;
+
+  & > div {
+    margin-bottom: $s-size;
+  }
 }
 
 .user-profile-name {
