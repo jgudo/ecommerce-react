@@ -16,9 +16,6 @@ import Select from 'react-select';
 import { addToBasket, removeFromBasket } from 'redux/actions/basketActions';
 
 const ViewProduct = () => {
-    useDocumentTitle(`View ${store.product ? store.product.name : 'Item'}`);
-    useScrollTop();
-
     const { id } = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -26,7 +23,10 @@ const ViewProduct = () => {
     const store = useSelector(state => ({
         product: state.products.items.find(item => item.id === id),
         basket: state.basket
+
     }));
+    useScrollTop();
+    useDocumentTitle(`View ${store?.product?.name || 'Item'}`);
 
     const [selectedImage, setSelectedImage] = useState(store.product?.image || '');
     const [product, setProduct] = useState(store.product || null);
