@@ -50,31 +50,27 @@
 
   @include tablet {
     width: 100%;
-    flex-direction: row;
+  }
+
+  & > button {
+    margin-bottom: $s-size;
   }
 }
 
 .auth-provider-button {
   width: 100%;
-  margin: $s-size;
-  display: flex;
+  font-size: 1.4rem;
 
-  @include mobile {
-      margin: $s-size 0;
-    }
-
-  i {
-    flex-basis: 20%;
+  & * {
+    font-size: 1.4rem;
   }
 
-  span {
-    flex-basis: 80%;
-    color: $white;
-    font-size: $m-size;
-
-    @include tablet {
-      display: none;
-    }
+  .anticon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: $m-size;
+    margin: auto;
   }
 }
 

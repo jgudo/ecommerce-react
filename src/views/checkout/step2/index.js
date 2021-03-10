@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { Boundary } from 'components/common';
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
 import { Form, Formik } from 'formik';
@@ -88,14 +89,18 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 										onClick={() => history.push(CHECKOUT_STEP_1)}
 										type="button"
 									>
+										<ArrowLeftOutlined />
+										&nbsp;
 										Go Back
 									</button>
 									<button
-										className="button"
+										className="button button-icon"
 										disabled={!isValid}
 										type="submit"
 									>
 										Next Step
+										&nbsp;
+										<ArrowRightOutlined />
 									</button>
 								</div>
 							</Form>

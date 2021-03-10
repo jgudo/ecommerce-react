@@ -1,17 +1,16 @@
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Modal } from 'components/common';
 import { useFormikContext } from 'formik';
-import { useModal } from 'hooks';
 import React, { useState } from 'react';
 
 const ConfirmModal = ({ onConfirmUpdate, modal }) => {
-    const { isModalOpen, onCloseModal } = useModal();
-    const { password, setPassword } = useState('');
+    const [password, setPassword] = useState('');
     const { values } = useFormikContext();
 
     return (
         <Modal
-            isOpen={modal.isModalOpen}
-            onRequestClose={onCloseModal}
+            isOpen={modal.isOpenModal}
+            onRequestClose={modal.onCloseModal}
         >
             <div className="text-center padding-l">
                 <h4>Confirm Update</h4>
@@ -34,8 +33,13 @@ const ConfirmModal = ({ onConfirmUpdate, modal }) => {
             <div className="d-flex-center">
                 <button
                     className="button"
-                    onClick={() => onConfirmUpdate(values, password)}
+                    onClick={() => {
+                        onConfirmUpdate(values, password);
+                        modal.onCloseModal();
+                    }}
                 >
+                    <CheckOutlined />
+                    &nbsp;
                     Confirm
 				</button>
             </div>
@@ -43,8 +47,8 @@ const ConfirmModal = ({ onConfirmUpdate, modal }) => {
                 className="modal-close-button button button-border button-border-gray button-small"
                 onClick={modal.onCloseModal}
             >
-                X
-			</button>
+                <CloseOutlined />
+            </button>
         </Modal>
     );
 }

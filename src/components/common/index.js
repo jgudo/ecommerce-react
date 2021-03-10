@@ -2,7 +2,6 @@ export { default as AdminNavigation } from './AdminNavigation';
 export { default as AdminSideBar } from './AdminSidePanel';
 export { default as Badge } from './Badge';
 export { default as Boundary } from './Boundary';
-export { default as CircularProgress } from './CircularProgress';
 export { default as ColorChooser } from './ColorChooser';
 export { default as Filters } from './Filters';
 export { default as FiltersToggle } from './FiltersToggle';

@@ -1,3 +1,4 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { BasketItemControl } from 'components/basket';
 import { ImageLoader } from 'components/common';
 import { displayMoney } from 'helpers/utils';
@@ -39,15 +40,7 @@ const BasketItem = ({ dispatch, product }) => {
 							<i className="fa fa-square" style={{ color: product.selectedColor }} />
 						</div>
 					</div>
-					{/* {product.selectedSize && <span>{product.selectedSize} mm</span>}
-					<h5 className="my-0">
-						{displayMoney(product.price)}
-						<span>{` (x ${product.quantity})`}</span>
-					</h5> */}
 				</div>
-				{/* <div className="basket-item-color">
-					{product.selectedColor && <i className="fa fa-square" style={{ color: product.selectedColor }} />}
-				</div> */}
 				<div className="basket-item-price">
 					<h4 className="my-0">{displayMoney(product.price * product.quantity)}</h4>
 				</div>
@@ -55,7 +48,7 @@ const BasketItem = ({ dispatch, product }) => {
 					className="basket-item-remove button button-border button-border-gray button-small"
 					onClick={onRemoveFromBasket}
 				>
-					<i className="fa fa-trash" />
+					<CloseOutlined />
 				</button>
 			</div>
 		</div>

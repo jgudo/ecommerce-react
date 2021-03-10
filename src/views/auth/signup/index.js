@@ -1,4 +1,5 @@
-import { CircularProgress, SocialLogin } from 'components/common';
+import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons';
+import { SocialLogin } from 'components/common';
 import { CustomInput } from 'components/formik';
 import { Field, Form, Formik } from 'formik';
 import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
@@ -61,7 +62,7 @@ const SignUp = (props) => {
 				<div className="loader">
 					<h3 className="toast-success auth-success">
 						{authStatus.message}
-						<CircularProgress />
+						<LoadingOutlined />
 					</h3>
 				</div>
 			)}
@@ -125,8 +126,9 @@ const SignUp = (props) => {
 												disabled={isSigningUp}
 												type="submit"
 											>
-												<CircularProgress visible={isSigningUp} theme="light" />
 												{isSigningUp ? 'Signing Up' : 'Sign Up'}
+												&nbsp;
+												{isSigningUp ? <LoadingOutlined /> : <ArrowRightOutlined />}
 											</button>
 										</div>
 									</Form>

@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+import { ShoppingOutlined } from '@ant-design/icons';
 import * as ROUTE from 'constants/routes';
 import logo from 'images/logo-full.png';
 import React, { useEffect, useRef } from 'react';
@@ -117,7 +118,7 @@ const Navigation = () => {
 								>
 
 									<Badge count={store.basketLength}>
-										<i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
+										<ShoppingOutlined style={{ fontSize: '2.4rem' }} />
 									</Badge>
 								</button>
 							)}

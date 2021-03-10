@@ -1,4 +1,5 @@
-import { Boundary, CircularProgress, ImageLoader } from 'components/common';
+import { EditOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Boundary, ImageLoader } from 'components/common';
 import { Formik } from 'formik';
 import { useDocumentTitle, useFileHandler, useModal, useScrollTop } from 'hooks';
 import React, { useEffect } from 'react';
@@ -77,7 +78,7 @@ const EditProfile = (props) => {
 
 	const onConfirmUpdate = (form, password) => {
 		if (password) {
-			update(form, { email: field.email.value, password });
+			update(form, { email: form.email, password });
 		}
 	};
 
@@ -125,14 +126,14 @@ const EditProfile = (props) => {
 									/>
 									{isFileLoading ? (
 										<div className="loading-wrapper">
-											<CircularProgress visible={true} theme="light" />
+											<LoadingOutlined />
 										</div>
 									) : (
 										<label
 											className="edit-button edit-banner-button"
 											htmlFor="edit-banner"
 										>
-											<i className="fa fa-pen" />
+											<EditOutlined />
 										</label>
 									)}
 								</div>
@@ -152,14 +153,14 @@ const EditProfile = (props) => {
 									/>
 									{isFileLoading ? (
 										<div className="loading-wrapper">
-											<CircularProgress visible={true} theme="light" />
+											<LoadingOutlined />
 										</div>
 									) : (
 										<label
 											className="edit-button edit-avatar-button"
 											htmlFor="edit-avatar"
 										>
-											<i className="fa fa-pen" />
+											<EditOutlined />
 										</label>
 									)}
 								</div>

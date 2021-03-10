@@ -1,3 +1,4 @@
+import { ArrowRightOutlined, ShopOutlined } from '@ant-design/icons';
 import { BasketItem } from 'components/basket';
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { displayMoney } from 'helpers/utils';
@@ -47,6 +48,8 @@ const OrderSummary = ({
 						onClick={onClickPrevious}
 						type="button"
 					>
+						<ShopOutlined />
+						&nbsp;
 						Continue Shopping
 					</button>
 					<button
@@ -55,6 +58,8 @@ const OrderSummary = ({
 						type="submit"
 					>
 						Next Step
+						&nbsp;
+						<ArrowRightOutlined />
 					</button>
 				</div>
 			</div>

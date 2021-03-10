@@ -1,9 +1,5 @@
-import {
-    CircularProgress,
-    ColorChooser,
-    ImageLoader,
-    MessageDisplay
-} from 'components/common';
+import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
+import { ColorChooser, ImageLoader, MessageDisplay } from 'components/common';
 import { FeaturedProduct } from 'components/product';
 import { RECOMMENDED_PRODUCTS, SHOP } from 'constants/routes';
 import firebase from 'firebase/firebase';
@@ -90,10 +86,18 @@ const ViewProduct = () => {
 
     return (
         <main className="content">
-            {isLoading && <div className="loader"><CircularProgress /></div>}
+            {isLoading && (
+                <div className="loader">
+                    <h4>Loading Product...</h4>
+                    <br />
+                    <LoadingOutlined style={{ fontSize: '3rem' }} />
+                </div>
+            )}
             {(product && !isLoading) && (
                 <div className="product-view">
-                    <Link to={SHOP}><h3><i className="fa fa-chevron-left" /> Back to shop</h3> </Link>
+                    <Link className="button-link" to={SHOP}>
+                        <h3><ArrowLeftOutlined /> &nbsp; Back to shop</h3>
+                    </Link>
                     <div className="product-modal">
                         {product.imageCollection.length !== 0 && (
                             <div className="product-modal-image-collection">
@@ -123,8 +127,7 @@ const ViewProduct = () => {
                             <span className="text-subtle">{product.brand}</span>
                             <h1 className="margin-top-0">{product.name}</h1>
                             <span>{product.description}</span>
-                            <br />
-                            <br />
+                            <br /><br />
                             <div className="divider" />
                             <br />
                             <div>
