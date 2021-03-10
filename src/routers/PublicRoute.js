@@ -18,7 +18,7 @@ const PublicRoute = ({
 			return (
 				isAuth && role === 'ADMIN'
 					? <Redirect to={ADMIN_DASHBOARD} />
-					: (auth && role === 'USER') && (path === SIGNIN || path === SIGNUP)
+					: (isAuth && role === 'USER') && (path === SIGNIN || path === SIGNUP)
 						? <Redirect to={from} />
 						: (
 							<main className="content">
