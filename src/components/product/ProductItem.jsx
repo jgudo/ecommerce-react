@@ -1,3 +1,4 @@
+import { CheckOutlined } from '@ant-design/icons';
 import { ImageLoader } from 'components/common';
 import { displayActionMessage, displayMoney } from 'helpers/utils';
 import PropTypes from 'prop-types';
@@ -38,11 +39,11 @@ const ProductItem = ({
 			<div
 				className={`product-card ${!product.id ? 'product-loading' : ''}`}
 				style={{
-					border: isItemOnBasket ? '1px solid #cacaca' : '',
+					border: isItemOnBasket ? '1px solid #a6a5a5' : '',
 					boxShadow: isItemOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
 				}}
 			>
-				{isItemOnBasket && <i className="fa fa-check product-card-check" />}
+				{isItemOnBasket && <CheckOutlined className="fa fa-check product-card-check" />}
 				<div
 					className="product-card-content"
 					onClick={onClickItem}
@@ -56,9 +57,15 @@ const ProductItem = ({
 						) : <Skeleton width={'100%'} height={'90%'} />}
 					</div>
 					<div className="product-details">
-						<h5 className="product-card-name text-overflow-ellipsis margin-auto">{product.name || <Skeleton width={80} />}</h5>
-						<p className="product-card-brand">{product.brand || <Skeleton width={60} />}</p>
-						<h4 className="product-card-price">{product.price ? displayMoney(product.price) : <Skeleton width={40} />}</h4>
+						<h5 className="product-card-name text-overflow-ellipsis margin-auto">
+							{product.name || <Skeleton width={80} />}
+						</h5>
+						<p className="product-card-brand">
+							{product.brand || <Skeleton width={60} />}
+						</p>
+						<h4 className="product-card-price">
+							{product.price ? displayMoney(product.price) : <Skeleton width={40} />}
+						</h4>
 					</div>
 				</div>
 				{product.id && (

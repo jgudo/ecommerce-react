@@ -43,10 +43,10 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 	const history = useHistory();
 
 	const initFormikValues = {
-		fullname: shipping.fullname || '',
-		email: shipping.email || '',
-		address: shipping.address || '',
-		mobile: shipping.mobile || {},
+		fullname: shipping.fullname || profile.fullname || '',
+		email: shipping.email || profile.email || '',
+		address: shipping.address || profile.address || '',
+		mobile: shipping.mobile || profile.mobile || {},
 		isInternational: shipping.isInternational || false,
 		isDone: shipping.isDone || false
 	}

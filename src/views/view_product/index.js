@@ -95,8 +95,8 @@ const ViewProduct = () => {
             )}
             {(product && !isLoading) && (
                 <div className="product-view">
-                    <Link className="button-link" to={SHOP}>
-                        <h3><ArrowLeftOutlined /> &nbsp; Back to shop</h3>
+                    <Link to={SHOP}>
+                        <h3 className="button-link d-inline-flex"><ArrowLeftOutlined /> &nbsp; Back to shop</h3>
                     </Link>
                     <div className="product-modal">
                         {product.imageCollection.length !== 0 && (

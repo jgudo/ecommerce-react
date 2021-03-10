@@ -106,7 +106,7 @@
 
 .product-card-content {
   padding: 0;
-  @include bezier-transition(transform);
+  transition: all .4s ease-in-out;
 }
 
 .product-card-img-wrapper {
@@ -116,7 +116,7 @@
   margin: auto;
   position: relative;
   background: #f6f6f6;
-  @include bezier-transition();
+  transition: all .4s ease-in-out;
 
   @include mobile {
     height: 8rem;
@@ -128,7 +128,7 @@
 }
 
 .product-card-price {
-  color: $gray-10;
+  color: $black;
 }
 
 .product-card-name {
@@ -156,7 +156,7 @@
   position: absolute;
   bottom: -100%;
   font-size: $font-small;
-  @include bezier-transition();
+  transition: all .4s ease-in-out;
 
   @include mobile {
     bottom: 0;

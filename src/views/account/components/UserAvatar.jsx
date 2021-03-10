@@ -34,6 +34,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 	return isAuthenticating ? (
 		<div className="user-nav">
 			<span>Signing Out</span>
+			&nbsp;
 			<LoadingOutlined />
 		</div>
 	) : (

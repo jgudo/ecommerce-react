@@ -37,7 +37,13 @@ const BasketItem = ({ dispatch, product }) => {
 						</div>
 						<div>
 							<span className="spec-title">Color</span>
-							<i className="fa fa-square" style={{ color: product.selectedColor }} />
+							<div style={{
+								backgroundColor: product.selectedColor || product.availableColors[0],
+								width: '15px',
+								height: '15px',
+								borderRadius: '50%'
+							}}
+							/>
 						</div>
 					</div>
 				</div>

@@ -1,16 +1,14 @@
 import { AdminNavigation, AdminSideBar } from 'components/common';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-const AdminRoute = ({ component: Component, ...rest }) => {
-	const user = useSelector(state => state.auth);
-
+const AdminRoute = ({ isAuth, role, component: Component, ...rest }) => {
 	return (
 		<Route
 			{...rest}
 			component={props => (
-				user && user.role === 'ADMIN' ? (
+				isAuth && role === 'ADMIN' ? (
 					<>
 						<AdminNavigation />
 						<main className="content-admin">
@@ -26,4 +24,9 @@ const AdminRoute = ({ component: Component, ...rest }) => {
 	);
 };
 
-export default AdminRoute;
+const mapStateToProps = ({ auth }) => ({
+	isAuth: !!auth,
+	role: auth?.role || ''
+});
+
+export default connect(mapStateToProps)(AdminRoute);
