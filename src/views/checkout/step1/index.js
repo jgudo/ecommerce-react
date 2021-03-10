@@ -4,7 +4,7 @@ import { displayMoney } from 'helpers/utils';
 import { useDocumentTitle, useScrollTop } from 'hooks';
 import React from 'react';
 import { StepTracker } from '../components';
-import withAuth from '../hoc/withAuth';
+import withCheckout from '../hoc/withCheckout';
 
 const OrderSummary = ({
 	basket,
@@ -62,4 +62,4 @@ const OrderSummary = ({
 	);
 };
 
-export default withAuth(OrderSummary);
+export default withCheckout(OrderSummary);

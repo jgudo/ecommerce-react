@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({
-	auth,
+	isAuth,
+	role,
 	userType,
 	component: Component,
 	path,
@@ -14,13 +15,13 @@ const PrivateRoute = ({
 	<Route
 		{...rest}
 		component={props => (
-			auth && auth.role === 'USER'
+			isAuth && role === 'USER'
 				? (
 					<main className="content">
 						<Component {...props} />
 					</main>
 				)
-				: auth && auth.role === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
+				: isAuth && role === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
 					: <Redirect to={{
 						pathname: SIGNIN,
 						state: { from: props.location }
@@ -30,6 +31,9 @@ const PrivateRoute = ({
 	/>
 );
 
-const mapStateToProps = ({ auth }) => ({ auth });
+const mapStateToProps = ({ auth }) => ({
+	isAuth: !!auth,
+	role: auth?.role || ''
+});
 
 export default connect(mapStateToProps)(PrivateRoute);

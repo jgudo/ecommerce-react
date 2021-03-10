@@ -1,8 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { Boundary } from 'components/common';
-import { CustomInput, CustomMobileInput } from 'components/formik';
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useDocumentTitle, useScrollTop } from 'hooks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,7 +9,8 @@ import { useHistory } from 'react-router';
 import { setShippingDetails } from 'redux/actions/checkoutActions';
 import * as Yup from 'yup';
 import { StepTracker } from '../components';
-import withAuth from '../hoc/withAuth';
+import withCheckout from '../hoc/withCheckout';
+import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
 
 const FormSchema = Yup.object().shape({
@@ -67,9 +67,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 			<div className="checkout">
 				<StepTracker current={2} />
 				<div className="checkout-step-2">
-					<h3 className="text-center">
-						Shipping Details
-				</h3>
+					<h3 className="text-center">Shipping Details</h3>
 					<Formik
 						initialValues={initFormikValues}
 						validateOnChange
@@ -78,76 +76,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 					>
 						{({ values, isValid }) => (
 							<Form>
-								<div className="checkout-shipping-wrapper">
-									<div className="checkout-shipping-form">
-										<div className="checkout-fieldset">
-											<div className="d-block checkout-field">
-												<Field
-													name="fullname"
-													type="text"
-													label="* Full Name"
-													placeholder="Enter your full name"
-													component={CustomInput}
-													style={{ textTransform: 'capitalize' }}
-												/>
-											</div>
-											<div className="d-block checkout-field">
-												<Field
-													name="email"
-													type="email"
-													label="* Email Address"
-													placeholder="Enter your email address"
-													component={CustomInput}
-												/>
-											</div>
-										</div>
-										<div className="checkout-fieldset">
-											<div className="d-block checkout-field">
-												<Field
-													name="address"
-													type="text"
-													label="* Shipping Address"
-													placeholder="Enter full shipping address"
-													component={CustomInput}
-												/>
-											</div>
-											<div className="d-block checkout-field">
-												<CustomMobileInput name="mobile" defaultValue={values.mobile} />
-											</div>
-										</div>
-										<div className="checkout-fieldset">
-											<Field name="isInternational">
-												{({ field, form, meta }) => (
-													<div className="checkout-field">
-														{meta.touched && meta.error ? (
-															<span className="label-input label-error">{meta.error}</span>
-														) : (
-															<label className="label-input" htmlFor={field.name}>Shipping Option</label>
-														)}
-														<div className="checkout-checkbox-field">
-															<input
-																checked={field.value}
-																id={field.name}
-																onChange={(e) => {
-																	form.setValues({ ...form.values, [field.name]: e.target.checked });
-																}}
-																value={meta.value}
-																type="checkbox"
-															/>
-															<label className="d-flex w-100" htmlFor={field.name}>
-																<h5 className="d-flex-grow-1 margin-0">
-																	&nbsp; International Shipping &nbsp;
-																<span className="text-subtle">7-14 days</span>
-																</h5>
-																<h4 className="margin-0">$50.00</h4>
-															</label>
-														</div>
-													</div>
-												)}
-											</Field>
-										</div>
-									</div>
-								</div>
+								<ShippingForm />
 								<br />
 								{/*  ---- TOTAL --------- */}
 								<ShippingTotal subtotal={subtotal} />
@@ -178,4 +107,4 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 	);
 };
 
-export default withAuth(ShippingDetails);
+export default withCheckout(ShippingDetails);

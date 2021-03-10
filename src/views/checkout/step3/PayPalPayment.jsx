@@ -1,20 +1,20 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
 
-const PayPalPayment = ({ paymentMode, onPayPalModeChange }) => {
+const PayPalPayment = () => {
 	const { values, setValues } = useFormikContext();
 
 	return (
-		<div className={`checkout-fieldset-collapse ${paymentMode === 'paypal' ? 'is-selected-payment' : ''}`}>
+		<div className={`checkout-fieldset-collapse ${values.type === 'paypal' ? 'is-selected-payment' : ''}`}>
 			<div className="checkout-field margin-0">
 				<div className="checkout-checkbox-field">
 					<input
-						checked={values.paymentMode === 'paypal'}
+						checked={values.type === 'paypal'}
 						id="modePayPal"
-						name="paymentMode"
+						name="type"
 						onChange={(e) => {
 							if (e.target.checked) {
-								setValues({ ...values, paymentMode: 'paypal' });
+								setValues({ ...values, type: 'paypal' });
 							}
 						}}
 						type="radio"

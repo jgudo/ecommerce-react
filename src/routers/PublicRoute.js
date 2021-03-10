@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 const PublicRoute = ({
-	auth,
+	isAuth,
+	role,
 	component: Component,
 	path,
 	...rest
@@ -15,14 +16,10 @@ const PublicRoute = ({
 			const { from } = props.location.state || { from: { pathname: '/' } };
 
 			return (
-				auth && auth.role === 'ADMIN'
-					? (
-						<Redirect to={ADMIN_DASHBOARD} />
-					)
-					: (auth && auth.role === 'USER') && (path === SIGNIN || path === SIGNUP)
-						? (
-							<Redirect to={from} />
-						)
+				isAuth && role === 'ADMIN'
+					? <Redirect to={ADMIN_DASHBOARD} />
+					: (auth && role === 'USER') && (path === SIGNIN || path === SIGNUP)
+						? <Redirect to={from} />
 						: (
 							<main className="content">
 								<Component {...props} />
@@ -33,6 +30,9 @@ const PublicRoute = ({
 	/>
 );
 
-const mapStateToProps = ({ auth }) => ({ auth });
+const mapStateToProps = ({ auth }) => ({
+	isAuth: !!auth,
+	role: auth?.role || ''
+});
 
 export default connect(mapStateToProps)(PublicRoute);

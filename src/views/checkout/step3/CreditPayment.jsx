@@ -1,21 +1,46 @@
 /* eslint-disable no-else-return */
 import { CustomInput } from 'components/formik';
 import { Field, useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
-	const { cardInputRef, collapseCreditHeight } = ref;
+const CreditPayment = (props) => {
 	const { values, setValues } = useFormikContext();
+	const collapseContainerRef = useRef(null);
+	const cardInputRef = useRef(null);
+	const containerRef = useRef(null);
+	const checkboxContainerRef = useRef(null);
+
+	useEffect(() => {
+		toggleCollapse();
+	}, [values.type]);
+
+	const toggleCollapse = () => {
+		const cn = containerRef.current;
+		const cb = checkboxContainerRef.current;
+		const cl = collapseContainerRef.current;
+
+		if (cb && cn && cl) {
+			if (values.type === 'credit') {
+				cardInputRef.current.focus();
+				cn.style.height = `${cb.offsetHeight + cl.offsetHeight}px`;
+			} else {
+				cardInputRef.current.blur();
+				cn.style.height = `${cb.offsetHeight}px`;
+			}
+		}
+	}
 
 	const onCreditModeChange = (e) => {
 		if (e.target.checked) {
-			setValues({ ...values, paymentMode: 'credit' });
+			setValues({ ...values, type: 'credit' });
+			toggleCollapse();
+		}
+	};
 
-			const parent = e.target.closest('.checkout-fieldset-collapse');
-			const checkBoxContainer = e.target.closest('.checkout-checkbox-field');
-
-			cardInputRef.current.focus();
-			parent.style.height = `${checkBoxContainer.offsetHeight + collapseCreditHeight.current.offsetHeight}px`;
+	const handleOnlyNumberInput = (e) => {
+		const key = e.nativeEvent.key;
+		if (/\D/.test(key) && key !== 'Backspace') {
+			e.preventDefault();
 		}
 	};
 
@@ -24,14 +49,14 @@ const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
 			<h3 className="text-center">Payment</h3>
 			<br />
 			<span className="d-block padding-s">Payment Option</span>
-			<div className={`checkout-fieldset-collapse ${paymentMode === 'credit' ? 'is-selected-payment' : ''}`}>
+			<div ref={containerRef} className={`checkout-fieldset-collapse ${values.type === 'credit' ? 'is-selected-payment' : ''}`}>
 				{/* ---- CHECKBOX TOGGLER ------ */}
 				<div className="checkout-field margin-0">
-					<div className="checkout-checkbox-field">
+					<div className="checkout-checkbox-field" ref={checkboxContainerRef}>
 						<input
-							checked={values.paymentMode === 'credit'}
+							checked={values.type === 'credit'}
 							id="modeCredit"
-							name="paymentMode"
+							name="type" // the field name in formik I used is type 
 							onChange={onCreditModeChange}
 							type="radio"
 						/>
@@ -50,7 +75,7 @@ const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
 						</label>
 					</div>
 				</div>
-				<div className="checkout-collapse-sub" ref={collapseCreditHeight}>
+				<div className="checkout-collapse-sub" ref={collapseContainerRef}>
 					<span className="d-block padding-s text-center">Accepted Cards</span>
 					<div className="checkout-cards-accepted d-flex-center">
 						<div className="payment-img payment-img-visa" title="Visa" />
@@ -76,7 +101,9 @@ const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
 							<div className="checkout-field">
 								<Field
 									name="cardnumber"
-									type="number"
+									type="text"
+									maxLength={19}
+									onKeyDown={handleOnlyNumberInput}
 									label="* Card Number"
 									placeholder="Enter your card number"
 									component={CustomInput}
@@ -96,7 +123,9 @@ const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
 							<div className="checkout-field">
 								<Field
 									name="ccv"
-									type="number"
+									type="text"
+									maxLength={4}
+									onKeyDown={handleOnlyNumberInput}
 									label="* CCV"
 									placeholder="****"
 									component={CustomInput}
@@ -108,6 +137,6 @@ const CreditPayment = React.forwardRef(({ paymentMode, }, ref) => {
 			</div>
 		</>
 	);
-});
+};
 
 export default CreditPayment;

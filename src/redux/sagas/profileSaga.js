@@ -1,11 +1,11 @@
-import { call, put, select } from 'redux-saga/effects';
-import firebase from 'firebase/firebase';
-import { history } from 'routers/AppRouter';
-import { UPDATE_PROFILE, UPDATE_EMAIL } from 'constants/constants';
-import { updateProfileSuccess } from '../actions/profileActions';
-import { setLoading } from '../actions/miscActions';
-import { displayActionMessage } from 'helpers/utils';
+import { UPDATE_EMAIL, UPDATE_PROFILE } from 'constants/constants';
 import { ACCOUNT } from 'constants/routes';
+import firebase from 'firebase/firebase';
+import { displayActionMessage } from 'helpers/utils';
+import { call, put, select } from 'redux-saga/effects';
+import { history } from 'routers/AppRouter';
+import { setLoading } from '../actions/miscActions';
+import { updateProfileSuccess } from '../actions/profileActions';
 
 function* profileSaga({ type, payload }) {
 	switch (type) {

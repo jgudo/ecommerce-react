@@ -16,6 +16,7 @@ import Select from 'react-select';
 import { addToBasket, removeFromBasket } from 'redux/actions/basketActions';
 
 const ViewProduct = () => {
+    useDocumentTitle(`View ${store.product ? store.product.name : 'Item'}`);
     useScrollTop();
 
     const { id } = useParams();
@@ -26,15 +27,20 @@ const ViewProduct = () => {
         product: state.products.items.find(item => item.id === id),
         basket: state.basket
     }));
-    useDocumentTitle(`View ${store.product ? store.product.name : 'Item'}`);
 
     const [selectedImage, setSelectedImage] = useState(store.product?.image || '');
     const [product, setProduct] = useState(store.product || null);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [isLoading, setLoading] = useState(false);
-    const { recommendedProducts, fetchRecommendedProducts, isLoading: isLoadingFeatured, error } = useRecommendedProducts(6);
+    const {
+        recommendedProducts,
+        fetchRecommendedProducts,
+        isLoading: isLoadingFeatured,
+        error
+    } = useRecommendedProducts(6);
     const colorOverlay = useRef(null);
+
     const foundOnBasket = () => store.basket.find(item => item.id === product.id);
 
     const onAddToBasket = () => {

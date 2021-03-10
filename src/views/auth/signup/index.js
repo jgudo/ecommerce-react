@@ -17,7 +17,7 @@ const SignInSchema = Yup.object().shape({
 		.matches(/[A-Z\W]/g, 'Password should contain at least 1 uppercase letter.'),
 	fullname: Yup.string()
 		.required('Full name is required.')
-		.min(2, 'Name should be at least 2 characters.')
+		.min(4, 'Name should be at least 4 characters.')
 });
 
 const SignUp = (props) => {

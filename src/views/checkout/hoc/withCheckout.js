@@ -1,10 +1,11 @@
 /* eslint-disable no-nested-ternary */
+import { SIGNIN } from 'constants/routes';
 import { calculateTotal } from 'helpers/utils';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-const withAuth = (Component) => {
+const withCheckout = (Component) => {
 	return withRouter((props) => {
 		const state = useSelector(state => ({
 			isAuth: !!state.auth.id && !!state.auth.role,
@@ -15,9 +16,9 @@ const withAuth = (Component) => {
 		}));
 
 		if (!state.isAuth) {
-			<Redirect to="/signin" />
+			return <Redirect to={SIGNIN} />
 		} else if (state.basket.length === 0) {
-			<Redirect to="/" />
+			return <Redirect to="/" />
 		} else if (state.isAuth && state.basket.length !== 0) {
 			return (
 				<Component
@@ -35,4 +36,4 @@ const withAuth = (Component) => {
 	});
 };
 
-export default withAuth;
+export default withCheckout;
