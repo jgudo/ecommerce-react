@@ -1,4 +1,4 @@
-import { CircularProgress } from 'components/common';
+import { ArrowLeftOutlined, CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { CustomInput, CustomMobileInput } from 'components/formik';
 import { ACCOUNT } from 'constants/routes';
 import { Field, useFormikContext } from 'formik';
@@ -50,6 +50,8 @@ const EditForm = ({ isLoading, authProvider }) => {
                     disabled={isLoading}
                     onClick={() => history.push(ACCOUNT)}
                 >
+                    <ArrowLeftOutlined />
+                    &nbsp;
                     Back to Profile
                 </button>
                 <button
@@ -57,7 +59,8 @@ const EditForm = ({ isLoading, authProvider }) => {
                     disabled={isLoading}
                     onClick={submitForm}
                 >
-                    <CircularProgress visible={isLoading} theme="light" />
+                    {isLoading ? <LoadingOutlined /> : <CheckOutlined />}
+                    &nbsp;
                     {isLoading ? 'Updating Profile' : 'Update Profile'}
                 </button>
             </div>

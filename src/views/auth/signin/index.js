@@ -1,5 +1,5 @@
 import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons';
-import { CircularProgress, SocialLogin } from 'components/common';
+import { SocialLogin } from 'components/common';
 import { CustomInput } from 'components/formik';
 import { FORGOT_PASSWORD } from 'constants/routes';
 import { Field, Form, Formik } from "formik";
@@ -60,7 +60,7 @@ const SignIn = (props) => {
 				<div className="loader">
 					<h3 className="toast-success auth-success">
 						{authStatus.message}
-						<CircularProgress />
+						<LoadingOutlined />
 					</h3>
 				</div>
 			)}

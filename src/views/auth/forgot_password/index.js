@@ -1,4 +1,5 @@
-import { CircularProgress, Input } from 'components/common';
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Input } from 'components/common';
 import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,10 +62,8 @@ const ForgotPassword = () => {
 				onClick={onSubmitEmail}
 				type="button"
 			>
-				<CircularProgress
-					theme="light"
-					visible={isSendingForgotPWRequest}
-				/>
+				{isSendingForgotPWRequest ? <LoadingOutlined /> : <CheckOutlined />}
+				&nbsp;
 				{isSendingForgotPWRequest ? 'Sending Password Reset Email' : 'Send Password Reset Email'}
 			</button>
 		</div>

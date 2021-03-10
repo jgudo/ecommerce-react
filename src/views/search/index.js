@@ -1,4 +1,5 @@
-import { Boundary, CircularProgress, MessageDisplay } from 'components/common';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Boundary, MessageDisplay } from 'components/common';
 import { ProductItem } from 'components/product';
 import { useDidMount } from 'hooks';
 import React, { useEffect, useRef, useState } from 'react';
@@ -85,7 +86,11 @@ const Search = (props) => {
         </Boundary>
     ) : (
         <main className="content">
-            <div className="loader"><CircularProgress /></div>
+            <div className="loader">
+                <h4>Searching Product...</h4>
+                <br />
+                <LoadingOutlined style={{ fontSize: '3rem' }} />
+            </div>
         </main>
     );
 };

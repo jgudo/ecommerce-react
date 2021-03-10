@@ -1,4 +1,5 @@
-import { CircularProgress, ImageLoader } from 'components/common';
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
+import { ImageLoader } from 'components/common';
 import { CustomColorInput, CustomCreatableSelect, CustomInput, CustomTextarea } from 'components/formik';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import { useFileHandler } from 'hooks';
@@ -265,10 +266,8 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 									disabled={isLoading}
 									type="submit"
 								>
-									<CircularProgress
-										theme="light"
-										visible={isLoading}
-									/>
+									{isLoading ? <LoadingOutlined /> : <CheckOutlined />}
+									&nbsp;
 									{isLoading ? 'Saving Product' : 'Save Product'}
 								</button>
 							</div>

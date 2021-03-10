@@ -73,7 +73,9 @@
 .searchbar-icon {
   position: absolute;
   left: $m-size;
-  top: 1.3rem;
-  opacity: .2;
-  font-size: $font-small;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  color: #7a7a7a;
+  font-size: 1.6rem;
 }

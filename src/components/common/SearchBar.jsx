@@ -1,12 +1,10 @@
+import { SearchOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clearRecentSearch, removeSelectedRecent } from 'redux/actions/filterActions';
 
-const SearchBar = ({
-	filter,
-	isLoading
-}) => {
+const SearchBar = ({ filter, isLoading }) => {
 	const [searchInput, setSearchInput] = useState('');
 	const searchbarRef = useRef(null);
 	const history = useHistory();
@@ -64,6 +62,7 @@ const SearchBar = ({
 	return (
 		<>
 			<div className="searchbar" ref={searchbarRef}>
+				<SearchOutlined className="searchbar-icon" />
 				<input
 					className="search-input searchbar-input"
 					onChange={onSearchChange}
@@ -106,7 +105,6 @@ const SearchBar = ({
 						))}
 					</div>
 				)}
-				<i className="fa fa-search searchbar-icon" />
 			</div>
 		</>
 	);

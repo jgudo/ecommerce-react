@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import { CircularProgress } from 'components/common';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useDocumentTitle, useScrollTop } from 'hooks';
 import React, { lazy, Suspense } from 'react';
 import UserTab from '../components/UserTab';
@@ -10,7 +10,7 @@ const UserOrdersTab = lazy(() => import('../components/UserOrdersTab'));
 
 const Loader = () => (
 	<div className="loader" style={{ minHeight: '80vh' }}>
-		<CircularProgress />
+		<LoadingOutlined />
 		<h6>Loading ... </h6>
 	</div>
 );

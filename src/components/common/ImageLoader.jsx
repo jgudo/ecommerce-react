@@ -1,5 +1,5 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
-import CircularProgress from './CircularProgress';
 
 const ImageLoader = (props) => {
   const _loaded = {};
@@ -20,7 +20,7 @@ const ImageLoader = (props) => {
 
   return (
     <>
-      {!loaded && <CircularProgress style={spinnerStyle} />}
+      {!loaded && <LoadingOutlined style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, margin: 'auto' }} />}
       <img
         alt={props.alt || ''}
         className={`${props.className || ''} ${loaded ? 'is-img-loaded' : 'is-img-loading'}`}

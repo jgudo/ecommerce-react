@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { DownOutlined, LoadingOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { ACCOUNT } from 'constants/routes';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
@@ -34,7 +34,7 @@ const UserNav = ({ profile, isAuthenticating }) => {
 	return isAuthenticating ? (
 		<div className="user-nav">
 			<span>Signing Out</span>
-			<LoadingOutline />
+			<LoadingOutlined />
 		</div>
 	) : (
 		<div

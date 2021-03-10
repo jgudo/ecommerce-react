@@ -1,3 +1,4 @@
+import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { CHECKOUT_STEP_2 } from 'constants/routes';
 import { useFormikContext } from 'formik';
 import { displayMoney } from 'helpers/utils';
@@ -34,6 +35,8 @@ const Total = ({ isInternational, subtotal }) => {
                     onClick={() => onClickBack(values)}
                     type="button"
                 >
+                    <ArrowLeftOutlined />
+                    &nbsp;
                     Go Back
             </button>
                 <button
@@ -42,6 +45,8 @@ const Total = ({ isInternational, subtotal }) => {
                     onClick={submitForm}
                     type="button"
                 >
+                    <CheckOutlined />
+                    &nbsp;
                     Confirm
             </button>
             </div>
