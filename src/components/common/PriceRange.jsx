@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider'
-import { SliderRail, Handle, Track, Tick } from './PriceRangeComponents'
+import { Handles, Rail, Slider, Ticks, Tracks } from 'react-compound-slider'
+import { Handle, SliderRail, Tick, Track } from './PriceRangeComponents'
 
 const sliderStyle = {
 	position: 'relative',
@@ -40,17 +40,17 @@ const PriceRange = (props) => {
 			<div className="price-range-control">
 				<input
 					className={inputClassName()}
-					disabled={props.productsLength === 0}
+					disabled={props.productsCount === 0}
 					max={props.max}
 					min={props.min}
 					type="number"
 					readOnly
 					value={state.inputMin}
 				/>
-	—
-			<input
+				—
+				<input
 					className={inputClassName()}
-					disabled={props.productsLength === 0}
+					disabled={props.productsCount === 0}
 					max={props.max}
 					min={props.min}
 					type="number"

@@ -1,81 +1,48 @@
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 import { ColorChooser, ImageLoader, MessageDisplay } from 'components/common';
-import { FeaturedProduct } from 'components/product';
+import { ProductShowcaseGrid } from 'components/product';
 import { RECOMMENDED_PRODUCTS, SHOP } from 'constants/routes';
-import firebase from 'firebase/firebase';
-import { displayActionMessage, displayMoney } from 'helpers/utils';
-import { useDidMount, useDocumentTitle, useRecommendedProducts, useScrollTop } from 'hooks';
+import { displayMoney } from 'helpers/utils';
+import {
+    useBasket,
+    useDocumentTitle,
+    useProduct,
+    useRecommendedProducts,
+    useScrollTop
+} from 'hooks';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import Select from 'react-select';
-import { addToBasket, removeFromBasket } from 'redux/actions/basketActions';
 
 const ViewProduct = () => {
     const { id } = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
-    const didMount = useDidMount(true);
-    const store = useSelector(state => ({
-        product: state.products.items.find(item => item.id === id),
-        basket: state.basket
-
-    }));
+    const { product, isLoading, error } = useProduct(id);
+    const { addToBasket, isItemOnBasket } = useBasket(id);
     useScrollTop();
-    useDocumentTitle(`View ${store?.product?.name || 'Item'}`);
+    useDocumentTitle(`View ${product?.name || 'Item'}`);
 
-    const [selectedImage, setSelectedImage] = useState(store.product?.image || '');
-    const [product, setProduct] = useState(store.product || null);
+    const [selectedImage, setSelectedImage] = useState(product?.image || '');
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
-    const [isLoading, setLoading] = useState(false);
+
     const {
         recommendedProducts,
         fetchRecommendedProducts,
         isLoading: isLoadingFeatured,
-        error
+        error: errorFeatured
     } = useRecommendedProducts(6);
     const colorOverlay = useRef(null);
 
-    const foundOnBasket = () => store.basket.find(item => item.id === product.id);
-
-    const onAddToBasket = () => {
-        if (foundOnBasket()) {
-            dispatch(removeFromBasket(product.id));
-            displayActionMessage('Item removed from basket', 'info');
-        } else {
-            dispatch(addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] }));
-            displayActionMessage('Item added to basket', 'success');
-        }
-    };
+    useEffect(() => {
+        setSelectedImage(product?.image);
+    }, [product]);
 
     const onSelectedSizeChange = (newValue) => {
         setSelectedSize(newValue.value);
     };
-
-    useEffect(() => {
-        (async () => {
-            if (!product || store.product?.id !== id) {
-                try {
-                    setLoading(true);
-                    const doc = await firebase.getProduct(id);
-                    if (doc.exists) {
-                        const data = { ...doc.data(), id: doc.ref.id };
-
-                        if (didMount) {
-                            setProduct(data);
-                            setLoading(false);
-                            setSelectedImage(data.image);
-                        }
-                    } else {
-                        history.push(SHOP);
-                    }
-                } catch (err) {
-                    history.push(SHOP);
-                }
-            }
-        })()
-    }, [id]);
 
     const onSelectedColorChange = (color) => {
         setSelectedColor(color);
@@ -92,6 +59,9 @@ const ViewProduct = () => {
                     <br />
                     <LoadingOutlined style={{ fontSize: '3rem' }} />
                 </div>
+            )}
+            {error && (
+                <MessageDisplay message={error} />
             )}
             {(product && !isLoading) && (
                 <div className="product-view">
@@ -151,10 +121,10 @@ const ViewProduct = () => {
                             <h1>{displayMoney(product.price)}</h1>
                             <div className="product-modal-action">
                                 <button
-                                    className={`button button-small ${foundOnBasket() ? 'button-border button-border-gray' : ''}`}
-                                    onClick={onAddToBasket}
+                                    className={`button button-small ${isItemOnBasket(product.id) ? 'button-border button-border-gray' : ''}`}
+                                    onClick={() => addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] })}
                                 >
-                                    {foundOnBasket() ? 'Remove From Basket' : 'Add To Basket'}
+                                    {isItemOnBasket(product.id) ? 'Remove From Basket' : 'Add To Basket'}
                                 </button>
                             </div>
                         </div>
@@ -164,34 +134,20 @@ const ViewProduct = () => {
                             <h1>Recommended</h1>
                             <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
                         </div>
-                        <div className="product-display-grid">
-                            {error ? (
-                                <MessageDisplay
-                                    message={error}
-                                    action={fetchRecommendedProducts}
-                                    buttonLabel="Try Again"
-                                />
-                            ) : (
-                                <>
-                                    {(recommendedProducts.length === 0 && isLoadingFeatured) ? new Array(4).fill({}).map((product, index) => (
-                                        <FeaturedProduct
-                                            key={`product-skeleton ${index}`}
-                                            product={product}
-                                        />
-                                    )) : recommendedProducts.map(product => (
-                                        <FeaturedProduct
-                                            key={product.id}
-                                            isLoading={isLoadingFeatured}
-                                            product={product}
-                                        />
-                                    ))}
-                                </>
-                            )}
-                        </div>
+                        {errorFeatured ? (
+                            <MessageDisplay
+                                message={error}
+                                action={fetchRecommendedProducts}
+                                buttonLabel="Try Again"
+                            />
+                        ) : (
+                            <ProductShowcaseGrid products={recommendedProducts} skeletonCount={3} />
+                        )}
                     </div>
                 </div>
-            )}
-        </main>
+            )
+            }
+        </main >
     )
 };
 

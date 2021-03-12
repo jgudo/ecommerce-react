@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { MessageDisplay } from 'components/common';
-import { FeaturedProduct } from 'components/product';
+import { ProductShowcaseGrid } from 'components/product';
 import { FEATURED_PRODUCTS, RECOMMENDED_PRODUCTS, SHOP } from 'constants/routes';
 import { useDocumentTitle, useFeaturedProducts, useRecommendedProducts, useScrollTop } from 'hooks';
 import bannerImg from 'images/banner-girl.png';
@@ -30,78 +30,54 @@ const Home = () => {
 			<div className="home">
 				<div className="banner">
 					<div className="banner-desc">
-						<h1 className="text-thin"><strong>See</strong> everything with <strong>Clarity</strong></h1>
-						<p>Buying eyewear should leave you happy and good-looking, with money in your pocket. Glasses, sunglasses, and contacts—we’ve got your eyes covered.</p>
+						<h1 className="text-thin">
+							<strong>See</strong> everything with <strong>Clarity</strong>
+						</h1>
+						<p>Buying eyewear should leave you happy and good-looking, with money in your pocket.
+						Glasses, sunglasses, and contacts—we’ve got your eyes covered.
+						</p>
 						<br />
 						<Link to={SHOP} className="button">
-							Shop Now
-							&nbsp;
-							<ArrowRightOutlined />
+							Shop Now &nbsp; <ArrowRightOutlined />
 						</Link>
 					</div>
-					<div className="banner-img">
-						<img src={bannerImg} alt="" />
-					</div>
+					<div className="banner-img"><img src={bannerImg} alt="" /></div>
 				</div>
 				<div className="display">
 					<div className="display-header">
 						<h1>Featured Products</h1>
 						<Link to={FEATURED_PRODUCTS}>See All</Link>
 					</div>
-					<div className="product-display-grid">
-						{(errorFeatured && !isLoadingFeatured) ? (
-							<MessageDisplay
-								message={errorFeatured}
-								action={fetchFeaturedProducts}
-								buttonLabel="Try Again"
-							/>
-						) : (
-							<>
-								{(featuredProducts.length === 0) ? new Array(4).fill({}).map((product, index) => (
-									<FeaturedProduct
-										key={`product-skeleton ${index}`}
-										product={product}
-									/>
-								)) : featuredProducts.map(product => (
-									<FeaturedProduct
-										key={product.id}
-										isLoading={isLoadingFeatured}
-										product={product}
-									/>
-								))}
-							</>
-						)}
-					</div>
+					{(errorFeatured && !isLoadingFeatured) ? (
+						<MessageDisplay
+							message={errorFeatured}
+							action={fetchFeaturedProducts}
+							buttonLabel="Try Again"
+						/>
+					) : (
+						<ProductShowcaseGrid
+							products={featuredProducts}
+							skeletonCount={6}
+						/>
+					)}
 				</div>
 				<div className="display">
 					<div className="display-header">
 						<h1>Recommended Products</h1>
 						<Link to={RECOMMENDED_PRODUCTS}>See All</Link>
 					</div>
-					<div className="product-display-grid">
-						{(errorRecommended && !isLoadingRecommended) ? (
-							<MessageDisplay
-								message={errorRecommended}
-								action={fetchRecommendedProducts}
-								buttonLabel="Try Again"
-							/>
-						) : (
-							<>
-								{recommendedProducts.length === 0 ? new Array(4).fill({}).map((product, index) => (
-									<FeaturedProduct
-										key={`product-skeleton ${index}`}
-										product={product}
-									/>
-								)) : recommendedProducts.map(product => (
-									<FeaturedProduct
-										key={product.id}
-										isLoading={isLoadingRecommended}
-										product={product}
-									/>
-								))}
-							</>
-						)}
-					</div>
+					{(errorRecommended && !isLoadingRecommended) ? (
+						<MessageDisplay
+							message={errorRecommended}
+							action={fetchRecommendedProducts}
+							buttonLabel="Try Again"
+						/>
+					) : (
+						<ProductShowcaseGrid
+							products={recommendedProducts}
+							skeletonCount={6}
+						/>
+					)}
 				</div>
 			</div>
 		</main>

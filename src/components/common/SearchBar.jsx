@@ -1,11 +1,15 @@
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clearRecentSearch, removeSelectedRecent } from 'redux/actions/filterActions';
 
-const SearchBar = ({ filter, isLoading }) => {
+const SearchBar = () => {
 	const [searchInput, setSearchInput] = useState('');
+	const { filter, isLoading } = useSelector(state => ({
+		filter: state.filter,
+		isLoading: state.app.loading
+	}));
 	const searchbarRef = useRef(null);
 	const history = useHistory();
 

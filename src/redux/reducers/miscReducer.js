@@ -1,6 +1,6 @@
 import {
-	LOADING,
-	IS_AUTHENTICATING,
+	IS_AUTHENTICATING, LOADING,
+
 	SET_AUTH_STATUS,
 	SET_REQUEST_STATUS
 } from 'constants/constants';
@@ -8,7 +8,7 @@ import {
 const initState = {
 	loading: false,
 	isAuthenticating: false,
-	authStatus: {},
+	authStatus: null,
 	requestStatus: null,
 	theme: 'light'
 };

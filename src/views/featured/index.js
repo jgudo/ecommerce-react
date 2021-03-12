@@ -1,5 +1,5 @@
 import { MessageDisplay } from 'components/common';
-import { FeaturedProduct } from 'components/product';
+import { ProductShowcaseGrid } from 'components/product';
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from 'hooks';
 import bannerImg from 'images/banner-guy.png';
 import React from 'react';
@@ -35,20 +35,10 @@ const FeaturedProducts = () => {
                                 buttonLabel="Try Again"
                             />
                         ) : (
-                            <>
-                                {featuredProducts.length === 0 ? new Array(4).fill({}).map((product, index) => (
-                                    <FeaturedProduct
-                                        key={`product-skeleton ${index}`}
-                                        product={product}
-                                    />
-                                )) : featuredProducts.map(product => (
-                                    <FeaturedProduct
-                                        key={product.id}
-                                        isLoading={isLoading}
-                                        product={product}
-                                    />
-                                ))}
-                            </>
+                            <ProductShowcaseGrid
+                                products={featuredProducts}
+                                skeletonCount={6}
+                            />
                         )}
                     </div>
                 </div>

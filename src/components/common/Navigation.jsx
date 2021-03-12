@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { ShoppingOutlined } from '@ant-design/icons';
+import { FilterOutlined, ShoppingOutlined } from '@ant-design/icons';
 import * as ROUTE from 'constants/routes';
 import logo from 'images/logo-full.png';
 import React, { useEffect, useRef } from 'react';
@@ -16,6 +16,14 @@ const Navigation = () => {
 	const navbar = useRef(null);
 	const history = useHistory();
 	const { pathname } = useLocation();
+
+	const store = useSelector(state => ({
+		basketLength: state.basket.length,
+		user: state.auth,
+		isAuthenticating: state.app.isAuthenticating,
+		isLoading: state.app.loading,
+	}));
+
 	const scrollHandler = () => {
 		if (navbar.current && window.screen.width > 480) {
 			if (window.pageYOffset >= 70) {
@@ -28,20 +36,8 @@ const Navigation = () => {
 
 	useEffect(() => {
 		window.addEventListener('scroll', scrollHandler);
-
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, []);
-
-	const store = useSelector(state => ({
-		filter: state.filter,
-		products: state.products.items,
-		basketLength: state.basket.length,
-		profile: state.profile,
-		user: state.auth,
-		isLoading: state.app.loading,
-		isAuthenticating: state.app.isAuthenticating,
-		productsLength: state.products.items.length
-	}));
 
 	const onClickLink = (e) => {
 		if (store.isAuthenticating) e.preventDefault();
@@ -62,51 +58,31 @@ const Navigation = () => {
 	} else if (window.screen.width <= 800) {
 		return (
 			<MobileNavigation
-				basketLength={store.basketLength}
+				{...store}
 				disabledPaths={basketDisabledpathnames}
-				isAuth={store.user}
-				products={store.products}
-				isLoading={store.isLoading}
-				productsCount={store.productsCount}
-				filter={store.filter}
-				isAuthenticating={store.isAuthenticating}
 				pathname={pathname}
-				profile={store.profile}
 			/>
 		)
 	} else {
 		return (
 			<nav className="navigation" ref={navbar}>
 				<div className="logo">
-					<Link onClick={onClickLink} to="/">
-						<img src={logo} />
-					</Link>
+					<Link onClick={onClickLink} to="/"><img src={logo} /></Link>
 				</div>
 				<ul className="navigation-menu-main">
-					<li>
-						<Link to={ROUTE.HOME}>HOME</Link>
-					</li>
-					<li>
-						<Link to={ROUTE.SHOP}>SHOP</Link>
-					</li>
+					<li><NavLink activeClassName="navigation-menu-active" exact to={ROUTE.HOME}>Home</NavLink></li>
+					<li><NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>Shop</NavLink></li>
+					<li><NavLink activeClassName="navigation-menu-active" to={ROUTE.FEATURED_PRODUCTS}>Featured</NavLink></li>
+					<li><NavLink activeClassName="navigation-menu-active" to={ROUTE.RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
 				</ul>
 				{(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
-					<FiltersToggle
-						filter={store.filter}
-						isLoading={store.isLoading}
-						products={store.products}
-						productsCount={store.productsLength}
-					>
+					<FiltersToggle>
 						<button className="button-muted button-small">
-							Filters &nbsp;<i className="fa fa-filter" />
+							Filters &nbsp;<FilterOutlined />
 						</button>
 					</FiltersToggle>
 				)}
-				<SearchBar
-					isLoading={store.isLoading}
-					filter={store.filter}
-				/>
-
+				<SearchBar />
 				<ul className="navigation-menu">
 					<li className="navigation-menu-item">
 						<BasketToggle>
@@ -126,31 +102,27 @@ const Navigation = () => {
 					</li>
 					{store.user ? (
 						<li className="navigation-menu-item">
-							<UserAvatar isAuthenticating={store.isAuthenticating} profile={store.profile} />
+							<UserAvatar />
 						</li>
 					) : (
 						<li className="navigation-action">
 							{pathname !== ROUTE.SIGNUP && (
-								<NavLink
-									activeClassName="navigation-menu-active"
+								<Link
 									className="button button-small"
-									exact
 									onClick={onClickLink}
 									to={ROUTE.SIGNUP}
 								>
 									Sign Up
-								</NavLink>
+								</Link>
 							)}
 							{pathname !== ROUTE.SIGNIN && (
-								<NavLink
-									activeClassName="navigation-menu-active"
+								<Link
 									className="button button-small button-muted margin-left-s"
-									exact
 									onClick={onClickLink}
 									to={ROUTE.SIGNIN}
 								>
 									Sign In
-								</NavLink>
+								</Link>
 							)}
 						</li>
 					)}

@@ -1,34 +1,38 @@
-import { call, put } from 'redux-saga/effects';
-
-import firebase from 'firebase/firebase';
-import { history } from 'routers/AppRouter';
-
 import {
-	SIGNIN,
-	SIGNUP,
 	ON_AUTHSTATE_FAIL,
-	SIGNIN_WITH_GOOGLE,
+
+
+
+
+
+	ON_AUTHSTATE_SUCCESS, RESET_PASSWORD,
+
+
+	SET_AUTH_PERSISTENCE, SIGNIN,
+
+
+
 	SIGNIN_WITH_FACEBOOK,
-	SIGNIN_WITH_GITHUB,
-	RESET_PASSWORD,
-	SIGNOUT,
-	ON_AUTHSTATE_SUCCESS,
-	SET_AUTH_PERSISTENCE
+	SIGNIN_WITH_GITHUB, SIGNIN_WITH_GOOGLE,
+
+
+
+	SIGNOUT, SIGNUP
 } from 'constants/constants';
-
-import { signInSuccess, signOutSuccess } from 'redux/actions/authActions';
-import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
-
-import { clearBasket, setBasketItems } from 'redux/actions/basketActions';
-import { setProfile, clearProfile } from 'redux/actions/profileActions';
-import { resetFilter } from 'redux/actions/filterActions';
-import { resetCheckout } from 'redux/actions/checkoutActions';
-
+import firebase from 'firebase/firebase';
 import defaultAvatar from 'images/defaultAvatar.jpg';
 import defaultBanner from 'images/defaultBanner.jpg';
+import { call, put } from 'redux-saga/effects';
+import { signInSuccess, signOutSuccess } from 'redux/actions/authActions';
+import { clearBasket, setBasketItems } from 'redux/actions/basketActions';
+import { resetCheckout } from 'redux/actions/checkoutActions';
+import { resetFilter } from 'redux/actions/filterActions';
+import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
+import { clearProfile, setProfile } from 'redux/actions/profileActions';
+import { history } from 'routers/AppRouter';
 
 function* handleError(e) {
-	const obj = { success: false, type: 'auth' };
+	const obj = { success: false, type: 'auth', isError: true };
 	yield put(setAuthenticating(false));
 
 	switch (e.code) {
@@ -127,7 +131,7 @@ function* authSaga({ type, payload }) {
 				yield put(resetCheckout());
 				yield put(signOutSuccess());
 				yield put(setAuthenticating(false));
-				yield call(history.push, '/signin');
+				yield call(history.push, SIGNIN);
 			} catch (e) {
 				console.log(e);
 			}
@@ -147,13 +151,6 @@ function* authSaga({ type, payload }) {
 			}
 			break;
 		case ON_AUTHSTATE_SUCCESS:
-			yield put(setAuthStatus({
-				success: true,
-				type: 'auth',
-				message: 'Successfully signed in. Redirecting...'
-			}));
-			// yield call(history.push, '/');
-
 			const snapshot = yield call(firebase.getUser, payload.uid);
 
 			if (snapshot.data()) { // if user exists in database
@@ -188,6 +185,13 @@ function* authSaga({ type, payload }) {
 					provider: payload.providerData[0].providerId
 				}));
 			}
+
+			yield put(setAuthStatus({
+				success: true,
+				type: 'auth',
+				isError: false,
+				message: 'Successfully signed in. Redirecting...'
+			}));
 			yield put(setAuthenticating(false));
 			break;
 		case ON_AUTHSTATE_FAIL:

@@ -29,7 +29,9 @@ class Firebase {
 
 	passwordReset = email => this.auth.sendPasswordResetEmail(email);
 
-	addUser = (id, user) => this.db.collection('users').doc(id).set(user);
+	addUser = (id, user) => {
+		return this.db.collection('users').doc(id).set(user);
+	};
 
 	getUser = id => this.db.collection('users').doc(id).get();
 
@@ -105,7 +107,7 @@ class Firebase {
 
 					resolve({ products, lastKey });
 				} catch (e) {
-					reject(new Error(':( Failed to fetch products.'));
+					reject(e?.message || ':( Failed to fetch products.');
 				}
 			} else {
 				const timeout = setTimeout(() => {
@@ -130,7 +132,7 @@ class Firebase {
 				} catch (e) {
 					if (didTimeout) return;
 					console.log('Failed to fetch products: An error occured while trying to fetch products or there may be no product ', e);
-					reject(new Error(':( Failed to fetch products.'));
+					reject(e?.message || ':( Failed to fetch products.');
 				}
 			}
 		});

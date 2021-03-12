@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { removeProduct } from 'redux/actions/productActions';
 
 
-const ProductItem = ({ product, history }) => {
+const ProductItem = ({ product }) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const productRef = useRef(null);
 
 	const onClickEdit = () => {

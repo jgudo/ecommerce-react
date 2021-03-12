@@ -3,14 +3,12 @@ import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useHistory } from 'react-router-dom';
 
-const ProductFeatured = ({ isLoading, product }) => {
+const ProductFeatured = ({ product }) => {
     const history = useHistory();
     const onClickItem = () => {
-        if (isLoading) return;
+        if (!product) return;
 
-        if (product.id) {
-            history.push(`/product/${product.id}`);
-        }
+        history.push(`/product/${product.id}`);
     };
 
     return (

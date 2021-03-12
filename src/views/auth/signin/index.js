@@ -1,13 +1,14 @@
 import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons';
 import { SocialLogin } from 'components/common';
 import { CustomInput } from 'components/formik';
-import { FORGOT_PASSWORD } from 'constants/routes';
+import { FORGOT_PASSWORD, SIGNUP } from 'constants/routes';
 import { Field, Form, Formik } from "formik";
 import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signIn } from 'redux/actions/authActions';
+import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
 import * as Yup from 'yup';
 
 const SignInSchema = Yup.object().shape({
@@ -24,39 +25,32 @@ const SignIn = (props) => {
 		isAuthenticating: state.app.isAuthenticating
 	}));
 
-	/* separate states so that when user navigates to signup or forgot password,
-	the authStatus message won't display to other routes.
-  */
-	const [signInStatus, setSignInStatus] = useState({});
-	const [isSigningIn, setIsSigningIn] = useState(false);
-	// --- 
 	const dispatch = useDispatch();
 	const didMount = useDidMount();
 
 	useScrollTop();
 	useDocumentTitle('Sign In | Salinaka');
-	useEffect(() => {
-		if (didMount) {
-			setSignInStatus(authStatus);
-			setIsSigningIn(isAuthenticating);
-		}
-	}, [authStatus, isAuthenticating]);
 
-	const onSignUp = () => props.history.push('/signup');
+	useEffect(() => {
+		return () => {
+			dispatch(setAuthStatus(null));
+			dispatch(setAuthenticating(false))
+		}
+	}, []);
+
+	const onSignUp = () => props.history.push(SIGNUP);
 
 	const onSubmitForm = (form) => {
 		dispatch(signIn(form.email, form.password));
 	};
 
 	const onClickLink = (e) => {
-		if (isSigningIn) e.preventDefault();
+		if (isAuthenticating) e.preventDefault();
 	};
-
-	const isSuccess = !!authStatus.success && authStatus.type === 'auth';
 
 	return (
 		<div className="auth-content">
-			{isSuccess && (
+			{authStatus?.success && (
 				<div className="loader">
 					<h3 className="toast-success auth-success">
 						{authStatus.message}
@@ -64,14 +58,14 @@ const SignIn = (props) => {
 					</h3>
 				</div>
 			)}
-			{signInStatus.message && (
-				<h5 className="text-center toast-error">
-					{authStatus.message}
-				</h5>
-			)}
-			{!isSuccess && (
+			{!authStatus?.success && (
 				<>
-					<div className={`auth ${signInStatus.message && (!authStatus.success && 'input-error')}`}>
+					{authStatus?.message && (
+						<h5 className="text-center toast-error">
+							{authStatus?.message}
+						</h5>
+					)}
+					<div className={`auth ${authStatus?.message && (!authStatus?.success && 'input-error')}`}>
 						<div className="auth-main">
 							<h3>Sign in to Salinaka</h3>
 							<br />
@@ -89,7 +83,7 @@ const SignIn = (props) => {
 										<Form>
 											<div className="auth-field">
 												<Field
-													disabled={isSigningIn}
+													disabled={isAuthenticating}
 													name="email"
 													type="email"
 													label="Email"
@@ -99,7 +93,7 @@ const SignIn = (props) => {
 											</div>
 											<div className="auth-field">
 												<Field
-													disabled={isSigningIn}
+													disabled={isAuthenticating}
 													name="password"
 													type="password"
 													label="Password"
@@ -118,12 +112,12 @@ const SignIn = (props) => {
 												</Link>
 												<button
 													className="button auth-button"
-													disabled={isSigningIn}
+													disabled={isAuthenticating}
 													type="submit"
 												>
-													{isSigningIn ? 'Signing In' : 'Sign In'}
+													{isAuthenticating ? 'Signing In' : 'Sign In'}
 													&nbsp;
-													{isSigningIn ? <LoadingOutlined /> : <ArrowRightOutlined />}
+													{isAuthenticating ? <LoadingOutlined /> : <ArrowRightOutlined />}
 												</button>
 											</div>
 										</Form>
@@ -134,7 +128,7 @@ const SignIn = (props) => {
 						<div className="auth-divider">
 							<h6>OR</h6>
 						</div>
-						<SocialLogin isLoading={isSigningIn} />
+						<SocialLogin isLoading={isAuthenticating} />
 					</div>
 					<div className="auth-message">
 						<span className="auth-info">
@@ -142,7 +136,7 @@ const SignIn = (props) => {
 						</span>
 						<button
 							className="button button-small button-border button-border-gray button-icon"
-							disabled={isSigningIn}
+							disabled={isAuthenticating}
 							onClick={onSignUp}
 						>
 							Sign Up

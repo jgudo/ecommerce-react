@@ -1,49 +1,36 @@
 import { CheckOutlined } from '@ant-design/icons';
 import { ImageLoader } from 'components/common';
-import { displayActionMessage, displayMoney } from 'helpers/utils';
+import { displayMoney } from 'helpers/utils';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addToBasket, removeFromBasket } from 'redux/actions/basketActions';
 
-const ProductItem = ({
-	product,
-	isItemOnBasket,
-	isLoading
-}) => {
+const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const onClickItem = () => {
-		if (isLoading) return;
+		if (!product) return;
 
 		if (product.id) {
 			history.push(`/product/${product.id}`);
 		}
 	};
 
-	const onAddToBasket = () => {
-		if (isItemOnBasket) {
-			dispatch(removeFromBasket(product.id));
-			displayActionMessage('Item removed from basket', 'info');
-		} else {
-			dispatch(addToBasket({ ...product, selectedSize: product.sizes[0] }));
-			displayActionMessage('Item added to basket', 'success');
-		}
-	};
+	const itemOnBasket = isItemOnBasket ? isItemOnBasket(product.id) : false;
 
 	return (
 		<SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
 			<div
 				className={`product-card ${!product.id ? 'product-loading' : ''}`}
 				style={{
-					border: isItemOnBasket ? '1px solid #a6a5a5' : '',
-					boxShadow: isItemOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
+					border: product && itemOnBasket ? '1px solid #a6a5a5' : '',
+					boxShadow: product && itemOnBasket ? '0 10px 15px rgba(0, 0, 0, .07)' : 'none'
 				}}
 			>
-				{isItemOnBasket && <CheckOutlined className="fa fa-check product-card-check" />}
+				{itemOnBasket && <CheckOutlined className="fa fa-check product-card-check" />}
 				<div
 					className="product-card-content"
 					onClick={onClickItem}
@@ -70,10 +57,10 @@ const ProductItem = ({
 				</div>
 				{product.id && (
 					<button
-						className={`product-card-button button-small button button-block ${isItemOnBasket ? 'button-border button-border-gray' : ''}`}
-						onClick={onAddToBasket}
+						className={`product-card-button button-small button button-block ${itemOnBasket ? 'button-border button-border-gray' : ''}`}
+						onClick={() => addToBasket && addToBasket({ ...product, selectedSize: product.sizes[0] })}
 					>
-						{isItemOnBasket ? 'Remove from basket' : 'Add to basket'}
+						{itemOnBasket ? 'Remove from basket' : 'Add to basket'}
 					</button>
 				)}
 

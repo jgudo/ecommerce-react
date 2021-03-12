@@ -1,6 +1,6 @@
-.product-list {
+.product-grid {
   display: grid;
-  // grid-template-columns: repeat(6, 180px);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   grid-gap: $s-size;
   justify-content: center;
 
@@ -48,6 +48,7 @@
 }
 
 .product-card {
+  max-width: 180px;
   height: 230px;
   border: 1px solid $border-color;
   text-align: center;
@@ -55,6 +56,7 @@
   background: $white;
   // box-shadow: 0 10px 15px rgba(0, 0, 0, .05);
   overflow: hidden;
+  // margin: auto;
   // animation: slide-up .3s ease;
 
   &:hover {

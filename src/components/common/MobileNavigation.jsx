@@ -41,9 +41,9 @@ const Navigation = (props) => {
 					)}
 				</BasketToggle>
 				<ul className="mobile-navigation-menu">
-					{props.isAuth ? (
+					{props.user ? (
 						<li className="mobile-navigation-item">
-							<UserNav isAuthenticating={props.isAuthenticating} profile={props.profile} />
+							<UserNav />
 						</li>
 					) : (
 						<>
@@ -63,17 +63,8 @@ const Navigation = (props) => {
 				</ul>
 			</div>
 			<div className="mobile-navigation-sec">
-				<SearchBar
-					isLoading={props.isLoading}
-					filter={props.filter}
-				/>
-				<FiltersToggle
-					filter={props.filter}
-					isLoading={props.isLoading}
-					products={props.products}
-					productsCount={props.productsLength}
-					history={history}
-				>
+				<SearchBar />
+				<FiltersToggle>
 					<button className="button-link button-small">
 						<i className="fa fa-filter" />
 					</button>

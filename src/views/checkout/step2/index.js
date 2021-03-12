@@ -95,7 +95,6 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 									</button>
 									<button
 										className="button button-icon"
-										disabled={!isValid}
 										type="submit"
 									>
 										Next Step

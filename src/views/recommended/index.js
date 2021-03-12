@@ -1,9 +1,8 @@
 import { MessageDisplay } from 'components/common';
-import { FeaturedProduct } from 'components/product';
+import { ProductShowcaseGrid } from 'components/product';
 import { useDocumentTitle, useRecommendedProducts, useScrollTop } from 'hooks';
 import bannerImg from 'images/banner-girl-1.png';
 import React from 'react';
-
 
 const RecommendedProducts = () => {
     useDocumentTitle('Recommended Products | Salinaka');
@@ -36,20 +35,10 @@ const RecommendedProducts = () => {
                                 buttonLabel="Try Again"
                             />
                         ) : (
-                            <>
-                                {recommendedProducts.length === 0 ? new Array(4).fill({}).map((product, index) => (
-                                    <FeaturedProduct
-                                        key={`product-skeleton ${index}`}
-                                        product={product}
-                                    />
-                                )) : recommendedProducts.map(product => (
-                                    <FeaturedProduct
-                                        key={product.id}
-                                        isLoading={isLoading}
-                                        product={product}
-                                    />
-                                ))}
-                            </>
+                            <ProductShowcaseGrid
+                                products={recommendedProducts}
+                                skeletonCount={6}
+                            />
                         )}
                     </div>
                 </div>

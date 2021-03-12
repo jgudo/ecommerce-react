@@ -3,11 +3,15 @@ import { DownOutlined, LoadingOutlined, LogoutOutlined, UserOutlined } from '@an
 import { ACCOUNT } from 'constants/routes';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { signOut } from 'redux/actions/authActions';
 
-const UserNav = ({ profile, isAuthenticating }) => {
+const UserNav = () => {
+	const { profile, isAuthenticating } = useSelector(state => ({
+		profile: state.profile,
+		isAuthenticating: state.app.isAuthenticating,
+	}));
 	const userNav = useRef(null);
 	const dispatch = useDispatch();
 

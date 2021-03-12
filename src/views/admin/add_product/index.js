@@ -1,9 +1,11 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import { useDocumentTitle, useScrollTop } from 'hooks';
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { addProduct } from 'redux/actions/productActions';
-import { ProductForm } from '../components';
+
+const ProductForm = lazy(() => import('../components/ProductForm'))
 
 const AddProduct = () => {
 	useScrollTop();
@@ -18,24 +20,32 @@ const AddProduct = () => {
 	return (
 		<div className="product-form-container">
 			<h2>Add New Product</h2>
-			<ProductForm
-				isLoading={isLoading}
-				onSubmit={onSubmit}
-				product={{
-					name: '',
-					brand: '',
-					price: 0,
-					maxQuantity: 0,
-					description: '',
-					keywords: [],
-					sizes: [],
-					image: '',
-					isFeatured: false,
-					isRecommended: false,
-					availableColors: [],
-					imageCollection: []
-				}}
-			/>
+			<Suspense fallback={(
+				<div className="loader" style={{ minHeight: '80vh' }}>
+					<h6>Loading ... </h6>
+					<br />
+					<LoadingOutlined />
+				</div>
+			)}>
+				<ProductForm
+					isLoading={isLoading}
+					onSubmit={onSubmit}
+					product={{
+						name: '',
+						brand: '',
+						price: 0,
+						maxQuantity: 0,
+						description: '',
+						keywords: [],
+						sizes: [],
+						image: '',
+						isFeatured: false,
+						isRecommended: false,
+						availableColors: [],
+						imageCollection: []
+					}}
+				/>
+			</Suspense>
 		</div>
 	);
 };

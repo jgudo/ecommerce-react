@@ -4,13 +4,8 @@ import { useDispatch } from 'react-redux';
 import Filters from './Filters';
 import Modal from './Modal';
 
-const FiltersToggle = ({
-	filter,
-	isLoading,
-	products,
-	productsCount,
-	children
-}) => {
+const FiltersToggle = ({ children }) => {
+
 	const { isOpenModal, onOpenModal, onCloseModal } = useModal();
 	const dispatch = useDispatch();
 
@@ -27,14 +22,7 @@ const FiltersToggle = ({
 				onRequestClose={onCloseModal}
 			>
 				<div className="filters-toggle-sub">
-					<Filters
-						closeModal={onCloseModal}
-						dispatch={dispatch}
-						filter={filter}
-						isLoading={isLoading}
-						products={products}
-						productsCount={productsCount}
-					/>
+					<Filters closeModal={onCloseModal} />
 				</div>
 				<button
 					className="modal-close-button"

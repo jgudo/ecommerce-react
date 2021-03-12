@@ -12,7 +12,7 @@ const PublicRoute = ({
 }) => (
 	<Route
 		{...rest}
-		component={(props) => {
+		render={(props) => {
 			const { from } = props.location.state || { from: { pathname: '/' } };
 
 			return (

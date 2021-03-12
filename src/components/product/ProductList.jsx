@@ -1,24 +1,23 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-sort-props */
-import { MessageDisplay } from 'components/common';
-import PropTypes, { object } from 'prop-types';
+import { Boundary, MessageDisplay } from 'components/common';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLoading } from 'redux/actions/miscActions';
 import { getProducts } from 'redux/actions/productActions';
 
 const ProductList = (props) => {
+	const { products, filteredProducts, isLoading, requestStatus } = props;
 	const [isFetching, setFetching] = useState(false);
-	const { filteredProducts, productsCount, isLoading } = props;
-
 	const dispatch = useDispatch();
+
 	const fetchProducts = () => {
 		setFetching(true);
-		dispatch(getProducts(props.lastRefKey));
+		dispatch(getProducts(products.lastRefKey));
 	};
 
 	useEffect(() => {
-		if (productsCount === 0 || !props.lastRefKey) {
+		if (products.items.length === 0 || !products.lastRefKey) {
 			fetchProducts();
 		}
 
@@ -28,27 +27,26 @@ const ProductList = (props) => {
 
 	useEffect(() => {
 		setFetching(false);
-	}, [props.lastRefKey]);
-
-	const foundOnBasket = id => !!props.basket.find(item => item.id === id);
+	}, [products.lastRefKey]);
 
 	if (filteredProducts.length === 0 && !isLoading) {
-		return <MessageDisplay message={props.requestStatus?.message || 'No products found.'} />
-	} else if (filteredProducts.length === 0 && !isLoading) {
+		return (
+			<MessageDisplay message={requestStatus?.message || 'No products found.'} />
+		)
+	} else if (filteredProducts.length === 0 && requestStatus) {
 		return (
 			<MessageDisplay
-				message={props.requestStatus?.message || 'Something went wrong :('}
+				message={requestStatus?.message || 'Something went wrong :('}
 				action={fetchProducts}
 				buttonLabel="Try Again"
 			/>
 		)
 	} else {
 		return (
-			<>
-				{props.children({ foundOnBasket })}
-
+			<Boundary>
+				{props.children}
 				{/* Show 'Show More' button if products length is less than total products */}
-				{props.productsCount < props.totalProductsCount && (
+				{products.items.length < products.total && (
 					<div className="d-flex-center padding-l">
 						<button
 							className="button button-small"
@@ -59,21 +57,9 @@ const ProductList = (props) => {
 						</button>
 					</div>
 				)}
-			</>
+			</Boundary>
 		)
 	}
-};
-
-ProductList.propType = {
-	filter: PropTypes.object,
-	basket: PropTypes.arrayOf(object),
-	filteredProducts: PropTypes.arrayOf(PropTypes.object),
-	products: PropTypes.arrayOf(object),
-	isLoading: PropTypes.bool.isRequired,
-	requestStatus: PropTypes.string.isRequired,
-	productsCount: PropTypes.number.isRequired,
-	totalProductsCount: PropTypes.number.isRequired,
-	filteredProductsLength: PropTypes.number.isRequired,
 };
 
 export default ProductList;
