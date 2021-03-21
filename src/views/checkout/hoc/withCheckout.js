@@ -29,7 +29,7 @@ const withCheckout = (Component) => {
 					payment={state.payment}
 					profile={state.profile}
 					shipping={state.shipping}
-					subtotal={calculateTotal(state.basket.map(product => product.price * product.quantity)) + shipppingFee}
+					subtotal={calculateTotal(state.basket.map(product => product.price * product.quantity)) + shippingFee}
 				/>
 			)
 		} else {
