@@ -21,8 +21,9 @@ const useRecommendedProducts = (itemsCount) => {
 
             const docs = await firebase.getRecommendedProducts(itemsCount);
 
-            if (docs.empty) {
-                didMount && setError('No recommended products found.');
+            if (docs.empty && didMount) {
+                setError('No recommended products found.');
+                setLoading(false);
             } else {
                 const items = [];
 

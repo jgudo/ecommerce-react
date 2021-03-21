@@ -15,6 +15,8 @@ const withCheckout = (Component) => {
 			profile: state.profile
 		}));
 
+		const shippingFee = state.shipping.isInternational ? 50 : 0;
+
 		if (!state.isAuth) {
 			return <Redirect to={SIGNIN} />
 		} else if (state.basket.length === 0) {
@@ -27,7 +29,7 @@ const withCheckout = (Component) => {
 					payment={state.payment}
 					profile={state.profile}
 					shipping={state.shipping}
-					subtotal={calculateTotal(state.basket.map(product => product.price * product.quantity))}
+					subtotal={calculateTotal(state.basket.map(product => product.price * product.quantity)) + shipppingFee}
 				/>
 			)
 		} else {
