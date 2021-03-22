@@ -34,7 +34,7 @@ const Home = () => {
           <div className="banner-desc">
             <h1 className="text-thin">
               <strong>See</strong>
-              everything with
+              &nbsp;everything with&nbsp;
               <strong>Clarity</strong>
             </h1>
             <p>
