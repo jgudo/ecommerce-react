@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-else-return */
 import { CustomInput } from 'components/formik';
 import { Field, useFormikContext } from 'formik';
@@ -56,17 +57,17 @@ const CreditPayment = () => {
         {/* ---- CHECKBOX TOGGLER ------ */}
         <div className="checkout-field margin-0">
           <div className="checkout-checkbox-field" ref={checkboxContainerRef}>
+            <input
+              checked={values.type === 'credit'}
+              id="modeCredit"
+              name="type" // the field name in formik I used is type
+              onChange={onCreditModeChange}
+              type="radio"
+            />
             <label
               className="d-flex w-100"
               htmlFor="modeCredit"
             >
-              <input
-                checked={values.type === 'credit'}
-                id="modeCredit"
-                name="type" // the field name in formik I used is type
-                onChange={onCreditModeChange}
-                type="radio"
-              />
               <div className="d-flex-grow-1 margin-left-s">
                 <h4 className="margin-0">Credit Card</h4>
                 <span className="text-subtle d-block margin-top-s">

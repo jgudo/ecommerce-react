@@ -18,6 +18,7 @@ const BasketItem = ({ product }) => {
       <div className="basket-item-wrapper">
         <div className="basket-item-img-wrapper">
           <ImageLoader
+            alt={product.name}
             className="basket-item-img"
             src={product.image}
           />
@@ -78,8 +79,8 @@ BasketItem.propTypes = {
     maxQuantity: PropType.number,
     description: PropType.string,
     keywords: PropType.arrayOf(PropType.string),
-    selectedSize: PropType.arrayOf(PropType.string),
-    selectedColor: PropType.arrayOf(PropType.number),
+    selectedSize: PropType.string,
+    selectedColor: PropType.string,
     imageCollection: PropType.arrayOf(PropType.string),
     sizes: PropType.arrayOf(PropType.number),
     image: PropType.string,

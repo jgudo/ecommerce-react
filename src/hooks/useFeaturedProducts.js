@@ -15,9 +15,11 @@ const useFeaturedProducts = (itemsCount) => {
 
       const docs = await firebase.getFeaturedProducts(itemsCount);
 
-      if (docs.empty && didMount) {
-        setError('No featured products found.');
-        setLoading(false);
+      if (docs.empty) {
+        if (didMount) {
+          setError('No featured products found.');
+          setLoading(false);
+        }
       } else {
         const items = [];
 
@@ -38,6 +40,7 @@ const useFeaturedProducts = (itemsCount) => {
       }
     }
   };
+
   useEffect(() => {
     if (featuredProducts.length === 0 && didMount) {
       fetchFeaturedProducts();

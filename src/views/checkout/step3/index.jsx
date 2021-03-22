@@ -84,12 +84,12 @@ Payment.propTypes = {
   }).isRequired,
   payment: PropType.shape({
     name: PropType.string,
-    cardnumber: PropType.number,
+    cardnumber: PropType.string,
     expiry: PropType.string,
-    ccv: PropType.number,
+    ccv: PropType.string,
     type: PropType.string
   }).isRequired,
-  subtotal: PropType.bool.isRequired
+  subtotal: PropType.number.isRequired
 };
 
 export default withCheckout(Payment);

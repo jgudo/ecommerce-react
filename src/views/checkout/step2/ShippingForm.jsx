@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { CustomInput, CustomMobileInput } from 'components/formik';
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
@@ -58,16 +59,16 @@ const ShippingForm = () => {
                   </label>
                 )}
                 <div className="checkout-checkbox-field">
+                  <input
+                    checked={field.value}
+                    id={field.name}
+                    onChange={(e) => {
+                      form.setValues({ ...form.values, [field.name]: e.target.checked });
+                    }}
+                    value={meta.value}
+                    type="checkbox"
+                  />
                   <label className="d-flex w-100" htmlFor={field.name}>
-                    <input
-                      checked={field.value}
-                      id={field.name}
-                      onChange={(e) => {
-                        form.setValues({ ...form.values, [field.name]: e.target.checked });
-                      }}
-                      value={meta.value}
-                      type="checkbox"
-                    />
                     <h5 className="d-flex-grow-1 margin-0">
                       &nbsp; International Shipping &nbsp;
                       <span className="text-subtle">7-14 days</span>

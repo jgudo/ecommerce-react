@@ -12,23 +12,28 @@ const PrivateRoute = ({
 }) => (
   <Route
     {...rest}
-    component={(props) => (
-      isAuth && role === 'USER'
-        ? (
+    component={(props) => {
+      if (isAuth && role === 'USER') {
+        return (
           <main className="content">
             <Component {...props} />
           </main>
-        )
-        : isAuth && role === 'ADMIN' ? <Redirect to={ADMIN_DASHBOARD} />
-          : (
-            <Redirect to={{
-              pathname: SIGNIN,
-              // eslint-disable-next-line react/prop-types
-              state: { from: props.location }
-            }}
-            />
-          )
-    )}
+        );
+      }
+
+      if (isAuth && role === 'ADMIN') {
+        return <Redirect to={ADMIN_DASHBOARD} />;
+      }
+
+      return (
+        <Redirect to={{
+          pathname: SIGNIN,
+          // eslint-disable-next-line react/prop-types
+          state: { from: props.location }
+        }}
+        />
+      );
+    }}
   />
 );
 

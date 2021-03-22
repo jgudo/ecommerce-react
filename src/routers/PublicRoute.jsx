@@ -19,14 +19,14 @@ const PublicRoute = ({
       if (isAuth && role === 'ADMIN') {
         <Redirect to={ADMIN_DASHBOARD} />;
       } else if ((isAuth && role === 'USER') && (path === SIGNIN || path === SIGNUP)) {
-        <Redirect to={from} />;
-      } else {
-        return (
-          <main className="content">
-            <Component {...props} />
-          </main>
-        );
+        return <Redirect to={from} />;
       }
+
+      return (
+        <main className="content">
+          <Component {...props} />
+        </main>
+      );
     }}
   />
 );
@@ -34,7 +34,7 @@ const PublicRoute = ({
 PublicRoute.defaultProps = {
   isAuth: false,
   role: 'USER',
-  path: undefined
+  path: '/'
 };
 
 PublicRoute.propTypes = {
