@@ -1,11 +1,12 @@
 import {
   ON_AUTHSTATE_FAIL,
   ON_AUTHSTATE_SUCCESS, RESET_PASSWORD,
-  SET_AUTH_PERSISTENCE, SIGNIN,
-  SIGNIN_WITH_FACEBOOK,
+  SET_AUTH_PERSISTENCE,
+  SIGNIN, SIGNIN_WITH_FACEBOOK,
   SIGNIN_WITH_GITHUB, SIGNIN_WITH_GOOGLE,
   SIGNOUT, SIGNUP
 } from 'constants/constants';
+import { SIGNIN as ROUTE_SIGNIN } from 'constants/routes';
 import defaultAvatar from 'images/defaultAvatar.jpg';
 import defaultBanner from 'images/defaultBanner.jpg';
 import { call, put } from 'redux-saga/effects';
@@ -118,7 +119,7 @@ function* authSaga({ type, payload }) {
         yield put(resetCheckout());
         yield put(signOutSuccess());
         yield put(setAuthenticating(false));
-        yield call(history.push, SIGNIN);
+        yield call(history.push, ROUTE_SIGNIN);
       } catch (e) {
         console.log(e);
       }

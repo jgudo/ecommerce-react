@@ -17,8 +17,10 @@ const PublicRoute = ({
       const { from } = props.location.state || { from: { pathname: '/' } };
 
       if (isAuth && role === 'ADMIN') {
-        <Redirect to={ADMIN_DASHBOARD} />;
-      } else if ((isAuth && role === 'USER') && (path === SIGNIN || path === SIGNUP)) {
+        return <Redirect to={ADMIN_DASHBOARD} />;
+      }
+
+      if ((isAuth && role === 'USER') && (path === SIGNIN || path === SIGNUP)) {
         return <Redirect to={from} />;
       }
 
