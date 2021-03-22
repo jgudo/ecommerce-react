@@ -12,7 +12,7 @@ import { searchProduct } from 'redux/actions/productActions';
 const Search = ({ match }) => {
   const { searchKey } = match.params;
   const dispatch = useDispatch();
-  const didMount = useDidMount();
+  const didMount = useDidMount(true);
   const store = useSelector((state) => ({
     isLoading: state.app.loading,
     products: state.products.searchedProducts.items,
