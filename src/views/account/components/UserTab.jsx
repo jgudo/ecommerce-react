@@ -24,9 +24,9 @@ const UserTab = (props) => {
       </div>
       <div className="user-tab-content">
         {children.map((child) => {
-          if (child.props.index !== activeTab) return undefined;
+          if (child.props.index !== activeTab) return null;
 
-          return child.children;
+          return child.props.children;
         })}
       </div>
     </div>

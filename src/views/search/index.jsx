@@ -21,13 +21,13 @@ const Search = ({ match }) => {
   }));
 
   useEffect(() => {
-    if (!didMount && !store.isLoading) {
+    if (didMount && !store.isLoading) {
       dispatch(searchProduct(searchKey));
     }
+  }, [searchKey]);
 
-    return () => {
-      dispatch(setRequestStatus(''));
-    };
+  useEffect(() => () => {
+    dispatch(setRequestStatus(''));
   }, []);
 
   if (store.requestStatus && !store.isLoading) {
