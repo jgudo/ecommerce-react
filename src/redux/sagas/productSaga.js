@@ -183,7 +183,7 @@ function* productSaga({ type, payload }) {
         const result = yield call(firebase.searchProducts, payload.searchKey);
 
         if (result.products.length === 0) {
-          yield handleError('No product found.');
+          yield handleError({ message: 'No product found.' });
           yield put(clearSearchState());
         } else {
           yield put(searchProductSuccess({
