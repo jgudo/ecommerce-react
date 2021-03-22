@@ -1,30 +1,45 @@
+import PropType from 'prop-types';
 import React, { Component } from 'react';
 
 class Boundary extends Component {
-	static getDerivedStateFromError(error) {
-		return { hasError: true };
-	}
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
 
-	state = {
-		hasError: false
-	};
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hasError: false
+    };
+  }
 
 
-	componentDidCatch(error, errorInfo) {
-		console.log(error);
-	}
+  componentDidCatch(error) {
+    console.log(error);
+  }
 
-	render() {
-		if (this.state.hasError) {
-			return (
-				<div className="loader">
-					<h3>:( Something went wrong.</h3>
-				</div>
-			);
-		}
+  render() {
+    const { hasError } = this.state;
+    const { children } = this.props;
 
-		return this.props.children;
-	}
+    if (hasError) {
+      return (
+        <div className="loader">
+          <h3>:( Something went wrong.</h3>
+        </div>
+      );
+    }
+
+    return children;
+  }
 }
+
+Boundary.propTypes = {
+  children: PropType.oneOfType([
+    PropType.arrayOf(PropType.node),
+    PropType.node
+  ]).isRequired
+};
 
 export default Boundary;

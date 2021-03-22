@@ -7,7 +7,6 @@ export { default as Filters } from './Filters';
 export { default as FiltersToggle } from './FiltersToggle';
 export { default as Footer } from './Footer';
 export { default as ImageLoader } from './ImageLoader';
-export { default as Input } from './Input';
 export { default as MessageDisplay } from './MessageDisplay';
 export { default as MobileNavigation } from './MobileNavigation';
 export { default as Modal } from './Modal';

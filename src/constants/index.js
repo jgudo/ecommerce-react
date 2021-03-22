@@ -1,2 +1,3 @@
-export { default as actionType } from './constants';
-export { default as routes } from './routes';
+export * as actionType from './constants';
+export * as route from './routes';
+

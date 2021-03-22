@@ -1,17 +1,19 @@
+import PropType from 'prop-types';
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Badge = ({ count, children }) => {
-	return (
-		<div className="badge">
-			{children}
-			{count >= 1 && <span className="badge-count">{count}</span>}
-		</div>
-	);
-};
+const Badge = ({ count, children }) => (
+  <div className="badge">
+    {children}
+    {count >= 1 && <span className="badge-count">{count}</span>}
+  </div>
+);
 
-Badge.propType = {
-	count: PropTypes.number.isRequired
+Badge.propTypes = {
+  count: PropType.number.isRequired,
+  children: PropType.oneOfType([
+    PropType.arrayOf(PropType.node),
+    PropType.node
+  ]).isRequired
 };
 
 export default Badge;

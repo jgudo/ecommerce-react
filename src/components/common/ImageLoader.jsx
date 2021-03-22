@@ -1,34 +1,42 @@
 import { LoadingOutlined } from '@ant-design/icons';
+import PropType from 'prop-types';
 import React, { useState } from 'react';
 
-const ImageLoader = (props) => {
-  const _loaded = {};
-  const spinnerStyle = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    margin: 'auto'
-  };
-  const [loaded, setLoaded] = useState(_loaded[props.src]);
+const ImageLoader = ({ src, alt, className }) => {
+  const loadedImages = {};
+  const [loaded, setLoaded] = useState(loadedImages[src]);
 
   const onLoad = () => {
-    _loaded[props.src] = true;
+    loadedImages[src] = true;
     setLoaded(true);
   };
 
   return (
     <>
-      {!loaded && <LoadingOutlined style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, margin: 'auto' }} />}
+      {!loaded && (
+        <LoadingOutlined style={{
+          position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, margin: 'auto'
+        }}
+        />
+      )}
       <img
-        alt={props.alt || ''}
-        className={`${props.className || ''} ${loaded ? 'is-img-loaded' : 'is-img-loading'}`}
+        alt={alt || ''}
+        className={`${className || ''} ${loaded ? 'is-img-loaded' : 'is-img-loading'}`}
         onLoad={onLoad}
-        src={props.src}
+        src={src}
       />
     </>
   );
+};
+
+ImageLoader.defaultProps = {
+  className: 'image-loader'
+};
+
+ImageLoader.propTypes = {
+  src: PropType.string.isRequired,
+  alt: PropType.string.isRequired,
+  className: PropType.string
 };
 
 export default ImageLoader;
