@@ -4,9 +4,6 @@ Simple ecommerce react js app with firebase [typescript].
 
 ### [Live demo](https://salinaka-ecommerce.web.app/)
 
-## TypeScript Version [HERE](https://github.com/jgudo/ecommerce-react/tree/typescript-support)
-
-
 ![Salinaka screenshot](https://raw.githubusercontent.com/jgudo/ecommerce-react/master/static/screeny1.png)
 ![Salinaka screenshot](https://raw.githubusercontent.com/jgudo/ecommerce-react/master/static/screeny2.png)
 ![Salinaka screenshot](https://raw.githubusercontent.com/jgudo/ecommerce-react/master/static/screeny3.png)
