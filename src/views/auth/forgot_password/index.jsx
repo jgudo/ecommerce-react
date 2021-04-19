@@ -37,7 +37,7 @@ const ForgotPassword = () => {
   return (
     <div className="forgot_password">
       {forgotPWStatus.message && (
-        <h5 className={`text-center ${authStatus.success ? 'toast-success' : 'toast-error'}`}>
+        <h5 className={`text-center ${authStatus?.success ? 'toast-success' : 'toast-error'}`}>
           {authStatus.message}
         </h5>
       )}
@@ -47,17 +47,20 @@ const ForgotPassword = () => {
       <input
         field="email"
         required
+        className="input-form"
         label="* Email"
         maxLength={40}
-        onInputChange={onEmailChange}
+        onChange={onEmailChange}
         placeholder="Enter your email"
-        readOnly={isSendingForgotPWRequest || authStatus.success}
+        readOnly={isSendingForgotPWRequest || authStatus?.success}
         type="email"
+        style={{ width: '100%' }}
       />
+      <br />
       <br />
       <button
         className="button w-100-mobile"
-        disabled={isSendingForgotPWRequest || authStatus.success}
+        disabled={isSendingForgotPWRequest || authStatus?.success}
         onClick={onSubmitEmail}
         type="button"
       >
