@@ -72,7 +72,6 @@ module.exports = merge(baseConfig, {
         {
           from: path.resolve(__dirname, "../static"),
           to: "static",
-          ignore: [".*"],
         },
       ],
     }),
