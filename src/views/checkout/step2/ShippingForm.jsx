@@ -55,7 +55,7 @@ const ShippingForm = () => {
                     className="label-input"
                     htmlFor={field.name}
                   >
-                    Shipping Option
+                    Delivery Option
                   </label>
                 )}
                 <div className="checkout-checkbox-field">
@@ -70,10 +70,10 @@ const ShippingForm = () => {
                   />
                   <label className="d-flex w-100" htmlFor={field.name}>
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; International Shipping &nbsp;
-                      <span className="text-subtle">7-14 days</span>
+                      &nbsp; Delivery Charges &nbsp;
+                      <span className="text-subtle">1-2 days</span>
                     </h5>
-                    <h4 className="margin-0">25000FCFA</h4>
+                    <h4 className="margin-0">2500FCFA</h4>
                   </label>
                 </div>
               </div>
