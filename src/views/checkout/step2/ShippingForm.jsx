@@ -73,7 +73,7 @@ const ShippingForm = () => {
                       &nbsp; International Shipping &nbsp;
                       <span className="text-subtle">7-14 days</span>
                     </h5>
-                    <h4 className="margin-0">$50.00</h4>
+                    <h4 className="margin-0">25000FCFA</h4>
                   </label>
                 </div>
               </div>

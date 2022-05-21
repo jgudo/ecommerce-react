@@ -26,7 +26,7 @@ const Total = ({ isInternational, subtotal }) => {
       <div className="basket-total text-right">
         <p className="basket-total-title">Total:</p>
         <h2 className="basket-total-amount">
-          {displayMoney(subtotal + (isInternational ? 50 : 0))}
+          {displayMoney(subtotal + (isInternational ? 25000 : 0))}
         </h2>
       </div>
       <br />
