@@ -13,15 +13,15 @@ const Footer = () => {
 
   return !visibleOnlyPath.includes(pathname) ? null : (
     <footer className="footer">
-      {/* <div className="footer-col-1">
+      <div className="footer-col-1">
         <strong>
           <span>
-            Developed by
-            {' '}
-            <a href="https://github.com/jgudo">JULIUS GUEVARRA</a>
+            Contacts <br />
+            tel : +237 651 97 76 85 <br />
+            email : lunetas@yahoo.fr
           </span>
         </strong>
-      </div> */}
+      </div>
       <div className="footer-col-2">
         <img alt="Footer logo" className="footer-logo" src={logo} />
         <h5>
@@ -29,14 +29,13 @@ const Footer = () => {
           {new Date().getFullYear()}
         </h5>
       </div>
-      {/* <div className="footer-col-3">
+      <div className="footer-col-3">
         <strong>
           <span>
-            Fork this project &nbsp;
-            <a href="https://github.com/jgudo/ecommerce-react">HERE</a>
+            Welcome
           </span>
         </strong>
-      </div> */}
+      </div>
     </footer>
   );
 };

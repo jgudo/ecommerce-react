@@ -34,8 +34,8 @@ const ShippingForm = () => {
             <Field
               name="address"
               type="text"
-              label="* Shipping Address"
-              placeholder="Enter full shipping address"
+              label="* Delivery Address"
+              placeholder="Enter full delivery address"
               component={CustomInput}
             />
           </div>
