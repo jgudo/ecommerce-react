@@ -3,7 +3,7 @@ import {
   CLEAR_SEARCH_STATE, EDIT_PRODUCT_SUCCESS,
   GET_PRODUCTS_SUCCESS, REMOVE_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_SUCCESS
-} from 'constants/constants';
+} from '@/constants/constants';
 
 const initState = {
   lastRefKey: null,

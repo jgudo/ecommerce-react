@@ -1,6 +1,6 @@
-import { useDidMount } from 'hooks';
+import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
-import firebase from 'services/firebase';
+import firebase from '@/services/firebase';
 
 const useFeaturedProducts = (itemsCount) => {
   const [featuredProducts, setFeaturedProducts] = useState([]);

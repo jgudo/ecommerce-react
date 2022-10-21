@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { AppliedFilters, ProductGrid, ProductList } from 'components/product';
-import { useDocumentTitle, useScrollTop } from 'hooks';
+import { AppliedFilters, ProductGrid, ProductList } from '@/components/product';
+import { useDocumentTitle, useScrollTop } from '@/hooks';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectFilter } from 'selectors/selector';
+import { selectFilter } from '@/selectors/selector';
 
 const Shop = () => {
   useDocumentTitle('Shop | Salinaka');

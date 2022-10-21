@@ -1,8 +1,8 @@
 import { ArrowRightOutlined, ShopOutlined } from '@ant-design/icons';
-import { BasketItem } from 'components/basket';
-import { CHECKOUT_STEP_2 } from 'constants/routes';
-import { displayMoney } from 'helpers/utils';
-import { useDocumentTitle, useScrollTop } from 'hooks';
+import { BasketItem } from '@/components/basket';
+import { CHECKOUT_STEP_2 } from '@/constants/routes';
+import { displayMoney } from '@/helpers/utils';
+import { useDocumentTitle, useScrollTop } from '@/hooks';
 import PropType from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';

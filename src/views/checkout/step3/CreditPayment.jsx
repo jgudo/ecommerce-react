@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-else-return */
-import { CustomInput } from 'components/formik';
+import { CustomInput } from '@/components/formik';
 import { Field, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
 

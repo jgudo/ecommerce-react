@@ -1,5 +1,5 @@
-import * as Route from 'constants/routes';
-import logo from 'images/logo-full.png';
+import * as Route from '@/constants/routes';
+import logo from '@/images/logo-full.png';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 

@@ -1,9 +1,9 @@
-import { UPDATE_EMAIL, UPDATE_PROFILE } from 'constants/constants';
-import { ACCOUNT } from 'constants/routes';
-import { displayActionMessage } from 'helpers/utils';
+import { UPDATE_EMAIL, UPDATE_PROFILE } from '@/constants/constants';
+import { ACCOUNT } from '@/constants/routes';
+import { displayActionMessage } from '@/helpers/utils';
 import { call, put, select } from 'redux-saga/effects';
-import { history } from 'routers/AppRouter';
-import firebase from 'services/firebase';
+import { history } from '@/routers/AppRouter';
+import firebase from '@/services/firebase';
 import { setLoading } from '../actions/miscActions';
 import { updateProfileSuccess } from '../actions/profileActions';
 

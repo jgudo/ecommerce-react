@@ -1,4 +1,4 @@
-import { useBasket } from 'hooks';
+import { useBasket } from '@/hooks';
 import PropType from 'prop-types';
 import React from 'react';
 import ProductItem from './ProductItem';

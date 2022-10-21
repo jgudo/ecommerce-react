@@ -1,7 +1,7 @@
-import { useDidMount } from 'hooks';
+import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import firebase from 'services/firebase';
+import firebase from '@/services/firebase';
 
 const useProduct = (id) => {
   // get and check if product exists in store

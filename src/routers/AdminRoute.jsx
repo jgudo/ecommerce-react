@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import { AdminNavigation, AdminSideBar } from 'components/common';
+import { AdminNavigation, AdminSideBar } from '@/components/common';
 import PropType from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';

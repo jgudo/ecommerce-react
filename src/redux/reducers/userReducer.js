@@ -1,4 +1,4 @@
-import { ADD_USER, DELETE_USER, EDIT_USER } from 'constants/constants';
+import { ADD_USER, DELETE_USER, EDIT_USER } from '@/constants/constants';
 
 // const initState = [
 //   {

@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import { useDidMount } from 'hooks';
+import { useDidMount } from '@/hooks';
 import PropType from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, withRouter } from 'react-router-dom';
-import { applyFilter, resetFilter } from 'redux/actions/filterActions';
-import { selectMax, selectMin } from 'selectors/selector';
+import { applyFilter, resetFilter } from '@/redux/actions/filterActions';
+import { selectMax, selectMin } from '@/selectors/selector';
 import PriceRange from './PriceRange';
 
 const Filters = ({ closeModal }) => {

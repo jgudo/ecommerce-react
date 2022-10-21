@@ -3,7 +3,7 @@ import {
   CLEAR_BASKET,
   MINUS_QTY_ITEM, REMOVE_FROM_BASKET,
   SET_BASKET_ITEMS
-} from 'constants/constants';
+} from '@/constants/constants';
 
 export const setBasketItems = (items = []) => ({
   type: SET_BASKET_ITEMS,
