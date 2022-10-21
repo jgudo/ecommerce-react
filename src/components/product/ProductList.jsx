@@ -1,10 +1,10 @@
 /* eslint-disable react/forbid-prop-types */
-import { Boundary, MessageDisplay } from 'components/common';
+import { Boundary, MessageDisplay } from '@/components/common';
 import PropType from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setLoading } from 'redux/actions/miscActions';
-import { getProducts } from 'redux/actions/productActions';
+import { setLoading } from '@/redux/actions/miscActions';
+import { getProducts } from '@/redux/actions/productActions';
 
 const ProductList = (props) => {
   const {

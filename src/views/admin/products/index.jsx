@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Boundary } from 'components/common';
-import { AppliedFilters, ProductList } from 'components/product';
-import { useDocumentTitle, useScrollTop } from 'hooks';
+import { Boundary } from '@/components/common';
+import { AppliedFilters, ProductList } from '@/components/product';
+import { useDocumentTitle, useScrollTop } from '@/hooks';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { selectFilter } from 'selectors/selector';
+import { selectFilter } from '@/selectors/selector';
 import { ProductsNavbar } from '../components';
 import ProductsTable from '../components/ProductsTable';
 

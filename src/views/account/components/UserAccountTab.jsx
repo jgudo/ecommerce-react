@@ -1,7 +1,7 @@
 /* eslint-disable indent */
-import { ImageLoader } from 'components/common';
-import { ACCOUNT_EDIT } from 'constants/routes';
-import { displayDate } from 'helpers/utils';
+import { ImageLoader } from '@/components/common';
+import { ACCOUNT_EDIT } from '@/constants/routes';
+import { displayDate } from '@/helpers/utils';
 import PropType from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';

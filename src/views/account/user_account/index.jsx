@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import { LoadingOutlined } from '@ant-design/icons';
-import { useDocumentTitle, useScrollTop } from 'hooks';
+import { useDocumentTitle, useScrollTop } from '@/hooks';
 import React, { lazy, Suspense } from 'react';
 import UserTab from '../components/UserTab';
 

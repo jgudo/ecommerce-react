@@ -1,15 +1,15 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-nested-ternary */
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import { Boundary } from 'components/common';
-import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from 'constants/routes';
+import { Boundary } from '@/components/common';
+import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from '@/constants/routes';
 import { Form, Formik } from 'formik';
-import { useDocumentTitle, useScrollTop } from 'hooks';
+import { useDocumentTitle, useScrollTop } from '@/hooks';
 import PropType from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { setShippingDetails } from 'redux/actions/checkoutActions';
+import { setShippingDetails } from '@/redux/actions/checkoutActions';
 import * as Yup from 'yup';
 import { StepTracker } from '../components';
 import withCheckout from '../hoc/withCheckout';

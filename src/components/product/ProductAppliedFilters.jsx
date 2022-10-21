@@ -3,7 +3,7 @@ import { CloseCircleOutlined } from '@ant-design/icons';
 import PropType from 'prop-types';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { applyFilter } from 'redux/actions/filterActions';
+import { applyFilter } from '@/redux/actions/filterActions';
 
 const ProductAppliedFilters = ({ filteredProductsCount }) => {
   const filter = useSelector((state) => state.filter, shallowEqual);

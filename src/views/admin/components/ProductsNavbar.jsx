@@ -1,6 +1,6 @@
 import { FilterOutlined, PlusOutlined } from '@ant-design/icons';
-import { FiltersToggle, SearchBar } from 'components/common';
-import { ADD_PRODUCT } from 'constants/routes';
+import { FiltersToggle, SearchBar } from '@/components/common';
+import { ADD_PRODUCT } from '@/constants/routes';
 import PropType from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router-dom';

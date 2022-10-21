@@ -1,4 +1,4 @@
-import { ADMIN_PRODUCTS } from 'constants/routes';
+import { ADMIN_PRODUCTS } from '@/constants/routes';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 

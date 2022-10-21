@@ -1,6 +1,6 @@
 import {
   IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS
-} from 'constants/constants';
+} from '@/constants/constants';
 
 export const setLoading = (bool = true) => ({
   type: LOADING,

@@ -1,4 +1,4 @@
-import * as ACTION from 'constants/constants';
+import * as ACTION from '@/constants/constants';
 import { takeLatest } from 'redux-saga/effects';
 import authSaga from './authSaga';
 import productSaga from './productSaga';

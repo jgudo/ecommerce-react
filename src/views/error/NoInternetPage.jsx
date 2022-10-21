@@ -1,4 +1,4 @@
-import { useScrollTop } from 'hooks';
+import { useScrollTop } from '@/hooks';
 import React from 'react';
 
 const NoInternet = () => {

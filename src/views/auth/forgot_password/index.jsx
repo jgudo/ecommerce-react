@@ -1,8 +1,8 @@
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
-import { useDidMount, useDocumentTitle, useScrollTop } from 'hooks';
+import { useDidMount, useDocumentTitle, useScrollTop } from '@/hooks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword } from 'redux/actions/authActions';
+import { resetPassword } from '@/redux/actions/authActions';
 
 const ForgotPassword = () => {
   const { authStatus, isAuthenticating } = useSelector((state) => ({
@@ -36,12 +36,12 @@ const ForgotPassword = () => {
 
   return (
     <div className="forgot_password">
-      {forgotPWStatus.message && (
+      {forgotPWStatus?.message && (
         <h5 className={`text-center ${authStatus?.success ? 'toast-success' : 'toast-error'}`}>
           {authStatus.message}
         </h5>
       )}
-      <h3>Forgot Your Password?</h3>
+      <h2>Forgot Your Password?</h2>
       <p>Enter your email address and we will send you a password reset email.</p>
       <br />
       <input

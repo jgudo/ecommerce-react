@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import { FeaturedProduct } from 'components/product';
+import { FeaturedProduct } from '@/components/product';
 import PropType from 'prop-types';
 import React from 'react';
 
