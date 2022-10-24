@@ -39,14 +39,14 @@ create a **Database** and choose **Cloud Firestore** and start in test mode
 
 ### 3. Run development server
 ```sh 
-$ npm run dev-server
+$ yarn dev
 ```
 
 ---
 
 ## Build the project
 ```sh
-$ npm run build
+$ yarn build
 ```
 
 ## How to add products or perform CRUD operations for Admin
