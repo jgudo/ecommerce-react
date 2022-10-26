@@ -12,7 +12,7 @@ Simple ecommerce react js app with firebase [typescript].
 ## Run Locally
 ### 1. Install Dependencies
 ```sh
-$ npm install
+$ yarn install
 ```
 
 ### 2. Create a new firebase project
