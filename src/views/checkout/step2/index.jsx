@@ -39,7 +39,7 @@ const FormSchema = Yup.object().shape({
 });
 
 const ShippingDetails = ({ profile, shipping, subtotal }) => {
-  useDocumentTitle('Check Out Step 2 | Salinaka');
+  useDocumentTitle('Check Out Step 2 | Lunetas-cam');
   useScrollTop();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -70,7 +70,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       <div className="checkout">
         <StepTracker current={2} />
         <div className="checkout-step-2">
-          <h3 className="text-center">Shipping Details</h3>
+          <h3 className="text-center">Delivery Details</h3>
           <Formik
             initialValues={initFormikValues}
             validateOnChange
