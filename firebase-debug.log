@@ -1,0 +1,88 @@
+[debug] [2023-04-13T05:29:14.347Z] ----------------------------------------------------------------------
+[debug] [2023-04-13T05:29:14.349Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rajku\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-04-13T05:29:14.349Z] CLI Version:   11.26.0
+[debug] [2023-04-13T05:29:14.349Z] Platform:      win32
+[debug] [2023-04-13T05:29:14.349Z] Node Version:  v18.14.1
+[debug] [2023-04-13T05:29:14.350Z] Time:          Thu Apr 13 2023 10:59:14 GMT+0530 (India Standard Time)
+[debug] [2023-04-13T05:29:14.350Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-13T05:29:14.398Z] Field ".emulators.firestore.port" in "firebase.json" is possibly invalid: should be number
+[debug] [2023-04-13T05:29:14.402Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-13T05:29:14.403Z] > authorizing via signed-in user (rajkumarramineni19@gmail.com)
+[debug] [2023-04-13T05:29:14.403Z] Field ".emulators.firestore.port" in "firebase.json" is possibly invalid: should be number
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\mypersonal\React_training-placement\ecommerce-react
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-04-13T05:29:35.447Z] Using project from CLI flag: ecommerce-react-3fc93
+[debug] [2023-04-13T05:29:35.450Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ecommerce-react-3fc93 [none]
+[debug] [2023-04-13T05:29:37.565Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ecommerce-react-3fc93 200
+[debug] [2023-04-13T05:29:37.565Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ecommerce-react-3fc93 {"projectId":"ecommerce-react-3fc93","projectNumber":"223491012589","displayName":"ecommerce-react","name":"projects/ecommerce-react-3fc93","resources":{"hostingSite":"ecommerce-react-3fc93","realtimeDatabaseInstance":"ecommerce-react-3fc93-default-rtdb","storageBucket":"ecommerce-react-3fc93.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_4044561d-257d-44de-9f2d-d6bae63c8506"}
+[info] i  Using project ecommerce-react-3fc93 (ecommerce-react) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2023-04-13T05:29:50.724Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2023-04-13T05:29:52.309Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2023-04-13T05:29:52.309Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"9.19.1","browserURL":"https://www.gstatic.com/firebasejs/9.19.1/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/9.19.1/firebase.tgz"},"live":{"version":"9.19","browserURL":"https://www.gstatic.com/firebasejs/live/9.19/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/9.19/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/9.19.1/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/9.19.1/firebase-auth/cordova.js","auth/react-native":"https://www.gstatic.com/firebasejs/9.19.1/firebase-auth/react-native.js","functions":"https://www.gstatic.com/firebasejs/9.19.1/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/9.19.1/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/9.19.1/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/9.19.1/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/9.19.1/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/9.19.1/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/9.19.1/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js","firestore.memory":"https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.memory.js"}}
+[info] +  Wrote y/index.html 
+[info] 
+[info] i  Detected a .git folder at C:\mypersonal\React_training-placement\ecommerce-react 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=599123007&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2023-04-13T05:29:59.023Z] >>> [apiv2][query] POST https://github.com/login/oauth/access_token [none]
+[debug] [2023-04-13T05:29:59.024Z] >>> [apiv2][body] POST https://github.com/login/oauth/access_token [stream]
+[debug] [2023-04-13T05:30:00.476Z] <<< [apiv2][status] POST https://github.com/login/oauth/access_token 200
+[debug] [2023-04-13T05:30:00.476Z] <<< [apiv2][body] POST https://github.com/login/oauth/access_token {"access_token":"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","token_type":"bearer","scope":"read:user,repo"}
+[debug] [2023-04-13T05:30:00.481Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2023-04-13T05:30:01.828Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2023-04-13T05:30:01.828Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"RAJKUMAR1993","id":40784116,"node_id":"MDQ6VXNlcjQwNzg0MTE2","avatar_url":"https://avatars.githubusercontent.com/u/40784116?v=4","gravatar_id":"","url":"https://api.github.com/users/RAJKUMAR1993","html_url":"https://github.com/RAJKUMAR1993","followers_url":"https://api.github.com/users/RAJKUMAR1993/followers","following_url":"https://api.github.com/users/RAJKUMAR1993/following{/other_user}","gists_url":"https://api.github.com/users/RAJKUMAR1993/gists{/gist_id}","starred_url":"https://api.github.com/users/RAJKUMAR1993/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/RAJKUMAR1993/subscriptions","organizations_url":"https://api.github.com/users/RAJKUMAR1993/orgs","repos_url":"https://api.github.com/users/RAJKUMAR1993/repos","events_url":"https://api.github.com/users/RAJKUMAR1993/events{/privacy}","received_events_url":"https://api.github.com/users/RAJKUMAR1993/received_events","type":"User","site_admin":false,"name":"Rajkumar","company":"HCL Technologies Limited","blog":"https://evanto.netlify.app","location":"Hyderabad","email":null,"hireable":null,"bio":"ReactJs Developer","twitter_username":null,"public_repos":46,"public_gists":0,"followers":0,"following":8,"created_at":"2018-07-03T04:55:01Z","updated_at":"2023-03-24T04:59:32Z","private_gists":0,"total_private_repos":2,"owned_private_repos":2,"disk_usage":1230155,"collaborators":0,"two_factor_authentication":false,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] +  Success! Logged into GitHub as RAJKUMAR1993 
+[info] 
+[debug] [2023-04-13T05:30:14.235Z] >>> [apiv2][query] GET https://api.github.com/repos/n/actions/secrets/public-key type=owner
+[debug] [2023-04-13T05:30:15.349Z] <<< [apiv2][status] GET https://api.github.com/repos/n/actions/secrets/public-key 404
+[debug] [2023-04-13T05:30:15.349Z] <<< [apiv2][body] GET https://api.github.com/repos/n/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest"}
+[info] 
+[info] 
+[error] !  The provided authorization cannot be used with this repository. If this repository is in an organization, did you remember to grant access? 
+[info] 
+[info] i  Action required: Visit this URL to ensure access has been granted to the appropriate organization(s) for the Firebase CLI GitHub OAuth App: 
+[info] https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+[info] 
+[debug] [2023-04-13T05:31:24.414Z] >>> [apiv2][query] GET https://api.github.com/repos/n	/actions/secrets/public-key type=owner
+[debug] [2023-04-13T05:31:26.053Z] <<< [apiv2][status] GET https://api.github.com/repos/n	/actions/secrets/public-key 401
+[debug] [2023-04-13T05:31:26.054Z] <<< [apiv2][body] GET https://api.github.com/repos/n	/actions/secrets/public-key {"message":"Bad credentials","documentation_url":"https://docs.github.com/rest"}
+[debug] [2023-04-13T05:31:30.417Z] >>> [apiv2][query] GET https://api.github.com/repos/n	/actions/secrets/public-key type=owner
+[debug] [2023-04-13T05:31:31.330Z] <<< [apiv2][status] GET https://api.github.com/repos/n	/actions/secrets/public-key 401
+[debug] [2023-04-13T05:31:31.330Z] <<< [apiv2][body] GET https://api.github.com/repos/n	/actions/secrets/public-key {"message":"Bad credentials","documentation_url":"https://docs.github.com/rest"}
+[debug] [2023-04-13T05:31:34.187Z] >>> [apiv2][query] GET https://api.github.com/repos/y/actions/secrets/public-key type=owner
+[debug] [2023-04-13T05:31:35.115Z] <<< [apiv2][status] GET https://api.github.com/repos/y/actions/secrets/public-key 401
+[debug] [2023-04-13T05:31:35.115Z] <<< [apiv2][body] GET https://api.github.com/repos/y/actions/secrets/public-key {"message":"Bad credentials","documentation_url":"https://docs.github.com/rest"}
