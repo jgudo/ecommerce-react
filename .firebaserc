@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "salinaka-ecommerce"
-  }
+    "default": "ecommerce-react-3fc93",
+    "my-ecomm": "ecommerce-react-3fc93"
+  },
+  "targets": {},
+  "etags": {}
 }
