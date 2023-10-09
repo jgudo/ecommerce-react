@@ -29,7 +29,7 @@ const SignIn = ({ history }) => {
   const dispatch = useDispatch();
 
   useScrollTop();
-  useDocumentTitle('Sign In | Salinaka');
+  useDocumentTitle('Sign In | listen2re');
 
   useEffect(() => () => {
     dispatch(setAuthStatus(null));
@@ -65,7 +65,9 @@ const SignIn = ({ history }) => {
           )}
           <div className={`auth ${authStatus?.message && (!authStatus?.success && 'input-error')}`}>
             <div className="auth-main">
-              <h3>Sign in to Salinaka</h3>
+              
+              <h3>Sign in to listen2re</h3>
+              <SocialLogin isLoading={isAuthenticating} />
               <br />
               <div className="auth-wrapper">
                 <Formik
@@ -79,7 +81,7 @@ const SignIn = ({ history }) => {
                 >
                   {() => (
                     <Form>
-                      <div className="auth-field">
+                      {/* <div className="auth-field">
                         <Field
                           disabled={isAuthenticating}
                           name="email"
@@ -98,9 +100,9 @@ const SignIn = ({ history }) => {
                           placeholder="Your Password"
                           component={CustomInput}
                         />
-                      </div>
+                      </div> */}
                       <br />
-                      <div className="auth-field auth-action">
+                      {/* <div className="auth-field auth-action">
                         <Link
                           onClick={onClickLink}
                           style={{ textDecoration: 'underline' }}
@@ -117,18 +119,18 @@ const SignIn = ({ history }) => {
                           &nbsp;
                           {isAuthenticating ? <LoadingOutlined /> : <ArrowRightOutlined />}
                         </button>
-                      </div>
+                      </div> */}
                     </Form>
                   )}
                 </Formik>
               </div>
             </div>
-            <div className="auth-divider">
+            {/* <div className="auth-divider">
               <h6>OR</h6>
-            </div>
-            <SocialLogin isLoading={isAuthenticating} />
+            </div> */}
+            {/* <SocialLogin isLoading={isAuthenticating} /> */}
           </div>
-          <div className="auth-message">
+          {/* <div className="auth-message">
             <span className="auth-info">
               <strong>Don&apos;t have an account?</strong>
             </span>
@@ -140,7 +142,7 @@ const SignIn = ({ history }) => {
             >
               Sign Up
             </button>
-          </div>
+          </div> */}
         </>
       )}
     </div>
