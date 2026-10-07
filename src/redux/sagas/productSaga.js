@@ -67,6 +67,10 @@ function* productSaga({ type, payload }) {
       try {
         yield initRequest();
 
+        const state = yield select();
+        const createdBy = state.auth?.id;
+        if (!createdBy) throw new Error('You must be signed in to create a product.');
+
         const { imageCollection } = payload;
         const key = yield call(firebase.generateKey);
         const downloadURL = yield call(firebase.storeImage, key, 'products', payload.image);
@@ -84,6 +88,7 @@ function* productSaga({ type, payload }) {
 
         const product = {
           ...payload,
+          createdBy,
           image: downloadURL,
           imageCollection: [image, ...images]
         };
@@ -107,6 +112,7 @@ function* productSaga({ type, payload }) {
 
         const { image, imageCollection } = payload.updates;
         let newUpdates = { ...payload.updates };
+        delete newUpdates.createdBy;
 
         if (image.constructor === File && typeof image === 'object') {
           try {

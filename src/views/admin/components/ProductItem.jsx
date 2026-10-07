@@ -4,7 +4,7 @@ import { displayActionMessage, displayDate, displayMoney } from '@/helpers/utils
 import PropType from 'prop-types';
 import React, { useRef } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, withRouter } from 'react-router-dom';
 import { removeProduct } from '@/redux/actions/productActions';
 
@@ -12,6 +12,9 @@ const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const productRef = useRef(null);
+  const { id: currentUserId, role } = useSelector((state) => state.auth || {});
+  const canManageProduct = role === 'SUPER_ADMIN'
+    || (role === 'ADMIN' && !!currentUserId && product.createdBy === currentUserId);
 
   const onClickEdit = () => {
     history.push(`${EDIT_PRODUCT}/${product.id}`);
@@ -68,7 +71,7 @@ const ProductItem = ({ product }) => {
             <span>{product.maxQuantity || <Skeleton width={20} />}</span>
           </div>
         </div>
-        {product.id && (
+        {product.id && canManageProduct && (
           <div className="item-action">
             <button
               className="button button-border button-small"
@@ -113,6 +116,7 @@ const ProductItem = ({ product }) => {
 ProductItem.propTypes = {
   product: PropType.shape({
     id: PropType.string,
+    createdBy: PropType.string,
     name: PropType.string,
     brand: PropType.string,
     price: PropType.number,

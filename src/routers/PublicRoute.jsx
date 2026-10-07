@@ -16,7 +16,7 @@ const PublicRoute = ({
       // eslint-disable-next-line react/prop-types
       const { from } = props.location.state || { from: { pathname: '/' } };
 
-      if (isAuth && role === 'ADMIN') {
+      if (isAuth && (role === 'ADMIN' || role === 'SUPER_ADMIN')) {
         return <Redirect to={ADMIN_DASHBOARD} />;
       }
 

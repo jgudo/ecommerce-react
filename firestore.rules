@@ -14,14 +14,42 @@ service cloud.firestore {
     //  allow read, write: if request.time < timestamp.date(2020, 4, 21);
     //}
     
-    match /users/{userId} {
-      allow read, update: if request.auth.uid != null && request.auth.uid == userId;
-    	allow create: if request.auth.uid != null;
+    function isSignedIn() {
+      return request.auth != null;
     }
-    
+
+    function isSuperAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'SUPER_ADMIN';
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == 'USER';
+      allow update: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role;
+    }
+
     match /products/{productId} {
-      allow create,update,delete: if request.auth.uid != null;
-    	allow read: if true;
+      allow create: if isSuperAdmin()
+        || (isAdmin() && request.resource.data.createdBy == request.auth.uid);
+      allow update: if isSuperAdmin()
+        || (isAdmin()
+          && resource.data.createdBy == request.auth.uid
+          && request.resource.data.createdBy == resource.data.createdBy);
+      allow delete: if isSuperAdmin()
+        || (isAdmin() && resource.data.createdBy == request.auth.uid);
+      allow read: if true;
     }
   }
 }
