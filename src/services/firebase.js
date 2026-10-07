@@ -21,6 +21,12 @@ class Firebase {
   signIn = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
+  createPhoneRecaptchaVerifier = (containerId) =>
+    new app.auth.RecaptchaVerifier(containerId, { size: "normal" });
+
+  signInWithPhoneNumber = (phoneNumber, verifier) =>
+    this.auth.signInWithPhoneNumber(phoneNumber, verifier);
+
   signInWithGoogle = () =>
     this.auth.signInWithPopup(new app.auth.GoogleAuthProvider());
 
