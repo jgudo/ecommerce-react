@@ -1,8 +1,11 @@
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { BasketToggle } from '@/components/basket';
-import { HOME, SIGNIN } from '@/constants/routes';
+import {
+  FEATURED_PRODUCTS, HOME, RECOMMENDED_PRODUCTS, SHOP, SIGNIN
+} from '@/constants/routes';
 import PropType from 'prop-types';
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import UserNav from '@/views/account/components/UserAvatar';
 import Badge from './Badge';
 import FiltersToggle from './FiltersToggle';
@@ -13,9 +16,15 @@ const Navigation = (props) => {
     isAuthenticating, basketLength, disabledPaths, user
   } = props;
   const { pathname } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const onClickLink = (e) => {
     if (isAuthenticating) e.preventDefault();
+  };
+
+  const onClickNavigationLink = (e) => {
+    onClickLink(e);
+    if (!isAuthenticating) setIsMenuOpen(false);
   };
 
   return (
@@ -26,6 +35,17 @@ const Navigation = (props) => {
             <h2>SALINAKA</h2>
           </Link>
         </div>
+
+        <button
+          aria-controls="mobile-navigation-routes"
+          aria-expanded={isMenuOpen}
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          className="button-link mobile-navigation-toggle"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          type="button"
+        >
+          {isMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
+        </button>
 
         <BasketToggle>
           {({ onClickToggle }) => (
@@ -64,6 +84,14 @@ const Navigation = (props) => {
           )}
         </ul>
       </div>
+      {isMenuOpen && (
+        <ul className="mobile-navigation-routes" id="mobile-navigation-routes">
+          <li><NavLink activeClassName="navigation-menu-active" exact onClick={onClickNavigationLink} to={HOME}>Home</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" onClick={onClickNavigationLink} to={SHOP}>Shop</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" onClick={onClickNavigationLink} to={FEATURED_PRODUCTS}>Featured</NavLink></li>
+          <li><NavLink activeClassName="navigation-menu-active" onClick={onClickNavigationLink} to={RECOMMENDED_PRODUCTS}>Recommended</NavLink></li>
+        </ul>
+      )}
       <div className="mobile-navigation-sec">
         <SearchBar />
         <FiltersToggle>
