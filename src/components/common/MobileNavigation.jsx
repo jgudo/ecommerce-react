@@ -7,6 +7,7 @@ import UserNav from '@/views/account/components/UserAvatar';
 import Badge from './Badge';
 import FiltersToggle from './FiltersToggle';
 import SearchBar from './SearchBar';
+import Tooltip from './Tooltip';
 
 const Navigation = (props) => {
   const {
@@ -29,17 +30,18 @@ const Navigation = (props) => {
 
         <BasketToggle>
           {({ onClickToggle }) => (
-            <button
-              className="button-link navigation-menu-link basket-toggle"
-              onClick={onClickToggle}
-              disabled={disabledPaths.includes(pathname)}
-              type="button"
-            >
-
-              <Badge count={basketLength}>
-                <i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
-              </Badge>
-            </button>
+            <Tooltip text="Open shopping basket">
+              <button
+                className="button-link navigation-menu-link basket-toggle"
+                onClick={onClickToggle}
+                disabled={disabledPaths.includes(pathname)}
+                type="button"
+              >
+                <Badge count={basketLength}>
+                  <i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
+                </Badge>
+              </button>
+            </Tooltip>
           )}
         </BasketToggle>
         <ul className="mobile-navigation-menu">
@@ -67,9 +69,11 @@ const Navigation = (props) => {
       <div className="mobile-navigation-sec">
         <SearchBar />
         <FiltersToggle>
-          <button className="button-link button-small" type="button">
-            <i className="fa fa-filter" />
-          </button>
+          <Tooltip text="Filter products">
+            <button className="button-link button-small" type="button">
+              <i className="fa fa-filter" />
+            </button>
+          </Tooltip>
         </FiltersToggle>
       </div>
     </nav>

@@ -1,3 +1,38 @@
+.ui-tooltip {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+
+  .ui-tooltip-text {
+    position: absolute;
+    z-index: map-get($z-index, 'toast');
+    bottom: calc(100% + #{$xs-size});
+    left: 50%;
+    width: max-content;
+    max-width: 22rem;
+    padding: $xs-size $s-size;
+    border-radius: 3px;
+    background: $off-black;
+    color: $white;
+    font-size: $font-small;
+    line-height: 1.4;
+    text-align: center;
+    white-space: normal;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 2px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+    pointer-events: none;
+  }
+
+  &:hover .ui-tooltip-text,
+  &:focus-within .ui-tooltip-text {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+}
+
 .tooltip {
     position: relative;
     display: inline-block;

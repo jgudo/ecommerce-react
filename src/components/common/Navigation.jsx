@@ -13,6 +13,7 @@ import Badge from './Badge';
 import FiltersToggle from './FiltersToggle';
 import MobileNavigation from './MobileNavigation';
 import SearchBar from './SearchBar';
+import Tooltip from './Tooltip';
 
 const Navigation = () => {
   const navbar = useRef(null);
@@ -79,10 +80,12 @@ const Navigation = () => {
       </ul>
       {(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
         <FiltersToggle>
-          <button className="button-muted button-small" type="button">
-            Filters &nbsp;
-            <FilterOutlined />
-          </button>
+          <Tooltip text="Filter products">
+            <button className="button-muted button-small" type="button">
+              Filters &nbsp;
+              <FilterOutlined />
+            </button>
+          </Tooltip>
         </FiltersToggle>
       )}
       <SearchBar />
@@ -90,17 +93,18 @@ const Navigation = () => {
         <li className="navigation-menu-item">
           <BasketToggle>
             {({ onClickToggle }) => (
-              <button
-                className="button-link navigation-menu-link basket-toggle"
-                disabled={basketDisabledpathnames.includes(pathname)}
-                onClick={onClickToggle}
-                type="button"
-              >
-
-                <Badge count={store.basketLength}>
-                  <ShoppingOutlined style={{ fontSize: '2.4rem' }} />
-                </Badge>
-              </button>
+              <Tooltip text="Open shopping basket">
+                <button
+                  className="button-link navigation-menu-link basket-toggle"
+                  disabled={basketDisabledpathnames.includes(pathname)}
+                  onClick={onClickToggle}
+                  type="button"
+                >
+                  <Badge count={store.basketLength}>
+                    <ShoppingOutlined style={{ fontSize: '2.4rem' }} />
+                  </Badge>
+                </button>
+              </Tooltip>
             )}
           </BasketToggle>
         </li>
